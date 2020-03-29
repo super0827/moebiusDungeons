@@ -25,7 +25,7 @@
         
         <section class="portContainer animated infinite" :id="characters.name">
             <section class="overlay"></section>
-            <img  :src="characters.portrait" :alt="characters.description2">
+            <img :src="characters.portrait" :alt="characters.description2">
         </section>
 
     </section>
