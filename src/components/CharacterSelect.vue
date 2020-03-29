@@ -1,6 +1,6 @@
 <template>
 
-<section class="characterSelectWrapper">
+<section class="characterSelectWrapper animated fadeIn slow">
 
     <h1 class="animated" :class="{'pulse slow infinite' : isEntering, 'zoomOutUp' : isLeaving }">MOEBIUS DUNGEONS</h1>
 
@@ -42,8 +42,7 @@ export default {
       return {
           isEntering: true,
           isLeaving: false,
-          hoverPulse: false,
-          currentPlayer: null,
+          playerData: null,
           characterClasses: [
               {name:"swordsman", 
               portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
@@ -78,16 +77,21 @@ export default {
       }
   },
   methods: {
-      setPlayer(passedPlayer) {
-          console.log(passedPlayer);
-          this.currentPlayer = passedPlayer;
-          this.isEntering = false;
-          this.isLeaving = true;
+    setPlayer(passedPlayer) {
+        console.log(`You're playing as the ${passedPlayer.name}`);
+
+        //Toggle Animations
+        this.isEntering = false;
+        this.isLeaving = true;
+
+        const characterModule = this;
+        characterModule.$emit('character-chosen', passedPlayer);
+        
+        setTimeout(function(){
+            characterModule.$emit('to-dungeon');
+        }, 500);
       }
   },
-  destroyed: function() {
-    this.$emit('to-dungeon');
-  }
 }
 </script>
 

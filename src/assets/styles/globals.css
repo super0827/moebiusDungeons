@@ -41,3 +41,23 @@ p {
     font-size:15px;
     margin:5px 0;
 }
+
+/* Portrait Styles */
+.sigil{
+    max-width:100px;
+}
+
+.portrait {
+    max-width:200px;
+}
+
+/* Stat Styles */
+.flexRow {
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.flexRow img {
+    max-width:50px;
+}
