@@ -14,7 +14,6 @@ body {
     max-width:200px;
     text-align:center;
     margin:20px;
-
 }
 
 h1 {
@@ -49,6 +48,7 @@ p {
 
 .portrait {
     max-width:200px;
+    width:200px;
 }
 
 /* Stat Styles */
@@ -58,6 +58,6 @@ p {
     align-items: center;
 }
 
-.flexRow img {
+.stats img {
     max-width:50px;
 }
