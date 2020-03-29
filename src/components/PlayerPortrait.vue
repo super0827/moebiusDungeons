@@ -5,7 +5,7 @@
       <h3>YOU</h3>
       <img class="portrait" :src="player.portrait">
       
-      <section class="flexRow">
+      <section class="flexRow stats">
 
         <section>
           <p>{{ player.health }}</p>
