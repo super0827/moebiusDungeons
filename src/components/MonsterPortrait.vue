@@ -1,6 +1,6 @@
 <template>
 <section id="monsterPortWrapper" class="hidden">
-    <img class="imgSize" src="./imgs/BEASTS.png" alt="">
+    <!-- <img class="imgSize" src="./imgs/BEASTS.png" alt="">
     <section class="levelTitle">
         <p id="monsterName"></p>
     </section>
@@ -37,6 +37,7 @@
 
     <section>
         METTLE<p id="monsterXp"></p>
+  </section> -->
   </section>
 </template>
 

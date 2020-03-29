@@ -1,7 +1,6 @@
 <template>
- <section id="leftTile" class="tile">
-
-    <!-- Player -->
+ <section >
+<!-- 
     <section id="charPortWrapper" class="hidden">
         <div id="charClass"></div>
         
@@ -40,7 +39,7 @@
         <section>
             METTLE<p id="playerXp"></p>
         </section>
-    </section>
+    </section> -->
 </section>
 </template>
 

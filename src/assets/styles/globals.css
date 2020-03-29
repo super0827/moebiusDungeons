@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Frijole|Oswald&display=swap');
+
+:root{
+    --headers-type: 'Frijole', cursive;
+    --paragraphs-type: 'Oswald', sans-serif;
+}
+
+body {
+    margin:0;
+    padding:0;
+}
+
+.columns {
+    max-width:200px;
+    text-align:center;
+    margin:20px;
+
+}
+
+h1 {
+    font-family: var(--headers-type);
+    font-size:30px;
+}
+
+h2 {
+    font-family: var(--paragraphs-type);
+    font-size:25px;
+    margin:0;
+    text-transform:uppercase;
+    text-decoration:underline;
+}
+h3 {
+    font-family: var(--paragraphs-type);
+    font-size:18px;
+    font-weight:100;
+    margin:0;
+}
+
+p {
+    font-family: var(--paragraphs-type);
+    font-size:15px;
+    margin:5px 0;
+}

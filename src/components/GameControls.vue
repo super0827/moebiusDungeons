@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'BattleControls',
+  name: 'GameControls',
   props: {
     
   }

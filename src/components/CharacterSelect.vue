@@ -1,36 +1,35 @@
 <template>
-<section id="intro">
-  <section class="chooseChar">
-      <section id="swordsmanCont" class="animated zoomIn">
-          <h2>SWORDSMAN</h2>
-          <p>Slicing & dicing.</p>
-          <p>Heavy hitter & sturdy.</p>
-          <section id="swordsman" onclick="pickChar(this.id)" class="charSlot">
-              <img src="./imgs/swordsman.png" alt="a swordsman, armored and adept in swordplay. Swings his sword real good.">
-              <section class="overlay"></section>
-          </section>
-      </section>
-  
-      <section id="mageCont" class="animated zoomIn">
-          <h2>MAGE</h2>
-          <p>Uses magic attacks.</p>
-          <p>Ignores enemy armor.</p>
-          <section id="mage" onclick="pickChar(this.id)" class="charSlot">
-              <img src="./imgs/mage.png" alt="a mage sitting with her book and magic flame, she can cast spells">
-              <section class="overlay"></section>
-          </section>
-      </section>
-  
-      <section id="varletCont" class="animated zoomIn">
-          <h2>VARLET</h2>
-          <p>Jack of all trades.</p>
-          <p>Starts with 1 Mettle</p>
-          <section id="varlet" onclick="pickChar(this.id)" class="charSlot">
-              <img src="./imgs/varlet.png" alt="a varlet by a campfire. he's trecherous and untrustworthy.">
-              <section class="overlay"></section>
-          </section>
-      </section>
-  </section>
+
+<section class="characterSelectWrapper">
+
+    <h1 class="animated" :class="{'pulse slow infinite' : isEntering, 'zoomOutUp' : isLeaving }">MOEBIUS DUNGEONS</h1>
+
+<section class="chooseChar">
+    <section
+    v-for="characters in characterClasses"
+    :key="characters.name"
+    :portrait="characters.portrait"
+    :coins="characters.coins"
+    :health="characters.health"
+    :armor="characters.armor"
+    :attackMax="characters.attackMax"
+    :attackType="characters.attackType"
+    :attackTypeImage="characters.attackTypeImage"
+    @click="setPlayer(characters)"
+    class="columns animated"
+    :class="{ [characters.inAnimations]: isEntering, [characters.outAnimations]: isLeaving }"
+    >
+        <h2>{{characters.name}}</h2>
+        <h3>{{characters.description1}}</h3>
+        <p>{{characters.description2}}</p>
+        
+        <section class="portContainer animated infinite" :id="characters.name">
+            <section class="overlay"></section>
+            <img  :src="characters.portrait" :alt="characters.description2">
+        </section>
+
+    </section>
+</section>
 </section>
 </template>
 
@@ -38,51 +37,99 @@
 export default {
   name: 'CharacterSelect',
   props: {
+  },
+  data() {
+      return {
+          isEntering: true,
+          isLeaving: false,
+          hoverPulse: false,
+          currentPlayer: null,
+          characterClasses: [
+              {name:"swordsman", 
+              portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
+              description1:"Slicing and Dicing", 
+              description2:"Bruiser class, high damage, good armor, high health.", 
+              coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
+              attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
+              inAnimations: "zoomInLeft",
+              outAnimations: "zoomOutLeft"
+              },
+
+              {name:"mage", 
+              portrait:require("../assets/imgs/playableCharacters/mage.png"), 
+              description1:"Spellslinging", 
+              description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
+              coins:0, health:6, armor:0, attackMax:10, attackType: "magical", 
+              attackTypeImage: require("../assets/imgs/icons/magicalIcon.png"), 
+              inAnimations: "zoomInUp",
+              outAnimations: "zoomOutDown",
+              },
+
+              {name:"varlet", 
+              portrait:require("../assets/imgs/playableCharacters/varlet.png"), 
+              description1:"Sneaky and Roguish", 
+              description2:"Avoids damage on critical hits, mid tier stats.", 
+              coins:1, health:8, armor:1, attackMax:6, attackType: "physical", 
+              attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
+              inAnimations: "zoomInRight",
+              outAnimations: "zoomOutRight",
+              },
+          ],
+      }
+  },
+  methods: {
+      setPlayer(passedPlayer) {
+          console.log(passedPlayer);
+          this.currentPlayer = passedPlayer;
+          this.isEntering = false;
+          this.isLeaving = true;
+      }
+  },
+  destroyed: function() {
+    this.$emit('to-dungeon');
   }
 }
 </script>
 
 <style scoped>
+.characterSelectWrapper {
+    text-align:center;
+}
+
 .chooseChar {
     display:flex;
     flex-direction: row;
-}
-
-.chooseChar > section {
-    margin:0px 20px;
 }
 
 .chooseChar img {
     max-width:200px;
 }
 
-.charSlot {
-    position:relative;
-}
-
-.charSlot:hover {
-    cursor:pointer;
-}
-
 .overlay {
     height:100px;
     width:200px;
     z-index:999;
-    top:132px;
     position:absolute;
+    bottom:0;
 }
 
-#swordsman.charSlot:hover > .overlay {
-    background: linear-gradient(0deg, rgb(255, 145, 0) 0%, rgba(255,192,0,0) 100%);
+.portContainer {
+    position:relative;
+}
+
+#swordsman:hover, #mage:hover, #varlet:hover {
     cursor:pointer;
 }
+#swordsman:hover .overlay {
+    background: linear-gradient(0deg, rgb(187, 16, 58) 0%, rgba(255,192,0,0) 100%);
+}
 
-#mage.charSlot:hover > .overlay {
+#mage:hover .overlay {
     background: linear-gradient(0deg, rgb(0, 174, 255) 0%, rgba(255,192,0,0) 100%);
     cursor:pointer;
 }
 
-#varlet.charSlot:hover > .overlay {
+#varlet:hover .overlay {
     background: linear-gradient(0deg, rgb(238, 255, 0) 0%, rgba(255,192,0,0) 100%);
     cursor:pointer;
 }

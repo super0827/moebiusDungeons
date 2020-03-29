@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'ShopPortrait',
+  name: 'ShopControls',
   props: {
     
   }
