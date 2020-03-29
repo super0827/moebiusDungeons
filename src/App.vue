@@ -3,14 +3,20 @@
 
     <!-- DEBUGGING -->
     <section class="debugBar">
-      <section @click="scene = 'characterSelect'">Player Select</section>
+      <p>METHODS</p>
       <section>Kill Player</section>
       <section>Kill Monster</section>
-      <section @click="scene = 'instructions'">Instructions</section>
+      <br>
+      <p>END GAME</p>
       <section @click="scene = 'winner'">Win Screen</section>
       <section @click="scene = 'loser'">Lose Screen</section>
-      <section @click="scene = 'dungeon'">Dungeon</section>
-      <section @click="scene = 'shop'">Shop</section>
+      <br>
+      <p>GAMEPLAY</p>
+      <section @click="scene = 'characterSelect'">Player Select</section>
+      <section @click="scene = 'instructions'">Instructions</section>
+      <section @click="scene = 'gameplay'">Gameplay</section>
+      <section @click="gameplayScene = 'shop'">Shop</section>
+      <section @click="gameplayScene = 'dungeon'">Shop</section>
     </section>
 
 
@@ -19,21 +25,30 @@
     <transition name="fade" mode="out-in">
 
       <!-- Character Selection Screen-->
-      <character-select @character-chosen="createPlayer($event)" @to-dungeon="scene = 'dungeon'" v-if="scene == 'characterSelect'"/>
+      <character-select @character-chosen="createPlayer($event)" @to-dungeon="scene = 'gameplay'" v-if="scene == 'characterSelect'"/>
 
       <instructions-screen v-else-if="scene == 'instructions'"/>
 
       <!-- Gameplay Screen -->
-      <section v-else-if="scene == 'dungeon'">
+      <section v-else-if="scene == 'gameplay'">
+
+        <h1 class=""> {{ gameplayScene }} </h1>
+
+        <section class="flexRow">
         <player-portrait 
           :player="player"
+          class="animated zoomInLeft"
         />
 
-        <game-controls/>
-        <monster-portrait/>
+        <section v-if="gameplayScene == 'dungeon'">
+          <battle-controls/>
+          <monster-portrait/>
+        </section>
 
         <shop-controls/>
         <shop-portrait/>
+        </section>
+      
       </section>
 
       <win-screen v-else-if="scene == 'winner'"/>
@@ -53,7 +68,7 @@ import InstructionsScreen from './components/InstructionsScreen.vue';
 import CharacterSelect from './components/CharacterSelect.vue';
 import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
-import GameControls from './components/GameControls.vue';
+import BattleControls from './components/BattleControls.vue';
 import MonsterPortrait from "./components/MonsterPortrait.vue";
 import PlayerPortrait from "./components/PlayerPortrait.vue";
 import ShopControls from "./components/ShopControls.vue";
@@ -66,7 +81,7 @@ export default {
     InstructionsScreen,
     WinScreen,
     LoseScreen,
-    GameControls,
+    BattleControls,
     MonsterPortrait,
     PlayerPortrait,
     ShopControls,
@@ -75,6 +90,7 @@ export default {
   data() {
     return {
       scene: 'characterSelect',
+      gameplayScene: 'dungeon',
       player: [],
     }
   },
@@ -99,9 +115,13 @@ export default {
   justify-content:center;
   align-items:center;
 }
-                    
+
+
+                  
+/* Debug Styles - REMOVE FOR PRODUCTION */
 .debugBar {
   font-family: var(--paragraphs-type);
+  text-align:center;
   display:inline;
   position:fixed;
   font-size:10px;
