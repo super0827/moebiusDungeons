@@ -1,8 +1,8 @@
 <template>
 
-<section class="characterSelectWrapper animated fadeIn slow">
+<section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'pulse slow infinite' : isEntering, 'zoomOutUp' : isLeaving }">MOEBIUS DUNGEONS</h1>
+    <h1 class="animated" :class="{isEntering, 'zoomOutUp' : isLeaving }">MOEBIUS DUNGEONS</h1>
 
 <section class="chooseChar">
     <section
@@ -30,14 +30,16 @@
 
     </section>
 </section>
+
+<h1 @click="$emit('instructions')" id="about">
+    HUH?
+</h1>
 </section>
 </template>
 
 <script>
 export default {
   name: 'CharacterSelect',
-  props: {
-  },
   data() {
       return {
           isEntering: true,
@@ -83,13 +85,13 @@ export default {
         //Toggle Animations
         this.isEntering = false;
         this.isLeaving = true;
+        this.$emit('character-chosen', passedPlayer);
 
         const characterModule = this;
-        characterModule.$emit('character-chosen', passedPlayer);
         
         setTimeout(function(){
             characterModule.$emit('to-dungeon');
-        }, 500);
+        }, 100);
       }
   },
 }
@@ -135,6 +137,22 @@ export default {
 
 #varlet:hover .overlay {
     background: linear-gradient(0deg, rgb(238, 255, 0) 0%, rgba(255,192,0,0) 100%);
+    cursor:pointer;
+}
+
+#about {
+    display:inline-block;
+    position:absolute;
+    right:10px;
+    top:10px;
+    margin:0;
+    padding:10px 20px;
+    line-height: 20px;
+    font-size:15px;
+    background: rgb(240,240,240);
+}
+#about:hover {
+    background:rgb(185, 185, 185);
     cursor:pointer;
 }
 </style>
