@@ -1,5 +1,5 @@
 <template>
-  <section class="playerTile columns">
+  <section class="columns">
       
       <img class="sigil" src="../assets/imgs/icons/playerSigilIcon.png" alt="">
       <h3>YOU</h3>
@@ -18,14 +18,15 @@
         </section>
         
         <section>
-          <p>{{ player.attackMax }}</p>
+          <p> d{{ player.attackMax }}</p>
           <img :src="player.attackTypeImage">
         </section>
 
       </section>
 
-      <section>
-        
+      <section class="coinWrapper">
+        <img src="../assets/imgs/icons/coinIcon.png" alt="">
+        <h1 class="coinValue">{{ player.coins }}</h1>
       </section>
 
   </section>
@@ -35,15 +36,11 @@
 
 export default {
   name: 'PlayerPortrait',
-  data() {
-    return {
-    }
-  },
   props:{
     player: {
       type: Object
     }
-  }
+  },
   }
 </script>
 
