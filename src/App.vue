@@ -16,44 +16,69 @@
       <section @click="scene = 'instructions'">Instructions</section>
       <section @click="scene = 'gameplay'">Gameplay</section>
       <section @click="gameplayScene = 'shop'">Shop</section>
-      <section @click="gameplayScene = 'dungeon'">Shop</section>
+      <section @click="gameplayScene = 'dungeon'">Dungeon</section>
     </section>
-
-
 
     <!-- GUI -->
     <transition name="fade" mode="out-in">
 
       <!-- Character Selection Screen-->
-      <character-select @character-chosen="createPlayer($event)" @to-dungeon="scene = 'gameplay'" v-if="scene == 'characterSelect'"/>
+      <character-select 
+      @instructions="scene = 'instructions'"
+      @character-chosen="createPlayer($event)" 
+      @to-dungeon="scene = 'gameplay'" 
+      v-if="scene == 'characterSelect'"/>
 
-      <instructions-screen v-else-if="scene == 'instructions'"/>
+      <!-- Instructions Screen -->
+      <instructions-screen 
+      @understood="scene = 'characterSelect'" 
+      v-if="scene == 'instructions'"/>
 
       <!-- Gameplay Screen -->
-      <section v-else-if="scene == 'gameplay'">
-
-        <h1 class=""> {{ gameplayScene }} </h1>
+      <section class="gameplayWrapper" v-if="scene == 'gameplay'">
+        <h1 class="textCenter phaseName animated zoomInDown"> {{ gameplayScene }} </h1>
 
         <section class="flexRow">
-        <player-portrait 
-          :player="player"
+          
+          <!-- Player Portrait and Stats - Always show during gameplay -->
+          <player-portrait
           class="animated zoomInLeft"
-        />
+          :player="player"
+          />
 
-        <section v-if="gameplayScene == 'dungeon'">
-          <battle-controls/>
-          <monster-portrait/>
+          <!-- Battle Controls for Dungeon Scene -->
+          <battle-controls
+          class="animated zoomInDown"
+          @battle-help="helper = 'battle'"
+          @deal-damage="tradeBlows()"
+          v-if="gameplayScene == 'dungeon'"
+          />
+
+          <!-- Monster Portait and Stats for Dungeon Scene -->
+          <monster-portrait
+          class="animated zoomInRight"
+          @monster-stats="getMonster($event)"
+          v-if="gameplayScene == 'dungeon'"/>
+
+          <section
+          v-else-if="gameplayScene == 'shop'">
+            <shop-controls/>
+            <shop-portrait/>
+          </section>
+
         </section>
 
-        <shop-controls/>
-        <shop-portrait/>
-        </section>
-      
+        <!-- HELPERS -->
+        <h1 @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
+          <transition name="fade" mode="out-in">
+          <battle-help @close="helper = ''" v-if="helper=='battle'"/>
+        </transition>
+
       </section>
 
-      <win-screen v-else-if="scene == 'winner'"/>
+      <win-screen v-if="scene == 'winner'"/>
 
-      <lose-screen v-else-if="scene == 'loser'"/>
+      <lose-screen v-if="scene == 'loser'"/>
 
     </transition>
   </div>
@@ -66,37 +91,51 @@ import './assets/styles/transitions.css';
 
 import InstructionsScreen from './components/InstructionsScreen.vue';
 import CharacterSelect from './components/CharacterSelect.vue';
-import WinScreen from './components/WinScreen.vue';
-import LoseScreen from './components/LoseScreen.vue';
+import BattleHelp from './components/BattleHelp.vue';
+
+import PlayerPortrait from "./components/PlayerPortrait.vue";
+
 import BattleControls from './components/BattleControls.vue';
 import MonsterPortrait from "./components/MonsterPortrait.vue";
-import PlayerPortrait from "./components/PlayerPortrait.vue";
+
 import ShopControls from "./components/ShopControls.vue";
 import ShopPortrait from "./components/ShopPortrait.vue";
+
+import WinScreen from './components/WinScreen.vue';
+import LoseScreen from './components/LoseScreen.vue';
 
 export default {
   name: 'App',
   components: {
-    CharacterSelect,
     InstructionsScreen,
-    WinScreen,
-    LoseScreen,
+    CharacterSelect,
+    BattleHelp,
+    PlayerPortrait,
     BattleControls,
     MonsterPortrait,
-    PlayerPortrait,
     ShopControls,
     ShopPortrait,
+    WinScreen,
+    LoseScreen,
   },
   data() {
     return {
       scene: 'characterSelect',
       gameplayScene: 'dungeon',
       player: [],
+      helper: "",
+      currentMonster: [],
     }
   },
   methods: {
     createPlayer(player) {
       this.player = player;
+    },
+    getMonster(monster){
+      this.currentMonster = monster;
+    },
+    tradeBlows() {
+
     }
   }
 }
@@ -116,6 +155,33 @@ export default {
   align-items:center;
 }
 
+.gameplayWrapper {
+  position:relative;
+  width:600px;
+  height:662px;
+}
+
+.phaseName {
+  font-size:60px;
+  margin:10px 0;
+}
+
+
+/* HELPERS */
+    #dungeonHelp {
+        font-size: 12px;
+        position:fixed;
+        right:10px;
+        top:10px;
+        margin:0;
+        padding:5px;
+        background:rgb(218, 218, 218);
+    }
+
+    #dungeonHelp:hover {
+        background:rgb(240, 240, 240);
+        cursor:pointer
+    }
 
                   
 /* Debug Styles - REMOVE FOR PRODUCTION */
