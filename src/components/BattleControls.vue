@@ -1,58 +1,64 @@
 <template>
-<section>
-  <section class="hidden" id="combatOptions">
+<section class="columns battleOptions">
 
-      <section id="combatToolTipWrapper">
-          <p id="combatToolTip" class="fast hidden"></p>
-      </section>
+    <h2 @click="$emit('deal-damage')">Trade Blows</h2>
+    <h2>Be Reckless</h2>
+    
+    <br>
 
-      <!-- Attack Button -->
-      <section id="hackAndSlash">
-          <h2 onclick="hackAndSlash()">Trade Blows</h2>
-      </section>
-      <!-- Run Button -->
-      <section id="turnTail">
-          <h2 onclick="turnTail()">Turn Tail</h2>
-      </section>
-  </section>
+    <h3>Turn Tail</h3>
 
-  <!-- SHOP ITEMS -->
-  <section id="shopItems" class="hidden">
-      <section id="dungeonButton" onclick="openDungeon();buttonHover.play();">
-          <h2>FIGHT ANOTHER MONSTER</h2>
-      </section>
-      <br><br>
-      <h3 id="item1does"></h3>
-      <section class="travelItem">
-          <p class="xpCost">1M</p> <p onclick="buyItem(this.id)" id="item1"></p>
-      </section>
-
-      <hr>
-      
-      <h3 id="item2does"></h3>
-      <section class="travelItem">
-          <p class="xpCost">2M<p> <p onclick="buyItem(this.id)" id="item2"></p>
-      </section>
-
-      <hr>
-
-      <h3 id="item3does"></h3>
-      <section  class="travelItem">
-          <p class="xpCost">3M</p> <p onclick="buyItem(this.id)" id="item3"></p>
-      </section>
-  </section>
 </section>
 </template>
 
 <script>
 export default {
   name: 'BattleControls',
-  props: {
-    
-  }
 }
 </script>
 
 <style scoped>
+    .battleOptions {
+        margin:0 20px;
+    }
 
+    p {
+        font-size:10px;
+    }
+
+    h2 {
+        background: rgb(151, 151, 151);
+        cursor:pointer;
+    }
+    
+    h3 {
+        background: rgb(207, 207, 207);
+        cursor:pointer;
+    }
+
+    h2:hover {
+        background: rgb(166, 207, 144);
+    }
+    
+    h3:hover {
+        background: rgb(166, 207, 144);
+    }
+
+    h1 {
+        font-size:15px;
+        margin:2px;
+    }
+
+    h2 {
+        padding:10px;
+        font-size: 17px;
+        text-decoration: none;
+    }
+
+    h3 {
+        padding:10px;
+        font-size:17px;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 </style>
