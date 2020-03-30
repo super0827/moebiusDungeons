@@ -3,6 +3,7 @@
 :root{
     --headers-type: 'Frijole', cursive;
     --paragraphs-type: 'Oswald', sans-serif;
+    --button-background: rgb(151, 151, 151);
 }
 
 body {
@@ -13,7 +14,7 @@ body {
 .columns {
     max-width:200px;
     text-align:center;
-    margin:20px;
+    margin:0 10px;
 }
 
 h1 {
@@ -24,7 +25,7 @@ h1 {
 h2 {
     font-family: var(--paragraphs-type);
     font-size:25px;
-    margin:0;
+    margin:5px 0;
     text-transform:uppercase;
     text-decoration:underline;
 }
@@ -32,13 +33,17 @@ h3 {
     font-family: var(--paragraphs-type);
     font-size:18px;
     font-weight:100;
-    margin:0;
+    margin:2px 0;
 }
 
 p {
     font-family: var(--paragraphs-type);
     font-size:15px;
     margin:5px 0;
+}
+
+.textCenter {
+    text-align:center;
 }
 
 /* Portrait Styles */
@@ -51,13 +56,44 @@ p {
     width:200px;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
 /* Stat Styles */
 .flexRow {
     display:flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
 .stats img {
     max-width:50px;
+}
+
+.coinWrapper {
+    position:relative;
+    margin:0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+}
+
+.coinWrapper img{
+    max-width:100px;
+    width:100px;
+}
+
+.coinValue {
+    display:inline-block;
+    margin:0;
+    text-align:center;
+    vertical-align: center;
+    line-height: 100px;
+    font-size:50px;
+    top:-2px;
+    color:white;
+    text-shadow: black -2px 2px 2px;
+    position:absolute;
 }
