@@ -6,6 +6,7 @@
       <p>METHODS</p>
       <section>Kill Player</section>
       <section>Kill Monster</section>
+      <section>New Monster</section>
       <br>
       <p>END GAME</p>
       <section @click="scene = 'winner'">Win Screen</section>
@@ -25,7 +26,7 @@
       <!-- Character Selection Screen-->
       <character-select 
       @instructions="scene = 'instructions'"
-      @character-chosen="createPlayer($event)" 
+      @character-chosen="createPlayerData($event)" 
       @to-dungeon="scene = 'gameplay'" 
       v-if="scene == 'characterSelect'"/>
 
@@ -34,34 +35,44 @@
       @understood="scene = 'characterSelect'" 
       v-if="scene == 'instructions'"/>
 
+      
       <!-- Gameplay Screen -->
       <section class="gameplayWrapper" v-if="scene == 'gameplay'">
-        <h1 class="textCenter phaseName animated zoomInDown"> {{ gameplayScene }} </h1>
+        
+        <!-- Title For Phase -->
+        <transition appear
+          enter-active-class="animated zoomInDown"
+          leave-active-class="amimated zoomOutDown"
+        >
+          <section class="flexColumn">
+            <img class="iconImageSize" src="./assets/imgs/icons/monsterSigilIcon.png" alt="">
+            <h1 class="textCenter phaseName">{{ gameplayScene }}</h1>
+          </section>
+        </transition>
 
+
+        <!-- Wrapper for Gameplay -->
         <section class="flexRow">
           
           <!-- Player Portrait and Stats - Always show during gameplay -->
-          <player-portrait
-          class="animated zoomInLeft"
-          :player="player"
-          />
+          <player-portrait :playerData="playerData"/>
 
-          <!-- Battle Controls for Dungeon Scene -->
-          <battle-controls
-          class="animated zoomInDown"
-          @battle-help="helper = 'battle'"
-          @deal-damage="tradeBlows()"
-          v-if="gameplayScene == 'dungeon'"
-          />
 
-          <!-- Monster Portait and Stats for Dungeon Scene -->
-          <monster-portrait
-          class="animated zoomInRight"
-          @monster-stats="getMonster($event)"
-          v-if="gameplayScene == 'dungeon'"/>
+            <!-- Battle Controls for Dungeon Scene -->
+            <battle-controls
+            v-if="gameplayScene == 'dungeon'"
+            :playerData="playerData"
+            :monsterData="monsterData"
+            />
 
-          <section
-          v-else-if="gameplayScene == 'shop'">
+            <!-- Monster Portait and Stats for Dungeon Scene -->
+            <monster-portrait
+            v-if="gameplayScene == 'dungeon'"
+            @send-monster="createMonsterData($event)"
+            @monster-is-dead="gameplayScene = 'shop'"
+            />
+
+          <section class="flexRow" v-if="gameplayScene == 'shop'">
             <shop-controls/>
             <shop-portrait/>
           </section>
@@ -122,21 +133,18 @@ export default {
     return {
       scene: 'characterSelect',
       gameplayScene: 'dungeon',
-      player: [],
+      playerData: null,
+      monsterData: null,
       helper: "",
-      currentMonster: [],
     }
   },
   methods: {
-    createPlayer(player) {
-      this.player = player;
+    createPlayerData(player) {
+      this.playerData = player;
     },
-    getMonster(monster){
-      this.currentMonster = monster;
+    createMonsterData(monster) {
+      this.monsterData = monster;
     },
-    tradeBlows() {
-
-    }
   }
 }
 </script>
@@ -155,15 +163,27 @@ export default {
   align-items:center;
 }
 
-.gameplayWrapper {
-  position:relative;
-  width:600px;
-  height:662px;
+
+
+.battleWrapper {
+  width:400px;
+  max-width:400px;
 }
 
 .phaseName {
   font-size:60px;
   margin:10px 0;
+}
+
+.iconImageSize {
+  width:75px;
+  margin-right:10px;
+}
+
+.gameWrapper {
+  width:600px;
+  min-width:600px;
+  margin:0 auto;
 }
 
 
