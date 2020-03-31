@@ -67,6 +67,13 @@ p {
     align-items: center;
 }
 
+.flexColumn {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .stats img {
     max-width:50px;
 }
