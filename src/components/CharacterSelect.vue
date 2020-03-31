@@ -2,7 +2,7 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{isEntering, 'zoomOutUp' : isLeaving }">MOEBIUS DUNGEONS</h1>
+    <h1 class="animated" :class="{'zoomInDown' : isEntering, 'zoomOutUp' :isLeaving }">MOEBIUS DUNGEONS</h1>
 
 <section class="chooseChar">
     <section
