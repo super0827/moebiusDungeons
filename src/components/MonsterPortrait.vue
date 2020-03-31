@@ -1,46 +1,81 @@
 <template>
+<transition appear
+    enter-active-class="animated zoomInRight"
+    leave-active-class="animated zoomOutRight"
+>
 <section class="columns">
     
-      <img class="sigil" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
-      <h3 class="uppercase"> {{ currentMonster.name }} </h3>
-      <img class="portrait" :src="currentMonster.portrait">
+      <h3 class="uppercase"> {{ newMonster.name }} </h3>
+      
+      <section 
+      class="portraitWrapper"
+      >
+
+        <img 
+        class="portrait" 
+        :src="newMonster.portrait"
+        :class="{ 'animated pulse' : hurt }"
+        @animationend="hurt = false"
+        >
+
+        <transition appear
+          type="animation"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated fadeOut"
+          @after-enter="afterEnter"
+        >
+          <h1 v-if="blocked" class="blocked">BLOCKED!</h1>   
+        </transition>
+      </section>
       
       <section class="flexRow stats">
 
         <section>
-          <p>{{ currentMonster.health }}</p>
+          <p>{{ newMonster.health }}</p>
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
         <section>
-          <p>{{ currentMonster.armor }}</p>
+          <p>{{ newMonster.armor }}</p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ currentMonster.attackMax }}</p>
-          <img :src="currentMonster.attackTypeImage">
+          <p> d{{ newMonster.attackMax }}</p>
+          <img :src="newMonster.attackTypeImage">
         </section>
 
       </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ currentMonster.coins }}</h1>
+        <h1 class="coinValue">{{ newMonster.coins }}</h1>
       </section>
-    
 </section>
+</transition>
 </template>
 
+
 <script>
+import { EventBus } from "../js/event-bus";
+
 export default {
   name: 'MonsterPortrait',
   data() {
       return {
-          currentMonster: null,
+
+          //monster animation states
+          blocked: false,
+          hurt: false,
+
+          //Monster data
           monsterRoster: 0,
+          newMonster: Object,
           monsterCharacters: [
                 // Level 1   
+              {
+               name: "emptyObject",
+              },
               {
                 name:"bats", 
                 portrait:require("../assets/imgs/monsters/bats.png"), 
@@ -62,13 +97,13 @@ export default {
               {
                 name:"gnoll", 
                 portrait:require("../assets/imgs/monsters/gnoll.png"), 
-                coins:1, health:9, armor:1, attackMax:4, attackType: "physical",
+                coins:1, health:9, armor:1, attackMax:5, attackType: "physical",
                 attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
               },
               {
                 name:"goblins", 
                 portrait:require("../assets/imgs/monsters/goblins.png"), 
-                coins:1, health:8, armor:1, attackMax:6, attackType: "physical",
+                coins:1, health:8, armor:1, attackMax:4, attackType: "physical",
                 attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
               },
 
@@ -184,15 +219,64 @@ export default {
           ],
       }
   },
+  methods: {
+    // Resets animations after they're executed
+    afterEnter: function (){
+    console.log('After Enter');
+    this.blocked = false;
+    this.hurt = false;
+    }
+  },
   created() {
-       this.monsterRoster = this.monsterRoster + Math.floor(Math.random() * (3 - 1) + 1);
-       this.currentMonster = this.monsterCharacters[this.monsterRoster];
+      // Sets monsterRoster to a new value, adding 1-4 to the old value
+      this.monsterRoster = this.monsterRoster + Math.floor(Math.random() * Math.floor(4)) + 1;
+      this.newMonster = this.monsterCharacters[this.monsterRoster];
+      this.$emit('send-monster', this.newMonster);
 
-       this.$emit('monster-stats', this.currentMonster);
-  }
+  },
+   mounted() { 
+    // let self = this;
+
+    EventBus.$on('monster-recoil', () => { this.hurt = true; });
+    //listen for player dealing 0 or less damage
+    EventBus.$on("monster-blocked", () => { this.blocked = true; });
+    //listens fot player dealing 1 or more damage.
+    EventBus.$on("monster-takes-damage", () => { this.newMonster.health--; });
+    //listens for monster dying
+    EventBus.$on("is-monster-dead", () => { 
+      if(this.newMonster.health <= 0){
+        // self.$emit('monster-is-dead');
+      }
+    });
+  },
 }
 </script>
 
 <style scoped>
 
+.portraitWrapper {
+  display:grid;
+  height:233px;
+  grid-template-columns: 100%;
+  grid-template-rows: 33% 34% 33%;
+}
+
+.blocked {
+  grid-row: 2/3;
+  grid-column: 1/2;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width:200px;
+  text-align:center;
+  margin:0 auto;
+  text-decoration:none;
+  color:greenyellow;
+  font-size:20px;
+  text-shadow:black 2px 2px 2px;
+}
+
+.test {
+  position:fixed;
+}
 </style>
