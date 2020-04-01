@@ -24,7 +24,8 @@
           leave-active-class="animated fadeOut"
           @after-enter="afterEnter"
         >
-          <h1 v-if="blocked" class="blocked">BLOCKED!</h1>   
+          <h1 v-if="blocked" class="blocked">BLOCKED!</h1>
+          <section v-if="normalDamage" class="damagedOverlay"></section>  
         </transition>
       </section>
       
@@ -67,6 +68,7 @@ export default {
           //monster animation states
           blocked: false,
           hurt: false,
+          normalDamage: false,
 
           //Monster data
           monsterRoster: 0,
