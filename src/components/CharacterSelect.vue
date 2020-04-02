@@ -141,15 +141,13 @@ export default {
 }
 
 #about {
-    display:inline-block;
-    position:absolute;
-    right:10px;
-    top:10px;
-    margin:0;
-    padding:10px 20px;
-    line-height: 20px;
-    font-size:15px;
-    background: rgb(240,240,240);
+    font-size: 20px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    margin: 0;
+    padding: 5px;
+    background: rgb(218, 218, 218);
 }
 #about:hover {
     background:rgb(185, 185, 185);
