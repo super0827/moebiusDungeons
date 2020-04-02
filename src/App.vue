@@ -77,13 +77,14 @@
             <shop-portrait/>
           </section>
 
+        <transition name="fade" mode="out-in">
+          <battle-help @close="helper = ''" v-if="helper=='battle'"/>
+        </transition>
+
         </section>
 
         <!-- HELPERS -->
         <h1 @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
-          <transition name="fade" mode="out-in">
-          <battle-help @close="helper = ''" v-if="helper=='battle'"/>
-        </transition>
 
       </section>
 
@@ -180,16 +181,17 @@ export default {
   margin-right:10px;
 }
 
-.gameWrapper {
+.gameplayWrapper {
   width:600px;
   min-width:600px;
   margin:0 auto;
+  position:relative;
 }
 
 
 /* HELPERS */
     #dungeonHelp {
-        font-size: 12px;
+        font-size: 20px;
         position:fixed;
         right:10px;
         top:10px;
