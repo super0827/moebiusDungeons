@@ -22,54 +22,68 @@ import { EventBus } from "../js/event-bus";
 
 export default {
     name: 'BattleControls',
+    data() {
+        return {
+            combatActive: false,
+        }
+    },
     props:{
         playerData: { type: Object },
         monsterData: { type: Object },
     },
     methods:{
-        mounted() {
-
-        },
         randomRoll(rollMax){
             let roll = Math.floor(Math.random() * Math.floor(rollMax) + 1);
             return roll;
         },
-        tradeBlows(attacker, defender) {
-            //Determines attackers attack roll
-            let attackRoll = this.randomRoll(attacker.attackMax);
-            
-            //if attacker is player
-            if(attacker.name == this.playerData.name) {
-                // Attack route if attacker type is physical
-                if (attacker.attackType == 'physical') {
-                    attackRoll = Math.max(0, attackRoll - defender.armor);
+        tradeBlows(attacker, defender, special) {
+            if(!this.combatActive) {
 
-                    //if monster blocked the attack
-                    if(attackRoll <= 0){
-                        //Listener in MonsterPortrait.vue
-                        EventBus.$emit("monster-blocked");
-                    }
-                    //if damage is dealt to the monster
-                    else{
-                        // Animate Monster recoiling in MonsterPortrait
-                        EventBus.$emit('monster-recoil');
+                this.combatActive = true;
+                //Determines attackers attack roll
+                let attackRoll = this.randomRoll(attacker.attackMax);
 
-                        // iterate over damage
-                        for(let i = attackRoll; i > 0; i--) {
-                            setTimeout(function(){
-                                //Update monsters health in Monster Portrait
-                                EventBus.$emit('monster-takes-damage');
-                                
-                                if (i === attackRoll) {
-                                    console.log('checking monster death');
-                                    EventBus.$emit('is-monster-dead');
-                                }
-                            }, 120 * i);
-                        }
-                    }
+                if(special){
+                    console.log('specialAttack!')
                 }
-                else {
-                    console.log(`magic attack roll is ${attackRoll}`)
+
+                EventBus.$emit("player-attacking");
+
+                    // Attack route if attacker type is physical
+                    if (attacker.attackType == 'physical') {
+                        attackRoll = Math.max(0, attackRoll - defender.armor);
+
+                        //if monster blocked the attack
+                        if(attackRoll <= 0){
+                            //Listener in MonsterPortrait.vue
+                            EventBus.$emit("monster-blocked");
+                            //Listener in MonsterPortrait.vue
+                            setTimeout(function(){
+                                EventBus.$emit('is-monster-dead');
+                            }, 500);
+                        }
+                        //if damage is dealt to the monster
+                        else{
+                            // Animate Monster recoiling in MonsterPortrait
+                            EventBus.$emit('monster-recoil');
+                            //Monster attacked with physical damage
+                            EventBus.$emit('monster-physical-damage', attackRoll);
+
+
+                            // iterate over damage
+                            for(let i = attackRoll; i > 0; i--) {
+                                setTimeout(function(){
+                                    //Update monsters health in Monster Portrait
+                                    EventBus.$emit('monster-takes-damage');
+                                    
+                                    if (i === 1) {
+                                        setTimeout(function(){
+                                            EventBus.$emit('is-monster-dead');
+                                        }, 500);
+                                    }
+                                }, 120 * i);
+                            }
+                        }
                 }
             }
         },
@@ -78,8 +92,53 @@ export default {
         },
         turnTail(){
             console.log("turning tail");
+        },
+        monsterRetaliate(attacker, defender){
+            //Determines attackers attack roll
+                let attackRoll = this.randomRoll(attacker.attackMax);
+                EventBus.$emit("monster-attacking");
+                    
+                    // Attack route if attacker type is physical
+                    if (attacker.attackType == 'physical') {
+                        attackRoll = Math.max(0, attackRoll - defender.armor);
+
+                        //if player blocked the attack
+                        if(attackRoll <= 0){
+                            //Listener in MonsterPortrait.vue
+                            EventBus.$emit("player-blocked");
+                            this.combatActive = false;
+
+                        }
+                        //if damage is dealt to the monster
+                        else{
+                            // Animate Monster recoiling in MonsterPortrait
+                            EventBus.$emit('player-recoil');
+                            //Monster attacked with physical damage
+                            EventBus.$emit('player-physical-damage', attackRoll);
+
+
+                            // iterate over damage
+                            for(let i = attackRoll; i > 0; i--) {
+                                setTimeout(function(){
+                                    //Update monsters health in Monster Portrait
+                                    EventBus.$emit('player-takes-damage');
+                                    
+                                    if (i === 1) {
+                                        EventBus.$emit('is-player-dead');
+                                        this.combatActive = false;
+                                    }
+                                }, 120 * i);
+                            }
+                        }
+                }
         }
-    }
+        
+    },
+    mounted() {
+            EventBus.$on('monster-retaliate', () => {
+                this.monsterRetaliate(this.monsterData, this.playerData);
+            });
+        }
 }
 </script>
 
@@ -95,7 +154,7 @@ export default {
     }
 
     h2 {
-        background: rgb(151, 151, 151);
+        background: rgb(207, 207, 207);
         cursor:pointer;
     }
     
