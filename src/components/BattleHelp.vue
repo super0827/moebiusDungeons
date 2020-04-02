@@ -93,7 +93,7 @@ export default {
         position:absolute;
         top:0px;
         left:-50px;
-        padding: 10px 50px;
+        padding: 0px 50px;
         z-index:99999;
         height:100%;
         width:100%;
