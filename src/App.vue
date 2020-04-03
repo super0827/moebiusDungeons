@@ -164,15 +164,13 @@ export default {
   align-items:center;
 }
 
-
-
 .battleWrapper {
   width:400px;
   max-width:400px;
 }
 
 .phaseName {
-  font-size:60px;
+  font-size:40px;
   margin:10px 0;
 }
 

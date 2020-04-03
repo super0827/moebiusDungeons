@@ -284,11 +284,12 @@ export default {
 
   },
    mounted() { 
-
+    //sets animation state of monster attacking 
     EventBus.$on('monster-attacking', () => {
       this.attacking = true;
     });
 
+    //sets animation state of monster being attacked
     EventBus.$on('monster-recoil', () => {
       this.hurt = true; 
       this.portEffect = true;
