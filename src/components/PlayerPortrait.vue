@@ -95,9 +95,7 @@ import { EventBus } from "../js/event-bus";
 export default {
   name: 'PlayerPortrait',
   props:{
-    playerData: {
-      type: Object,
-    }
+    playerData: { type: Object },
   },
   data() {
     return {
