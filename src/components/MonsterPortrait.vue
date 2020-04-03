@@ -9,7 +9,7 @@
       
       <section 
       class="portraitWrapper"
-      :class="{'animated pulse' : hurt, 'animated reverseWobble' : attacking, 'animated jello' : blocked }"
+      :class="{'animated pulse' : hurt, 'animated reverseWobble' : attacking }"
         @animationend="afterEnter"
       >
         <!-- Monster Image -->
@@ -294,27 +294,33 @@ export default {
       this.portEffect = true;
       this.portEffectRed = true;
     });
+
     //listens for physical damage
     EventBus.$on('monster-physical-damage', ($event) => {
       this.attackDamage = $event;
       this.afterArmorDamage = this.attackDamage - this.newMonster.armor;
     });
+
     //listen for player dealing 0 or less damage
     EventBus.$on("monster-blocked", () => { 
       this.blocked = true; 
       this.portEffect = true;
       this.portEffectPurple = true;
+      
     });
+
     //listens fot player dealing 1 or more damage.
     EventBus.$on("monster-takes-damage", () => { 
       this.newMonster.health--;
     });
+
     //listens for monster dying
     EventBus.$on("is-monster-dead", () => { 
-      if(this.newMonster.health <= 0){
-        console.log('monster is dead!');
+      if(this.newMonster.health >= 0){
         EventBus.$emit('monster-retaliate');
-      } else {
+      }
+      else {
+          console.log('monster is dead!');
           EventBus.$emit('monster-retaliate');
       }
     });
