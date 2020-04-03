@@ -12,7 +12,7 @@
       :class="{'animated pulse' : hurt, 'animated wobble' : attacking }"
         @animationend="afterEnter"
       >
-      <img class="portrait" :src="playerData.portrait">
+      <img class="portrait" :src="player.portrait">
 
       <!-- Animated Damage Tips -->
         <transition appear
@@ -64,25 +64,25 @@
       <section class="flexRow stats">
 
         <section>
-          <p>{{ playerData.health }}</p>
+          <p>{{ player.health }}</p>
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
         <section>
-          <p>{{ playerData.armor }}</p>
+          <p>{{ player.armor }}</p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ playerData.attackMax }}</p>
-          <img :src="playerData.attackTypeImage">
+          <p> d{{ player.attackMax }}</p>
+          <img :src="player.attackTypeImage">
         </section>
 
       </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ playerData.coins }}</h1>
+        <h1 class="coinValue">{{ player.coins }}</h1>
       </section>
 
   </section>
@@ -130,35 +130,42 @@ export default {
     }
   },
   mounted() { 
-    // let self = this
 
     EventBus.$on('player-attacking', () => {
       this.attacking = true;
     });
+
     EventBus.$on('player-recoil', () => {
       this.hurt = true; 
       this.portEffect = true;
       this.portEffectRed = true;
     });
+
     //listens for physical damage
     EventBus.$on('player-physical-damage', ($event) => {
       this.attackDamage = $event;
       this.afterArmorDamage = this.attackDamage - this.player.armor;
     });
+
     //listen for player dealing 0 or less damage
     EventBus.$on("player-blocked", () => { 
       this.blocked = true; 
       this.portEffect = true;
-      this.portEffectGreen = true;
+      this.portEffectPurple = true;
     });
+
     //listens fot player dealing 1 or more damage.
     EventBus.$on("player-takes-damage", () => { 
       this.player.health--;
     });
+
     //listens for monster dying
     EventBus.$on("is-player-dead", () => { 
-      if(this.player.health <= 0){
-        // self.$emit('monster-is-dead');
+      if(this.player.health >= 0){
+        console.log('player is still alive');
+      }
+      else {
+        console.log('player is dead')
       }
     });
   },
