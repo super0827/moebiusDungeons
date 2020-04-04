@@ -1,40 +1,18 @@
 <template>
 
  <section class="columns">
-      
-      <img class="sigil" src="../assets/imgs/icons/shopkeepSigilIcon.png" alt="">
-      <h3> {{  }}</h3>
-      <img class="portrait" :src="player.portrait">
+
+      <h3> {{ currentShopkeep.name }}</h3>
+
+      <img class="portrait" :src="currentShopkeep.portrait">
       
       <section class="flexRow stats">
 
-          <p> {{ }} </p>
+          <p> {{ currentShopkeep.saying }} </p>
 
-      </section>
-
-      <section class="coinWrapper">
-        <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ player.coins }}</h1>
       </section>
 
   </section>
-
-
-
-    <!-- <img class="imgSize" src="./imgs/TRAVELERS.png" alt="">
-        <section class="levelTitle">
-            <p id="shopName"></p>
-        </section>
-        
-        <section id="shopPortraits">
-        </section>
-        
-        <section id="shopSaying">
-        </section>
-
-        <section>
-            <h3 id="shopTip"></h3>
-        </section> -->
 
 </template>
 
@@ -43,20 +21,17 @@ export default {
     name: 'ShopPortrait',
     data() {
         return {
+             currentShopkeep: Object,
              shopKeepers: [
               {
                 name:"cleric", 
-                portrait:require("../assets/imgs/shopkeepers/cleric.png"), 
-                description1:"Slicing and Dicing", 
-                description2:"Bruiser class, high damage, good armor, high health.", 
-                coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
+                portrait:require("../assets/imgs/shopkeepers/cleric.png"),
                 inAnimations: "zoomInLeft",
                 outAnimations: "zoomOutLeft"
               },
 
-              {name:"mage", 
-              portrait:require("../assets/imgs/playableCharacters/mage.png"), 
+              {name:"graverobber", 
+              portrait:require("../assets/imgs/shopkeepers/graverobber.png"), 
               description1:"Spellslinging", 
               description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
               coins:0, health:6, armor:0, attackMax:10, attackType: "magical", 
@@ -77,9 +52,15 @@ export default {
           ],
         }
     },
+    created() {
+        let randomNumber = Math.floor(Math.random() * Math.floor(4) + 1);
+        this.currentShopkeep = this.shopKeepers[randomNumber];
+    }
 }
 </script>
 
 <style scoped>
-
+h3 {
+    text-transform:uppercase;
+}
 </style>
