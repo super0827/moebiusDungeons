@@ -46,7 +46,8 @@ export default {
           isLeaving: false,
           playerData: null,
           characterClasses: [
-              {name:"swordsman", 
+              {name:"swordsman",
+              type:'player', 
               portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
               description1:"Slicing and Dicing", 
               description2:"Bruiser class, high damage, good armor, high health.", 
@@ -56,7 +57,8 @@ export default {
               outAnimations: "zoomOutLeft"
               },
 
-              {name:"mage", 
+              {name:"mage",
+              type:'player', 
               portrait:require("../assets/imgs/playableCharacters/mage.png"), 
               description1:"Spellslinging", 
               description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
@@ -66,7 +68,8 @@ export default {
               outAnimations: "zoomOutDown",
               },
 
-              {name:"varlet", 
+              {name:"varlet",
+              type:'player', 
               portrait:require("../assets/imgs/playableCharacters/varlet.png"), 
               description1:"Sneaky and Roguish", 
               description2:"Avoids damage on critical hits, mid tier stats.", 
