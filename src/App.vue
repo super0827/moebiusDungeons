@@ -39,17 +39,25 @@
       <!-- Gameplay Screen -->
       <section class="gameplayWrapper" v-if="scene == 'gameplay'">
         
-        <!-- Title For Phase -->
-        <transition appear
-          enter-active-class="animated zoomInDown"
-          leave-active-class="amimated zoomOutDown"
-        >
           <section class="flexColumn">
-            <img class="iconImageSize" src="./assets/imgs/icons/monsterSigilIcon.png" alt="">
-            <h1 class="textCenter phaseName">{{ gameplayScene }}</h1>
-          </section>
-        </transition>
+            <transition appear 
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+            mode="out-in"
+            >
+            <img key="dungeonSigil" v-if="gameplayScene == 'dungeon'" class="iconImageSize" src="./assets/imgs/icons/monsterSigilIcon.png" alt="">
+            <img key="shopSigil" v-if="gameplayScene == 'shop'" class="iconImageSize" src="./assets/imgs/icons/shopkeepSigilIcon.png" alt="">
+            </transition>
 
+            <transition appear 
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+            mode="out-in"
+            >
+            <h1 :key="gameplayScene" class="textCenter phaseName">{{ gameplayScene }}</h1>
+            </transition>
+          </section>
+            
 
         <!-- Wrapper for Gameplay -->
         <section class="flexRow">
