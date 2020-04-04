@@ -9,7 +9,7 @@
 
       <section 
       class="portraitWrapper"
-      :class="{'animated pulse' : hurt, 'animated wobble' : attacking }"
+      :class="{'animated pulse' : hurt, 'animated wobble' : attacking, 'animated pulse' : blocked }"
         @animationend="afterEnter"
       >
       <img class="portrait" :src="player.portrait">
@@ -141,8 +141,8 @@ export default {
 
     //listens for physical damage
     EventBus.$on('player-physical-damage', ($event) => {
-      this.attackDamage = $event;
-      this.afterArmorDamage = this.attackDamage - this.player.armor;
+      this.attackDamage = $event + this.player.armor;
+      this.afterArmorDamage = $event;
     });
 
     //listen for player dealing 0 or less damage
@@ -161,9 +161,11 @@ export default {
     EventBus.$on("is-player-dead", () => { 
       if(this.player.health >= 0){
         console.log('player is still alive');
+
+        EventBus.$emit('reset-combat');
       }
       else {
-        console.log('player is dead')
+        console.log('player is dead');
       }
     });
   },
