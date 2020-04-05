@@ -19,8 +19,7 @@
 export default {
   name: 'ShopControls',
   props: {
-    shopkeepData
-    : { type: Object, }
+    shopkeepData: { type: Object, }
   },
   data() {
     return {
