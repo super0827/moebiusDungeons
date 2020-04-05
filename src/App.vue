@@ -39,6 +39,7 @@
       <!-- Gameplay Screen -->
       <section class="gameplayWrapper" v-if="scene == 'gameplay'">
         
+          <!-- Gameplay Phase Title -->
           <section class="flexColumn">
             <transition appear 
             enter-active-class="animated fadeIn"
@@ -147,6 +148,7 @@ export default {
       gameplayScene: 'dungeon',
       playerData: null,
       monsterData: null,
+      shopkeepData: null,
       helper: "",
     }
   },
@@ -157,7 +159,7 @@ export default {
     createMonsterData(monster) {
       this.monsterData = monster;
     },
-    createShopkeep(shopkeep) {
+    createShopkeepData(shopkeep) {
       this.shopkeepData = shopkeep; 
     },
 
@@ -191,7 +193,6 @@ export default {
 
 .iconImageSize {
   width:75px;
-  margin-right:10px;
 }
 
 .gameplayWrapper {
