@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { EventBus } from '../js/event-bus';
+
 export default {
     name: 'ShopPortrait',
     data() {
@@ -26,18 +28,21 @@ export default {
               {
                 name:"cleric", 
                 portrait:require("../assets/imgs/shopkeepers/cleric.png"),
-                inAnimations: "zoomInLeft",
-                outAnimations: "zoomOutLeft"
+                items: [
+                    { name: 'minor heal', cost: 1, description: 'heals player for 6 hp', value:6, },
+                    { name: 'blessing', cost: 2, description: 'increases players armor by 1', value: 3 },
+                    { name: 'miracle', cost: 3, description: 'increases players max attack by 3', value: 3 },
+                ],
+                saying:"Come in, are you hurt?",
+                inAnimations: "zoomInRight",
+                outAnimations: "zoomOutRight"
               },
 
-              {name:"graverobber", 
+              {
+                name:"graverobber", 
               portrait:require("../assets/imgs/shopkeepers/graverobber.png"), 
-              description1:"Spellslinging", 
-              description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
-              coins:0, health:6, armor:0, attackMax:10, attackType: "magical", 
-              attackTypeImage: require("../assets/imgs/icons/magicalIcon.png"), 
-              inAnimations: "zoomInUp",
-              outAnimations: "zoomOutDown",
+              inAnimations: "zoomInRight",
+              outAnimations: "zoomOutRight",
               },
 
               {name:"varlet", 
@@ -53,13 +58,18 @@ export default {
         }
     },
     created() {
-        let randomNumber = Math.floor(Math.random() * Math.floor(4) + 1);
-        this.currentShopkeep = this.shopKeepers[randomNumber];
+        // let randomNumber = Math.floor(Math.random() * Math.floor(4) + 1);
+        this.currentShopkeep = this.shopKeepers[0];
+        EventBus.$emit('send-shopkeep', this.currentShopkeep);
     }
 }
 </script>
 
 <style scoped>
+.columns {
+    width:200px;
+    min-width:200px;
+}
 h3 {
     text-transform:uppercase;
 }

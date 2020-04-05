@@ -38,38 +38,28 @@ export default {
         },
         tradeBlows(attacker, defender, special) {
             if(this.combatActive || !this.monsterAttacking) {
-                // prevents player from spamming attack buttons
-                if(attacker.type == 'player'){
-                    this.combatActive = true;
-                    console.log('===============================');
-                    console.log('PLAYER ATTACKING')
-                    console.log('===============================');
-                }
-                else{
-                    console.log(' ')
-                    console.log('===============================');
-                    console.log('MONSTER ATTACKING')
-                    console.log('===============================');
-                }
                 
                 //Determines attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
                 console.log(`${attacker.name} attack value starts at ${attackRoll}`)
+                
+                // prevents player from spamming attack buttons
+                if(attacker.type == 'player'){
+                    this.combatActive = true;
+                }
 
                 // sets player portrait state in PlayerPortrait.vue
                 EventBus.$emit(`${attacker.type}-attacking`);
                 
                 //To be used in additional attack types 
-                if(special){
-                    console.log('specialAttack!');
+                if(special == 'beReckless'){
+                    attackRoll += attackRoll / 2;
                 }
 
                 // runs if player attack type is physical
                 if (attacker.attackType == 'physical') {
                     //recalculates damage subtracting defenders armor value from attack
-            attackRoll = Math.max(0, (attackRoll - defender.armor));
-            console.log(`ATTACK from ${attacker.name} - ${defender.name} ${defender.armor} armor = ${attackRoll}`)
-                    
+                attackRoll = Math.max(0, (attackRoll - defender.armor));
                     //if monster blocked the attack
                     if(attackRoll <= 0){
                         //Listener in MonsterPortrait.vue
@@ -106,10 +96,8 @@ export default {
             }
         },
         beReckless(){
-            console.log("being reckless");
+            this.tradeBlows(this.playerData, this.monsterData,)
         },
-
-
         turnTail(){
             console.log("turning tail");
         },

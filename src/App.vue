@@ -65,24 +65,27 @@
           <!-- Player Portrait and Stats - Always show during gameplay -->
           <player-portrait :playerData="playerData"/>
 
-
+            <section class="flexRow" v-if="gameplayScene == 'dungeon'">
             <!-- Battle Controls for Dungeon Scene -->
             <battle-controls
-            v-if="gameplayScene == 'dungeon'"
             :playerData="playerData"
             :monsterData="monsterData"
             />
 
             <!-- Monster Portait and Stats for Dungeon Scene -->
             <monster-portrait
-            v-if="gameplayScene == 'dungeon'"
             @send-monster="createMonsterData($event)"
             @monster-is-dead="gameplayScene = 'shop'"
             />
+            </section>
 
           <section class="flexRow" v-if="gameplayScene == 'shop'">
-            <shop-controls/>
-            <shop-portrait/>
+            <shop-controls 
+            :shopkeepData="shopkeepData"
+            />
+            <shop-portrait 
+            @send-shopkeep="createShopkeepData($event)"
+            />
           </section>
 
         <transition name="fade" mode="out-in">
@@ -154,6 +157,10 @@ export default {
     createMonsterData(monster) {
       this.monsterData = monster;
     },
+    createShopkeep(shopkeep) {
+      this.shopkeepData = shopkeep; 
+    },
+
   }
 }
 </script>
