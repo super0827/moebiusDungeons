@@ -1,26 +1,22 @@
 <template>
-<transition appear
-    name="custom-classes-transition"
-    enter-to-class="animated zoomInUp"
-    leave-to-class="amimated zoomOutUp"
->
-<section class="columns battleOptions">
+<section class="columns battleOptions"
+:class="{
+  'animated zoomInUp' : !leaving, 
+  'animated zoomOutUp' : leaving
+  }">
   
   <!-- Shop Title Description -->
-  <h2 class="textCenter">{{ shopkeepData.shopTitle }}</h2>
-
-  <hr>
-
+  <h2 class="textCenter">{{ storeState.shopkeep.shopTitle }}</h2>
     <section class="buySlot">
       <section class="information">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ shopkeepData.items[0].cost }}</h1>
+          <h1>{{ storeState.shopkeep.items[0].cost }}</h1>
         </article>
       
         <article>
-          <h2 :class="{'striked' : !tierOne}">{{ shopkeepData.items[0].name }}</h2>
-          <p> {{ shopkeepData.items[0].description }} </p>
+          <h2 :class="{'striked' : !tierOne}">{{ storeState.shopkeep.items[0].name }}</h2>
+          <p> {{ storeState.shopkeep.items[0].description }} </p>
         </article>
       </section>
     </section>
@@ -29,12 +25,12 @@
       <section class="information">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ shopkeepData.items[1].cost }}</h1>
+          <h1>{{ storeState.shopkeep.items[1].cost }}</h1>
         </article>
       
         <article>
-          <h2 :class="{'striked' : !tierTwo}">{{ shopkeepData.items[1].name }}</h2>
-          <p> {{ shopkeepData.items[1].description }} </p>
+          <h2 :class="{'striked' : !tierTwo}">{{ storeState.shopkeep.items[1].name }}</h2>
+          <p> {{ storeState.shopkeep.items[1].description }} </p>
         </article>
       </section>
     </section>
@@ -43,40 +39,54 @@
       <section class="information">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ shopkeepData.items[2].cost }}</h1>
+          <h1>{{ storeState.shopkeep.items[2].cost }}</h1>
         </article>
       
         <article>
-          <h2 :class="{'striked' : !tierThree}">{{ shopkeepData.items[2].name }}</h2>
-          <p> {{ shopkeepData.items[2].description }} </p>
+          <h2 :class="{'striked' : !tierThree}">{{ storeState.shopkeep.items[2].name }}</h2>
+          <p> {{ storeState.shopkeep.items[2].description }} </p>
         </article>
       </section>
+
     </section>
+
 
 <hr>
 
+
+    <section class="buySlot">
+      <h3 @click="storeState.phase = 'DungeonPhase'">BACK TO THE DUNGEONS</h3>
+    </section>
+
 </section>
-</transition>
 </template>
 
 <script>
+import { store } from "../store";
 
 export default {
   name: 'ShopControls',
-  props: {
-    shopkeepData: { type: Object, }
-  },
   data() {
     return {
+      leaving:false,
+      storeState: store.state,
       tierOne: false,
       tierTwo: false,
       tierThree: false,
     }
+  },
+  beforeDestroy(){
+    this.leaving = true;
   }
 }
 </script>
 
 <style scoped>
+
+hr {
+  border:solid black 1px;
+}
+
 .information {
   display:flex;
   justify-content:space-evenly;
@@ -120,12 +130,13 @@ p {
 .buySlot {
   position:relative;
   padding:10px;
-  background: rgba(207, 207, 207, 1);
+  /* background: rgba(207, 207, 207, 1); */
+  border:2px solid black;
   margin:0 0 10px 0;
 }
 
 .buySlot:hover {
-  background: rgb(224, 224, 224);
+  background: rgb(253,229,144);
   cursor:pointer;
 }
 

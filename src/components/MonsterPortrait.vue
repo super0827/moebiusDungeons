@@ -1,11 +1,11 @@
 <template>
-<transition appear
-    enter-active-class="animated zoomInRight"
-    leave-active-class="animated zoomOutRight"
->
 <section 
+  key="monsterPortComp"
  class="columns" 
- :class="{'animated tada' : monsterDead}"
+ :class="{
+  'animated tada' : monsterDead, 
+  'animated zoomInRight' : storeState.phase = 'DungeonPhase', 
+  'animated zoomOutRight' : storeState.phase != 'DungeonPhase'}"
  @animationend="monsterFinished"
 >
     
@@ -92,7 +92,6 @@
         <h1 class="coinValue">{{ storeState.monster.coins }}</h1>
       </section>
 </section>
-</transition>
 </template>
 
 
@@ -140,6 +139,7 @@ export default {
   },
   created() {
     store.newMonster();
+    store.newShopkeep();
   },
    mounted() { 
     //sets animation state of monster attacking 
@@ -175,16 +175,16 @@ export default {
 
     //listens for monster dying
     EventBus.$on("is-monster-dead", () => { 
-      if(this.storeState.monster.health >= 0){
+      if(this.storeState.monster.health > 0){
         EventBus.$emit('monster-retaliate');
       }
       else {
-          console.log('monster is dead!');
           this.monsterDead = true;
-          let self = this;
-          setTimeout(function() {
-            self.$emit('monster-is-dead');
-          }, 2000);
+          if(this.storeState.finalBoss == false){
+            setTimeout( () => { this.storeState.phase = "ShopPhase" }, 2000);
+          } else {
+            setTimeout( () => { this.storeState.phase = "WinScreen" }, 2000);
+          }
           
       }
     });

@@ -1,10 +1,10 @@
 <template>
-<transition appear
-    name="custom-classes-transition"
-    enter-to-class="animated zoomInUp"
-    leave-to-class="amimated zoomOutUp"
+<section class="columnsMiddle battleOptions"
+:class="{
+  'animated zoomInUp' : storeState.phase = 'DungeonPhase', 
+  'animated zoomOutUp' : storeState.phase != 'DungeonPhase'
+  }"
 >
-<section class="columnsMiddle battleOptions">
 
     <p>
         {{storeState.monster.warning}}
@@ -12,20 +12,19 @@
 
     <br>
 
-    <h2 :class="{'striked' : combatActive}" @click="tradeBlows(playerData, monsterData)">Trade Blows</h2>
-    <h2 :class="{'striked' : combatActive}" @click="beReckless(playerData, monsterData)">Be Reckless</h2>
+    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="tradeBlows(storeState.player, storeState.monster)">Trade Blows</h2>
+    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(playerData, monsterData)">Be Reckless</h2>
     
     <br>
 
-    <h3 :class="{'striked' : combatActive}" @click="turnTail()">Turn Tail</h3>
+    <h3 :class="{'striked' : combatActive || monsterAttacking }" @click="turnTail()">Turn Tail</h3>
 
 </section>
-</transition>
 </template>
 
 <script>
 import { EventBus } from "../js/event-bus";
-import { store } from "../store"
+import { store } from "../store";
 
 export default {
     name: 'BattleControls',
@@ -41,7 +40,7 @@ export default {
             return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         },
         tradeBlows(attacker, defender, special) {
-            if(this.combatActive || !this.monsterAttacking) {
+            if(!this.combatActive && !this.monsterAttacking) {
                 
                 //Determines attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
@@ -50,6 +49,10 @@ export default {
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
+                }
+
+                if(attacker.typ == 'monster') {
+                    this.monsterAttacking = true;
                 }
 
                 // sets player portrait state in PlayerPortrait.vue
@@ -100,7 +103,7 @@ export default {
             }
         },
         beReckless(){
-            this.tradeBlows(this.playerData, this.monsterData,)
+            this.tradeBlows(this.storeState.player, this.storeState.monster,)
         },
         turnTail(){
             console.log("turning tail");
@@ -111,8 +114,8 @@ export default {
     },
     mounted() {
             EventBus.$on('monster-retaliate', () => {
-                this.tradeBlows(this.monsterData, this.playerData);
-                this.monsterAttacking = true;
+                this.combatActive = false;
+                this.tradeBlows(this.storeState.monster, this.storeState.player);
             });
             EventBus.$on('reset-combat', () => {
                 this.combatActive = false;
@@ -136,6 +139,7 @@ export default {
 
     h1, h2, h3 {
         transition: all .6s;
+        width:90%;
     }
 
     h2 {
@@ -176,11 +180,10 @@ export default {
 
     .striked {
         text-decoration: line-through;
-        background:crimson;
+        opacity:0.2;
         transition:all .6s;
     }
     .striked:hover {
-        background:crimson;
         transition:all .6s;
         cursor:not-allowed;
     }

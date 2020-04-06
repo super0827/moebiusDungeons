@@ -1,9 +1,10 @@
 <template>
 <transition appear
+  mode="out-in"
   enter-active-class="animated zoomInLeft"
   leave-active-class="animated zoomOutLeft"
 >
-  <section class="columns">
+  <section key="playerPortComp" class="columns">
       
       <h3>YOU</h3>
 
@@ -142,7 +143,7 @@ export default {
 
     //listens for physical damage
     EventBus.$on('player-physical-damage', ($event) => {
-      this.attackDamage = $event + this.player.armor;
+      this.attackDamage = $event + this.storeState.player.armor;
       this.afterArmorDamage = $event;
     });
 
@@ -155,12 +156,12 @@ export default {
 
     //listens fot player dealing 1 or more damage.
     EventBus.$on("player-takes-damage", () => { 
-      this.player.health--;
+      this.storeState.player.health--;
     });
 
     //listens for monster dying
     EventBus.$on("is-player-dead", () => { 
-      if(this.player.health >= 0){
+      if(this.storeState.player.health >= 0){
         console.log('player is still alive');
 
         EventBus.$emit('reset-combat');

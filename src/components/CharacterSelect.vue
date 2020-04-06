@@ -4,36 +4,34 @@
 
     <h1 class="animated" :class="{'zoomInDown' : isEntering, 'zoomOutUp' :isLeaving }">MOEBIUS DUNGEONS</h1>
 
-<section class="chooseChar">
-    <section
-    v-for="characters in characterClasses"
-    :key="characters.name"
-    :portrait="characters.portrait"
-    :coins="characters.coins"
-    :health="characters.health"
-    :armor="characters.armor"
-    :attackMax="characters.attackMax"
-    :attackType="characters.attackType"
-    :attackTypeImage="characters.attackTypeImage"
-    @click="setPlayer(characters)"
-    class="columns animated"
-    :class="{ [characters.inAnimations]: isEntering, [characters.outAnimations]: isLeaving }"
-    >
-        <h2>{{characters.name}}</h2>
-        <h3>{{characters.description1}}</h3>
-        <p>{{characters.description2}}</p>
+    <section class="chooseChar">
+        <section
+        v-for="characters in characterClasses"
+        :key="characters.name"
+        :portrait="characters.portrait"
+        :coins="characters.coins"
+        :health="characters.health"
+        :armor="characters.armor"
+        :attackMax="characters.attackMax"
+        :attackType="characters.attackType"
+        :attackTypeImage="characters.attackTypeImage"
+        @click="setPlayer(characters)"
+        class="columns animated"
+        :class="{ [characters.inAnimations]: isEntering, [characters.outAnimations]: isLeaving }">
         
-        <section class="portContainer animated infinite" :id="characters.name">
-            <section class="overlay"></section>
-            <img :src="characters.portrait" :alt="characters.description2">
+            <h2>{{characters.name}}</h2>
+            <h3>{{characters.description1}}</h3>
+            <p>{{characters.description2}}</p>
+        
+            <section class="portContainer animated infinite" :id="characters.name">
+                <section class="overlay"></section>
+                <img :src="characters.portrait" :alt="characters.description2">
+            </section>
+
         </section>
-
     </section>
-</section>
 
-<h1 @click="$emit('instructions')" id="about">
-    HUH?
-</h1>
+<h1 id="about"> HUH? </h1>
 </section>
 </template>
 
@@ -91,12 +89,8 @@ export default {
         //Toggle Animations
         this.isEntering = false;
         this.isLeaving = true;
-
-        const characterModule = this;
         
-        setTimeout(function(){
-            characterModule.$emit('to-dungeon');
-        }, 100);
+        setTimeout(() => { this.storeState.phase = "DungeonPhase"; }, 100);
       }
   },
 }

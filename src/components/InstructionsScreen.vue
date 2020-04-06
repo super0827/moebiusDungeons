@@ -24,15 +24,22 @@
   </p>
 
 <br>
-  <h1 id="proceed" @click="$emit('understood')">
+  <h1 id="proceed" @click="storeState.phase = 'CharacterSelect'">
       UNDERSTOOD.
   </h1>
 </section>
 </template>
 
 <script>
+import { store } from "../store";
+
 export default {
   name: 'InstructionsScreen',
+  data() {
+      return {
+          storeState: store.state,
+      }
+  },
 }
 </script>
 
