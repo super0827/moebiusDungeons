@@ -5,100 +5,26 @@
     <section class="debugBar">
       <p>METHODS</p>
       <section>Kill Player</section>
-      <section>Kill Monster</section>
+      <section @click="killMonster()">Kill Monster</section>
       <section>New Monster</section>
       <br>
       <p>END GAME</p>
       <section @click="scene = 'winner'">Win Screen</section>
       <section @click="scene = 'loser'">Lose Screen</section>
       <br>
-      <p>GAMEPLAY</p>
-      <section @click="scene = 'characterSelect'">Player Select</section>
-      <section @click="scene = 'instructions'">Instructions</section>
-      <section @click="scene = 'gameplay'">Gameplay</section>
-      <section @click="gameplayScene = 'shop'">Shop</section>
-      <section @click="gameplayScene = 'dungeon'">Dungeon</section>
+      <p>SCENES</p>
+      <section @click="storeState.phase = 'InstructionsScreen'">Instructions</section>
+      <section @click="storeState.phase = 'CharacterSelect'">Char Select</section>
+      <section @click="storeState.phase = 'ShopPhase'">Shop</section>
+      <section @click="storeState.phase = 'DungeonPhase'">Dungeon</section>
     </section>
 
     <!-- GUI -->
     <transition name="fade" mode="out-in">
-
-      <!-- Character Selection Screen-->
-      <character-select 
-      @instructions="scene = 'instructions'"
-      @character-chosen="createPlayerData($event)" 
-      @to-dungeon="scene = 'gameplay'" 
-      v-if="scene == 'characterSelect'"/>
-
-      <!-- Instructions Screen -->
-      <instructions-screen 
-      @understood="scene = 'characterSelect'" 
-      v-if="scene == 'instructions'"/>
-
-      
-      <!-- Gameplay Screen -->
-      <section class="gameplayWrapper" v-if="scene == 'gameplay'">
-        
-          <!-- Gameplay Phase Title -->
-          <section class="flexColumn">
-            <transition appear 
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-            mode="out-in"
-            >
-            <img key="dungeonSigil" v-if="gameplayScene == 'dungeon'" class="iconImageSize" src="./assets/imgs/icons/monsterSigilIcon.png" alt="">
-            <img key="shopSigil" v-if="gameplayScene == 'shop'" class="iconImageSize" src="./assets/imgs/icons/shopkeepSigilIcon.png" alt="">
-            </transition>
-
-            <transition appear 
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-            mode="out-in"
-            >
-            <h1 :key="gameplayScene" class="textCenter phaseName">{{ gameplayScene }}</h1>
-            </transition>
-          </section>
-            
-
-        <!-- Wrapper for Gameplay -->
-        <section class="flexRow">
-          
-          <!-- Player Portrait and Stats - Always show during gameplay -->
-          <player-portrait/>
-
-            <!-- Wrapper for Dungeon Controls and Monster Portrait -->
-            <section class="flexRow" v-if="gameplayScene == 'dungeon'">
-              <battle-controls/>
-              <monster-portrait
-                @monster-is-dead="gameplayScene = 'shop'"
-              />
-            </section>
-
-          <!-- Wrapper for Shop Controls and Shop Portrait -->
-          <section class="flexRow" v-if="gameplayScene == 'shop'">
-            <shop-controls/>
-            <shop-portrait/>
-          </section>
-
-        <transition name="fade" mode="out-in">
-          <battle-help @close="helper = ''" v-if="helper=='battle'"/>
-        </transition>
-
-        </section>
-
-        <!-- HELPER BUTTONS -->
-        <transition name="fade" mode="out-in">
-        <h1 v-if="helper != 'battle'" @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
-        </transition>
-
-      </section>
-
-      <win-screen v-if="scene == 'winner'"/>
-
-      <lose-screen v-if="scene == 'loser'"/>
-
+      <component :is="storeState.phase"></component>
     </transition>
-  </div>
+
+</div>
 </template>
 
 <script>
@@ -106,19 +32,14 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
+import { EventBus } from "./js/event-bus";
 import { store } from "./store"
 
-import InstructionsScreen from './components/InstructionsScreen.vue';
 import CharacterSelect from './components/CharacterSelect.vue';
-import BattleHelp from './components/BattleHelp.vue';
+import DungeonPhase from './components/DungeonPhase.vue';
+import ShopPhase from './components/ShopPhase.vue';
 
-import PlayerPortrait from "./components/PlayerPortrait.vue";
-
-import BattleControls from './components/BattleControls.vue';
-import MonsterPortrait from "./components/MonsterPortrait.vue";
-
-import ShopControls from "./components/ShopControls.vue";
-import ShopPortrait from "./components/ShopPortrait.vue";
+import InstructionsScreen from './components/InstructionsScreen.vue';
 
 import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
@@ -128,31 +49,23 @@ export default {
   components: {
     InstructionsScreen,
     CharacterSelect,
-    BattleHelp,
-    PlayerPortrait,
-    BattleControls,
-    MonsterPortrait,
-    ShopControls,
-    ShopPortrait,
+    DungeonPhase,
+    ShopPhase,
     WinScreen,
     LoseScreen,
   },
   data() {
     return {
       scene: 'characterSelect',
-      gameplayScene: 'dungeon',
       helper: "",
       storeState: store.state,
     }
   },
   methods: {
-    createMonsterData(monster) {
-      store.monsterData = monster;
-    },
-    createShopkeepData(shopkeep) {
-      store.shopkeepData = shopkeep; 
-    },
-
+    killMonster() {
+      this.storeState.monster.health = 0;
+      EventBus.$emit('is-monster-dead');
+    }
   }
 }
 </script>
@@ -179,10 +92,6 @@ export default {
 .phaseName {
   font-size:40px;
   margin:10px 0;
-}
-
-.iconImageSize {
-  width:75px;
 }
 
 .gameplayWrapper {
