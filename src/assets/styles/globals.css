@@ -17,6 +17,10 @@ body {
     margin:0 10px;
 }
 
+.iconImageSize {
+    width:75px;
+  }
+
 h1 {
     font-family: var(--headers-type);
     font-size:30px;
