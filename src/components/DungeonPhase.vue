@@ -1,6 +1,7 @@
 <template>
 <section>
-    <section class="flexColumn">
+    <section class="flexColumn animated"
+    :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}">
         <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
@@ -18,15 +19,20 @@
     <section class="flexRow">
         <!-- Player Portrait and Stats -->
         <player-portrait
-        key="playerPortrait"/>
-
+        class="animated"
+        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
+        />
         <!-- Dungeon Controls -->
-        <battle-controls 
+        <battle-controls
+        class="animated"
+        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}"
         key="battleControls"/>
 
         <!-- Monster Portrait -->
         <monster-portrait
         key="monsterPortrait"
+        class="animated"
+        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering}"
         @monster-is-dead="gameplayScene = 'shop'"
         />
     </section>
@@ -34,6 +40,7 @@
 </template>
 
 <script>
+import { store } from "../store"
 import BattleControls from './BattleControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
 import MonsterPortrait from "./MonsterPortrait.vue";
@@ -50,6 +57,8 @@ export default {
     data() {
         return {
             helper: false,
+            isEntering: true,
+            storeState: store.state,
         }
     },
 }

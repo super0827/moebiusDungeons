@@ -3,9 +3,8 @@
   key="monsterPortComp"
  class="columns" 
  :class="{
-  'animated tada' : monsterDead, 
-  'animated zoomInRight' : storeState.phase = 'DungeonPhase', 
-  'animated zoomOutRight' : storeState.phase != 'DungeonPhase'}"
+  'animated tada' : monsterDead,
+  }"
  @animationend="monsterFinished"
 >
     
@@ -180,10 +179,14 @@ export default {
       }
       else {
           this.monsterDead = true;
-          if(this.storeState.finalBoss == false){
-            setTimeout( () => { this.storeState.phase = "ShopPhase" }, 2000);
-          } else {
+          if(this.storeState.finalBoss == true ){
             setTimeout( () => { this.storeState.phase = "WinScreen" }, 2000);
+            } else {
+            this.storeState.isEntering = false;
+            setTimeout( () => { 
+              this.storeState.phase = "ShopPhase";
+              this.storeState.isEntering = true; 
+            }, 2000);
           }
           
       }

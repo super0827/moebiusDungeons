@@ -20,9 +20,9 @@
     </section>
 
     <!-- GUI -->
-    <transition name="fade" mode="out-in">
-      <component :is="storeState.phase"></component>
-    </transition>
+      <transition name="fade" mode="out-in">
+        <component :is="storeState.phase"></component>
+      </transition> 
 
 </div>
 </template>

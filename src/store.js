@@ -7,6 +7,7 @@ export const store = {
         monsterRoster: 0,
         phase: "CharacterSelect",
         finalBoss: false,
+        isEntering: true,
     },
     characters: {
         playerClasses: "",

@@ -1,9 +1,5 @@
 <template>
 <section class="columnsMiddle battleOptions"
-:class="{
-  'animated zoomInUp' : storeState.phase = 'DungeonPhase', 
-  'animated zoomOutUp' : storeState.phase != 'DungeonPhase'
-  }"
 >
 
     <p>

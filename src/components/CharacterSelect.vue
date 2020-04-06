@@ -2,7 +2,7 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'zoomInDown' : isEntering, 'zoomOutUp' :isLeaving }">MOEBIUS DUNGEONS</h1>
+    <h1 class="animated" :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering }">MOEBIUS DUNGEONS</h1>
 
     <section class="chooseChar">
         <section
@@ -17,7 +17,7 @@
         :attackTypeImage="characters.attackTypeImage"
         @click="setPlayer(characters)"
         class="columns animated"
-        :class="{ [characters.inAnimations]: isEntering, [characters.outAnimations]: isLeaving }">
+        :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
         
             <h2>{{characters.name}}</h2>
             <h3>{{characters.description1}}</h3>
@@ -43,8 +43,6 @@ export default {
   data() {
       return {
           storeState: store.state,
-          isEntering: true,
-          isLeaving: false,
           characterClasses: [
               {name:"swordsman",
               type:'player', 
@@ -87,10 +85,9 @@ export default {
         this.storeState.player = passedPlayer;
         
         //Toggle Animations
-        this.isEntering = false;
-        this.isLeaving = true;
+        this.storeState.isEntering = false;
         
-        setTimeout(() => { this.storeState.phase = "DungeonPhase"; }, 100);
+        setTimeout(() => { this.storeState.phase = "DungeonPhase"; this.storeState.isEntering = true; }, 1000);
       }
   },
 }

@@ -1,10 +1,4 @@
 <template>
-<transition appear
-    mode="out-in"
-    name="custom-classes-transition"
-    enter-to-class="animated zoomInRight"
-    leave-to-class="animated zoomOutRight"
->
  <section key="shopPortComp" class="columns">
 
       <h3> {{ storeState.shopkeep.name }}</h3>
@@ -18,7 +12,6 @@
       </section>
 
   </section>
-</transition>
 </template>
 
 <script>

@@ -1,10 +1,5 @@
 <template>
-<transition appear
-  mode="out-in"
-  enter-active-class="animated zoomInLeft"
-  leave-active-class="animated zoomOutLeft"
->
-  <section key="playerPortComp" class="columns">
+  <section class="columns">
       
       <h3>YOU</h3>
 
@@ -87,7 +82,6 @@
       </section>
 
   </section>
-</transition>
 </template>
 
 <script>
