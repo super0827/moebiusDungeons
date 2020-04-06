@@ -18,7 +18,7 @@
           <h1>{{ shopkeepData.items[0].cost }}</h1>
         </article>
       
-        <article class="description">
+        <article>
           <h2 :class="{'striked' : !tierOne}">{{ shopkeepData.items[0].name }}</h2>
           <p> {{ shopkeepData.items[0].description }} </p>
         </article>
@@ -32,8 +32,8 @@
           <h1>{{ shopkeepData.items[1].cost }}</h1>
         </article>
       
-        <article class="description">
-          <h2 :class="{'striked' : !tierOne}">{{ shopkeepData.items[1].name }}</h2>
+        <article>
+          <h2 :class="{'striked' : !tierTwo}">{{ shopkeepData.items[1].name }}</h2>
           <p> {{ shopkeepData.items[1].description }} </p>
         </article>
       </section>
@@ -46,8 +46,8 @@
           <h1>{{ shopkeepData.items[2].cost }}</h1>
         </article>
       
-        <article class="description">
-          <h2 :class="{'striked' : !tierOne}">{{ shopkeepData.items[2].name }}</h2>
+        <article>
+          <h2 :class="{'striked' : !tierThree}">{{ shopkeepData.items[2].name }}</h2>
           <p> {{ shopkeepData.items[2].description }} </p>
         </article>
       </section>
@@ -79,12 +79,8 @@ export default {
 <style scoped>
 .information {
   display:flex;
-  justify-content:space-around;
+  justify-content:space-evenly;
   align-items: center;
-}
-
-.description {
-  display:inline-block;
 }
 
 .itemWrapper {

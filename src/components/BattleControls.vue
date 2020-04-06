@@ -4,7 +4,13 @@
     enter-to-class="animated zoomInUp"
     leave-to-class="amimated zoomOutUp"
 >
-<section class="columns battleOptions">
+<section class="columnsMiddle battleOptions">
+
+    <p>
+        {{monsterData.warning}}
+    </p>
+
+    <br>
 
     <h2 :class="{'striked' : combatActive}" @click="tradeBlows(playerData, monsterData)">Trade Blows</h2>
     <h2 :class="{'striked' : combatActive}" @click="beReckless(playerData, monsterData)">Be Reckless</h2>
@@ -175,5 +181,17 @@ export default {
         background:crimson;
         transition:all .6s;
         cursor:not-allowed;
+    }
+
+    .columnsMiddle {
+        display:flex;
+        justify-content: center;
+        align-items:center;
+        flex-direction: column;
+        width:200px;
+        min-width:200px;
+        text-align:center;
+        margin:0 10px;  
+        height:449px;
     }
 </style>
