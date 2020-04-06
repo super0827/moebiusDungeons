@@ -38,13 +38,15 @@
 </template>
 
 <script>
+import { store } from "../store"
+
 export default {
   name: 'CharacterSelect',
   data() {
       return {
+          storeState: store.state,
           isEntering: true,
           isLeaving: false,
-          playerData: null,
           characterClasses: [
               {name:"swordsman",
               type:'player', 
@@ -84,11 +86,11 @@ export default {
   methods: {
     setPlayer(passedPlayer) {
         console.log(`You're playing as the ${passedPlayer.name}`);
-
+        this.storeState.player = passedPlayer;
+        
         //Toggle Animations
         this.isEntering = false;
         this.isLeaving = true;
-        this.$emit('character-chosen', passedPlayer);
 
         const characterModule = this;
         

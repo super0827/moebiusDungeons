@@ -12,7 +12,7 @@
       :class="{'animated pulse' : hurt, 'animated wobble' : attacking, 'animated pulse' : blocked }"
         @animationend="afterEnter"
       >
-      <img class="portrait" :src="player.portrait">
+      <img class="portrait" :src="storeState.player.portrait">
 
       <!-- Animated Damage Tips -->
         <transition appear
@@ -37,7 +37,7 @@
               </h2>
               <h3 class="versus">vs.</h3>
               <h2 class="armorValue">
-              {{ player.armor }} 
+              {{ storeState.player.armor }} 
               </h2>
              </section>
           </section>
@@ -64,25 +64,25 @@
       <section class="flexRow stats">
 
         <section>
-          <p>{{ player.health }}</p>
+          <p>{{ storeState.player.health }}</p>
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
         <section>
-          <p>{{ player.armor }}</p>
+          <p>{{ storeState.player.armor }}</p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ player.attackMax }}</p>
-          <img :src="player.attackTypeImage">
+          <p> d{{ storeState.player.attackMax }}</p>
+          <img :src="storeState.player.attackTypeImage">
         </section>
 
       </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ player.coins }}</h1>
+        <h1 class="coinValue">{{ storeState.player.coins }}</h1>
       </section>
 
   </section>
@@ -91,28 +91,29 @@
 
 <script>
 import { EventBus } from "../js/event-bus";
+import { store } from "../store"
+
 
 export default {
   name: 'PlayerPortrait',
-  props:{
-    playerData: { type: Object },
-  },
+  
   data() {
     return {
+
+      storeState: store.state,
+
       //monster animation states
-          blocked: false,
-          hurt: false,
-          attacking:false,
-          portEffect: false,
-          portEffectRed: false,
-          portEffectPurple: false,
-          portEffectGreen: false,
+        blocked: false,
+        hurt: false,
+        attacking:false,
+        portEffect: false,
+        portEffectRed: false,
+        portEffectPurple: false,
+        portEffectGreen: false,
 
-          player: this.playerData,
-
-          // Battle Data
-          attackDamage: 0,
-          afterArmorDamage: 0,
+        // Battle Data
+        attackDamage: 0,
+        afterArmorDamage: 0,
     }
   },
   methods: {

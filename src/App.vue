@@ -64,29 +64,20 @@
         <section class="flexRow">
           
           <!-- Player Portrait and Stats - Always show during gameplay -->
-          <player-portrait :playerData="playerData"/>
+          <player-portrait/>
 
+            <!-- Wrapper for Dungeon Controls and Monster Portrait -->
             <section class="flexRow" v-if="gameplayScene == 'dungeon'">
-            <!-- Battle Controls for Dungeon Scene -->
-            <battle-controls
-            :playerData="playerData"
-            :monsterData="monsterData"
-            />
-
-            <!-- Monster Portait and Stats for Dungeon Scene -->
-            <monster-portrait
-            @send-monster="createMonsterData($event)"
-            @monster-is-dead="gameplayScene = 'shop'"
-            />
+              <battle-controls/>
+              <monster-portrait
+                @monster-is-dead="gameplayScene = 'shop'"
+              />
             </section>
 
+          <!-- Wrapper for Shop Controls and Shop Portrait -->
           <section class="flexRow" v-if="gameplayScene == 'shop'">
-            <shop-controls 
-            :shopkeepData="shopkeepData"
-            />
-            <shop-portrait 
-            @send-shopkeep="createShopkeepData($event)"
-            />
+            <shop-controls/>
+            <shop-portrait/>
           </section>
 
         <transition name="fade" mode="out-in">
@@ -95,8 +86,10 @@
 
         </section>
 
-        <!-- HELPERS -->
-        <h1 @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
+        <!-- HELPER BUTTONS -->
+        <transition name="fade" mode="out-in">
+        <h1 v-if="helper != 'battle'" @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
+        </transition>
 
       </section>
 
@@ -112,6 +105,8 @@
 import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
+
+import { store } from "./store"
 
 import InstructionsScreen from './components/InstructionsScreen.vue';
 import CharacterSelect from './components/CharacterSelect.vue';
@@ -146,21 +141,16 @@ export default {
     return {
       scene: 'characterSelect',
       gameplayScene: 'dungeon',
-      playerData: null,
-      monsterData: null,
-      shopkeepData: null,
       helper: "",
+      storeState: store.state,
     }
   },
   methods: {
-    createPlayerData(player) {
-      this.playerData = player;
-    },
     createMonsterData(monster) {
-      this.monsterData = monster;
+      store.monsterData = monster;
     },
     createShopkeepData(shopkeep) {
-      this.shopkeepData = shopkeep; 
+      store.shopkeepData = shopkeep; 
     },
 
   }

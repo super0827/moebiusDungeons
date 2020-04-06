@@ -7,7 +7,7 @@
 <section class="columnsMiddle battleOptions">
 
     <p>
-        {{monsterData.warning}}
+        {{storeState.monster.warning}}
     </p>
 
     <br>
@@ -25,18 +25,16 @@
 
 <script>
 import { EventBus } from "../js/event-bus";
+import { store } from "../store"
 
 export default {
     name: 'BattleControls',
     data() {
         return {
+            storeState: store.state,
             combatActive: false,
             monsterAttacking: false,
         }
-    },
-    props:{
-        playerData: { type: Object },
-        monsterData: { type: Object },
     },
     methods:{
         randomRoll(rollMax){
@@ -108,6 +106,9 @@ export default {
             console.log("turning tail");
         },
     },
+    created() {
+        
+    },
     mounted() {
             EventBus.$on('monster-retaliate', () => {
                 this.tradeBlows(this.monsterData, this.playerData);
@@ -129,7 +130,8 @@ export default {
     }
 
     p {
-        font-size:10px;
+        font-size:20px;
+        text-transform:uppercase;
     }
 
     h1, h2, h3 {

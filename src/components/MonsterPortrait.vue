@@ -9,7 +9,7 @@
  @animationend="monsterFinished"
 >
     
-      <h3 class="uppercase"> {{ newMonster.name }} </h3>
+      <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
       
       <section 
       class="portraitWrapper"
@@ -19,7 +19,7 @@
         <!-- Monster Image -->
         <img 
         class="portrait" 
-        :src="newMonster.portrait"
+        :src="storeState.monster.portrait"
         >
 
         <!-- Animated Damage Tips -->
@@ -45,7 +45,7 @@
               </h2>
               <h3 class="versus">vs.</h3>
               <h2 class="armorValue">
-              {{ newMonster.armor }} 
+              {{ storeState.monster.armor }} 
               </h2>
              </section>
           </section>
@@ -71,25 +71,25 @@
       <section class="flexRow stats">
 
         <section>
-          <p>{{ newMonster.health }}</p>
+          <p>{{ storeState.monster.health }}</p>
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
         <section>
-          <p>{{ newMonster.armor }}</p>
+          <p>{{ storeState.monster.armor }}</p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ newMonster.attackMax }}</p>
-          <img :src="newMonster.attackTypeImage">
+          <p> d{{ storeState.monster.attackMax }}</p>
+          <img :src="storeState.monster.attackTypeImage">
         </section>
 
       </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ newMonster.coins }}</h1>
+        <h1 class="coinValue">{{ storeState.monster.coins }}</h1>
       </section>
 </section>
 </transition>
@@ -98,11 +98,14 @@
 
 <script>
 import { EventBus } from "../js/event-bus";
+import { store } from "../store"
 
 export default {
   name: 'MonsterPortrait',
   data() {
       return {
+          storeState: store.state,
+          storeChar: store.characters,
 
           //monster animation states
           blocked: false,
@@ -117,177 +120,7 @@ export default {
           // Battle Data
           attackDamage: 0,
           afterArmorDamage: 0,
-
-          //Monster data
-          monsterRoster: 0,
-          newMonster: Object,
-          monsterCharacters: [
-                // Level 1   
-              {
-               name: "emptyObject",
-              },
-              {
-                name:"bats",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/bats.png"), 
-                coins:1, health:4, armor:0, attackMax:4, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"slime",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/slime.png"), 
-                coins:1, health:6, armor:2, attackMax:4, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"kobold",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/kobold.png"), 
-                coins:1, health:7, armor:1, attackMax:4, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"gnoll",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/gnoll.png"), 
-                coins:1, health:9, armor:1, attackMax:5, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"goblins",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/goblins.png"), 
-                coins:1, health:8, armor:1, attackMax:4, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-
-                // Level 2
-              {
-                name:"ghost",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/ghost.png"), 
-                coins:2, health:10, armor:2, attackMax:8, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-              {
-                name:"lizardman",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/lizardman.png"), 
-                coins:2, health:12, armor:2, attackMax:8, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"curse",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/curse.png"), 
-                coins:2, health:16, armor:4, attackMax:12, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-              {
-                name:"bandits",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/bandits.png"), 
-                coins:2, health:15, armor:2, attackMax:8, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-                  
-                  // Level 3
-              
-              {
-                name:"mimic",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/mimic.png"), 
-                coins:5, health:18, armor:3, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"ghoul",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/ghoul.png"), 
-                coins:3, health:15, armor:2, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"skeleton",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/skeleton.png"), 
-                coins:3, health:16, armor:2, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"swampling",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/swampling.png"), 
-                coins:3, health:16, armor:2, attackMax:10, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-
-                // Level 4
-
-              {
-                name:"harpy",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/harpy.png"), 
-                coins:4, health:15, armor:3, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"mushroom",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/mushroom.png"), 
-                coins:4, health:18, armor:2, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"dryad",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/dryad.png"), 
-                coins:4, health:20, armor:4, attackMax:10, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-              {
-                name:"golem",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/golem.png"), 
-                coins:4, health:22, armor:4, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              
-                // Level 5
-
-              {
-                name:"demon",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/demon.png"), 
-                coins:5, health:25, armor:4, attackMax:10, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-              {
-                name:"banshee",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/banshee.png"), 
-                coins:5, health:30, armor:5, attackMax:12, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-              
-                // BOSSES
-              
-              {
-                name:"lich",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/lich.png"), 
-                coins:10, health:36, armor:8, attackMax:12, attackType: "magical",
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png")
-              },
-              {
-                name:"dragon",
-                type:'monster', 
-                portrait:require("../assets/imgs/monsters/dragon.png"), 
-                coins:10, health:40, armor:8, attackMax:12, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png")
-              },
-          ],
+          
       }
   },
   methods: {
@@ -306,11 +139,7 @@ export default {
     }
   },
   created() {
-      // Sets monsterRoster to a new value, adding 1-4 to the old value
-      this.monsterRoster = this.monsterRoster + Math.floor(Math.random() * Math.floor(4)) + 1;
-      this.newMonster = this.monsterCharacters[this.monsterRoster];
-      this.$emit('send-monster', this.newMonster);
-
+    store.newMonster();
   },
    mounted() { 
     //sets animation state of monster attacking 
@@ -327,7 +156,7 @@ export default {
 
     //listens for physical damage
     EventBus.$on('monster-physical-damage', ($event) => {
-      this.attackDamage = $event + this.newMonster.armor
+      this.attackDamage = $event + this.storeState.monster.armor
       this.afterArmorDamage = $event;
     });
 
@@ -341,12 +170,12 @@ export default {
 
     //listens fot player dealing 1 or more damage.
     EventBus.$on("monster-takes-damage", () => { 
-      this.newMonster.health--;
+      this.storeState.monster.health--;
     });
 
     //listens for monster dying
     EventBus.$on("is-monster-dead", () => { 
-      if(this.newMonster.health >= 0){
+      if(this.storeState.monster.health >= 0){
         EventBus.$emit('monster-retaliate');
       }
       else {
