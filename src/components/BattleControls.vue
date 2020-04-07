@@ -108,7 +108,7 @@ export default {
     created() {
         
     },
-    mounted() {
+    beforeCreate() {
             EventBus.$on('monster-retaliate', () => {
                 this.combatActive = false;
                 this.tradeBlows(this.storeState.monster, this.storeState.player);

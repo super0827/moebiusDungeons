@@ -1,9 +1,5 @@
 <template>
-<section class="columns battleOptions"
-:class="{
-  'animated zoomInUp' : !leaving, 
-  'animated zoomOutUp' : leaving
-  }">
+<section class="columns battleOptions">
   
   <!-- Shop Title Description -->
   <h2 class="textCenter">{{ storeState.shopkeep.shopTitle }}</h2>
@@ -68,16 +64,12 @@ export default {
   name: 'ShopControls',
   data() {
     return {
-      leaving:false,
       storeState: store.state,
       tierOne: false,
       tierTwo: false,
       tierThree: false,
     }
   },
-  beforeDestroy(){
-    this.leaving = true;
-  }
 }
 </script>
 

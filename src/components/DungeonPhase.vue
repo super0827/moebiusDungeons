@@ -1,7 +1,7 @@
 <template>
 <section>
     <section class="flexColumn animated"
-    :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}">
+    :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
         <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
@@ -25,7 +25,7 @@
         <!-- Dungeon Controls -->
         <battle-controls
         class="animated"
-        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}"
+        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
         key="battleControls"/>
 
         <!-- Monster Portrait -->
@@ -61,6 +61,12 @@ export default {
             storeState: store.state,
         }
     },
+    created(){
+        this.storeState.isEntering = true;
+    },
+    beforeDestroy() {
+        this.storeState.isEntering = false;
+    }
 }
 </script>
 

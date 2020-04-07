@@ -21,7 +21,9 @@
 
     <!-- GUI -->
       <transition name="fade" mode="out-in">
-        <component :is="storeState.phase"></component>
+        <component 
+        :key="storeState.phase"
+        :is="storeState.phase"></component>
       </transition> 
 
 </div>

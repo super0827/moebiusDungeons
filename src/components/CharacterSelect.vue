@@ -90,6 +90,12 @@ export default {
         setTimeout(() => { this.storeState.phase = "DungeonPhase"; this.storeState.isEntering = true; }, 1000);
       }
   },
+  created(){
+        this.storeState.isEntering = true;
+    },
+    beforeDestroy() {
+        this.storeState.isEntering = false;
+    }
 }
 </script>
 

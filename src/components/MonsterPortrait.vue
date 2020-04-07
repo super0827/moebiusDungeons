@@ -182,10 +182,8 @@ export default {
           if(this.storeState.finalBoss == true ){
             setTimeout( () => { this.storeState.phase = "WinScreen" }, 2000);
             } else {
-            this.storeState.isEntering = false;
             setTimeout( () => { 
               this.storeState.phase = "ShopPhase";
-              this.storeState.isEntering = true; 
             }, 2000);
           }
           

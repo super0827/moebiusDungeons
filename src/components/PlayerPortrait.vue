@@ -124,7 +124,6 @@ export default {
     }
   },
   mounted() { 
-
     EventBus.$on('player-attacking', () => {
       this.attacking = true;
     });
