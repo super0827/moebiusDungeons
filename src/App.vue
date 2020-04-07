@@ -9,14 +9,14 @@
       <section>New Monster</section>
       <br>
       <p>END GAME</p>
-      <section @click="scene = 'winner'">Win Screen</section>
-      <section @click="scene = 'loser'">Lose Screen</section>
+      <section @click="store.sceneChange('WinScreen')">Win Screen</section>
+      <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
       <br>
       <p>SCENES</p>
-      <section @click="storeState.phase = 'InstructionsScreen'">Instructions</section>
-      <section @click="storeState.phase = 'CharacterSelect'">Char Select</section>
-      <section @click="storeState.phase = 'ShopPhase'">Shop</section>
-      <section @click="storeState.phase = 'DungeonPhase'">Dungeon</section>
+      <section @click="store.sceneChange('InstructionsScreen')">Instructions</section>
+      <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
+      <section @click="store.sceneChange('ShopPhase')">Shop</section>
+      <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
     </section>
 
     <!-- GUI -->
@@ -61,13 +61,14 @@ export default {
       scene: 'characterSelect',
       helper: "",
       storeState: store.state,
+      store: store,
     }
   },
   methods: {
     killMonster() {
       this.storeState.monster.health = 0;
       EventBus.$emit('is-monster-dead');
-    }
+    },
   }
 }
 </script>
