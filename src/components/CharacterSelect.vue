@@ -83,19 +83,9 @@ export default {
     setPlayer(passedPlayer) {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
-        
-        //Toggle Animations
-        this.storeState.isEntering = false;
-        
-        setTimeout(() => { this.storeState.phase = "DungeonPhase"; this.storeState.isEntering = true; }, 1000);
+        store.sceneChange('DungeonPhase');
       }
   },
-  created(){
-        this.storeState.isEntering = true;
-    },
-    beforeDestroy() {
-        this.storeState.isEntering = false;
-    }
 }
 </script>
 

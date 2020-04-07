@@ -180,11 +180,9 @@ export default {
       else {
           this.monsterDead = true;
           if(this.storeState.finalBoss == true ){
-            setTimeout( () => { this.storeState.phase = "WinScreen" }, 2000);
+              store.sceneChange('WinScreen');
             } else {
-            setTimeout( () => { 
-              this.storeState.phase = "ShopPhase";
-            }, 2000);
+              store.sceneChange('ShopPhase')
           }
           
       }

@@ -1,24 +1,29 @@
 <template>
-<section>
-    <section class="flexColumn">
-        <img key="shopSigil" class="iconImageSize" src="../assets/imgs/icons/shopkeepSigilIcon.png" alt="">
+<section key="shopPhaseWrapper">
+    <section class="flexColumn animated"
+        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
+    
+        <img key="shopSigil" class="iconImageSize" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
         <h1 class="textCenter phaseName">SHOP</h1> 
     </section>
 
     <section class="flexRow">
         <!-- Player Portrait -->
         <player-portrait
-        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
+        class="animated"
+        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering }"
         key="playerPortraitShop"/>  
 
         <!-- Shop Controls -->
         <shop-controls
-        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
+        class="animated"
+        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering }"
         key="shopControls"/>
         
         <!-- Shop Portrait -->
         <shop-portrait
-        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering}"
+        class="animated"
+        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering }"
         key="shopPortrait"/>
     </section>
 </section>
@@ -43,12 +48,6 @@ export default {
             storeState: store.state,
         }
     },
-    created(){
-        this.storeState.isEntering = true;
-    },
-    beforeDestroy() {
-        this.storeState.isEntering = false;
-    }
 }
 </script>
 

@@ -1,15 +1,11 @@
 <template>
-<section>
+<section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
     <section class="flexColumn animated"
     :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
         <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
 
-     <!--  Battle Helpers -->
-    <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="helper = ''" v-if="helper=='battle'"/>
-    </transition>
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
@@ -36,6 +32,11 @@
         @monster-is-dead="gameplayScene = 'shop'"
         />
     </section>
+    
+    <!--  Battle Helpers -->
+    <transition name="fade" mode="out-in">
+        <battle-help key="battleHelper" @close="helper = ''" v-if="helper=='battle'"/>
+    </transition>
 </section>
 </template>
 
@@ -57,19 +58,19 @@ export default {
     data() {
         return {
             helper: false,
-            isEntering: true,
             storeState: store.state,
         }
     },
-    created(){
-        this.storeState.isEntering = true;
-    },
-    beforeDestroy() {
-        this.storeState.isEntering = false;
-    }
 }
 </script>
 
 <style  scoped>
-
+    .dungeonPhaseWrapper {
+        position:relative;
+    }
+    battle-help {
+        position:absolute;
+        z-index:99999;
+        transition: all .4s ease-in-out;
+    }
 </style>
