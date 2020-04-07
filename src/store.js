@@ -217,7 +217,7 @@ export const store = {
                 { name: 'miracle', cost: 3, description: 'increases players max attack by 3' },
             ],
             saying:"Come in, are you hurt?",
-            shopTitle: "I can heal you, or perhaps you need the favor of the old gods?"
+            shopTitle: "I can heal you... or perhaps you need the favor of the old gods?"
           },
 
           {
@@ -267,5 +267,12 @@ export const store = {
     newShopkeep() {
       let randomNumber = Math.floor(Math.random() * Math.floor(3));
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
+    },
+    sceneChange(scene) {
+      this.state.isEntering = false;
+      setTimeout(() => {
+        this.state.phase = scene;
+        this.state.isEntering = true;
+      }, 100);
     }
 };
