@@ -90,7 +90,8 @@ hr {
 }
 
 .textCenter {
-  margin:10px 10px 20px 10px;
+  margin:5px 5px 10px 5px;
+  font-size:14px;
 }
 
 h2 {
