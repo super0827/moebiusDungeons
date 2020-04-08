@@ -315,7 +315,7 @@ export const store = {
             portrait:require("./assets/imgs/monsters/demon.png"), 
             coins:5, health:25, armor:4, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
-            warning: "Human-like but one thing proves, instead of feet they haver black hooves."
+            warning: "Human-like but one thing proves, instead of feet they have black hooves."
           },
           {
             name:"banshee",
