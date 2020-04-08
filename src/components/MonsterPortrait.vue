@@ -63,8 +63,10 @@
                 purple : portEffectPurple 
               }"
             >
-            </section>  
+            </section> 
           </transition>
+
+          <section v-if="storeState.monster.dire" class="direOverlay"></section>
       </section>
       
       <section class="flexRow stats">
@@ -136,9 +138,6 @@ export default {
     this.monsterDead = false;
     }
   },
-  created() {
-    store.newMonster();
-  },
    mounted() { 
     //sets animation state of monster attacking 
     EventBus.$on('monster-attacking', () => {
@@ -181,8 +180,9 @@ export default {
           if(this.storeState.finalBoss == true ){
               store.sceneChange('WinScreen');
             } else {
-              store.sceneChange('ShopPhase')
+              store.sceneChange('ShopPhase');
           }
+          this.storeState.player.coins += this.storeState.monster.coins;
           
       }
     });
@@ -197,6 +197,11 @@ export default {
   height:233px;
   grid-template-columns: 100%;
   grid-template-rows: 33% 34% 33%;
+}
+
+.portrait {
+  grid-row: 1/4;
+  grid-column:1/2;
 }
 
 .attackValue{
@@ -246,12 +251,17 @@ export default {
 
 .green {
     background: linear-gradient(0deg, rgb(16, 187, 87) 0%, rgba(255,192,0,0) 100%);
-
 }
 
 .damagedOverlay {
   grid-row:3/4;
   grid-column:1/2;
+}
+
+.direOverlay{
+  grid-row:1/4;
+  grid-column:1/2;
+  background:rgba(255, 0, 98, 0.308);
 }
 
 .damageReadout {
