@@ -1,7 +1,7 @@
 <template>
 <section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
     <section class="flexColumn animated"
-    :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
+    :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
         <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
@@ -21,7 +21,7 @@
         <!-- Dungeon Controls -->
         <battle-controls
         class="animated"
-        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
+        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
         key="battleControls"/>
 
         <!-- Monster Portrait -->
