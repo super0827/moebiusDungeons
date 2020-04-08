@@ -1,7 +1,7 @@
 <template>
 <section key="shopPhaseWrapper">
     <section class="flexColumn animated"
-        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
+        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
     
         <img key="shopSigil" class="iconImageSize" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
         <h1 class="textCenter phaseName">SHOP</h1> 
@@ -17,7 +17,7 @@
         <!-- Shop Controls -->
         <shop-controls
         class="animated"
-        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering }"
+        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering }"
         key="shopControls"/>
         
         <!-- Shop Portrait -->
