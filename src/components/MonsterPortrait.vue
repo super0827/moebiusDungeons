@@ -138,7 +138,6 @@ export default {
   },
   created() {
     store.newMonster();
-    store.newShopkeep();
   },
    mounted() { 
     //sets animation state of monster attacking 
