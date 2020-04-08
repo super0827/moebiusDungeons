@@ -3,9 +3,12 @@ import shuffle from 'lodash.shuffle';
 export const store = {
     state: {
         player: {type: Object},
+        playerTraits: [],
+        playerTraitsTemp: [],
         monster: {type: Object},
         shopkeep: {type: Object},
         gameStats: {type: Object},
+        shopInventory: [],
         monsterRoster: 0,
         phase: "CharacterSelect",
         finalBoss: false,
@@ -13,7 +16,7 @@ export const store = {
     },
     characters: { 
         monsterCharacters: [
-            // Level 1   
+            // Level 1 NORMAL  
           {
            name: "emptyObject",
           },
@@ -66,7 +69,7 @@ export const store = {
             warning: "Strong enough to maim and kill, gross enough your lunch might spill."
           },
 
-            // Level 2
+            // Level 2 NORMAL
           {
             name:"ghost",
             type:'monster', 
@@ -87,7 +90,7 @@ export const store = {
             name:"curse",
             type:'monster', 
             portrait:require("./assets/imgs/monsters/curse.png"), 
-            coins:2, health:16, armor:4, attackMax:12, attackType: "magical",
+            coins:1, health:16, armor:4, attackMax:10, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "A faint feeling of unluck first, your body hurts, you feel your worst."
           },
@@ -100,8 +103,111 @@ export const store = {
             warning: "Shadows hide two men from sight. Their motives born of moral spite."
           },
               
-              // Level 3
-          
+          // Level 1 VIRULENTS
+          {
+            dire:true,
+            name:"Virulent bats",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/bats.png"), 
+            coins:1, health:18, armor:1, attackMax:5, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning:"Bright red eyes, fangs meant to slice. To stay away is my advice."
+        },
+          {
+            dire: true,
+            name:"Virulent imps",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/imps.png"), 
+            coins:2, health:12, armor:1, attackMax:2, attackType: "magical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!"
+          },
+          {
+            dire: true,
+            name:"Virulent slime",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/slime.png"), 
+            coins:2, health:10, armor:2, attackMax:6, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "One wrong step to right or left is sure to spell your slimy death."
+          },
+          {
+            dire: true,
+            name:"Virulent kobold",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/kobold.png"), 
+            coins:2, health:11, armor:1, attackMax:6, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!"
+          },
+          {
+            dire: true,
+            name:"Virulent gnoll",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/gnoll.png"), 
+            coins:2, health:14, armor:2, attackMax:5, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "a warning growl behind sharp teeth, quickly now your sword unsheath."
+          },
+          {
+            dire: true,
+            name:"Virulent goblins",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/goblins.png"), 
+            coins:3, health:17, armor:2, attackMax:6, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "Strong enough to maim and kill, gross enough your lunch might spill."
+          },
+
+          //MIMIC!
+          {
+            name:"mimic",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/mimic.png"), 
+            coins:4, health:18, armor:3, attackMax:10, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "You reach out to your surprise, You're met by big bright yellow eyes."
+          },
+
+          // LEVEL 2 VIRULENTS
+          {
+            dire:true,
+            name:"virulent ghost",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/ghost.png"), 
+            coins:3, health:16, armor:2, attackMax:9, attackType: "magical",
+            attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
+            warning: "You lay awake at midnight hour, sounds unearthly shape your cower."
+          },
+          {
+            dire:true,
+            name:"virulent lizardman",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/lizardman.png"), 
+            coins:3, health:18, armor:2, attackMax:9, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "Lizard senses seek out prey, poison venom helps them slay."
+          },
+          {
+            dire:true,
+            name:"virulent curse",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/curse.png"), 
+            coins:1, health:16, armor:4, attackMax:12, attackType: "magical",
+            attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
+            warning: "A faint feeling of unluck first, your body hurts, you feel your worst."
+          },
+          {
+            dire:true,
+            name:"virulent bandits",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/bandits.png"), 
+            coins:4, health:15, armor:2, attackMax:8, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "Shadows hide two men from sight. Their motives born of moral spite."
+          },
+
+          //MIMIC
           {
             name:"mimic",
             type:'monster', 
@@ -110,6 +216,8 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You reach out to your surprise, You're met by big bright yellow eyes."
           },
+
+          // LEVEL 3 NORMAL
           {
             name:"ghoul",
             type:'monster', 
@@ -135,7 +243,36 @@ export const store = {
             warning: "into mud as thick as tar, your skin wil boil, bubble, and scar"
           },
 
-            // Level 4
+          //Level 3 VIRULENTS
+          {
+            dire:true,
+            name:"virulent ghoul",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/ghoul.png"), 
+            coins:4, health:20, armor:3, attackMax:10, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!"
+          },
+          {
+            dire:true,
+            name:"virulent skeleton",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/skeleton.png"), 
+            coins:4, health:21, armor:3, attackMax:11, attackType: "physical",
+            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            warning:"strong dark magic guides their hand, to stab and fight and kill and stand."
+          },
+          {
+            dire:true,
+            name:"virulent swampling",
+            type:'monster', 
+            portrait:require("./assets/imgs/monsters/swampling.png"), 
+            coins:5, health:23, armor:2, attackMax:10, attackType: "magical",
+            attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
+            warning: "into mud as thick as tar, your skin wil boil, bubble, and scar"
+          },
+
+            // Level 4 NORMALS
 
           {
             name:"harpy",
@@ -197,7 +334,7 @@ export const store = {
             portrait:require("./assets/imgs/monsters/lich.png"), 
             coins:10, health:36, armor:8, attackMax:12, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
-            warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.'
+            warning: "Whirling nacre tp body bound, a yearning mind in learn-lust drown."
           },
           {
             name:"dragon",
@@ -205,7 +342,7 @@ export const store = {
             portrait:require("./assets/imgs/monsters/dragon.png"), 
             coins:10, health:40, armor:8, attackMax:12, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
-            warning: "Whirling nacre tp body bound, a yearning mind in learn-lust drown."
+            warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.'
           },
         ],
         shopKeeps: [
@@ -213,9 +350,12 @@ export const store = {
             name:"cleric", 
             portrait:require("./assets/imgs/shopkeepers/cleric.png"),
             items: [
-                { name: 'minor heal', cost: 1, description: 'heals player for 6 hp' },
-                { name: 'blessing', cost: 2, description: 'increases players armor by 1' },
-                { name: 'miracle', cost: 3, description: 'increases players max attack by 3' },
+                { bought: false, noSale: false, name: 'minor heal', cost: 1, description: '+6 HP', buy: () => { store.state.player.health += 6 } },
+                { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1 } },
+                { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', buy: () => {store.state.monster.coins *= 2 }},
+                { bought: false, noSale: false, name: ' great blessing', cost: 2, description: '+3 ARM', buy: () => { store.state.player.armor += 3 } },
+                { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 } },
+                { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', buy: () => { store.state.player.attackMax += 5 } },
             ],
             saying:"Come in, are you hurt?",
             shopTitle: "I can heal you... or perhaps you need the favor of the old gods?"
@@ -225,9 +365,12 @@ export const store = {
             name:"graverobber", 
           portrait:require("./assets/imgs/shopkeepers/graverobber.png"),
           items: [
-            { name: 'nacre charm', cost: 1, description: 'ATK +1 | ARM +1 | HP +1'},
-            { name: 'detriment bangle', cost: 2, description: "Halves your HP | +3 ARM"},
-            { name: 'Demon Ring', cost: 3, description: 'ATK Type becomes Pyhsical | x2 ATK '},
+            { bought: false, noSale: false, name: 'nacre charm', cost: 1, description: 'ATK +1 | ARM +1 | HP -5', buy: () => { store.state.player.health -= 5; store.state.player.armor += 1; store.state.player.attackMax += 1 } },
+            { bought: false, noSale: false, name: 'detriment bangle', cost: 1, description: "Halves your HP | +3 ARM", buy: () => { store.state.player.armor += 3; store.state.player.health = Math.ceil(store.state.player.health / 2);} },
+            { bought: false, noSale: false, name: 'unlucky trinket', cost: 3, description: "Grants Double Attack to you and monsters.", buy: () => { store.state.playerTraits.push('double attack'); } },
+            { bought: false, noSale: false, name: 'hollow bone', cost: 2, description: "+4 ATK for next battle", buy: () => { store.state.playerTraitsTemp.push("hollow bone") } },
+            { bought: false, noSale: false, name: 'Demon Ring', cost: 4, description: 'ATK Type becomes Pyhsical | x2 ATK', buy: () => {store.state.monster.coins *= 2 }},
+            { bought: false, noSale: false, name: 'Dessicated Doll', cost: 5, description: 'Revive with 10 HP on death.', buy: () => { store.state.playerTraits.push('dessicated doll') }},
           ],
           saying:"Trust me, nothing I sell is cursed.",
           shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal."
@@ -236,9 +379,17 @@ export const store = {
           {name:"merchant", 
           portrait:require("./assets/imgs/shopkeepers/merchant.png"),
           items: [
-            { name: 'rations', cost: 1, description: '+5 HP' },
-            { name: 'armor kit', cost: 2, description: '+1 ARM' },
-            { name: 'whetstone', cost: 2, description: '+2 ATK' },
+            { bought: false, noSale: false, name: 'rations', cost: 1, description: '+5 HP', buy: () => { store.state.player.health += 5; } },
+            { bought: false, noSale: false, name: 'sewing kit', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1; } },
+            { bought: false, noSale: false, name: 'Mettle Poultice', cost: 1, description: '+2 ATK', buy: () => { store.state.player.attackMax += 2; } },
+            
+            { bought: false, noSale: false, name: 'simple meal', cost: 2, description: '+10 HP', buy: () => { store.state.player.health += 10; } },
+            { bought: false, noSale: false, name: 'armor kit', cost: 3, description: '+2 ARM', buy: () => { store.state.player.armor += 2; } },
+            { bought: false, noSale: false, name: 'Mettle Draght', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5; } },
+            
+            { bought: false, noSale: false, name: 'kings feast', cost: 4, description: '+15 HP', buy: () => { store.state.player.health += 15; } },
+            { bought: false, noSale: false, name: 'etching kit', cost: 5, description: '+3 ARM', buy: () => { store.state.player.armor += 5; } },
+            { bought: false, noSale: false, name: 'Mettle Vulnerary', cost: 5, description: '+8 ATK', buy: () => { store.state.player.attackMax += 8; } },
           ],
           saying:"Friend or foe, what are ya' buyin'?",
           shopTitle: "It's not much, but it's what I've got. All priced to move."
@@ -247,9 +398,19 @@ export const store = {
           {name:"witch", 
           portrait:require("./assets/imgs/shopkeepers/witch.png"),
           items: [
-            { name: 'red potion', cost: 1, description: '+8 HP' },
-            { name: 'banded charm', cost: 3, description: '+2 ATK | +1 ARM' },
-            { name: 'blood ritual', cost: 5, description: 'Thirds your HP | + lost HP to your ATK' },
+            { bought: false, noSale: false, name: 'weak enchantment', cost: 1, description: '+2 ATK', buy: () => { store.state.player.attackMax += 2; } },
+            { bought: false, noSale: false, name: 'red potion', cost: 1, description: '+6 HP', buy: () => { store.state.player.health += 6; } },
+            { bought: false, noSale: false, name: 'banded charm', cost: 1, description: '+1 ATK | +1 ARM', buy: () => { store.state.player.armor += 1; store.state.player.attackMax += 1; } },
+            
+            { bought: false, noSale: false, name: 'arcane binding', cost: 2, description: '+2 ATK | +1 ARM', buy: () => { store.state.player.armor += 1; store.state.player.attackMax += 2; } },
+            { bought: false, noSale: false, name: 'ochre elixir', cost: 2, description: '+6 HP | +1 ATK', buy: () => { store.state.player.health += 6; store.state.player.attackMax += 1; } },
+            { bought: false, noSale: false, name: 'mettle earring', cost: 2, description: '+1 ARM | +1 ATK | +6 HP', buy: () => { store.state.player.health += 6; store.state.player.attackMax += 1; store.state.player.armor += 1; } },
+            
+            { bought: false, noSale: false, name: 'ancient ward', cost: 3, description: '+3 ATK | +2 ARM', buy: () => { store.state.player.armor += 2; store.state.player.attackMax += 3; } },
+            { bought: false, noSale: false, name: 'special drink', cost: 3, description: '+10 HP | +2 ATK', buy: () => { store.state.player.health += 10; store.state.player.attackMax += 2; } },
+            { bought: false, noSale: false, name: 'mettle earring', cost: 3, description: '+1 ARM | +3 ATK | +8 HP', buy: () => { store.state.player.health += 8; store.state.player.attackMax += 3; store.state.player.armor += 1; } },
+            
+            { bought: false, noSale: false, name: 'blood ritual', cost: 5, description: 'Thirds your HP | + lost HP to your ATK', buy: () => { let temp = Math.ceil((store.state.player.health / 3) * 2); store.state.player.health -= temp; store.state.player.attackMax += temp; } },
           ],
           saying:"Everything you see, all hand enchanted.",
           shopTitle: "Some of my inventory tends to be virulent. Browse at your own risk."
@@ -259,33 +420,31 @@ export const store = {
     newMonster() {
         // Sets monsterRoster to a new value, adding 1-4 to the old value
         this.state.monsterRoster += Math.floor(Math.random() * Math.floor(4)) + 1;
-
-        if(this.state.monsterRoster > this.characters.monsterCharacters.length) {
-          this.state.monsterRoster = this.characters.monsterCharacters.length - 1;
+        
+        if(this.state.monsterRoster > this.characters.monsterCharacters.length - 1) {
+          this.state.monsterRoster = this.characters.monsterCharacters.length;
           this.state.finalBoss = true; 
+          console.log(`BOSS: there are ${this.characters.monsterCharacters.length} monsters in the list`);
+          console.log(`BOSS: the roster is at index ${this.state.monsterRoster}`);
+        }else {
+          console.log(`there are ${this.characters.monsterCharacters.length} monsters in the list`);
+          console.log(`the roster is at index ${this.state.monsterRoster}`);
+          this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
         }
-
-        this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
+        
     },
     newShopkeep() {
-      let randomNumber = Math.floor(Math.random() * Math.floor(this.characters.shopKeeps.length) - 1);
+      this.newMonster();
+      let randomNumber = Math.floor(Math.random() * Math.floor(this.characters.shopKeeps.length));
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
       this.state.shopkeep.items = shuffle(this.state.shopkeep.items);
+      this.state.shopInventory = this.state.shopkeep.items.slice(0,3);
     },
     sceneChange(scene) {
       this.state.isEntering = false;
 
       setTimeout(() => {
-        switch(scene){
-          case "DungeonPhase":
-            this.newMonster();
-          break;
-          case "ShopPhase":  
-            this.newShopkeep();
-          break;
-          default:
-          break;  
-        }
+            this.newShopkeep(); 
       }, 100);
       
       setTimeout(() => {
