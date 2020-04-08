@@ -258,21 +258,29 @@ export const store = {
     newMonster() {
         // Sets monsterRoster to a new value, adding 1-4 to the old value
         this.state.monsterRoster += Math.floor(Math.random() * Math.floor(4)) + 1;
+
         if(this.state.monsterRoster > this.characters.monsterCharacters.length) {
           this.state.monsterRoster = this.characters.monsterCharacters.length - 1;
           this.state.finalBoss = true; 
         }
+
         this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
     },
     newShopkeep() {
-      let randomNumber = Math.floor(Math.random() * Math.floor(3));
+      let randomNumber = Math.floor(Math.random() * Math.floor(this.characters.shopKeeps.length) - 1);
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
     },
     sceneChange(scene) {
       this.state.isEntering = false;
+      
+      setTimeout(() => {
+        this.newShopkeep();
+        this.newMonster();
+      }, 100);
+      
       setTimeout(() => {
         this.state.phase = scene;
         this.state.isEntering = true;
-      }, 100);
+      }, 200);
     }
 };
