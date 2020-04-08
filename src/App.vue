@@ -4,9 +4,10 @@
     <!-- DEBUGGING -->
     <section class="debugBar">
       <p>METHODS</p>
-      <section>Kill Player</section>
-      <section @click="killMonster()">Kill Monster</section>
-      <section>New Monster</section>
+      <section @click="store.newMonster()">New Monster</section>
+      <section @click="storeState.monsterRoster = 0">Reset Monster</section>
+      <section @click="storeState.player.coins += 1">+1 Coin</section>
+      <section @click="storeState.player.coins += 10">+10 Coins</section>
       <br>
       <p>END GAME</p>
       <section @click="store.sceneChange('WinScreen')">Win Screen</section>
