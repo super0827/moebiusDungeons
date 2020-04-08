@@ -1,3 +1,5 @@
+import shuffle from 'lodash.shuffle';
+
 export const store = {
     state: {
         player: {type: Object},
@@ -9,8 +11,7 @@ export const store = {
         finalBoss: false,
         isEntering: true,
     },
-    characters: {
-        playerClasses: "",
+    characters: { 
         monsterCharacters: [
             // Level 1   
           {
@@ -269,13 +270,22 @@ export const store = {
     newShopkeep() {
       let randomNumber = Math.floor(Math.random() * Math.floor(this.characters.shopKeeps.length) - 1);
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
+      this.state.shopkeep.items = shuffle(this.state.shopkeep.items);
     },
     sceneChange(scene) {
       this.state.isEntering = false;
-      
+
       setTimeout(() => {
-        this.newShopkeep();
-        this.newMonster();
+        switch(scene){
+          case "DungeonPhase":
+            this.newMonster();
+          break;
+          case "ShopPhase":  
+            this.newShopkeep();
+          break;
+          default:
+          break;  
+        }
       }, 100);
       
       setTimeout(() => {
