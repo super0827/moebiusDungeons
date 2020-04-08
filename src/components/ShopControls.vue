@@ -3,48 +3,28 @@
   
   <!-- Shop Title Description -->
   <h2 class="textCenter">{{ storeState.shopkeep.shopTitle }}</h2>
-    <section class="buySlot">
+
+    <section
+    v-for="items in shopInventory"
+    :key="items.name"
+    :name="items.name"
+    :description="items.description"
+    :cost="items.cost"
+    @click="setPlayer(characters)"
+    class="buySlot">
       <section class="information">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ storeState.shopkeep.items[0].cost }}</h1>
+          <h1>{{ cost }}</h1>
         </article>
-      
+  
         <article>
-          <h2 :class="{'striked' : !tierOne}">{{ storeState.shopkeep.items[0].name }}</h2>
-          <p> {{ storeState.shopkeep.items[0].description }} </p>
+          <h2 :class="{'striked' : !tierOne}">{{ name }}</h2>
+          <p> {{ description }} </p>
         </article>
       </section>
     </section>
 
-    <section class="buySlot">
-      <section class="information">
-        <article class="cost">
-          <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ storeState.shopkeep.items[1].cost }}</h1>
-        </article>
-      
-        <article>
-          <h2 :class="{'striked' : !tierTwo}">{{ storeState.shopkeep.items[1].name }}</h2>
-          <p> {{ storeState.shopkeep.items[1].description }} </p>
-        </article>
-      </section>
-    </section>
-
-    <section class="buySlot">
-      <section class="information">
-        <article class="cost">
-          <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ storeState.shopkeep.items[2].cost }}</h1>
-        </article>
-      
-        <article>
-          <h2 :class="{'striked' : !tierThree}">{{ storeState.shopkeep.items[2].name }}</h2>
-          <p> {{ storeState.shopkeep.items[2].description }} </p>
-        </article>
-      </section>
-
-    </section>
 
 
 <hr>
@@ -68,6 +48,13 @@ export default {
       tierOne: false,
       tierTwo: false,
       tierThree: false,
+    }
+  },
+  computed:{
+    shopInventory: function() {
+        //Pick three random slots from shopkeeper inventory
+        //
+        return this.storeState.shopkeep.items;
     }
   },
 }
