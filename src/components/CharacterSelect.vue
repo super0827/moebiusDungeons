@@ -31,7 +31,7 @@
         </section>
     </section>
 
-<h1 id="about"> HUH? </h1>
+<h1 id="about" @click="store.sceneChange('InstructionsScreen')"> HUH? </h1>
 </section>
 </template>
 
@@ -42,6 +42,7 @@ export default {
   name: 'CharacterSelect',
   data() {
       return {
+          store: store,
           storeState: store.state,
           characterClasses: [
               {name:"swordsman",
@@ -84,6 +85,7 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
         store.sceneChange('DungeonPhase');
+        store.newMonster();
       }
   },
 }
