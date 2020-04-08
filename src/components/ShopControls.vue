@@ -2,36 +2,39 @@
 <section class="columns battleOptions">
   
   <!-- Shop Title Description -->
-  <h2 class="textCenter">{{ storeState.shopkeep.shopTitle }}</h2>
+  <h2 class="textCenter">{{ storeState.shopkeep.shopTitle}}</h2>
 
     <section
-    v-for="buyable in storeState.shopkeep.items"
+    v-for="buyable in storeState.shopInventory"
     :key="buyable.name"
     :name="buyable.name"
+    :id="buyable.id"
     :description="buyable.description"
     :cost="buyable.cost"
-    @click="setPlayer(characters)"
+    :class="{'striked' : buyable.cost > storeState.player.coins, 'animated shake faster' : buyable.noSale }"
+    @click="buy(buyable)"
     class="buySlot">
-      <section class="information">
+      <section class="information" :class="{'bought' : buyable.bought}">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
           <h1>{{ buyable.cost }}</h1>
         </article>
   
         <article>
-          <h2 :class="{'striked' : striked }">{{ buyable.name }}</h2>
+          <h2>{{ buyable.name }}</h2>
           <p> {{ buyable.description }} </p>
         </article>
+
       </section>
+        <article class="boughtAlert" v-if="buyable.bought">
+          <h1>BOUGHT</h1>
+        </article>
     </section>
 
-
-
-<hr>
-
+    <hr>
 
     <section class="buySlot">
-      <h3 @click="storeState.phase = 'DungeonPhase'">BACK TO THE DUNGEONS</h3>
+      <h3 @click="store.sceneChange('DungeonPhase')">BACK TO THE DUNGEONS</h3>
     </section>
 
 </section>
@@ -45,14 +48,24 @@ export default {
   data() {
     return {
       storeState: store.state,
-      
+      shake: false,
+      store: store,
     }
   },
-  computed: {
-    striked: function() {
-      return true;
+  methods: {
+    buy(itemBought) {
+      if(itemBought.cost <= this.storeState.player.coins && itemBought.bought === false) {
+        itemBought.buy();
+        itemBought.bought = true;
+        this.storeState.player.coins -= itemBought.cost;
+      } else {
+        itemBought.noSale = true;
+        setTimeout(() => {
+        itemBought.noSale = false;
+        }, 500);
+      }
     }
-  }
+  },
 }
 </script>
 
@@ -149,8 +162,37 @@ p {
   height:50px;
 }
 
-h1 {
+.striked {
+  text-decoration:line-through;
+  background: rgb(255, 75, 75);
+  border:crimson 2px solid;
+}
+
+.striked:hover{
+  cursor:not-allowed;
+  background: rgb(255, 24, 24);
+}
+
+.bought {
+  cursor:not-allowed;
+  opacity:.2;
+}
+
+.boughtAlert h1{
   color:black;
-  text-shadow: rgb(255, 153, 0) 2px 2px 2px;
+  text-shadow: none;
+  position:absolute;
+  top:20px;
+  left:6px;
+  margin:0;
+  padding:0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  opacity:.5;
+}
+
+h1 {
+  color:white;
+  text-shadow: black -2px 2px 2px;
 }
 </style>
