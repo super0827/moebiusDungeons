@@ -5,22 +5,22 @@
   <h2 class="textCenter">{{ storeState.shopkeep.shopTitle }}</h2>
 
     <section
-    v-for="items in shopInventory"
-    :key="items.name"
-    :name="items.name"
-    :description="items.description"
-    :cost="items.cost"
+    v-for="buyable in storeState.shopkeep.items"
+    :key="buyable.name"
+    :name="buyable.name"
+    :description="buyable.description"
+    :cost="buyable.cost"
     @click="setPlayer(characters)"
     class="buySlot">
       <section class="information">
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ cost }}</h1>
+          <h1>{{ buyable.cost }}</h1>
         </article>
   
         <article>
-          <h2 :class="{'striked' : !tierOne}">{{ name }}</h2>
-          <p> {{ description }} </p>
+          <h2 :class="{'striked' : striked }">{{ buyable.name }}</h2>
+          <p> {{ buyable.description }} </p>
         </article>
       </section>
     </section>
@@ -45,18 +45,14 @@ export default {
   data() {
     return {
       storeState: store.state,
-      tierOne: false,
-      tierTwo: false,
-      tierThree: false,
+      
     }
   },
-  computed:{
-    shopInventory: function() {
-        //Pick three random slots from shopkeeper inventory
-        //
-        return this.storeState.shopkeep.items;
+  computed: {
+    striked: function() {
+      return true;
     }
-  },
+  }
 }
 </script>
 
