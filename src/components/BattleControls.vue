@@ -36,22 +36,22 @@ export default {
             return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         },
         tradeBlows(attacker, defender, special) {
+            // conditional prevents attacking while characters are animating
             if(!this.combatActive && !this.monsterAttacking) {
                 
                 //Determines attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
-                console.log(`${attacker.name} attack value starts at ${attackRoll}`)
+                console.log(`${attacker.name}'s attack is ${attackRoll}`);
                 
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
                 }
-
-                if(attacker.typ == 'monster') {
+                else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
                 }
 
-                // sets player portrait state in PlayerPortrait.vue
+                // animates attackers portrait to wobble
                 EventBus.$emit(`${attacker.type}-attacking`);
                 
                 //To be used in additional attack types 
@@ -62,21 +62,26 @@ export default {
                 // runs if player attack type is physical
                 if (attacker.attackType == 'physical') {
                     //recalculates damage subtracting defenders armor value from attack
-                attackRoll = Math.max(0, (attackRoll - defender.armor));
-                    //if monster blocked the attack
+                    attackRoll = Math.max(0, (attackRoll - defender.armor));
+                    
+                    //if monster blocked the attack completely
                     if(attackRoll <= 0){
-                        //Listener in MonsterPortrait.vue
+                        //animates defender portrait blocking
                         EventBus.$emit(`${defender.type}-blocked`);
-                        //Listener in MonsterPortrait.vue
+                        
+                        //checks to see if the defender is dead
                         setTimeout(function(){
                             EventBus.$emit(`is-${defender.type}-dead`);
                         }, 1500);
                     }
-                    //damage above 0 is dealt
-                    else if (attackRoll >= 1){
-                        console.log(`${defender.name} blocked ${defender.armor} so attack deals ${attackRoll} `);
-                        // Animate Monster recoiling in MonsterPortrait
+                    
+                    // else some damage is dealt
+                    else {
+                        console.log(`${defender.name} blocked ${defender.armor} - so attack deals ${attackRoll} `);
+                        
+                        // Animate defender pulsing
                         EventBus.$emit(`${defender.type}-recoil`);
+                        
                         //Monster attacked with physical damage
                         EventBus.$emit(`${defender.type}-physical-damage`, attackRoll);
 
