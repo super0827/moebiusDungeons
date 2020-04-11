@@ -444,7 +444,7 @@ export const store = {
       this.state.isEntering = false;
 
       setTimeout(() => {
-            this.newShopkeep(); 
+            this.newShopkeep();
       }, 100);
       
       setTimeout(() => {

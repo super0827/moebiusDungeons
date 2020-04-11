@@ -9,7 +9,7 @@
     <br>
 
     <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="tradeBlows(storeState.player, storeState.monster)">Trade Blows</h2>
-    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(playerData, monsterData)">Be Reckless</h2>
+    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(storeState.player, storeState.monster)">Be Reckless</h2>
     
     <br>
 
@@ -29,13 +29,14 @@ export default {
             storeState: store.state,
             combatActive: false,
             monsterAttacking: false,
+            specialAttack: "",
         }
     },
     methods:{
         randomRoll(rollMax){
             return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         },
-        tradeBlows(attacker, defender, special) {
+        tradeBlows(attacker, defender) {
             // conditional prevents attacking while characters are animating
             if(!this.combatActive && !this.monsterAttacking) {
                 
@@ -43,6 +44,8 @@ export default {
                 let attackRoll = this.randomRoll(attacker.attackMax);
                 console.log(`${attacker.name}'s attack is ${attackRoll}`);
                 
+
+
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
@@ -53,65 +56,110 @@ export default {
 
                 // animates attackers portrait to wobble
                 EventBus.$emit(`${attacker.type}-attacking`);
-                
-                //To be used in additional attack types 
-                if(special == 'beReckless'){
-                    attackRoll += attackRoll / 2;
+
+
+
+
+
+                // Physical ATTACKER
+                // Physical ATTACKER
+                // Physical ATTACKER
+                // runs if player attack type is physical
+                if (attacker.attackType === 'physical') {
+
+                    //Be Reckless Rules
+                    //For Monster Turn
+                    if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
+                         //lowers players defense
+                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                         console.log(`players defense halved from be Reckless`);
+                    }
+                    //For Player Turn
+                    else if (this.specialAttack === 'beReckless' && attacker.type === "player") {
+                        console.log(`---BE RECKLESS ${attacker.type}---`)
+                        attackRoll = Math.ceil(attackRoll * 1.5);
+                        console.log(`be reckless attack = ${attackRoll}`)
+                        attackRoll = Math.max(0, (attackRoll - defender.armor));
+                        console.log(`players attack from be reckless - monster armor = ${attackRoll}`)
+                    }
+
+                    //Trade Blows physical calculation if normal attack
+                    else {
+                        console.log(`---TRADE BLOWS ${attacker.type}---`)
+                        //recalculates damage normally subtracting defenders armor value from attack
+                        attackRoll = Math.max(0, (attackRoll - defender.armor));
+                    }
+
+                    console.log(`${defender.name} blocked ${defender.armor} - so attack deals ${attackRoll} `);
                 }
 
-                // runs if player attack type is physical
-                if (attacker.attackType == 'physical') {
-                    //recalculates damage subtracting defenders armor value from attack
-                    attackRoll = Math.max(0, (attackRoll - defender.armor));
-                    
-                    //if monster blocked the attack completely
-                    if(attackRoll <= 0){
-                        //animates defender portrait blocking
-                        EventBus.$emit(`${defender.type}-blocked`);
-                        
-                        //checks to see if the defender is dead
-                        setTimeout(function(){
-                            EventBus.$emit(`is-${defender.type}-dead`);
-                        }, 1500);
+
+
+                //MAGIC ATTACKER
+                //MAGIC ATTACKER
+                //MAGIC ATTACKER
+                //runs if attacker attack type is magical
+                else if (attacker.attackType === "magical") {
+                    //runs during monsters turn
+                    if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
+                         //lowers players defense
+                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                         console.log(`players defense halved from be Reckless`);
                     }
+                    //For Player Turn
+                    else if (this.specialAttack === 'beReckless' && attacker.type === "player") {
+                        console.log(`---BE RECKLESS ${attacker.type}---`);
+                        attackRoll = Math.ceil(attackRoll * 1.5);
+                        console.log(`be reckless attack = ${attackRoll}`);
+                    }
+                }
+
+                //if defender blocked the attack completely
+                if(attackRoll === 0){
+                    //animates defender portrait blocking
+                    EventBus.$emit(`${defender.type}-blocked`);
                     
-                    // else some damage is dealt
-                    else {
-                        console.log(`${defender.name} blocked ${defender.armor} - so attack deals ${attackRoll} `);
-                        
-                        // Animate defender pulsing
-                        EventBus.$emit(`${defender.type}-recoil`);
-                        
-                        //Monster attacked with physical damage
-                        EventBus.$emit(`${defender.type}-physical-damage`, attackRoll);
+                    //checks to see if the defender is dead
+                    setTimeout(function(){
+                        EventBus.$emit(`is-${defender.type}-dead`);
+                    }, 1500);
+                }
 
-                        // iterate over damage
-                        for(let i = 1; i <= attackRoll; i++) {
-                            setTimeout(function(){
-                                //Update monsters health in Monster Portrait
-                                EventBus.$emit(`${defender.type}-takes-damage`);
-                                console.log(i, attackRoll);
 
-                                if (i == attackRoll) {
-                                    setTimeout(function(){
-                                        EventBus.$emit(`is-${defender.type}-dead`);
-                                    }, 1300);
-                                }
-                            }, 120 * i);
-                        }
+                // else some damage is dealt
+                else {
+                    
+                    // Animate defender pulsing
+                    EventBus.$emit(`${defender.type}-recoil`);
+
+                    //Monster attacked with physical damage
+                    EventBus.$emit(`${defender.type}-physical-damage`, attackRoll);
+
+                    // iterate over damage
+                    for(let i = 1; i <= attackRoll; i++) {
+                        setTimeout(function(){
+                            //Update monsters health in Monster Portrait
+                            EventBus.$emit(`${defender.type}-takes-damage`);
+                            console.log(i, attackRoll);
+
+                            if (i === attackRoll) {
+                                setTimeout(function(){
+                                    EventBus.$emit(`is-${defender.type}-dead`);
+                                }, 1300);
+                            }
+                        }, 120 * i);
                     }
                 }
             }
         },
         beReckless(){
-            this.tradeBlows(this.storeState.player, this.storeState.monster,)
+            this.specialAttack = "beReckless"
+            this.tradeBlows(this.storeState.player, this.storeState.monster);
+
         },
         turnTail(){
             console.log("turning tail");
         },
-    },
-    created() {
-        
     },
     beforeCreate() {
             EventBus.$on('monster-retaliate', () => {
