@@ -85,7 +85,6 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
         store.sceneChange('DungeonPhase');
-        store.newMonster();
       }
   },
 }

@@ -157,7 +157,7 @@ export default {
       this.afterArmorDamage = $event;
     });
 
-    //listen for player dealing 0 or less damage
+    //listen for attacker dealing 0 damage
     EventBus.$on("monster-blocked", () => { 
       this.blocked = true; 
       this.portEffect = true;
@@ -165,7 +165,7 @@ export default {
       
     });
 
-    //listens fot player dealing 1 or more damage.
+    //listens for attacker dealing 1 or more damage.
     EventBus.$on("monster-takes-damage", () => { 
       this.storeState.monster.health--;
     });
