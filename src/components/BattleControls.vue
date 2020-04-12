@@ -39,20 +39,22 @@ export default {
         tradeBlows(attacker, defender) {
             // conditional prevents attacking while characters are animating
             if(!this.combatActive && !this.monsterAttacking) {
-                
+                console.log(" ");
+                console.log(`---> ${attacker.name}'s turn <---`);
+                console.log(`${defender.name}'s HP STARTS AT:${defender.health}`)
+
                 //Determines attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
-                console.log(`${attacker.name}'s attack is ${attackRoll}`);
+                console.log(`${attacker.name} rolls ${attackRoll} damage`);
                 
-
-
-                // prevents player from spamming attack buttons
+                //if else if prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
                 }
                 else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
                 }
+
 
                 // animates attackers portrait to wobble
                 EventBus.$emit(`${attacker.type}-attacking`);
@@ -68,29 +70,34 @@ export default {
                 if (attacker.attackType === 'physical') {
 
                     //Be Reckless Rules
-                    //For Monster Turn
-                    if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
-                         //lowers players defense
-                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
-                         console.log(`players defense halved from be Reckless`);
-                    }
-                    //For Player Turn
-                    else if (this.specialAttack === 'beReckless' && attacker.type === "player") {
-                        console.log(`---BE RECKLESS ${attacker.type}---`)
+                    //For Player Turn during be reckless
+                    if (this.specialAttack === 'beReckless' && attacker.type === "player") {
+                        console.log(`---${attacker.type} is BEING RECKLESS ---`);
                         attackRoll = Math.ceil(attackRoll * 1.5);
-                        console.log(`be reckless attack = ${attackRoll}`)
+                        console.log(`attack increased to ${attackRoll}`)
                         attackRoll = Math.max(0, (attackRoll - defender.armor));
-                        console.log(`players attack from be reckless - monster armor = ${attackRoll}`)
+                        console.log(`${defender.name} blocks ${defender.armor} damage`)
+                    }
+                    
+                    //For Monster Turn during be reckless
+                    else if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
+                            //lowers players defense
+                            attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                            console.log(`players defense halved to ${Math.floor(defender.armor/2)} from BE RECKLESS`);
+                            console.log(`${defender.name} blocks for ${Math.floor(defender.armor/2)}`);
                     }
 
-                    //Trade Blows physical calculation if normal attack
+                    //Trade Blows physical reduction calculation if normal attack
                     else {
-                        console.log(`---TRADE BLOWS ${attacker.type}---`)
+                        console.log(`--- ${attacker.name} is TRADING BLOWS ---`);
                         //recalculates damage normally subtracting defenders armor value from attack
                         attackRoll = Math.max(0, (attackRoll - defender.armor));
+                        console.log(`${defender.name} blocks for ${defender.armor}`);
                     }
+                    
+                    //LOGGING ATTACK AND ARMOR VALUES
+                    console.log(`${attacker.name} deals ${attackRoll} damage`);
 
-                    console.log(`${defender.name} blocked ${defender.armor} - so attack deals ${attackRoll} `);
                 }
 
 
@@ -100,20 +107,26 @@ export default {
                 //MAGIC ATTACKER
                 //runs if attacker attack type is magical
                 else if (attacker.attackType === "magical") {
-                    //runs during monsters turn
-                    if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
-                         //lowers players defense
-                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
-                         console.log(`players defense halved from be Reckless`);
-                    }
-                    //For Player Turn
-                    else if (this.specialAttack === 'beReckless' && attacker.type === "player") {
+                    //For Player Turn be reckless
+                    if (this.specialAttack === 'beReckless' && attacker.type === "player") {
                         console.log(`---BE RECKLESS ${attacker.type}---`);
                         attackRoll = Math.ceil(attackRoll * 1.5);
                         console.log(`be reckless attack = ${attackRoll}`);
                     }
+                    //runs during monsters turn be reckless
+                    else if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
+                         //lowers players defense
+                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                         console.log(`players defense halved from be Reckless`);
+                    }
                 }
 
+
+
+
+                //DAMAGE BLOCKED OR DAMAGE CALCULATED
+                //DAMAGE BLOCKED OR DAMAGE CALCULATED
+                //DAMAGE BLOCKED OR DAMAGE CALCULATED
                 //if defender blocked the attack completely
                 if(attackRoll === 0){
                     //animates defender portrait blocking
@@ -121,6 +134,7 @@ export default {
                     
                     //checks to see if the defender is dead
                     setTimeout(function(){
+                        console.log(`${defender.name}'s Ending HP: ${defender.health}`);
                         EventBus.$emit(`is-${defender.type}-dead`);
                     }, 1500);
                 }
@@ -144,11 +158,13 @@ export default {
 
                             if (i === attackRoll) {
                                 setTimeout(function(){
+                                    console.log(`${defender.name}'s Ending HP: ${defender.health}`);
                                     EventBus.$emit(`is-${defender.type}-dead`);
                                 }, 1300);
                             }
                         }, 120 * i);
                     }
+
                 }
             }
         },
