@@ -182,8 +182,7 @@ export default {
             } else {
               store.sceneChange('ShopPhase');
           }
-          this.storeState.player.coins += this.storeState.monster.coins;
-          
+      this.storeState.player.coins += this.storeState.monster.coins; 
       }
     });
   },
