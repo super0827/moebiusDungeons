@@ -3,17 +3,18 @@
   key="monsterPortComp"
  class="columns" 
  :class="{
-  'animated tada' : monsterDead,
+  'animated tada' : storeAnim.monsterDead,
   }"
- @animationend="monsterFinished"
 >
     
       <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
       
       <section 
       class="portraitWrapper"
-      :class="{ 'animated pulse' : hurt, 'animated reverseWobble' : attacking, 'animated pulse' : blocked }"
-        @animationend="afterEnter"
+      :class="{ 'animated pulse' : storeAnim.hurt, 
+      'animated reverseWobble' : storeAnim.attacking, 
+      'animated pulse' : storeAnim.blocking 
+      }"
       >
         <!-- Monster Image -->
         <img 
@@ -27,7 +28,7 @@
           enter-active-class="animated jackInTheBox"
           leave-active-class="animated fadeOut"
         >
-          <h1 v-if="blocked" class="blocked">BLOCKED!</h1>
+          <h1 v-if="storeAnim.blocking" class="blocked">BLOCKED!</h1>
         </transition>
 
         <transition appear
@@ -35,12 +36,12 @@
           enter-active-class="animated pulse"
           leave-active-class="animated fadeOut"
         >
-          <section class="damageReadout" v-if="hurt">
-              <h2 class="calculatedDamage"> {{ afterArmorDamage }} </h2>
+          <section class="damageReadout" v-if="storeAnim.hurt">
+              <h2 class="calculatedDamage"> {{ storeState.playerafterArmorDealtDamage }} </h2>
              
              <section class="flexRow">
               <h2 class="attackValue">
-                {{ attackDamage }} 
+                {{ storeState.playerDealtDamage }} 
               </h2>
               <h3 class="versus">vs.</h3>
               <h2 class="armorValue">
@@ -55,12 +56,12 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <section v-if="portEffect" 
+            <section v-if="storeAnim.portEffect" 
               class="damagedOverlay"
               :class="{ 
-                red : portEffectRed, 
-                green : portEffectGreen, 
-                purple : portEffectPurple 
+                red : storeAnim.portEffectRed, 
+                green : storeAnim.portEffectGreen, 
+                purple : storeAnim.portEffectPurple 
               }"
             >
             </section> 
@@ -97,95 +98,15 @@
 
 
 <script>
-import { EventBus } from "../js/event-bus";
-import { store } from "../store"
+import { store } from "../store";
 
 export default {
   name: 'MonsterPortrait',
   data() {
       return {
           storeState: store.state,
-          storeChar: store.characters,
-
-          //monster animation states
-          blocked: false,
-          hurt: false,
-          attacking:false,
-          portEffect: false,
-          portEffectRed: false,
-          portEffectPurple: false,
-          portEffectGreen: false,
-          monsterDead: false,
-
-          // Battle Data
-          attackDamage: 0,
-          afterArmorDamage: 0,
-          
+          storeAnim: store.animations.monster,
       }
-  },
-  methods: {
-    // Resets animations after they're executed
-    afterEnter: function (){
-    this.blocked = false;
-    this.hurt = false;
-    this.attacking = false;
-    this.portEffect = false;
-    this.portEffectRed = false;
-    this.portEffectGreen = false;
-    this.portEffectPurple = false;
-    },
-    monsterFinished: function () {
-    this.monsterDead = false;
-    }
-  },
-   mounted() { 
-    //sets animation state of monster attacking 
-    EventBus.$on('monster-attacking', () => {
-      this.attacking = true;
-    });
-
-    //sets animation state of monster being attacked
-    EventBus.$on('monster-recoil', () => {
-      this.hurt = true; 
-      this.portEffect = true;
-      this.portEffectRed = true;
-    });
-
-    //listens for physical damage
-    EventBus.$on('monster-physical-damage', ($event) => {
-      this.attackDamage = $event + this.storeState.monster.armor
-      this.afterArmorDamage = $event;
-    });
-
-    //listen for attacker dealing 0 damage
-    EventBus.$on("monster-blocked", () => { 
-      this.blocked = true; 
-      this.portEffect = true;
-      this.portEffectPurple = true;
-      
-    });
-
-    //listens for attacker dealing 1 or more damage.
-    EventBus.$on("monster-takes-damage", () => { 
-      this.storeState.monster.health--;
-    });
-
-    //listens for monster dying
-    EventBus.$on("is-monster-dead", () => { 
-      if(this.storeState.monster.health > 0){
-        EventBus.$emit('monster-retaliate');
-      }
-      else {
-          this.monsterDead = true;
-          if(this.storeState.finalBoss == true ){
-              store.sceneChange('WinScreen');
-            } else {
-              store.sceneChange('ShopPhase');
-          }
-          this.storeState.player.coins += this.storeState.monster.coins;
-          
-      }
-    });
   },
 }
 </script>
