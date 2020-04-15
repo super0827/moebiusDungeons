@@ -154,7 +154,6 @@ export default {
             setTimeout(() => {
                 //Update defenders health
                 defender.health--;
-                console.log(iterator, attackRoll);
             }, 120 * iterator);
             
             setTimeout(() => {
