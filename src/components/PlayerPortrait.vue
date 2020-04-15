@@ -33,7 +33,7 @@
                 {{ storeState.monsterDealtDamage }} 
               </h2>
               <h3 class="versus">vs.</h3>
-              <h2 class="armorValue">
+              <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack}">
               {{ storeState.player.armor }} 
               </h2>
              </section>
