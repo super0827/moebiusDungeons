@@ -63,33 +63,50 @@ export default {
                 // animates attackers portrait to wobble
                 this.wobble(attacker.type);
 
+
+
+
                 // Physical ATTACKER
                 // Physical ATTACKER
                 // Physical ATTACKER
                 // runs if player attack type is physical
                 if (attacker.attackType === 'physical') {
-
+                    this.storeState.magicAttack = false;
                     //Be Reckless Rules
-                    //For Monster Turn
-                    if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
-                         //lowers players defense
-                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
-                         this.addToLog(attacker.type, `Being Reckless`);
-                    }
-                    //For Player Turn
-                    else if (this.specialAttack === 'beReckless' && attacker.type === "player") {
-                        attackRoll = Math.ceil(attackRoll * 1.5);
-                        attackRoll = Math.max(0, (attackRoll - defender.armor));
+                    if( this.specialAttack === "beReckless" ) {
+                        if(attacker.type === 'monster'){
+                            //lowers players defense
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            this.addToLog(attacker.type, `Being Reckless`);
+                        } 
+                        else if (attacker.type === 'player') {
+                            attackRoll = Math.ceil(attackRoll * 1.5);
+                            this.storeState.playerDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
                         
-                        this.addToLog(attacker.type, `BEING RECKLESS`);
+                            this.addToLog(attacker.type, `BEING RECKLESS`);
+                        }
                     }
 
                     //Trade Blows physical calculation if normal attack
-                    else {
+                    else if (this.specialAttack === '') {
                         this.addToLog(attacker.type, `TRADING BLOWS`);
-                    
-                        //recalculates damage normally subtracting defenders armor value from attack
-                        attackRoll = Math.max(0, (attackRoll - defender.armor));
+
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                        }
+                        else if (attacker.type === 'player'){
+                            this.storeState.playerDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+
+                        }
                     }
                 }
 
@@ -100,14 +117,32 @@ export default {
                 //MAGIC ATTACKER
                 //runs if attacker attack type is magical
                 else if (attacker.attackType === "magical") {
-                    if (this.specialAttack === 'beReckless' && attacker.type === "player") {
-                        attackRoll = Math.ceil(attackRoll * 1.5);
+                    this.storeState.magicAttack = true;
+                    if (this.specialAttack === 'beReckless') {
                         this.addToLog(attacker.type, `BEING RECKLESS`);
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            }
+                        else if (attacker.type === 'player'){
+                            attackRoll = Math.ceil(attackRoll * 1.5);
+                            this.storeState.playerDealtDamage = attackRoll;
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+                        }
                     }
                     else {
                         this.addToLog(attacker.type, `TRADING BLOWS`);
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            }
+                        else if (attacker.type === 'player'){
+                            this.storeState.playerDealtDamage = attackRoll;
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+                        }
                     }
                 }
+
 
 
 
@@ -116,7 +151,7 @@ export default {
                 // BATTLE OUTCOME
 
                 //if defender blocked the attack completely
-                if(attackRoll === 0){
+                if(attackRoll <= 0){
                     this.addToLog(defender.type, `${defender.type} blocked`)
                     this.blocking(defender.type);
                     
@@ -136,6 +171,7 @@ export default {
                 // else some damage is dealt
                 else {
                     this.addToLog(defender.type, `Took ${attackRoll} damage`);
+
                     // Animate defender pulsing
                     this.recoil(defender.type);
 
@@ -146,6 +182,10 @@ export default {
                     for(let i = 1; i <= attackRoll; i++) {
                         this.dealDamage(i,attackRoll,defender);
                     }
+                }
+
+                if(attacker.type === 'monster'){
+                    this.specialAttack = '';
                 }
             }
         },
@@ -172,7 +212,7 @@ export default {
                     this.monsterAttacking = false;
                 }
 
-            }, );
+            }, 1000);
         },
         beReckless(){
             this.specialAttack = "beReckless"
