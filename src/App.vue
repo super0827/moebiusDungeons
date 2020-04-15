@@ -13,9 +13,13 @@
       <section @click="store.newMonster()">New Monster</section>
       <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
       <section @click="storeState.monster.health+=100">Monster HP +100</section>
+      <section @click="storeState.monster.health+=10">Monster HP +10</section>
+      <section @click="storeState.monster.health = 10">Monster HP =10</section>
       <br>
       <p>PLAYER</p>
       <section @click="storeState.player.health+=100">Player HP +100</section>
+      <section @click="storeState.player.health+=10">Player HP +10</section>
+      <section @click="storeState.player.health = 10">Player HP =10</section>
       <section @click="storeState.player.coins += 1">+1 Coin</section>
       <section @click="storeState.player.coins += 10">+10 Coins</section>
       <br>
@@ -135,8 +139,9 @@ export default {
   text-align:center;
   display:inline;
   position:fixed;
-  font-size:18px;
+  font-size:13px;
   top:0px;
+  z-index:999999;
   min-width:200px;
   opacity:0.7;
   color:white;
@@ -147,13 +152,8 @@ export default {
 
 .debugBar section {
   text-align:center;
-  padding:8px;
+  padding:1px;
   margin:3px;
   border:solid #eee 2px;
-}
-
-.debugBar section:hover {
-  cursor:pointer;
-  background:#999
 }
 </style>
