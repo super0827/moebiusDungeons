@@ -44,8 +44,8 @@
                 {{ storeState.playerDealtDamage }} 
               </h2>
               <h3 class="versus">vs.</h3>
-              <h2 class="armorValue">
-              {{ storeState.monster.armor }} 
+              <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack }">
+                  {{ storeState.monster.armor }} 
               </h2>
              </section>
           </section>
@@ -151,6 +151,11 @@ export default {
   margin:0;
   padding:0;
   text-decoration: none;
+}
+
+.striked {
+  color:red;
+  text-decoration: line-through;
 }
 
 .versus {
