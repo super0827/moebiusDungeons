@@ -19,6 +19,7 @@ export const store = {
         monsterafterArmorDealtDamage: 0,
         playerLog: [],
         monsterLog: [],
+        magicAttack: false,
     },
     animations: {
         monster:{
@@ -61,7 +62,7 @@ export const store = {
             type:'monster', 
             portrait:require("./assets/imgs/monsters/imps.png"), 
             coins:1, health:5, armor:1, attackMax:1, attackType: "magical",
-            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!"
           },
           {
