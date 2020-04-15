@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { store } from "../store"
+import { store } from "../store";
 
 
 export default {
@@ -95,6 +95,7 @@ export default {
     return {
       storeState: store.state,
       storeAnim: store.animations.player,
+
     }
   },
 }

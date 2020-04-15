@@ -8,9 +8,7 @@
             class="list-complete-item"
             :key="items.id"
             >
-            <hr>
                 {{ items.message }}
-            <hr>
             </li>
         </transition-group>
         </ul>
@@ -40,7 +38,7 @@ export default {
 
 <style  scoped>
     .readout {
-        max-width:50px;
+        max-width:70px;
         min-width:50px;
         text-align:center;
         margin:0 10px;
@@ -51,6 +49,10 @@ export default {
         text-transform:uppercase;
         min-width:50px;
         max-width:50px;
+        border-top: solid 2px rgb(182,182,182);
+        border-bottom: solid 2px rgb(182,182,182);
+        padding:10px;
+        margin:5px 0px;
     }
     ul {
         list-style-type: none;
