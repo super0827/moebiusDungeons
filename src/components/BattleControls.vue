@@ -248,7 +248,6 @@ export default {
             else {
                 log = store.state.playerLog;
             }
-
             log.push({id: this.randomKey(), message: comm});
         },
         randomKey: function () {
@@ -256,14 +255,13 @@ export default {
         },
         death(whoDied){
             if(whoDied === 'monster'){
-                store.monsterDeath();
+                this.monsterAnim.monsterDead = true;
+                store.sceneChange('ShopPhase');
             }
             else if (whoDied === 'player') {
-                this.storeState.sceneChange('LoseScreen');
+                store.sceneChange('LoseScreen');
             }
         },
-
-
 
 
         // ANIMATIONS

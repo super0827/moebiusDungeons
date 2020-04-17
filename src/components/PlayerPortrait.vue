@@ -95,7 +95,6 @@ export default {
     return {
       storeState: store.state,
       storeAnim: store.animations.player,
-
     }
   },
 }

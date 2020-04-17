@@ -474,9 +474,7 @@ export const store = {
       this.state.isEntering = false;
 
       if(this.state.monsterRoster > 0){
-        setTimeout(() => {
           this.newShopkeep();
-        }, 100);
       }
       else {
         this.newMonster();
@@ -487,13 +485,4 @@ export const store = {
         this.state.isEntering = true;
       }, 200);
     },
-    monsterDeath(){
-      if(this.state.monsterRoster === this.characters.monsterCharacters.length){
-        this.sceneChange('WinScreen');
-    }
-    else {
-        this.sceneChange('ShopPhase');
-    }
-    this.state.player.coins += this.state.monster.coins;
-    }
 };
