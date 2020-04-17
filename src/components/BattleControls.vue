@@ -249,10 +249,16 @@ export default {
         },
         death(whoDied){
             if(whoDied === 'monster'){
-                store.monsterDeath();
+                this.clearAnimations('monster');
+                this.monsterAnim.monsterDead = true;
+                setTimeout(() => {
+                    store.monsterDeath();
+                    this.clearAnimations('player');
+                },1000);
             }
             else if (whoDied === 'player') {
-                this.storeState.sceneChange('LoseScreen');
+                this.clearAnimations('player');
+                store.sceneChange('LoseScreen');
             }
         },
 
