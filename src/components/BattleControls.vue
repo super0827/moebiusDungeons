@@ -152,7 +152,7 @@ export default {
 
                 //if defender blocked the attack completely
                 if(attackRoll <= 0){
-                    this.addToLog(defender.type, `${defender.type} blocked`)
+                    this.addToLog(defender.type, `${defender.type} blocked`);
                     this.blocking(defender.type);
                     
                     if(defender.type === 'monster'){
@@ -179,39 +179,32 @@ export default {
                     this.storeState.attackDamage = attackRoll;
 
                     // iterate over damage
-                    for(let i = 1; i <= attackRoll; i++) {
-                        this.dealDamage(i,attackRoll,defender);
+                    // subtract attackRoll from defenderHealth
+                    defender.health -= attackRoll;
+
+                    //make some checks when damage is done being dealt
+                    // if defender health is lower or equal to 0
+                    if(defender.health <= 0){
+                        setTimeout(() => {
+                            this.death(defender.type);
+                        }, 1000);
                     }
+                    else if (defender.health > 0 && defender.type === 'monster') {
+                        this.combatActive = false;
+                        setTimeout(() => {
+                            this.monsterRetaliate();
+                        }, 1000);
+                    }
+                    else {
+                        this.monsterAttacking = false;
+                    }
+
                 }
 
                 if(attacker.type === 'monster'){
                     this.specialAttack = '';
                 }
             }
-        },
-        dealDamage(iterator, attackRoll,defender) {
-            
-            setTimeout(() => {
-                //Update defenders health
-                defender.health--;
-            }, 120 * iterator);
-            
-            setTimeout(() => {
-                if(defender.health <= 0){
-                    setTimeout(() => {
-                        this.death(defender.type);
-                    }, 1000);
-                }
-                else if (defender.health > 0 && defender.type === 'monster') {
-                    this.combatActive = false;
-                    setTimeout(() => {
-                        this.monsterRetaliate();
-                    }, 1000);
-                } else {
-                    this.monsterAttacking = false;
-                }
-
-            }, 1000);
         },
         beReckless(){
             this.specialAttack = "beReckless"
