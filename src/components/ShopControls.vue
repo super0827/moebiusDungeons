@@ -33,8 +33,8 @@
 
     <hr>
 
-    <section class="buySlot">
-      <h3 @click="store.sceneChange('DungeonPhase')">BACK TO THE DUNGEONS</h3>
+    <section class="buySlot"  @click="store.sceneChange('DungeonPhase')">
+      <h3>BACK TO THE DUNGEONS</h3>
     </section>
 
 </section>
