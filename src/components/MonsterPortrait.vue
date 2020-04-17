@@ -2,9 +2,6 @@
 <section 
   key="monsterPortComp"
  class="columns" 
- :class="{
-  'animated tada' : storeAnim.monsterDead,
-  }"
 >
     
       <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
@@ -13,7 +10,8 @@
       class="portraitWrapper"
       :class="{ 'animated pulse' : storeAnim.hurt, 
       'animated reverseWobble' : storeAnim.attacking, 
-      'animated pulse' : storeAnim.blocking 
+      'animated pulse' : storeAnim.blocking,
+      'animated tada' : storeAnim.monsterDead, 
       }"
       >
         <!-- Monster Image -->
