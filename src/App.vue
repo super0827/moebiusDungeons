@@ -15,20 +15,17 @@
       <section @click="storeState.monster.health+=100">Monster HP +100</section>
       <section @click="storeState.monster.health+=10">Monster HP +10</section>
       <section @click="storeState.monster.health = 10">Monster HP =10</section>
-      <br>
       <p>PLAYER</p>
       <section @click="storeState.player.health+=100">Player HP +100</section>
       <section @click="storeState.player.health+=10">Player HP +10</section>
       <section @click="storeState.player.health = 10">Player HP =10</section>
       <section @click="storeState.player.coins += 1">+1 Coin</section>
       <section @click="storeState.player.coins += 10">+10 Coins</section>
-      <br>
       <p>SCENES</p>
       <section @click="store.sceneChange('InstructionsScreen')">Instructions</section>
       <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
       <section @click="store.sceneChange('ShopPhase')">Shop</section>
-      <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
-      <br>   
+      <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>   
       <p>END GAME</p>
       <section @click="store.sceneChange('WinScreen')">Win Screen</section>
       <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
