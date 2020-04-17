@@ -447,6 +447,10 @@ export const store = {
         ],
     },
     newMonster() {
+
+        //removes tada class from MonsterPortrait.vue
+        this.animations.monster.monsterDead = false;
+
         // Sets monsterRoster to a new value, adding 1-4 to the old value
         this.state.monsterRoster += Math.floor(Math.random() * Math.floor(4)) + 1;
         
@@ -460,6 +464,7 @@ export const store = {
           console.log(`the roster is at index ${this.state.monsterRoster}`);
           this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
         }
+        console.log(`--- NEW MONSTER CREATED ---`)
         console.log(`new monster is ${this.state.monster.name}`);
     },
     newShopkeep() {
@@ -468,15 +473,21 @@ export const store = {
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
       this.state.shopkeep.items = shuffle(this.state.shopkeep.items);
       this.state.shopInventory = this.state.shopkeep.items.slice(0,3);
+      console.log(`--- NEW SHOP CREATED ---`)
       console.log(`new shop is ${this.state.shopkeep.name}`)
     },
     sceneChange(scene) {
       this.state.isEntering = false;
 
       if(this.state.monsterRoster > 0){
-        setTimeout(() => {
-          this.newShopkeep();
-        }, 100);
+        if (scene == 'ShopPhase'){
+          setTimeout(() => {
+            this.newShopkeep();
+          }, 1000);
+        }
+        else if (scene == 'DungeonsPhase'){
+          //do nothing
+        }
       }
       else {
         this.newMonster();
@@ -490,10 +501,10 @@ export const store = {
     monsterDeath(){
       if(this.state.monsterRoster === this.characters.monsterCharacters.length){
         this.sceneChange('WinScreen');
-    }
-    else {
+      }
+      else {
         this.sceneChange('ShopPhase');
-    }
-    this.state.player.coins += this.state.monster.coins;
+      }
+      this.state.player.coins += this.state.monster.coins;
     }
 };
