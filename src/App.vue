@@ -38,7 +38,9 @@
       <transition name="fade" mode="out-in">
         <component 
         :key="storeState.phase"
-        :is="storeState.phase"></component>
+        :is="storeState.phase"
+        :music="this.music"
+        ></component>
       </transition> 
 
 </div>

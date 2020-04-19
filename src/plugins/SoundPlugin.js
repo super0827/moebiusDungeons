@@ -16,7 +16,7 @@ const DEFAULT_SOUNDS = {
     "cantBuy": {
         url: require("@/assets/audio/cantBuy.wav"),
         defaults: {
-
+            
         },
     }
 };
