@@ -1,29 +1,14 @@
-# moebiusdungeons
+![Moebius Dungeons Logo](https://raw.githubusercontent.com/MisuseofMana/moebiusDungeons/master/src/assets/imgs/icons/playerSigilIcon.png)
 
-## Project setup
-```
-npm install
-```
+A Vue SPA based off of the Dungeons Of Amara Playable Book
+[Dungeons Of Amara Book](https://gum.co/CsdPh)
 
-### Compiles and hot-reloads for development
+## Run Locally
 ```
-npm run serve
+1. clone repo
+1. cd into local folder
+1. npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## What is this?
+Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CSS.
+The project is based off of Sean Yager's gameified book titled "Dungeons of Amara".
