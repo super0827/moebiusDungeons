@@ -10,7 +10,7 @@ export const store = {
         gameStats: {type: Object},
         shopInventory: [],
         monsterRoster: 0,
-        phase: "CharacterSelect",
+        phase: "StartScreen",
         finalBoss: false,
         isEntering: true,
         playerDealtDamage: 0,
