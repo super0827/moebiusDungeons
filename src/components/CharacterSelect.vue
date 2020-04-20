@@ -16,6 +16,7 @@
         :attackType="characters.attackType"
         :attackTypeImage="characters.attackTypeImage"
         @click="setPlayer(characters)"
+        @mouseenter="playChit()"
         class="columns animated"
         :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
         
@@ -36,7 +37,13 @@
 </template>
 
 <script>
-import { store } from "../store"
+import { store } from "../store";
+import { Howl } from "howler";
+
+const chit = new Howl({
+    src: ['../buttonHover.wav'],
+    volume:0.4,
+});
 
 export default {
   name: 'CharacterSelect',
@@ -85,7 +92,10 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
         store.sceneChange('DungeonPhase');
-      }
+    },
+    playChit() {
+        chit.play();
+    }
   },
 }
 </script>

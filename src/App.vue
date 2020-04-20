@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      scene: 'characterSelect',
+      scene: 'StartScreen',
       helper: "",
       storeState: store.state,
       store: store,
