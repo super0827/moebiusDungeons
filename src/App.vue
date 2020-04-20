@@ -52,6 +52,8 @@ import './assets/styles/transitions.css';
 
 import { store } from "./store"
 
+import StartScreen from './components/StartScreen.vue';
+
 import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
 import ShopPhase from './components/ShopPhase.vue';
@@ -64,6 +66,7 @@ import LoseScreen from './components/LoseScreen.vue';
 export default {
   name: 'App',
   components: {
+    StartScreen,
     InstructionsScreen,
     CharacterSelect,
     DungeonPhase,
@@ -73,7 +76,6 @@ export default {
   },
   data() {
     return {
-      scene: 'StartScreen',
       helper: "",
       storeState: store.state,
       store: store,
