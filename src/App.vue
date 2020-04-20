@@ -39,7 +39,6 @@
         <component 
         :key="storeState.phase"
         :is="storeState.phase"
-        :music="this.music"
         ></component>
       </transition> 
 

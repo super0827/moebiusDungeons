@@ -15,7 +15,8 @@
         :attackMax="characters.attackMax"
         :attackType="characters.attackType"
         :attackTypeImage="characters.attackTypeImage"
-        @click="setPlayer(characters)"
+        @click="setPlayer(characters), $sound.play('characterConfirm')"
+        @mouseenter="$sound.play('chit')"
         class="columns animated"
         :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
         
