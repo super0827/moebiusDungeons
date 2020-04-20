@@ -13,11 +13,20 @@
     </transition>
     
     <section class="flexRow">
+        
+        <player-readout
+        class="animated"
+        :class="{'zoomInLeft' : storeState.isEntering, 
+        'zoomOutLeft' : !storeState.isEntering}"
+        />
+
         <!-- Player Portrait and Stats -->
         <player-portrait
         class="animated"
         :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
         />
+        
+
         <!-- Dungeon Controls -->
         <battle-controls
         class="animated"
@@ -30,6 +39,12 @@
         class="animated"
         :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering}"
         @monster-is-dead="gameplayScene = 'shop'"
+        />
+
+        <monster-readout
+        class="animated"
+        :class="{'zoomInRight' : storeState.isEntering, 
+        'zoomOutRight' : !storeState.isEntering}"
         />
     </section>
     
@@ -46,6 +61,8 @@ import BattleControls from './BattleControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
 import MonsterPortrait from "./MonsterPortrait.vue";
 import BattleHelp from './BattleHelp.vue';
+import PlayerReadout from './PlayerReadout.vue';
+import MonsterReadout from './MonsterReadout.vue';
 
 export default {
     name: 'DungeonPhase',
@@ -54,6 +71,8 @@ export default {
         PlayerPortrait,
         BattleControls,
         MonsterPortrait,
+        PlayerReadout,
+        MonsterReadout,
     },
     data() {
         return {

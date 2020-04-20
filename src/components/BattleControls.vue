@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { EventBus } from "../js/event-bus";
 import { store } from "../store";
 
 export default {
@@ -27,9 +26,12 @@ export default {
     data() {
         return {
             storeState: store.state,
+            storeChar: store.characters,
             combatActive: false,
             monsterAttacking: false,
             specialAttack: "",
+            monsterAnim: store.animations.monster,
+            playerAnim: store.animations.player,
         }
     },
     methods:{
@@ -37,17 +39,20 @@ export default {
             return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         },
         tradeBlows(attacker, defender) {
+
+            this.clearAnimations(attacker.type);
+            this.clearAnimations(defender.type);
+
+            // BEGIN COMBAT
+            // BEGIN COMBAT
+            // BEGIN COMBAT
             // conditional prevents attacking while characters are animating
             if(!this.combatActive && !this.monsterAttacking) {
-                console.log(" ");
-                console.log(`---> ${attacker.name}'s turn <---`);
-                console.log(`${defender.name}'s HP STARTS AT:${defender.health}`)
 
                 //Determines attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
-                console.log(`${attacker.name} rolls ${attackRoll} damage`);
-                
-                //if else if prevents player from spamming attack buttons
+
+                // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
                 }
@@ -57,8 +62,7 @@ export default {
 
 
                 // animates attackers portrait to wobble
-                EventBus.$emit(`${attacker.type}-attacking`);
-
+                this.wobble(attacker.type);
 
 
 
@@ -68,36 +72,43 @@ export default {
                 // Physical ATTACKER
                 // runs if player attack type is physical
                 if (attacker.attackType === 'physical') {
-
+                    this.storeState.magicAttack = false;
                     //Be Reckless Rules
-                    //For Player Turn during be reckless
-                    if (this.specialAttack === 'beReckless' && attacker.type === "player") {
-                        console.log(`---${attacker.type} is BEING RECKLESS ---`);
-                        attackRoll = Math.ceil(attackRoll * 1.5);
-                        console.log(`attack increased to ${attackRoll}`)
-                        attackRoll = Math.max(0, (attackRoll - defender.armor));
-                        console.log(`${defender.name} blocks ${defender.armor} damage`)
-                    }
-                    
-                    //For Monster Turn during be reckless
-                    else if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
+                    if( this.specialAttack === "beReckless" ) {
+                        if(attacker.type === 'monster'){
                             //lowers players defense
+                            this.storeState.monsterDealtDamage = attackRoll;
                             attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
-                            console.log(`players defense halved to ${Math.floor(defender.armor/2)} from BE RECKLESS`);
-                            console.log(`${defender.name} blocks for ${Math.floor(defender.armor/2)}`);
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            this.addToLog(attacker.type, `Being Reckless`);
+                        } 
+                        else if (attacker.type === 'player') {
+                            attackRoll = Math.ceil(attackRoll * 1.5);
+                            this.storeState.playerDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+                        
+                            this.addToLog(attacker.type, `BEING RECKLESS`);
+                        }
                     }
 
-                    //Trade Blows physical reduction calculation if normal attack
-                    else {
-                        console.log(`--- ${attacker.name} is TRADING BLOWS ---`);
-                        //recalculates damage normally subtracting defenders armor value from attack
-                        attackRoll = Math.max(0, (attackRoll - defender.armor));
-                        console.log(`${defender.name} blocks for ${defender.armor}`);
-                    }
-                    
-                    //LOGGING ATTACK AND ARMOR VALUES
-                    console.log(`${attacker.name} deals ${attackRoll} damage`);
+                    //Trade Blows physical calculation if normal attack
+                    else if (this.specialAttack === '') {
+                        this.addToLog(attacker.type, `TRADING BLOWS`);
 
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                        }
+                        else if (attacker.type === 'player'){
+                            this.storeState.playerDealtDamage = attackRoll;
+                            attackRoll = Math.max(0, (attackRoll - defender.armor));
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+
+                        }
+                    }
                 }
 
 
@@ -107,86 +118,185 @@ export default {
                 //MAGIC ATTACKER
                 //runs if attacker attack type is magical
                 else if (attacker.attackType === "magical") {
-                    //For Player Turn be reckless
-                    if (this.specialAttack === 'beReckless' && attacker.type === "player") {
-                        console.log(`---BE RECKLESS ${attacker.type}---`);
-                        attackRoll = Math.ceil(attackRoll * 1.5);
-                        console.log(`be reckless attack = ${attackRoll}`);
+                    this.storeState.magicAttack = true;
+                    if (this.specialAttack === 'beReckless') {
+                        this.addToLog(attacker.type, `BEING RECKLESS`);
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            }
+                        else if (attacker.type === 'player'){
+                            attackRoll = Math.ceil(attackRoll * 1.5);
+                            this.storeState.playerDealtDamage = attackRoll;
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+                        }
                     }
-                    //runs during monsters turn be reckless
-                    else if( this.specialAttack === "beReckless" && attacker.type === 'monster' ) {
-                         //lowers players defense
-                         attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
-                         console.log(`players defense halved from be Reckless`);
+                    else {
+                        this.addToLog(attacker.type, `TRADING BLOWS`);
+                        if(attacker.type === 'monster'){
+                            this.storeState.monsterDealtDamage = attackRoll;
+                            this.storeState.monsterafterArmorDealtDamage = attackRoll;
+                            }
+                        else if (attacker.type === 'player'){
+                            this.storeState.playerDealtDamage = attackRoll;
+                            this.storeState.playerafterArmorDealtDamage = attackRoll;
+                        }
                     }
                 }
 
 
 
 
-                //DAMAGE BLOCKED OR DAMAGE CALCULATED
-                //DAMAGE BLOCKED OR DAMAGE CALCULATED
-                //DAMAGE BLOCKED OR DAMAGE CALCULATED
+                // BATTLE OUTCOME
+                // BATTLE OUTCOME
+                // BATTLE OUTCOME
+
                 //if defender blocked the attack completely
-                if(attackRoll === 0){
-                    //animates defender portrait blocking
-                    EventBus.$emit(`${defender.type}-blocked`);
+                if(attackRoll <= 0){
+                    this.addToLog(defender.type, `${defender.type} blocked`)
+                    this.blocking(defender.type);
                     
-                    //checks to see if the defender is dead
-                    setTimeout(function(){
-                        console.log(`${defender.name}'s Ending HP: ${defender.health}`);
-                        EventBus.$emit(`is-${defender.type}-dead`);
-                    }, 1500);
+                    if(defender.type === 'monster'){
+                        this.combatActive = false;
+                        setTimeout(()=>{
+                           this.monsterRetaliate();
+                        }, 1000);
+                    }else {
+                        setTimeout(()=>{
+                            this.resetCombat();
+                        }, 1000);
+                    }
                 }
 
 
                 // else some damage is dealt
                 else {
-                    
+                    this.addToLog(defender.type, `Took ${attackRoll} damage`);
+
                     // Animate defender pulsing
-                    EventBus.$emit(`${defender.type}-recoil`);
+                    this.recoil(defender.type);
 
                     //Monster attacked with physical damage
-                    EventBus.$emit(`${defender.type}-physical-damage`, attackRoll);
+                    this.storeState.attackDamage = attackRoll;
 
                     // iterate over damage
                     for(let i = 1; i <= attackRoll; i++) {
-                        setTimeout(function(){
-                            //Update monsters health in Monster Portrait
-                            EventBus.$emit(`${defender.type}-takes-damage`);
-                            console.log(i, attackRoll);
-
-                            if (i === attackRoll) {
-                                setTimeout(function(){
-                                    console.log(`${defender.name}'s Ending HP: ${defender.health}`);
-                                    EventBus.$emit(`is-${defender.type}-dead`);
-                                }, 1300);
-                            }
-                        }, 120 * i);
+                        this.dealDamage(i,attackRoll,defender);
                     }
 
                 }
+
+                if(attacker.type === 'monster'){
+                    this.specialAttack = '';
+                }
             }
+        },
+        dealDamage(iterator, attackRoll,defender) {
+            
+            setTimeout(() => {
+                //Update defenders health
+                defender.health--;
+            }, 120 * iterator);
+            
+            setTimeout(() => {
+                if(defender.health <= 0){
+                    setTimeout(() => {
+                        this.death(defender.type);
+                    }, 1000);
+                }
+                else if (defender.health > 0 && defender.type === 'monster') {
+                    this.combatActive = false;
+                    setTimeout(() => {
+                        this.monsterRetaliate();
+                    }, 1000);
+                } else {
+                    this.monsterAttacking = false;
+                }
+
+            }, 1000);
         },
         beReckless(){
             this.specialAttack = "beReckless"
             this.tradeBlows(this.storeState.player, this.storeState.monster);
-
+        },
+        monsterRetaliate() {
+            setTimeout(() => {
+                this.tradeBlows(this.storeState.monster, this.storeState.player);
+            },400);
         },
         turnTail(){
             console.log("turning tail");
         },
-    },
-    beforeCreate() {
-            EventBus.$on('monster-retaliate', () => {
-                this.combatActive = false;
-                this.tradeBlows(this.storeState.monster, this.storeState.player);
-            });
-            EventBus.$on('reset-combat', () => {
-                this.combatActive = false;
-                this.monsterAttacking = false;
-            });
+        resetCombat(){
+            this.monsterAttacking = false;
+        },
+        clearAnimations(whoToClear){
+            if(whoToClear === 'monster'){
+                for(let value in this.monsterAnim){
+                        this.monsterAnim[value] = false;
+                }
+            }
+            else if (whoToClear === 'player') {
+                for(let value in this.playerAnim){
+                        this.playerAnim[value] = false;
+                }
+            }
+        },
+        addToLog(whichLog, comm){
+            let log = "";
+            if(whichLog === 'monster'){
+                log = store.state.monsterLog;
+            }
+            else {
+                log = store.state.playerLog;
+            }
+            log.push({id: this.randomKey(), message: comm});
+        },
+        randomKey: function () {
+            return Math.random();
+        },
+        death(whoDied){
+            if(whoDied === 'monster'){
+                this.monsterAnim.monsterDead = true;
+                store.sceneChange('ShopPhase');
+            }
+            else if (whoDied === 'player') {
+                store.sceneChange('LoseScreen');
+            }
+        },
+
+
+        // ANIMATIONS
+        recoil (receiver) {
+            if (receiver === 'monster') {
+                this.monsterAnim.hurt = true;
+                this.monsterAnim.portEffect = true;
+                this.monsterAnim.portEffectRed = true;
+            } else if (receiver === 'player') {
+                this.playerAnim.hurt = true;
+                this.playerAnim.portEffect = true;
+                this.playerAnim.portEffectRed = true;
+            }
+        },
+        wobble (receiver) {
+            if (receiver === 'monster') {
+                this.monsterAnim.attacking = true;
+            } else if (receiver === 'player') {
+                this.playerAnim.attacking = true;
+            }
+        },
+        blocking (receiver) {
+            if (receiver === 'monster') {
+                this.monsterAnim.blocking = true;
+                this.monsterAnim.portEffect = true;
+                this.monsterAnim.portEffectPurple = true;
+            } else if (receiver === 'player') {
+                this.playerAnim.blocking = true;
+                this.playerAnim.portEffect = true;
+                this.playerAnim.portEffectPurple = true;
+            }
         }
+    },
 }
 </script>
 

@@ -16,11 +16,7 @@ const chit = new Howl({
 });
 
 export default {
-  name: 'CharacterSelect',
-  data() {
-        return {    
-
-        }
+    name: 'StartScreen',
 }
 </script>
 

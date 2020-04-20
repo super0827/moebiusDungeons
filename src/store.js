@@ -13,6 +13,35 @@ export const store = {
         phase: "CharacterSelect",
         finalBoss: false,
         isEntering: true,
+        playerDealtDamage: 0,
+        playerafterArmorDealtDamage: 0,
+        monsterDealtDamage: 0,
+        monsterafterArmorDealtDamage: 0,
+        playerLog: [],
+        monsterLog: [],
+        magicAttack: false,
+    },
+    animations: {
+        monster:{
+          blocking: false,
+          hurt: false,
+          attacking:false,
+          portEffect: false,
+          portEffectRed: false,
+          portEffectPurple: false,
+          portEffectGreen: false,
+          monsterDead: false,
+        },
+        player: {
+          blocking: false,
+          hurt: false,
+          attacking:false,
+          portEffect: false,
+          portEffectRed: false,
+          portEffectPurple: false,
+          portEffectGreen: false,
+          dead: false,
+        },
     },
     characters: { 
         monsterCharacters: [
@@ -33,7 +62,7 @@ export const store = {
             type:'monster', 
             portrait:require("./assets/imgs/monsters/imps.png"), 
             coins:1, health:5, armor:1, attackMax:1, attackType: "magical",
-            attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
+            attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!"
           },
           {
@@ -421,7 +450,7 @@ export const store = {
         // Sets monsterRoster to a new value, adding 1-4 to the old value
         this.state.monsterRoster += Math.floor(Math.random() * Math.floor(4)) + 1;
         
-        if(this.state.monsterRoster > this.characters.monsterCharacters.length - 1) {
+        if(this.state.monsterRoster > this.characters.monsterCharacters.length) {
           this.state.monsterRoster = this.characters.monsterCharacters.length;
           this.state.finalBoss = true; 
           console.log(`BOSS: there are ${this.characters.monsterCharacters.length} monsters in the list`);
@@ -431,7 +460,7 @@ export const store = {
           console.log(`the roster is at index ${this.state.monsterRoster}`);
           this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
         }
-        
+        console.log(`new monster is ${this.state.monster.name}`);
     },
     newShopkeep() {
       this.newMonster();
@@ -439,17 +468,21 @@ export const store = {
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
       this.state.shopkeep.items = shuffle(this.state.shopkeep.items);
       this.state.shopInventory = this.state.shopkeep.items.slice(0,3);
+      console.log(`new shop is ${this.state.shopkeep.name}`)
     },
     sceneChange(scene) {
       this.state.isEntering = false;
 
-      setTimeout(() => {
-            this.newShopkeep();
-      }, 100);
+      if(this.state.monsterRoster > 0){
+          this.newShopkeep();
+      }
+      else {
+        this.newMonster();
+      }
       
       setTimeout(() => {
         this.state.phase = scene;
         this.state.isEntering = true;
       }, 200);
-    }
+    },
 };

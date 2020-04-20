@@ -5,8 +5,9 @@
 
       <section 
       class="portraitWrapper"
-      :class="{'animated pulse' : hurt, 'animated wobble' : attacking, 'animated pulse' : blocked }"
-        @animationend="afterEnter"
+      :class="{'animated pulse' : storeAnim.hurt, 
+      'animated wobble' : storeAnim.attacking, 
+      'animated pulse' : storeAnim.blocked }"
       >
       <img class="portrait" :src="storeState.player.portrait">
 
@@ -16,7 +17,7 @@
           enter-active-class="animated jackInTheBox"
           leave-active-class="animated fadeOut"
         >
-          <h1 v-if="blocked" class="blocked">BLOCKED!</h1>
+          <h1 v-if="storeAnim.blocking" class="blocked">BLOCKED!</h1>
         </transition>
 
         <transition appear
@@ -24,15 +25,15 @@
           enter-active-class="animated pulse"
           leave-active-class="animated fadeOut"
         >
-          <section class="damageReadout" v-if="hurt">
-              <h2 class="calculatedDamage"> {{ afterArmorDamage }} </h2>
+          <section class="damageReadout" v-if="storeAnim.hurt">
+              <h2 class="calculatedDamage"> {{ storeState.monsterafterArmorDealtDamage }} </h2>
              
              <section class="flexRow">
               <h2 class="attackValue">
-                {{ attackDamage }} 
+                {{ storeState.monsterDealtDamage }} 
               </h2>
               <h3 class="versus">vs.</h3>
-              <h2 class="armorValue">
+              <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack}">
               {{ storeState.player.armor }} 
               </h2>
              </section>
@@ -44,12 +45,12 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <section v-if="portEffect" 
+            <section v-if="storeAnim.portEffect" 
               class="damagedOverlay"
               :class="{ 
-                red : portEffectRed, 
-                green : portEffectGreen, 
-                purple : portEffectPurple 
+                red : storeAnim.portEffectRed, 
+                green : storeAnim.portEffectGreen, 
+                purple : storeAnim.portEffectPurple 
               }"
             >
             </section>  
@@ -85,86 +86,19 @@
 </template>
 
 <script>
-import { EventBus } from "../js/event-bus";
-import { store } from "../store"
+import { store } from "../store";
 
 
 export default {
   name: 'PlayerPortrait',
-  
   data() {
     return {
-
       storeState: store.state,
-
-      //monster animation states
-        blocked: false,
-        hurt: false,
-        attacking:false,
-        portEffect: false,
-        portEffectRed: false,
-        portEffectPurple: false,
-        portEffectGreen: false,
-
-        // Battle Data
-        attackDamage: 0,
-        afterArmorDamage: 0,
+      storeAnim: store.animations.player,
     }
   },
-  methods: {
-    // Resets animations after they're executed
-    afterEnter: function (){
-    this.blocked = false;
-    this.hurt = false;
-    this.attacking = false;
-    this.portEffect = false;
-    this.portEffectRed = false;
-    this.portEffectGreen = false;
-    this.portEffectPurple = false;
-    }
-  },
-  mounted() { 
-    EventBus.$on('player-attacking', () => {
-      this.attacking = true;
-    });
+}
 
-    EventBus.$on('player-recoil', () => {
-      this.hurt = true; 
-      this.portEffect = true;
-      this.portEffectRed = true;
-    });
-
-    //listens for physical damage
-    EventBus.$on('player-physical-damage', ($event) => {
-      this.attackDamage = $event + this.storeState.player.armor;
-      this.afterArmorDamage = $event;
-    });
-
-    //listen for player dealing 0 or less damage
-    EventBus.$on("player-blocked", () => { 
-      this.blocked = true; 
-      this.portEffect = true;
-      this.portEffectPurple = true;
-    });
-
-    //listens fot player dealing 1 or more damage.
-    EventBus.$on("player-takes-damage", () => { 
-      this.storeState.player.health--;
-    });
-
-    //listens for monster dying
-    EventBus.$on("is-player-dead", () => { 
-      if(this.storeState.player.health >= 0){
-        console.log('player is still alive');
-
-        EventBus.$emit('reset-combat');
-      }
-      else {
-        console.log('player is dead');
-      }
-    });
-  },
-  }
 </script>
 
 <style scoped>

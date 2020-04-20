@@ -2,29 +2,44 @@
   <div id="app">
 
     <!-- DEBUGGING -->
+
     <section class="debugBar">
-      <p>METHODS</p>
-      <section @click="store.newMonster()">New Monster</section>
-      <section @click="storeState.monsterRoster = 0">Reset Monster</section>
+      <section @click="debugShow = !debugShow">
+        DEBUG BAR
+      </section>
+
+      <article v-if="debugShow">
+      <p>MONSTER</p>
+      <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
+      <section @click="storeState.monster.health+=100">Monster HP +100</section>
+      <section @click="storeState.monster.health+=10">Monster HP +10</section>
+      <section @click="storeState.monster.health = 10">Monster HP =10</section>
+      <br>
+      <p>PLAYER</p>
+      <section @click="storeState.player.health+=100">Player HP +100</section>
+      <section @click="storeState.player.health+=10">Player HP +10</section>
+      <section @click="storeState.player.health = 10">Player HP =10</section>
       <section @click="storeState.player.coins += 1">+1 Coin</section>
       <section @click="storeState.player.coins += 10">+10 Coins</section>
-      <br>
-      <p>END GAME</p>
-      <section @click="store.sceneChange('WinScreen')">Win Screen</section>
-      <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
       <br>
       <p>SCENES</p>
       <section @click="store.sceneChange('InstructionsScreen')">Instructions</section>
       <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
       <section @click="store.sceneChange('ShopPhase')">Shop</section>
       <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
+      <br>   
+      <p>END GAME</p>
+      <section @click="store.sceneChange('WinScreen')">Win Screen</section>
+      <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
+      </article>
     </section>
 
     <!-- GUI -->
       <transition name="fade" mode="out-in">
         <component 
         :key="storeState.phase"
-        :is="storeState.phase"></component>
+        :is="storeState.phase"
+        ></component>
       </transition> 
 
 </div>
@@ -35,7 +50,6 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
-import { EventBus } from "./js/event-bus";
 import { store } from "./store"
 
 import CharacterSelect from './components/CharacterSelect.vue';
@@ -63,14 +77,9 @@ export default {
       helper: "",
       storeState: store.state,
       store: store,
+      debugShow: false,
     }
   },
-  methods: {
-    killMonster() {
-      this.storeState.monster.health = 0;
-      EventBus.$emit('is-monster-dead');
-    },
-  }
 }
 </script>
 
@@ -125,26 +134,26 @@ export default {
                   
 /* Debug Styles - REMOVE FOR PRODUCTION */
 .debugBar {
+  margin:10px;
   font-family: var(--paragraphs-type);
   text-align:center;
   display:inline;
   position:fixed;
-  font-size:10px;
+  font-size:13px;
   top:0px;
+  z-index:999999;
+  min-width:200px;
+  opacity:0.7;
   color:white;
   left:0px;
   background:black;
+  text-transform:uppercase;
 }
 
 .debugBar section {
   text-align:center;
-  padding:8px;
+  padding:1px;
   margin:3px;
   border:solid #eee 2px;
-}
-
-.debugBar section:hover {
-  cursor:pointer;
-  background:#999
 }
 </style>
