@@ -2,7 +2,7 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering }">MOEBIUS DUNGEONS</h1>
+    <h1 class="animated" :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering }">CHOOSE YOUR CHARACTER</h1>
 
     <section class="chooseChar">
         <section
@@ -41,7 +41,7 @@ import { store } from "../store";
 import { Howl } from "howler";
 
 const chit = new Howl({
-    src: ['../buttonHover.wav'],
+    src: [require('../assets/audio/buttonHover.wav')],
     volume:0.4,
 });
 
