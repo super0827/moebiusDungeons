@@ -8,18 +8,25 @@
 
     <br>
 
-    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="tradeBlows(storeState.player, storeState.monster)">Trade Blows</h2>
-    <h2 :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(storeState.player, storeState.monster)">Be Reckless</h2>
+    <h2 @mouseenter="playChit()" :class="{'striked' : combatActive || monsterAttacking }" @click="tradeBlows(storeState.player, storeState.monster)">Trade Blows</h2>
+    <h2 @mouseenter="playChit()" :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(storeState.player, storeState.monster)">Be Reckless</h2>
     
     <br>
 
-    <h3 :class="{'striked' : combatActive || monsterAttacking }" @click="turnTail()">Turn Tail</h3>
+    <h3 @mouseenter="playChit()" :class="{'striked' : combatActive || monsterAttacking }" @click="turnTail()">Turn Tail</h3>
 
 </section>
 </template>
 
 <script>
 import { store } from "../store";
+import { Howl } from "howler";
+
+
+const chit = new Howl({
+    src: [require('../assets/audio/buttonHover.wav')],
+    volume:0.4,
+});
 
 export default {
     name: 'BattleControls',
@@ -35,6 +42,9 @@ export default {
         }
     },
     methods:{
+        playChit() {
+        chit.play();
+        },
         randomRoll(rollMax){
             return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         },
