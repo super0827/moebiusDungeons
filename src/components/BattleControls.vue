@@ -179,6 +179,8 @@ export default {
                 }
 
 
+
+
                 // else some damage is dealt
                 else {
                     this.addToLog(defender.type, `Took ${attackRoll} damage`);
@@ -189,10 +191,9 @@ export default {
                     //Monster attacked with physical damage
                     this.storeState.attackDamage = attackRoll;
 
-                    // iterate over damage
-                    for(let i = 1; i <= attackRoll; i++) {
-                        this.dealDamage(i,attackRoll,defender);
-                    }
+                    //set defender health to reflect damage taken
+                    defender.health -= attackRoll;
+
 
                 }
 
@@ -200,30 +201,6 @@ export default {
                     this.specialAttack = '';
                 }
             }
-        },
-        dealDamage(iterator, attackRoll,defender) {
-            
-            setTimeout(() => {
-                //Update defenders health
-                defender.health--;
-            }, 120 * iterator);
-            
-            setTimeout(() => {
-                if(defender.health <= 0){
-                    setTimeout(() => {
-                        this.death(defender.type);
-                    }, 1000);
-                }
-                else if (defender.health > 0 && defender.type === 'monster') {
-                    this.combatActive = false;
-                    setTimeout(() => {
-                        this.monsterRetaliate();
-                    }, 1000);
-                } else {
-                    this.monsterAttacking = false;
-                }
-
-            }, 1000);
         },
         beReckless(){
             this.specialAttack = "beReckless"
@@ -323,18 +300,23 @@ export default {
     }
 
     h1, h2, h3 {
-        transition: all .6s;
+        transition: all .2s;
         width:90%;
     }
 
     h2 {
         background: rgb(207, 207, 207);
         cursor:pointer;
+        padding:20px;
+        text-decoration:none;
     }
     
     h3 {
         background: rgb(207, 207, 207);
         cursor:pointer;
+        padding:10px 20px;
+        font-size:20px;
+        text-transform:uppercase;
     }
 
     h2:hover {
@@ -343,24 +325,6 @@ export default {
     
     h3:hover {
         background: rgb(166, 207, 144);
-    }
-
-    h1 {
-        font-size:15px;
-        margin:2px;
-    }
-
-    h2 {
-        padding:10px;
-        font-size: 17px;
-        text-decoration: none;
-    }
-
-    h3 {
-        padding:10px;
-        font-size:17px;
-        text-transform: uppercase;
-        text-decoration: none;
     }
 
     .striked {
