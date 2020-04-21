@@ -2,7 +2,7 @@
 <section>
 
     <section @click="startGame()" class="animated startScreen slower" :class="{'fadeIn' : storeState.isEntering, 
-    'fadeOut' : !storeState.isEntering }">
+    'rubberBand' : !storeState.isEntering }">
         <section class=" animated pulse infinite slower">
             <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
             <!-- <img src="../assets/imgs/icons/raceTypeIconMagic.png" alt=""> -->
@@ -26,16 +26,18 @@ export default {
     data() {
         return {
             storeState: store.state,
-            startBlip: new Howl({
-                src: [require('../assets/audio/gamestart.ogg')],
-                volume:0.5,
-            }),
-            startGame: function(){
-                this.startBlip.play();
-                this.storeState.phase = "CharacterSelect";
-            }, 
         }
     },
+    methods: {
+        startGame () {
+            const startBlip = new Howl({
+                src: [require('../assets/audio/startBlip.ogg')],
+            volume:1,
+            });
+            this.storeState.phase = "CharacterSelect";
+            startBlip.play();
+        }
+    }
 }
 </script>
 
