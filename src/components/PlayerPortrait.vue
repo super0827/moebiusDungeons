@@ -61,7 +61,13 @@
       <section class="flexRow stats">
 
         <section>
-          <p>{{ storeState.player.health }}</p>
+          <p>
+          <animated-number 
+          :value="storeState.player.health"
+          :duration="storeState.duration"
+          />
+          </p>
+
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
@@ -87,10 +93,14 @@
 
 <script>
 import { store } from "../store";
+import AnimatedNumber from "animated-number-vue";
 
 
 export default {
   name: 'PlayerPortrait',
+  components: {
+    AnimatedNumber
+  },
   data() {
     return {
       storeState: store.state,
