@@ -16,7 +16,6 @@
         :attackType="characters.attackType"
         :attackTypeImage="characters.attackTypeImage"
         @click="setPlayer(characters)"
-        @mouseenter="playChit()"
         class="columns animated"
         :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
         
@@ -24,7 +23,9 @@
             <h3>{{characters.description1}}</h3>
             <p>{{characters.description2}}</p>
         
-            <section class="portContainer animated infinite" :id="characters.name">
+            <section 
+            @mouseenter="playChit()"
+            class="portContainer animated infinite" :id="characters.name">
                 <section class="overlay"></section>
                 <img :src="characters.portrait" :alt="characters.description2">
             </section>
@@ -43,6 +44,17 @@ import { Howl } from "howler";
 const chit = new Howl({
     src: [require('../assets/audio/buttonHover.wav')],
     volume:0.4,
+});
+
+const confirm = new Howl({
+    src: [require('../assets/audio/gamestart.ogg')],
+    volume:0.5,
+});
+
+const charSelectMusic = new Howl ({
+    src: [require('../assets/audio/427442__kiluaboy__clouds.ogg')],
+    volume:0,
+    loop:true,
 });
 
 export default {
@@ -97,6 +109,14 @@ export default {
         chit.play();
     }
   },
+  created() {
+        charSelectMusic.play();
+        charSelectMusic.fade(0,1,1500);
+    },
+    beforeDestroy() {
+        confirm.play();
+        charSelectMusic.fade(1, 0, 1500);
+    },
 }
 </script>
 
