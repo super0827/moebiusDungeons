@@ -9,7 +9,7 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 v-if="helper != 'battle'" @click="helper = 'battle'" id="dungeonHelp">DUNGEON HELP</h1>
+        <h1 @click="helper = !helper" id="dungeonHelp">DUNGEON HELP</h1>
     </transition>
     
     <section class="flexRow">
@@ -50,13 +50,15 @@
     
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="helper = ''" v-if="helper=='battle'"/>
+        <battle-help key="battleHelper" @close="helper = false" v-if="helper==true"/>
     </transition>
 </section>
 </template>
 
 <script>
 import { store } from "../store"
+import { Howl } from "howler";
+
 import BattleControls from './BattleControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
 import MonsterPortrait from "./MonsterPortrait.vue";
@@ -78,8 +80,29 @@ export default {
         return {
             helper: false,
             storeState: store.state,
+            dungeonMusic: new Howl ({
+                src: [require('../assets/audio/battlePlanPurpPlan.mp3')],
+                volume:0.3,
+                loop: true,
+            }),
         }
     },
+    created() {
+        this.dungeonMusic.play();
+        this.dungeonMusic.fade(0, .3, 1500);
+    },
+    beforeDestroy() {
+        this.dungeonMusic.fade(.3, 0, 1500);
+    },
+    watch: {
+        helper: function() {
+            if(this.helper === true){
+                this.dungeonMusic.fade(.3, .05, 1000);
+            } else {
+                this.dungeonMusic.fade(.05, .3, 1000);
+            }
+        }
+    }
 }
 </script>
 
