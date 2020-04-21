@@ -30,11 +30,14 @@
 </template>
 
 <script>
-import { store } from "../store"
+import { store } from "../store";
+import { Howl } from "howler";
 
 import ShopControls from './ShopControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
 import ShopPortrait from "./ShopPortrait.vue";
+
+
 
 export default {
     name: 'ShopPhase',
@@ -46,7 +49,19 @@ export default {
     data() {
         return {
             storeState: store.state,
+            shopMusic: new Howl ({
+                src: [require('../assets/audio/spiritualMomentPP.mp3')],
+                volume:0.5,
+                loop: true,
+            }),
         }
+    },
+    created() {
+        this.shopMusic.play();
+        this.shopMusic.fade(0, .3, 1500);
+    },
+    beforeDestroy() {
+        this.shopMusic.fade(.3, 0, 1500);
     },
 }
 </script>
