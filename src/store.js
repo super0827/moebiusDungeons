@@ -20,6 +20,7 @@ export const store = {
         playerLog: [],
         monsterLog: [],
         magicAttack: false,
+        duration: 150,
     },
     animations: {
         monster:{
@@ -483,6 +484,6 @@ export const store = {
       setTimeout(() => {
         this.state.phase = scene;
         this.state.isEntering = true;
-      }, 200);
+      }, 300);
     },
 };
