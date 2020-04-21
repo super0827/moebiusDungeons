@@ -43,7 +43,7 @@ import { Howl } from "howler";
 
 const chit = new Howl({
     src: [require('../assets/audio/buttonHover.wav')],
-    volume:0.4,
+    volume:0.8,
 });
 
 const confirm = new Howl({
