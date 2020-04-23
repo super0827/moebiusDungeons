@@ -33,13 +33,19 @@
         </section>
     </section>
 
-<h1 id="about" @click="store.sceneChange('InstructionsScreen')"> HUH? </h1>
+<h1 id="about" @mouseenter="playChit()" @click="instructionsHandle()"> HUH? </h1>
+
+<transition name='fade'>
+    <instructions-screen @close-instructions="instructionsHandle()" v-if="instructions"/>
+</transition>
+
 </section>
 </template>
 
 <script>
 import { store } from "../store";
 import { Howl } from "howler";
+import InstructionsScreen from './InstructionsScreen';
 
 const chit = new Howl({
     src: [require('../assets/audio/buttonHover.wav')],
@@ -59,10 +65,14 @@ const charSelectMusic = new Howl ({
 
 export default {
   name: 'CharacterSelect',
+  components: {
+        InstructionsScreen,
+  },
   data() {
       return {
           store: store,
           storeState: store.state,
+          instructions: false,
           characterClasses: [
               {name:"swordsman",
               type:'player', 
@@ -104,18 +114,26 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
         store.sceneChange('DungeonPhase');
+        confirm.play();
+        charSelectMusic.fade(.6, 0, 1500);
     },
     playChit() {
         chit.play();
+    },
+    instructionsHandle(){
+        this.instructions = !this.instructions;
+        if (this.instructions == false){
+            charSelectMusic.fade(.05, .6, 1500);
+        }
+        else if (this.instructions == true){
+            charSelectMusic.fade(.6, .05, 1500);
+        }
+
     }
   },
   created() {
         charSelectMusic.play();
-        charSelectMusic.fade(0,1,1500);
-    },
-    beforeDestroy() {
-        confirm.play();
-        charSelectMusic.fade(1, 0, 1500);
+        charSelectMusic.fade(0,.6,1500);
     },
 }
 </script>
@@ -123,6 +141,7 @@ export default {
 <style scoped>
 .characterSelectWrapper {
     text-align:center;
+    position:relative;
 }
 
 .chooseChar {
