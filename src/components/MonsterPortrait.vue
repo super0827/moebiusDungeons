@@ -77,8 +77,9 @@
             <animated-number
             :value="storeState.monster.health"
             :duration="storeState.duration"
+            :formatValue="store.wholeNumber"
             />
-            {{ storeState.monster.health }}</p>
+          </p>
           <img src="../assets/imgs/icons/healthIcon.png">
         </section>
         
@@ -106,7 +107,6 @@
 import { store } from "../store";
 import AnimatedNumber from "animated-number-vue";
 
-
 export default {
   name: 'MonsterPortrait',
     components: {
@@ -116,6 +116,7 @@ export default {
       return {
           storeState: store.state,
           storeAnim: store.animations.monster,
+          store: store,
       }
   },
 }

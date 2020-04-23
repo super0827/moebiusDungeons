@@ -65,6 +65,7 @@
           <animated-number 
           :value="storeState.player.health"
           :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
           />
           </p>
 
@@ -103,6 +104,7 @@ export default {
   },
   data() {
     return {
+      store: store,
       storeState: store.state,
       storeAnim: store.animations.player,
     }
