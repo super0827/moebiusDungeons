@@ -28,6 +28,8 @@ const chit = new Howl({
     volume:0.4,
 });
 
+
+
 export default {
     name: 'BattleControls',
     data() {
@@ -50,6 +52,7 @@ export default {
         },
         tradeBlows(attacker, defender) {
 
+            //clear animations so they can be repeated
             this.clearAnimations(attacker.type);
             this.clearAnimations(defender.type);
 
@@ -70,12 +73,8 @@ export default {
                     this.monsterAttacking = true;
                 }
 
-
                 // animates attackers portrait to wobble
                 this.wobble(attacker.type);
-
-
-
 
                 // Physical ATTACKER
                 // Physical ATTACKER
@@ -83,9 +82,16 @@ export default {
                 // runs if player attack type is physical
                 if (attacker.attackType === 'physical') {
                     this.storeState.magicAttack = false;
-                    //Be Reckless Rules
+
+                    // if Be Reckless Rules apply
                     if( this.specialAttack === "beReckless" ) {
                         if(attacker.type === 'monster'){
+
+                            let monsterInSound = new Howl ({
+                                src: attacker.enterSound,
+                            });
+                            monsterInSound.play();
+
                             //lowers players defense
                             this.storeState.monsterDealtDamage = attackRoll;
                             attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
@@ -168,13 +174,12 @@ export default {
                     
                     if(defender.type === 'monster'){
                         this.combatActive = false;
-                        setTimeout(()=>{
                            this.monsterRetaliate();
-                        }, 1000);
-                    }else {
+                    }
+                    else {
                         setTimeout(()=>{
-                            this.resetCombat();
-                        }, 1000);
+                            this.monsterAttacking = false;
+                        }, 1200);
                     }
                 }
 
@@ -194,11 +199,23 @@ export default {
                     //set defender health to reflect damage taken
                     defender.health -= attackRoll;
 
+                    
 
                 }
-
+                
+                //Clear out the special Attack
                 if(attacker.type === 'monster'){
                     this.specialAttack = '';
+                    this.monsterAttacking = false;
+                }
+
+                if (defender.health <= 0) {
+                    this.death(defender.type);
+                }
+                
+                //monster attacks back
+                if(attacker.type == 'player' && defender.health > 0) {
+                    this.monsterRetaliate();
                 }
             }
         },
@@ -208,15 +225,15 @@ export default {
         },
         monsterRetaliate() {
             setTimeout(() => {
+                this.combatActive = false;
                 this.tradeBlows(this.storeState.monster, this.storeState.player);
-            },400);
+            },1200);
         },
         turnTail(){
             console.log("turning tail");
         },
-        resetCombat(){
-            this.monsterAttacking = false;
-        },
+
+        //clears all animation states on monster or player
         clearAnimations(whoToClear){
             if(whoToClear === 'monster'){
                 for(let value in this.monsterAnim){
@@ -229,6 +246,8 @@ export default {
                 }
             }
         },
+
+        //handles adding readout to the log found in store.js
         addToLog(whichLog, comm){
             let log = "";
             if(whichLog === 'monster'){
@@ -239,17 +258,23 @@ export default {
             }
             log.push({id: this.randomKey(), message: comm});
         },
+
+        //generates random key for the player log
         randomKey: function () {
             return Math.random();
         },
+
+        //runs if monster or player health is >= 0
         death(whoDied){
-            if(whoDied === 'monster'){
-                this.monsterAnim.monsterDead = true;
+            setTimeout(() => {
+                if(whoDied === 'monster'){
+                    this.monsterAnim.monsterDead = true;
                 store.sceneChange('ShopPhase');
-            }
-            else if (whoDied === 'player') {
-                store.sceneChange('LoseScreen');
-            }
+                }
+                else if (whoDied === 'player') {
+                    store.sceneChange('LoseScreen');
+                }
+            },1200);
         },
 
 
