@@ -12,11 +12,11 @@
   </h2>
 
   <h3>
-      Tougher beasts boast more coins. Each playable character is different, so try them out and see which you like best.
+      Tougher beasts drop more coins. Each character class is different, so try them all out.
   </h3>
 
   <h3>
-      Rinse. Repeat.    
+      Rinse then repeat. Try to make it to the end alive.    
   </h3>
 
   <p>
@@ -24,7 +24,7 @@
   </p>
 
 <br>
-  <h1 id="proceed" @click="storeState.phase = 'CharacterSelect'">
+  <h1 class="animated pulse slow infinite" id="proceed" @click="$emit('close-instructions')">
       UNDERSTOOD.
   </h1>
 </section>
@@ -45,7 +45,11 @@ export default {
 
 <style scoped>
     #instructions {
-        width:350px;
+        width:100%;
+        height:100%;
+        background:rgba(255, 255, 255, 0.98);
+        position:absolute;
+        top:0px;
         display:flex;
         justify-content: center;
         align-items: center;
@@ -67,20 +71,21 @@ export default {
     }
 
     h1 {
-        font-size:18px;
+        font-size:25px;
         margin:2px;
     }
 
     h2 {
-        font-size:16px;
+        font-size:25px;
+        margin:10px;
         text-decoration: none;
     }
 
     h3 {
-        font-size:14px;
+        font-size:18px;
     }
 
     p {
-        font-size:10px;
+        font-size:20px;
     };
 </style>
