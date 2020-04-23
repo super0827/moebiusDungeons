@@ -20,7 +20,7 @@ export const store = {
         playerLog: [],
         monsterLog: [],
         magicAttack: false,
-        duration: 150,
+        duration: 1000,
     },
     animations: {
         monster:{
@@ -56,7 +56,7 @@ export const store = {
             portrait:require("./assets/imgs/monsters/bats.png"), 
             coins:0, health:4, armor:0, attackMax:4, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
-            warning:"Bright red eyes, fangs meant to slice. To stay away is my advice."
+            warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
         },
           {
             name:"imps",
@@ -486,4 +486,7 @@ export const store = {
         this.state.isEntering = true;
       }, 300);
     },
+    wholeNumber(value) {
+      return `${Math.ceil(value)}`;
+    }
 };
