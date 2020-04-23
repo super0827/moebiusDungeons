@@ -58,7 +58,6 @@ import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
 import ShopPhase from './components/ShopPhase.vue';
 
-import InstructionsScreen from './components/InstructionsScreen.vue';
 
 import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
@@ -67,7 +66,6 @@ export default {
   name: 'App',
   components: {
     StartScreen,
-    InstructionsScreen,
     CharacterSelect,
     DungeonPhase,
     ShopPhase,
