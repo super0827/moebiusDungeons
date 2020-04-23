@@ -89,17 +89,17 @@ export default {
     },
     created() {
         this.dungeonMusic.play();
-        this.dungeonMusic.fade(0, .3, 1500);
+        this.dungeonMusic.fade(0, .1, 1500);
     },
     beforeDestroy() {
-        this.dungeonMusic.fade(.3, 0, 1500);
+        this.dungeonMusic.fade(.1, 0, 1500);
     },
     watch: {
         helper: function() {
             if(this.helper === true){
-                this.dungeonMusic.fade(.3, .05, 1000);
+                this.dungeonMusic.fade(.1, .01, 1000);
             } else {
-                this.dungeonMusic.fade(.05, .3, 1000);
+                this.dungeonMusic.fade(.01, .1, 1000);
             }
         }
     }
