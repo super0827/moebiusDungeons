@@ -25,7 +25,6 @@
         class="animated"
         :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
         />
-        
 
         <!-- Dungeon Controls -->
         <battle-controls
@@ -57,7 +56,6 @@
 
 <script>
 import { store } from "../store"
-import { Howl } from "howler";
 
 import BattleControls from './BattleControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
@@ -80,11 +78,6 @@ export default {
         return {
             helper: false,
             storeState: store.state,
-            dungeonMusic: new Howl ({
-                src: [require('../assets/audio/battlePlanPurpPlan.mp3')],
-                volume:0.3,
-                loop: true,
-            }),
         }
     },
     created() {
