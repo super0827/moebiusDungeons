@@ -24,7 +24,7 @@
   </p>
 
 <br>
-  <h1 class="animated pulse slow infinite" id="proceed" @click="$emit('close-instructions')">
+  <h1 @mouseenter="$sound.play('chit')" class="animated pulse slow infinite" id="proceed" @click="$emit('close-instructions')">
       UNDERSTOOD.
   </h1>
 </section>
