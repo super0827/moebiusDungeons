@@ -24,7 +24,7 @@
             <p>{{characters.description2}}</p>
         
             <section 
-            @mouseenter="playChit()"
+            @mouseenter="$sound.play('chit')"
             class="portContainer animated infinite" :id="characters.name">
                 <section class="overlay"></section>
                 <img :src="characters.portrait" :alt="characters.description2">
@@ -33,7 +33,7 @@
         </section>
     </section>
 
-<h1 id="about" @mouseenter="playChit()" @click="instructionsHandle()"> HUH? </h1>
+<h1 id="about" @mouseenter="$sound.play('chit')" @click="instructionsHandle()"> HUH? </h1>
 
 <transition name='fade'>
     <instructions-screen @close-instructions="instructionsHandle()" v-if="instructions"/>
@@ -44,24 +44,7 @@
 
 <script>
 import { store } from "../store";
-import { Howl } from "howler";
 import InstructionsScreen from './InstructionsScreen';
-
-const chit = new Howl({
-    src: [require('../assets/audio/buttonHover.wav')],
-    volume:0.8,
-});
-
-const confirm = new Howl({
-    src: [require('../assets/audio/gamestart.ogg')],
-    volume:0.5,
-});
-
-const charSelectMusic = new Howl ({
-    src: [require('../assets/audio/427442__kiluaboy__clouds.ogg')],
-    volume:0,
-    loop:true,
-});
 
 export default {
   name: 'CharacterSelect',
@@ -114,26 +97,22 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}`);
         this.storeState.player = passedPlayer;
         store.sceneChange('DungeonPhase');
-        confirm.play();
-        charSelectMusic.fade(.6, 0, 1500);
-    },
-    playChit() {
-        chit.play();
+        this.$sound.play('charPick')
+        this.$sound.pause('charSelectMusic', {fade:1000, volume:0 });
     },
     instructionsHandle(){
         this.instructions = !this.instructions;
         if (this.instructions == false){
-            charSelectMusic.fade(.05, .6, 1500);
+            this.$sound.pause('charSelectMusic', {fade:1000, volume:1});
         }
         else if (this.instructions == true){
-            charSelectMusic.fade(.6, .05, 1500);
+           this.$sound.pause('charSelectMusic', {fade:1000, volume:.1});
         }
 
     }
   },
   created() {
-        charSelectMusic.play();
-        charSelectMusic.fade(0,.6,1500);
+        this.$sound.play('charSelectMusic', {fade:2000});
     },
 }
 </script>
