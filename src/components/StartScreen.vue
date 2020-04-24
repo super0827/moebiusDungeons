@@ -19,7 +19,6 @@
 
 <script>
 import { store } from "../store";
-import { Howl } from "howler";
 
 export default {
     name: 'StartScreen',
@@ -30,12 +29,8 @@ export default {
     },
     methods: {
         startGame () {
-            const startBlip = new Howl({
-                src: [require('../assets/audio/startBlip.ogg')],
-            volume:1,
-            });
             this.storeState.phase = "CharacterSelect";
-            startBlip.play();
+            this.$sound.play('startblip');
         }
     }
 }
