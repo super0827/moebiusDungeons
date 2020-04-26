@@ -68,10 +68,12 @@ export default {
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
-                    this.$sound.play(storeState.monster.attackSound);
+                    let soundPick = randomRoll(storeState.monster.attackSound.length);
+                    this.$sound.play(storeState.monster.attackSound[soundPick]);
                 }
                 else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
+                    let soundPick = randomRoll(storeState.player.attackSound.length);
                     this.$sound.play(storeState.monster.attackSound);
                 }
 

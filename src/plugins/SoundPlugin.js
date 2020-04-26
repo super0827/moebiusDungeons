@@ -29,25 +29,26 @@ const DEFAULT_SOUNDS = {
     "charPick": {
         url: require("@/assets/audio/gamestart.ogg"),
         defaults: {
-            volume:0.5,
+            volume:.5,
         },
 	},
     "charSelectMusic": {
         url: require("@/assets/audio/427442__kiluaboy__clouds.ogg"),
         defaults: {
             loop: true,
-            volume: .6,
+            volume: .4,
         },
 	},
     "dungeonMusic": {
         url: require("@/assets/audio/battlePlanPurpPlan.mp3"),
         defaults: {
-            volume:.4,
+            volume:.3,
             loop: true,
         },
     },
-    
 
+    // monster entering sounds
+    // monster entering sounds
     // monster entering sounds
     "batsEnter": {
         url: require("@/assets/audio/monsterEnter/bats.wav"),
@@ -72,7 +73,31 @@ const DEFAULT_SOUNDS = {
         defaults: {
             volume:1,
         },
-	},
+    },
+
+    
+    // physical monster attacks
+    // physical monster attacks
+    // physical monster attacks
+    "monsterMelee1": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "monsterMelee2": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "monsterMelee3": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
 };
 
 const __sounds = {};
