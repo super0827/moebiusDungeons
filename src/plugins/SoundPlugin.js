@@ -29,7 +29,7 @@ const DEFAULT_SOUNDS = {
     "charPick": {
         url: require("@/assets/audio/gamestart.ogg"),
         defaults: {
-
+            volume:0.5,
         },
 	},
     "charSelectMusic": {
@@ -42,10 +42,18 @@ const DEFAULT_SOUNDS = {
     "dungeonMusic": {
         url: require("@/assets/audio/battlePlanPurpPlan.mp3"),
         defaults: {
-            volume:0.4,
+            volume:.4,
             loop: true,
         },
-	},
+    },
+    
+    //monster sounds
+    'batflap': {
+        url: require("@/assets/audio/monsterEnter/bats.wav"),
+        defaults: {
+            volume:.7,
+        }
+    }
 };
 
 const __sounds = {};

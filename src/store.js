@@ -57,6 +57,7 @@ export const store = {
             coins:0, health:4, armor:0, attackMax:4, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
+            enterSound: 'batflap',
         },
           {
             name:"imps",

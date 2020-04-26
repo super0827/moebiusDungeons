@@ -68,6 +68,7 @@ export default {
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
+                    this.$sound.play(storeState.monster.attackSound)
                 }
                 else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
@@ -308,6 +309,9 @@ export default {
                 this.playerAnim.portEffectPurple = true;
             }
         }
+    },
+    created() {
+        this.$sound.play(this.storeState.monster.enterSound);
     },
 }
 </script>

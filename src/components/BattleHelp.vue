@@ -1,7 +1,7 @@
 <template>
 <section>
     <section class="helpModule">
-        <h1 @click="$emit('close')" class="close">X</h1>
+        <h1 @mouseenter="$sound.play('chit')" @click="$emit('close')" class="close">X</h1>
 
 
         <h1 class="title">Battle Helper</h1>

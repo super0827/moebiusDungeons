@@ -9,7 +9,7 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="helper = !helper" id="dungeonHelp">DUNGEON HELP</h1>
+        <h1 @click="helper = !helper" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
     </transition>
     
     <section class="flexRow">
@@ -81,18 +81,17 @@ export default {
         }
     },
     created() {
-        this.dungeonMusic.play();
-        this.dungeonMusic.fade(0, .1, 1500);
+        this.$sound.play('dungeonMusic', {fade: 1200, volume: .4});
     },
     beforeDestroy() {
-        this.dungeonMusic.fade(.1, 0, 1500);
+        this.$sound.pause('dungeonMusic', {fade: 1200, volume: 0});
     },
     watch: {
         helper: function() {
             if(this.helper === true){
-                this.dungeonMusic.fade(.1, .01, 1000);
+                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.1})
             } else {
-                this.dungeonMusic.fade(.01, .1, 1000);
+                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.4})
             }
         }
     }
