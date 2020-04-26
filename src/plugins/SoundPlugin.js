@@ -74,8 +74,116 @@ const DEFAULT_SOUNDS = {
             volume:1,
         },
     },
+    "gnollEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "goblinEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "ghostEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "lizardmanEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "curseEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "banditEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "mimicEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "ghoulEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "skeletonEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "swamplingEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "harpyEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "mushroomEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "dryadEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "golemEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "demonEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "bansheeEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "lichEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "dragonEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
 
-    
+
     // physical monster attacks
     // physical monster attacks
     // physical monster attacks
