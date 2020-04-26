@@ -45,6 +45,33 @@ const DEFAULT_SOUNDS = {
             volume:0.4,
             loop: true,
         },
+    },
+    
+
+    // monster entering sounds
+    "batsEnter": {
+        url: require("@/assets/audio/monsterEnter/bats.wav"),
+        defaults: {
+            volume:1,
+        },
+	},
+    "impsEnter": {
+        url: require("@/assets/audio/monsterEnter/imp.wav"),
+        defaults: {
+            volume:1,
+        },
+	},
+    "slimeEnter": {
+        url: require("@/assets/audio/monsterEnter/slime.wav"),
+        defaults: {
+            volume:1,
+        },
+	},
+    "koboldEnter": {
+        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        defaults: {
+            volume:1,
+        },
 	},
 };
 

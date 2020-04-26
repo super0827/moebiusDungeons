@@ -119,6 +119,9 @@ export default {
           store: store,
       }
   },
+  created(){
+    this.$sound.play(this.storeState.monster.enterSound);
+  }
 }
 </script>
 

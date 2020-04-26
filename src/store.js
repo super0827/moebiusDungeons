@@ -57,6 +57,7 @@ export const store = {
             coins:0, health:4, armor:0, attackMax:4, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
+            enterSound: 'batsEnter',
         },
           {
             name:"imps",
@@ -64,7 +65,8 @@ export const store = {
             portrait:require("./assets/imgs/monsters/imps.png"), 
             coins:1, health:5, armor:1, attackMax:1, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
-            warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!"
+            warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
+            enterSound: 'impsEnter',
           },
           {
             name:"slime",
@@ -72,7 +74,8 @@ export const store = {
             portrait:require("./assets/imgs/monsters/slime.png"), 
             coins:1, health:6, armor:2, attackMax:4, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
-            warning: "One wrong step to right or left is sure to spell your slimy death."
+            warning: "One wrong step to right or left is sure to spell your slimy death.",
+            enterSound: 'slimeEnter',
           },
           {
             name:"kobold",
@@ -80,7 +83,8 @@ export const store = {
             portrait:require("./assets/imgs/monsters/kobold.png"), 
             coins:1, health:7, armor:1, attackMax:4, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
-            warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!"
+            warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
+            enterSound: 'koboldEnter',
           },
           {
             name:"gnoll",
