@@ -68,10 +68,11 @@ export default {
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
-                    this.$sound.play(storeState.monster.attackSound)
+                    this.$sound.play(storeState.monster.attackSound);
                 }
                 else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
+                    this.$sound.play(storeState.monster.attackSound);
                 }
 
                 // animates attackers portrait to wobble

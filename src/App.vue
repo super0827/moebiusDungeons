@@ -10,6 +10,7 @@
 
       <article v-if="debugShow">
       <p>MONSTER</p>
+      <section @click="store.newMonster()">New Monster</section>
       <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
       <section @click="storeState.monster.health+=100">Monster HP +100</section>
       <section @click="storeState.monster.health+=10">Monster HP +10</section>
