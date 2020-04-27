@@ -68,17 +68,16 @@ export default {
                 // prevents player from spamming attack buttons
                 if(attacker.type == 'player'){
                     this.combatActive = true;
-                    let soundPick = randomRoll(storeState.monster.attackSound.length);
-                    this.$sound.play(storeState.monster.attackSound[soundPick]);
                 }
                 else if(attacker.type == 'monster') {
                     this.monsterAttacking = true;
-                    let soundPick = randomRoll(storeState.player.attackSound.length);
-                    this.$sound.play(storeState.monster.attackSound);
                 }
 
                 // animates attackers portrait to wobble
                 this.wobble(attacker.type);
+
+
+
 
                 // Physical ATTACKER
                 // Physical ATTACKER
@@ -90,11 +89,6 @@ export default {
                     // if Be Reckless Rules apply
                     if( this.specialAttack === "beReckless" ) {
                         if(attacker.type === 'monster'){
-
-                            let monsterInSound = new Howl ({
-                                src: attacker.enterSound,
-                            });
-                            monsterInSound.play();
 
                             //lowers players defense
                             this.storeState.monsterDealtDamage = attackRoll;
@@ -117,12 +111,16 @@ export default {
                         this.addToLog(attacker.type, `TRADING BLOWS`);
 
                         if(attacker.type === 'monster'){
+                            let hitNum = this.randomRoll(3);
+                            this.$sound.play(`monsterMelee${hitNum}`);
                             this.storeState.monsterDealtDamage = attackRoll;
                             this.storeState.monsterDealtDamage = attackRoll;
                             attackRoll = Math.max(0, (attackRoll - defender.armor));
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
                         }
                         else if (attacker.type === 'player'){
+                            let hitNum = this.randomRoll(3);
+                            this.$sound.play(`playerMelee${hitNum}`);
                             this.storeState.playerDealtDamage = attackRoll;
                             attackRoll = Math.max(0, (attackRoll - defender.armor));
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
@@ -139,25 +137,41 @@ export default {
                 //runs if attacker attack type is magical
                 else if (attacker.attackType === "magical") {
                     this.storeState.magicAttack = true;
+
+                    //BEING RECKLESS
                     if (this.specialAttack === 'beReckless') {
                         this.addToLog(attacker.type, `BEING RECKLESS`);
+                        
+                        //on monsters turn
                         if(attacker.type === 'monster'){
                             this.storeState.monsterDealtDamage = attackRoll;
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
-                            }
+                        }
+                        //on players turn
                         else if (attacker.type === 'player'){
                             attackRoll = Math.ceil(attackRoll * 1.5);
                             this.storeState.playerDealtDamage = attackRoll;
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
                         }
                     }
+
+                    //NORMAL TRADING BLOWS
                     else {
                         this.addToLog(attacker.type, `TRADING BLOWS`);
+
+                        //on monsters turn
                         if(attacker.type === 'monster'){
+                            let hitNum = this.randomRoll(3);
+                            this.$sound.play(`monsterMagic${hitNum}`);
                             this.storeState.monsterDealtDamage = attackRoll;
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
-                            }
+                        }
+
+                        //on players turn
                         else if (attacker.type === 'player'){
+                            let hitNum = this.randomRoll(3);
+                            this.$sound.play(`playerMagic${hitNum}`);
+                            
                             this.storeState.playerDealtDamage = attackRoll;
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
                         }
@@ -213,11 +227,12 @@ export default {
                     this.monsterAttacking = false;
                 }
 
+                // if defender is at 0 or less hp run death function
                 if (defender.health <= 0) {
                     this.death(defender.type);
                 }
                 
-                //monster attacks back
+                //monster attacks back if not dead
                 if(attacker.type == 'player' && defender.health > 0) {
                     this.monsterRetaliate();
                 }
