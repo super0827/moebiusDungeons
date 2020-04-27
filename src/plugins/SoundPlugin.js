@@ -184,23 +184,93 @@ const DEFAULT_SOUNDS = {
     },
 
 
+    //physical player sounds
+    //physical player sounds
+    //physical player sounds
+    "playerMelee1": {
+        url: require("@/assets/audio/playerSounds/sword1.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "playerMelee2": {
+        url: require("@/assets/audio/playerSounds/sword2.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "playerMelee3": {
+        url: require("@/assets/audio/playerSounds/sword3.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
+    
+    //magical player sounds
+    //magical player sounds
+    //magical player sounds
+    "playerMagic1": {
+        url: require("@/assets/audio/playerSounds/flame.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "playerMagic2": {
+        url: require("@/assets/audio/playerSounds/flame2.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "playerMagic3": {
+        url: require("@/assets/audio/playerSounds/flame3.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
+
+
     // physical monster attacks
     // physical monster attacks
     // physical monster attacks
     "monsterMelee1": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterSounds/monsterAttack1.wav"),
         defaults: {
             volume:1,
         },
     },
     "monsterMelee2": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterSounds/monsterAttack2.mp3"),
         defaults: {
             volume:1,
         },
     },
     "monsterMelee3": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterSounds/monsterAttack3.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+
+
+    // magical monster attacks
+    // magical monster attacks
+    // magical monster attacks
+    "monsterMagic1": {
+        url: require("@/assets/audio/monsterSounds/monsterMagic1.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "monsterMagic2": {
+        url: require("@/assets/audio/monsterSounds/monsterMagic2.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "monsterMagic3": {
+        url: require("@/assets/audio/monsterSounds/monsterMagic3.wav"),
         defaults: {
             volume:1,
         },
