@@ -81,7 +81,7 @@ export default {
         }
     },
     created() {
-        this.$sound.play('dungeonMusic', {fade: 1200, volume: .4});
+        this.$sound.play('dungeonMusic', {fade: 1200, volume: .2});
     },
     beforeDestroy() {
         this.$sound.pause('dungeonMusic', {fade: 1200, volume: 0});
@@ -89,9 +89,9 @@ export default {
     watch: {
         helper: function() {
             if(this.helper === true){
-                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.1})
+                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.05})
             } else {
-                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.4})
+                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.2})
             }
         }
     }
