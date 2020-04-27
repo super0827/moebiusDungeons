@@ -173,6 +173,7 @@ export const store = {
             coins:2, health:12, armor:1, attackMax:2, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
+            enterSound: 'impEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -183,6 +184,7 @@ export const store = {
             coins:2, health:10, armor:2, attackMax:6, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "One wrong step to right or left is sure to spell your slimy death.",
+            enterSound: 'slimeEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -193,6 +195,7 @@ export const store = {
             coins:2, health:11, armor:1, attackMax:6, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
+            enterSound: 'koboldEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -203,6 +206,7 @@ export const store = {
             coins:2, health:14, armor:2, attackMax:5, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "a warning growl behind sharp teeth, quickly now your sword unsheath.",
+            enterSound: 'gnollEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -213,6 +217,7 @@ export const store = {
             coins:3, health:17, armor:2, attackMax:6, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
+            enterSound: 'goblinEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -224,6 +229,7 @@ export const store = {
             coins:4, health:18, armor:3, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
+            enterSound: 'mimicEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -236,6 +242,7 @@ export const store = {
             coins:3, health:16, armor:2, attackMax:9, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
+            enterSound: 'ghostEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -246,6 +253,7 @@ export const store = {
             coins:3, health:18, armor:2, attackMax:9, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Lizard senses seek out prey, poison venom helps them slay.",
+            enterSound: 'lizardmanEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -256,6 +264,7 @@ export const store = {
             coins:1, health:16, armor:4, attackMax:12, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
+            enterSound: 'curseEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -266,6 +275,7 @@ export const store = {
             coins:4, health:15, armor:2, attackMax:8, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Shadows hide two men from sight. Their motives born of moral spite.",
+            enterSound: 'banditsEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -277,6 +287,7 @@ export const store = {
             coins:5, health:18, armor:3, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
+            enterSound: 'mimicEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -288,6 +299,7 @@ export const store = {
             coins:3, health:15, armor:2, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
+            enterSound: 'ghoulEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -297,6 +309,7 @@ export const store = {
             coins:3, health:16, armor:2, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
+            enterSound: 'skeletonEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -306,6 +319,7 @@ export const store = {
             coins:3, health:16, armor:2, attackMax:10, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
+            enterSound: 'swamplingEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -318,6 +332,7 @@ export const store = {
             coins:4, health:20, armor:3, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
+            enterSound: 'ghoulEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -328,6 +343,7 @@ export const store = {
             coins:4, health:21, armor:3, attackMax:11, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
+            enterSound: 'skeletonEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -338,6 +354,7 @@ export const store = {
             coins:5, health:23, armor:2, attackMax:10, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
+            enterSound: 'swamplingEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -350,6 +367,7 @@ export const store = {
             coins:4, health:15, armor:3, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Halfway bird and halfway horrid, You'll be telling tales quite sordid.",
+            enterSound: 'harpyEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -359,6 +377,7 @@ export const store = {
             coins:4, health:18, armor:2, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"It stands still by a rotting log, spores cloud up a toxic fog.",
+            enterSound: 'mushroomEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -368,6 +387,7 @@ export const store = {
             coins:4, health:20, armor:4, attackMax:10, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "she lives beneath a special tree, deaf to any mortal plea.",
+            enterSound: 'dryadEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -377,6 +397,7 @@ export const store = {
             coins:4, health:22, armor:4, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "a guardian immune to death, you cannot kill what has no breath.",
+            enterSound: 'golemEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -389,6 +410,7 @@ export const store = {
             coins:5, health:25, armor:4, attackMax:10, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Human-like but one thing proves, instead of feet they have black hooves.",
+            enterSound: 'demonEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -398,6 +420,7 @@ export const store = {
             coins:5, health:30, armor:5, attackMax:12, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "she moans in anguish, ghostly, gritty. Her eyes shine bright to see your pity.",
+            enterSound: 'bansheeEnter',
             attacks: ['attakname', 'attackname'],
           },
           
@@ -410,6 +433,7 @@ export const store = {
             coins:10, health:36, armor:8, attackMax:12, attackType: "magical",
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "Whirling nacre tp body bound, a yearning mind in learn-lust drown.",
+            enterSound: 'lichEnter',
             attacks: ['attakname', 'attackname'],
           },
           {
@@ -419,6 +443,7 @@ export const store = {
             coins:10, health:40, armor:8, attackMax:12, attackType: "physical",
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.',
+            enterSound: 'dragonEnter',
             attacks: ['attakname', 'attackname'],
           },
         ],
@@ -520,16 +545,14 @@ export const store = {
     },
     sceneChange(scene) {
       this.state.isEntering = false;
-
-      if(this.state.monsterRoster > 0){
-          this.newShopkeep();
-      }
-      else {
-        this.newMonster();
-      }
       
       setTimeout(() => {
         this.state.phase = scene;
+        if(this.state.monsterRoster > 0  && scene == 'ShopPhase'){
+          this.newShopkeep();
+        } else if (this.state.monsterRoster == 0) {
+          this.newMonster();
+        }
         this.state.isEntering = true;
       }, 300);
     },

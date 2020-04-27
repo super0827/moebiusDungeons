@@ -59,7 +59,7 @@ const DEFAULT_SOUNDS = {
     "impsEnter": {
         url: require("@/assets/audio/monsterEnter/imp.wav"),
         defaults: {
-            volume:1,
+            volume:.4,
         },
 	},
     "slimeEnter": {
@@ -75,109 +75,109 @@ const DEFAULT_SOUNDS = {
         },
     },
     "gnollEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/gnoll.mp3"),
         defaults: {
             volume:1,
         },
     },
     "goblinEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/goblin.mp3"),
         defaults: {
             volume:1,
         },
     },
     "ghostEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/ghost.mp3"),
         defaults: {
             volume:1,
         },
     },
     "lizardmanEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/lizardman.mp3"),
         defaults: {
             volume:1,
         },
     },
     "curseEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/curse.mp3"),
         defaults: {
             volume:1,
         },
     },
-    "banditEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+    "banditsEnter": {
+        url: require("@/assets/audio/monsterEnter/bandits.mp3"),
         defaults: {
             volume:1,
         },
     },
     "mimicEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/mimic.mp3"),
         defaults: {
             volume:1,
         },
     },
     "ghoulEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/ghoul.mp3"),
         defaults: {
             volume:1,
         },
     },
     "skeletonEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/skeleton.wav"),
         defaults: {
             volume:1,
         },
     },
     "swamplingEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/swampling.mp3"),
         defaults: {
             volume:1,
         },
     },
     "harpyEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/harpy.mp3"),
         defaults: {
             volume:1,
         },
     },
     "mushroomEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/mushroom.mp3"),
         defaults: {
             volume:1,
         },
     },
     "dryadEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/dryad.mp3"),
         defaults: {
             volume:1,
         },
     },
     "golemEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/golem.mp3"),
         defaults: {
             volume:1,
         },
     },
     "demonEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/demon.mp3"),
         defaults: {
             volume:1,
         },
     },
     "bansheeEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/banshee.mp3"),
         defaults: {
             volume:1,
         },
     },
     "lichEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/lich.mp3"),
         defaults: {
             volume:1,
         },
     },
     "dragonEnter": {
-        url: require("@/assets/audio/monsterEnter/kobold.wav"),
+        url: require("@/assets/audio/monsterEnter/dragon.mp3"),
         defaults: {
             volume:1,
         },
