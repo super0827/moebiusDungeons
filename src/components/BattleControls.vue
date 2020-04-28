@@ -62,7 +62,7 @@ export default {
             // conditional prevents attacking while characters are animating
             if(!this.combatActive && !this.monsterAttacking) {
 
-                //Determines attackers attack roll
+                //Determines inital attackers attack roll
                 let attackRoll = this.randomRoll(attacker.attackMax);
 
                 // prevents player from spamming attack buttons
@@ -84,29 +84,51 @@ export default {
                 // Physical ATTACKER
                 // runs if player attack type is physical
                 if (attacker.attackType === 'physical') {
+                    //sets strike out of armor readout value to off
                     this.storeState.magicAttack = false;
 
-                    // if Be Reckless Rules apply
+                    //adds "Being Reckless" to monster Sidebar
+                    this.addToLog(attacker.type, `Being Reckless`);
+
+                    //PHYSICAL BE RECKLESS
+                    //PHYSICAL BE RECKLESS
+                    //PHYSICAL BE RECKLESS
                     if( this.specialAttack === "beReckless" ) {
+                        //if attacker is monster
                         if(attacker.type === 'monster'){
 
-                            //lowers players defense
+                            //displays rolled damage in PlayerPortrait.vue
                             this.storeState.monsterDealtDamage = attackRoll;
+
+                            //sets attack value to reflect halved players armor
                             attackRoll = Math.max(0, (attackRoll - Math.floor(defender.armor/2)));
+                            
+                            //displays armor adjusted damage in PlayerPortrait.vue
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
-                            this.addToLog(attacker.type, `Being Reckless`);
-                        } 
+
+                        }
+                        //if attacker is player
                         else if (attacker.type === 'player') {
+                            //multiplies attack roll by 1.5
                             attackRoll = Math.ceil(attackRoll * 1.5);
+
+                            //displays rolled damage in MonsterPortrait.vue
                             this.storeState.playerDealtDamage = attackRoll;
+
+                            //sets attack value to reflect reduction from monsters armor
                             attackRoll = Math.max(0, (attackRoll - defender.armor));
+
+                            //displays armor adjusted damage in MonsterPortrait.vue
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
-                        
-                            this.addToLog(attacker.type, `BEING RECKLESS`);
                         }
                     }
 
-                    //Trade Blows physical calculation if normal attack
+
+
+
+                   //PHYSICAL TRADE BLOWS
+                   //PHYSICAL TRADE BLOWS
+                   //PHYSICAL TRADE BLOWS
                     else if (this.specialAttack === '') {
                         this.addToLog(attacker.type, `TRADING BLOWS`);
 
@@ -124,10 +146,10 @@ export default {
                             this.storeState.playerDealtDamage = attackRoll;
                             attackRoll = Math.max(0, (attackRoll - defender.armor));
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
-
                         }
                     }
                 }
+                //END PHYSICAL ATTACK LOGIC
 
 
 
@@ -138,63 +160,102 @@ export default {
                 else if (attacker.attackType === "magical") {
                     this.storeState.magicAttack = true;
 
-                    //BEING RECKLESS
+                    //MAGIC BEING RECKLESS
+                    //MAGIC BEING RECKLESS
+                    //MAGIC BEING RECKLESS
                     if (this.specialAttack === 'beReckless') {
+                        //adds "BEING RECKLESS" to the HUD log
                         this.addToLog(attacker.type, `BEING RECKLESS`);
                         
                         //on monsters turn
                         if(attacker.type === 'monster'){
+                            //displays rolled damage in PlayerPortrait.vue
                             this.storeState.monsterDealtDamage = attackRoll;
+
+                            //displays actual damage in PlayerPortrait.vue
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
                         }
+
+
                         //on players turn
                         else if (attacker.type === 'player'){
+                            //sets attack value to reflect reduction from monsters armor
                             attackRoll = Math.ceil(attackRoll * 1.5);
+
+                            //displays rolled damage in MonsterPortrait.vue
                             this.storeState.playerDealtDamage = attackRoll;
+
+                            //displays armor adjusted damage in MonsterPortrait.vue
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
                         }
                     }
 
-                    //NORMAL TRADING BLOWS
+
+
+                    //MAGIC TRADING BLOWS
+                    //MAGIC TRADING BLOWS
+                    //MAGIC TRADING BLOWS
                     else {
+                        //add 'TRADING BLOWS" to HUD log
                         this.addToLog(attacker.type, `TRADING BLOWS`);
 
                         //on monsters turn
                         if(attacker.type === 'monster'){
+                            //play monster attack sound
                             let hitNum = this.randomRoll(3);
                             this.$sound.play(`monsterMagic${hitNum}`);
+                            
+                            //displays rolled damage in PlayerPortrait.vue
                             this.storeState.monsterDealtDamage = attackRoll;
+
+                            //(same value as above for amgic attacks) displays calculated after armor damage in PlayerPortrait.vue
                             this.storeState.monsterafterArmorDealtDamage = attackRoll;
                         }
 
                         //on players turn
                         else if (attacker.type === 'player'){
+                            //play monster attack sound
                             let hitNum = this.randomRoll(3);
                             this.$sound.play(`playerMagic${hitNum}`);
-                            
+
+                            //displays rolled damage in MonsterPortrait.vue
                             this.storeState.playerDealtDamage = attackRoll;
+
+                             //(same value as above for amgic attacks) displays calculated after armor damage in PlayerPortrait.vue
                             this.storeState.playerafterArmorDealtDamage = attackRoll;
                         }
                     }
                 }
+                //END MAGIC ATTACK LOGIC
 
 
 
 
-                // BATTLE OUTCOME
-                // BATTLE OUTCOME
-                // BATTLE OUTCOME
+                // BATTLE OUTCOMES
+                // BATTLE OUTCOMES
+                // BATTLE OUTCOMES
 
-                //if defender blocked the attack completely
+
+                //DAMAGE ENTIRELY BLOCKED
+                //if defender blocked the attack completely | attackRoll value is less than or equal to 0
                 if(attackRoll <= 0){
+                    // add defender blocked to the HUD log
                     this.addToLog(defender.type, `${defender.type} blocked`)
+
+                    //animate defender blocking attack entirely
                     this.blocking(defender.type);
                     
+                    //during monster attack phase
                     if(defender.type === 'monster'){
+                        //end player combat state
                         this.combatActive = false;
-                           this.monsterRetaliate();
+
+                        //run trade blows as monster
+                        this.monsterRetaliate();
                     }
-                    else {
+
+                    //during monster attack phase
+                    else if (defender.type === 'player') {
                         setTimeout(()=>{
                             this.monsterAttacking = false;
                         }, 1200);
@@ -202,25 +263,20 @@ export default {
                 }
 
 
-
-
-                // else some damage is dealt
+                // DEFENDER TAKES SOME DAMAGE
                 else {
+                    //add "Took X Damage" to HUD log
                     this.addToLog(defender.type, `Took ${attackRoll} damage`);
 
                     // Animate defender pulsing
                     this.recoil(defender.type);
 
-                    //Monster attacked with physical damage
-                    this.storeState.attackDamage = attackRoll;
-
-                    //set defender health to reflect damage taken
-                    defender.health -= attackRoll;
-
-                    
-
+                    //subtracts attackRoll from defender health to reflect damage taken
+                    defender.health -= attackRoll;  
                 }
                 
+
+
                 //Clear out the special Attack
                 if(attacker.type === 'monster'){
                     this.specialAttack = '';
