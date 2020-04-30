@@ -87,13 +87,15 @@ export default {
                     //sets strike out of armor readout value to off
                     this.storeState.magicAttack = false;
 
-                    //adds "Being Reckless" to monster Sidebar
-                    this.addToLog(attacker.type, `Being Reckless`);
 
                     //PHYSICAL BE RECKLESS
                     //PHYSICAL BE RECKLESS
                     //PHYSICAL BE RECKLESS
                     if( this.specialAttack === "beReckless" ) {
+                        
+                        //adds "Being Reckless" to monster Sidebar
+                        this.addToLog(attacker.type, `Being Reckless`);
+                        
                         //if attacker is monster
                         if(attacker.type === 'monster'){
 
@@ -231,10 +233,12 @@ export default {
 
 
 
-                // BATTLE OUTCOMES
-                // BATTLE OUTCOMES
-                // BATTLE OUTCOMES
 
+
+
+                // BATTLE OUTCOMES
+                // BATTLE OUTCOMES
+                // BATTLE OUTCOMES
 
                 //DAMAGE ENTIRELY BLOCKED
                 //if defender blocked the attack completely | attackRoll value is less than or equal to 0
@@ -256,9 +260,7 @@ export default {
 
                     //during monster attack phase
                     else if (defender.type === 'player') {
-                        setTimeout(()=>{
-                            this.monsterAttacking = false;
-                        }, 1200);
+                        this.monsterAttacking = false;
                     }
                 }
 
@@ -285,7 +287,9 @@ export default {
 
                 // if defender is at 0 or less hp run death function
                 if (defender.health <= 0) {
-                    this.death(defender.type);
+                    setTimeout(()=>{
+                        this.death(defender.type);
+                    }, 1000);
                 }
                 
                 //monster attacks back if not dead
@@ -341,15 +345,20 @@ export default {
 
         //runs if monster or player health is >= 0
         death(whoDied){
-            setTimeout(() => {
-                if(whoDied === 'monster'){
-                    this.monsterAnim.monsterDead = true;
-                store.sceneChange('ShopPhase');
-                }
-                else if (whoDied === 'player') {
-                    store.sceneChange('LoseScreen');
-                }
-            },1200);
+            if(whoDied === 'monster'){
+                this.monsterAnim.monsterDead = true;
+                let soundNum = this.randomRoll(4);
+                this.$sound.play(`monsterDead${soundNum}`);
+                setTimeout(()=>{
+                    store.sceneChange('ShopPhase');
+                    this.clearAnimations("monster");
+                    this.clearAnimations('player');
+                },1200);
+            }
+            else if (whoDied === 'player') {
+                store.sceneChange('LoseScreen');
+            }
+
         },
 
 
