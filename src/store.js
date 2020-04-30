@@ -537,6 +537,8 @@ export const store = {
     },
     newShopkeep() {
       this.newMonster();
+      this.playerLog = [];
+      this.monsterLog = [];
       let randomNumber = Math.floor(Math.random() * Math.floor(this.characters.shopKeeps.length));
       this.state.shopkeep = this.characters.shopKeeps[randomNumber];
       this.state.shopkeep.items = shuffle(this.state.shopkeep.items);
