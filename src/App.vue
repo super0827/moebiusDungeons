@@ -12,19 +12,15 @@
       <p>MONSTER</p>
       <section @click="store.newMonster()">New Monster</section>
       <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
-      <section @click="storeState.monster.health+=100">Monster HP +100</section>
-      <section @click="storeState.monster.health+=10">Monster HP +10</section>
-      <section @click="storeState.monster.health = 10">Monster HP =10</section>
+      <section @click="storeState.monster.health++">Monster HP Up</section>
+      <section @click="storeState.monster.health--">Monster HP Down</section>
       <br>
       <p>PLAYER</p>
-      <section @click="storeState.player.health+=100">Player HP +100</section>
-      <section @click="storeState.player.health+=10">Player HP +10</section>
-      <section @click="storeState.player.health = 10">Player HP =10</section>
-      <section @click="storeState.player.coins += 1">+1 Coin</section>
-      <section @click="storeState.player.coins += 10">+10 Coins</section>
+      <section @click="storeState.player.health++">Player HP Up</section>
+      <section @click="storeState.player.health--">Player HP Down</section>
+      <section @click="storeState.player.coins++">Coins Up</section>
       <br>
       <p>SCENES</p>
-      <section @click="store.sceneChange('InstructionsScreen')">Instructions</section>
       <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
       <section @click="store.sceneChange('ShopPhase')">Shop</section>
       <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
