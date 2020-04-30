@@ -60,7 +60,7 @@ export default {
               {name:"swordsman",
               type:'player', 
               portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
-              description1:"Slicing and Dicing", 
+              description1:"Slicing and Dicing",
               description2:"Bruiser class, high damage, good armor, high health.", 
               coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
               attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
