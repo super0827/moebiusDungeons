@@ -1,10 +1,7 @@
 <template>
 <section 
   key="monsterPortComp"
- class="columns" 
- :class="{
-  'animated tada' : storeAnim.monsterDead,
-  }"
+  class="columns" 
 >
     
       <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
@@ -13,7 +10,8 @@
       class="portraitWrapper"
       :class="{ 'animated pulse' : storeAnim.hurt, 
       'animated reverseWobble' : storeAnim.attacking, 
-      'animated pulse' : storeAnim.blocking 
+      'animated pulse' : storeAnim.blocking,
+      'animated tada' : storeAnim.monsterDead
       }"
       >
         <!-- Monster Image -->
@@ -41,7 +39,7 @@
                <section class="indicatorWrapper">
               <img class="attackIndicator" :src="storeState.monster.attackTypeImage" alt="">
               <h2 class="attackValue">
-                {{ storeState.monsterDealtDamage }} 
+                {{ storeState.playerDealtDamage }} 
               </h2>
                </section>
 
@@ -50,13 +48,13 @@
               <section class="indicatorWrapper">
               <img class="armorIndicator" src="../assets/imgs/icons/armorIcon.png" alt="">
               <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack}">
-              {{ storeState.player.armor }} 
+              {{ storeState.monster.armor }} 
               </h2>
               </section>
              </section>
 
              <section>
-              <h2 class="calculatedDamage"> {{ storeState.monsterafterArmorDealtDamage }} </h2>
+              <h2 class="calculatedDamage"> {{ storeState.playerafterArmorDealtDamage }} </h2>
             </section>
           </section>
         </transition>
