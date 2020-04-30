@@ -6,7 +6,6 @@
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
 
-
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
         <h1 @click="helper = !helper" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
@@ -74,24 +73,31 @@ export default {
         PlayerReadout,
         MonsterReadout,
     },
+    methods: {
+        randomRoll(rollMax){
+            return Math.floor(Math.random() * Math.floor(rollMax) + 1);
+        },
+    },
     data() {
         return {
             helper: false,
             storeState: store.state,
+            randomBkg: Number,
         }
     },
     created() {
-        this.$sound.play('dungeonMusic', {fade: 1200, volume: .2});
+        this.randomBkg = this.randomRoll(5);
+        this.$sound.play(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: .2});
     },
     beforeDestroy() {
-        this.$sound.pause('dungeonMusic', {fade: 1200, volume: 0});
+        this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: 0});
     },
     watch: {
         helper: function() {
             if(this.helper === true){
-                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.05})
+                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.05})
             } else {
-                this.$sound.pause('dungeonMusic', {fade: 1200, volume:.2})
+                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.2})
             }
         }
     }
