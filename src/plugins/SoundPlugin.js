@@ -14,6 +14,9 @@ const PAUSE_DEFAULTS = {
 }
 
 const DEFAULT_SOUNDS = {
+    //UI SFX
+    //UI SFX
+    //UI SFX
     "chit": {
         url: require("@/assets/audio/buttonHover.wav"),
         defaults: {
@@ -31,21 +34,106 @@ const DEFAULT_SOUNDS = {
         defaults: {
             volume:.5,
         },
-	},
+    },
+    "monsterDead1": {
+        url: require("@/assets/audio/victory1.wav"),
+        defaults: {
+            volume:.5,
+        },
+    },
+    "monsterDead2": {
+        url: require("@/assets/audio/victory2.wav"),
+        defaults: {
+            volume:.5,
+        },
+    },
+    "monsterDead3": {
+        url: require("@/assets/audio/victory3.wav"),
+        defaults: {
+            volume:.5,
+        },
+    },
+    "monsterDead4": {
+        url: require("@/assets/audio/victory4.wav"),
+        defaults: {
+            volume:.5,
+        },
+    },
+    
+    
+
+
+
+    //BACKGROUND MUSIC
+    //BACKGROUND MUSIC
+    //BACKGROUND MUSIC
     "charSelectMusic": {
         url: require("@/assets/audio/427442__kiluaboy__clouds.ogg"),
         defaults: {
             loop: true,
             volume: .4,
         },
-	},
-    "dungeonMusic": {
-        url: require("@/assets/audio/battlePlanPurpPlan.mp3"),
+    },
+
+    //Dungeon Phase
+    "dungeonMusic1": {
+        url: require("@/assets/audio/dungeonMusic/battlePlanPP.mp3"),
         defaults: {
             volume:.3,
             loop: true,
         },
     },
+    "dungeonMusic2": {
+        url: require("@/assets/audio/dungeonMusic/deadlockPP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    "dungeonMusic3": {
+        url: require("@/assets/audio/dungeonMusic/expectancyPP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    "dungeonMusic4": {
+        url: require("@/assets/audio/dungeonMusic/IntoBattlePP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    "dungeonMusic5": {
+        url: require("@/assets/audio/dungeonMusic/TheChasePP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    //Shop Phase
+    "shopMusic1": {
+        url: require("@/assets/audio/shopAudio/background/eventidePP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    "shopMusic2": {
+        url: require("@/assets/audio/shopAudio/background/scenicEssencePP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    "shopMusic3": {
+        url: require("@/assets/audio/shopAudio/background/spiritualMomentPP.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    
 
     // monster entering sounds
     // monster entering sounds
