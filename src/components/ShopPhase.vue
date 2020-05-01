@@ -48,7 +48,6 @@ import ShopPortrait from "./ShopPortrait.vue";
 import ShopHelp from "./ShopHelp.vue";
 
 
-
 export default {
     name: 'ShopPhase',
     components:{
