@@ -71,9 +71,13 @@ export default {
     created() {
         this.randomBkg = this.randomRoll(3);
         this.$sound.play(`shopMusic${this.randomBkg}`, {fade: 1200, volume: .2});
+
+        let roll = this.randomRoll(2);
+        this.$sound.play(this.storeState.shopkeep.welcome);
     },
     beforeDestroy() {
         this.$sound.pause(`shopMusic${this.randomBkg}`, {fade: 1200, volume: 0});
+        this.$sound.play(this.storeState.shopkeep.goodbye);
     },
     watch: {
         helper: function() {
