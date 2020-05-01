@@ -35,6 +35,12 @@ const DEFAULT_SOUNDS = {
             volume:.5,
         },
     },
+    'escape': {
+        url: require("@/assets/audio/runAway.wav"),
+        defaults: {
+            volume:1,
+        },
+    },
     "monsterDead1": {
         url: require("@/assets/audio/victory1.wav"),
         defaults: {
@@ -59,6 +65,77 @@ const DEFAULT_SOUNDS = {
             volume:.5,
         },
     },
+    "playerDead": {
+        url: require("@/assets/audio/loseSound.wav"),
+        defaults: {
+            volume:.5,
+        },
+    },
+    
+
+
+
+
+
+
+    //SHOP UI SFX
+    //SHOP UI SFX
+    //SHOP UI SFX
+    "cantBuy": {
+        url: require("@/assets/audio/cantBuy.wav"),
+        defaults: {
+            volume:.4,
+        },
+    },
+    "oneCoin1": {
+        url: require("@/assets/audio/shopAudio/coins/oneCoin1.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "oneCoin2": {
+        url: require("@/assets/audio/shopAudio/coins/oneCoin2.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "twoCoin1": {
+        url: require("@/assets/audio/shopAudio/coins/twoCoin1.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "twoCoin2": {
+        url: require("@/assets/audio/shopAudio/coins/twoCoin2.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "threeCoin1": {
+        url: require("@/assets/audio/shopAudio/coins/threeCoin1.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "threeCoin2": {
+        url: require("@/assets/audio/shopAudio/coins/threeCoin2.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "fourCoin": {
+        url: require("@/assets/audio/shopAudio/coins/fourCoin.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "fiveCoin": {
+        url: require("@/assets/audio/shopAudio/coins/fiveCoin.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
     
     
 
@@ -133,6 +210,16 @@ const DEFAULT_SOUNDS = {
             loop: true,
         },
     },
+    
+    //Lose Screen
+    "loseScreen": {
+        url: require("@/assets/audio/gameOver.mp3"),
+        defaults: {
+            volume:.3,
+            loop: true,
+        },
+    },
+    
     
 
     // monster entering sounds
