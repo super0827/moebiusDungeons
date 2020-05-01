@@ -13,7 +13,7 @@
     
     <br>
 
-    <h3 @mouseenter="playChit()" :class="{'striked' : combatActive || monsterAttacking }" @click="turnTail()">Turn Tail</h3>
+    <h3 @mouseenter="playChit()" :class="{'striked' : combatActive || monsterAttacking || !turnTailAvailable }" @click="turnTail()">Turn Tail</h3>
 
 </section>
 </template>
@@ -41,6 +41,7 @@ export default {
             specialAttack: "",
             monsterAnim: store.animations.monster,
             playerAnim: store.animations.player,
+            turnTailAvailable: true,
         }
     },
     methods:{
@@ -309,7 +310,31 @@ export default {
             },1200);
         },
         turnTail(){
-            console.log("turning tail");
+            if(this.turnTailAvailable) {
+                this.addToLog('player', `Turning Tail`);
+                this.addToLog('monster', `Turning Tail`);
+                this.$sound.play('escape');
+                let playerRoll = this.randomRoll(6) + this.storeState.player.health;
+                let monsterRoll = this.randomRoll(6) + this.storeState.monster.health;
+                setTimeout(()=>{
+                    this.addToLog('player', `You Rolled ${playerRoll}`);
+                    this.addToLog('monster', `Monster Rolled ${monsterRoll}`);
+                    setTimeout(()=>{
+                        if (playerRoll > monsterRoll){
+                            this.addToLog('player', `You Escaped!`);
+                            setTimeout(()=>{
+                                store.sceneChange('ShopPhase');
+                            }, 1500);
+                        }
+                        else if (monsterRoll >= playerRoll) {
+                            this.addToLog('player', `You Couldn't Escape!`);
+                            this.addToLog('monster', `The Monster Caught You!`);
+                            this.monsterRetaliate();
+                            this.turnTailAvailable = false;
+                        }
+                    },1500);
+                },1500);
+            }
         },
 
         //clears all animation states on monster or player
@@ -349,6 +374,8 @@ export default {
                 this.monsterAnim.monsterDead = true;
                 let soundNum = this.randomRoll(4);
                 this.$sound.play(`monsterDead${soundNum}`);
+                this.storeState.player.coins += this.storeState.monster.coins;
+                this.storeState.monster.coins = 0;
                 setTimeout(()=>{
                     store.sceneChange('ShopPhase');
                     this.clearAnimations("monster");
@@ -356,7 +383,15 @@ export default {
                 },1200);
             }
             else if (whoDied === 'player') {
-                store.sceneChange('LoseScreen');
+                this.playerAnim.playerDead = true;
+                this.$sound.play(`playerDead`);
+                this.storeState.player.coins += this.storeState.monster.coins;
+                this.storeState.monster.coins = 0;
+                setTimeout(()=>{
+                    store.sceneChange('LoseScreen');
+                    this.clearAnimations("monster");
+                    this.clearAnimations('player');
+                },1200);
             }
 
         },
