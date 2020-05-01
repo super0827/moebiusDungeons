@@ -18,6 +18,7 @@
       <p>PLAYER</p>
       <section @click="storeState.player.health++">Player HP Up</section>
       <section @click="storeState.player.health--">Player HP Down</section>
+      <section @click="storeState.player.health = 1">Player HP = 1</section>
       <section @click="storeState.player.coins++">Coins Up</section>
       <br>
       <p>SCENES</p>
