@@ -7,7 +7,9 @@
       class="portraitWrapper"
       :class="{'animated pulse' : storeAnim.hurt, 
       'animated wobble' : storeAnim.attacking, 
-      'animated pulse' : storeAnim.blocked }"
+      'animated pulse' : storeAnim.blocked,
+      'animated tada' : storeAnim.playerDead 
+      }"
       >
       <img class="portrait" :src="storeState.player.portrait">
 
@@ -83,12 +85,22 @@
         </section>
         
         <section>
-          <p>{{ storeState.player.armor }}</p>
+          <p><animated-number 
+          :value="storeState.player.armor"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          /></p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ storeState.player.attackMax }}</p>
+          <p>
+          <animated-number 
+          :value="storeState.player.attackMax"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+          </p>
           <img :src="storeState.player.attackTypeImage">
         </section>
 
@@ -96,7 +108,13 @@
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ storeState.player.coins }}</h1>
+        <h1 class="coinValue">
+          <animated-number 
+          :value="storeState.player.coins"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+        </h1>
       </section>
 
   </section>

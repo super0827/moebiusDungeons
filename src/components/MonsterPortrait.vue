@@ -92,12 +92,24 @@
         </section>
         
         <section>
-          <p>{{ storeState.monster.armor }}</p>
+          <p>
+            <animated-number 
+          :value="storeState.monster.attackMax"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+          </p>
           <img src="../assets/imgs/icons/armorIcon.png">
         </section>
         
         <section>
-          <p> d{{ storeState.monster.attackMax }}</p>
+          <p>
+          <animated-number 
+          :value="storeState.monster.attackMax"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+          </p>
           <img :src="storeState.monster.attackTypeImage">
         </section>
 
@@ -105,7 +117,13 @@
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ storeState.monster.coins }}</h1>
+        <h1 class="coinValue">
+          <animated-number 
+          :value="storeState.monster.coins"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+        </h1>
       </section>
 </section>
 </template>
