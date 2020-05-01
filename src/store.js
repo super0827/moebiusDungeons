@@ -475,7 +475,10 @@ export const store = {
             { bought: false, noSale: false, name: 'Dessicated Doll', cost: 5, description: 'Revive with 10 HP on death.', buy: () => { store.state.playerTraits.push('dessicated doll') }},
           ],
           saying:"Trust me, nothing I sell is cursed.",
-          shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal."
+          shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
+          welcome:'grWelcome',
+          goodbye:'grOkay',
+
           },
 
           {name:"merchant", 
@@ -494,7 +497,9 @@ export const store = {
             { bought: false, noSale: false, name: 'Mettle Vulnerary', cost: 5, description: '+8 ATK', buy: () => { store.state.player.attackMax += 8; } },
           ],
           saying:"Friend or foe, what are ya' buyin'?",
-          shopTitle: "It's not much, but it's what I've got. All priced to move."
+          shopTitle: "It's not much, but it's what I've got. All priced to move.",
+          welcome:'meWelcome',
+          goodbye:'meGoodbye',
           },
 
           {name:"witch", 
