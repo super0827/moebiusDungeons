@@ -62,6 +62,12 @@
 export default {
   name: 'LoseScreen',
   props: {
+  },
+  created() {
+      this.$sound.play('loseScreen');
+  },
+  beforeDestroy() {
+      this.$sound.pause(`loseScreen`, {fade: 1200, volume: 0});
   }
 }
 </script>
