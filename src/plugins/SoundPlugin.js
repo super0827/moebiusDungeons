@@ -136,6 +136,77 @@ const DEFAULT_SOUNDS = {
         },
     },
     
+    //GraveRobber 
+    "grWelcome": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberWelcome.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "grAlright": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberAlright.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "grBuyAnother": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberBuyAnother.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "grHeyThere": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberHeyThere.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "grHuh": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberHUH.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "grOkay": {
+        url: require("@/assets/audio/shopAudio/graverobber/graverobberOkay.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
+    //Merchant 
+    "meWelcome": {
+        url: require("@/assets/audio/shopAudio/merchant/merchantWelcome.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "meAlright": {
+        url: require("@/assets/audio/shopAudio/merchant/merchantAlright.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "meHey": {
+        url: require("@/assets/audio/shopAudio/merchant/merchantHey.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "meOkay": {
+        url: require("@/assets/audio/shopAudio/merchant/merchantOkay.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    "meGoodbye": {
+        url: require("@/assets/audio/shopAudio/merchant/merchantComeBackSoon.mp3"),
+        defaults: {
+            volume:1,
+        },
+    },
+    
+    
     
     
 
