@@ -68,7 +68,7 @@
                 <br>
                 You'll roll a random number from 1 to 6 and add your health points,
                 the monster will do the same. If you roll higher, you get away. If the
-                monster rolls higher it will attack you.
+                monster rolls higher it will attack you and you fail to run away.
             </p>
 
 
