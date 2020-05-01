@@ -88,6 +88,8 @@ export default {
     created() {
         this.randomBkg = this.randomRoll(5);
         this.$sound.play(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: .2});
+        this.storeState.playerLog = [];
+        this.storeState.monsterLog = [];
     },
     beforeDestroy() {
         this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: 0});
