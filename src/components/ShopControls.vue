@@ -53,13 +53,37 @@ export default {
     }
   },
   methods: {
+    randomRoll(rollMax){
+      return Math.floor(Math.random() * Math.floor(rollMax) + 1);
+    },
     buy(itemBought) {
       if(itemBought.cost <= this.storeState.player.coins && itemBought.bought === false) {
+
+        let roll = this.randomRoll(2);
+        switch (itemBought.cost) {
+          case 1:
+            this.$sound.play(`oneCoin${roll}`)
+            break;
+          case 2:
+            this.$sound.play(`twoCoin${roll}`)
+            break;
+          case 3:
+            this.$sound.play(`threeCoin${roll}`)
+            break;
+          case 4:
+            this.$sound.play(`fourCoin`)
+            break;
+          case 5:
+            this.$sound.play(`fiveCoin$`)
+            break;
+        }
+
         itemBought.buy();
         itemBought.bought = true;
         this.storeState.player.coins -= itemBought.cost;
       } else {
         itemBought.noSale = true;
+        this.$sound.play('cantBuy');
         setTimeout(() => {
         itemBought.noSale = false;
         }, 500);
