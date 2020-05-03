@@ -58,7 +58,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
             enterSound: 'batsEnter',
-            
+            special(){
+              //on tradeblows or be reckless, bats should attack first
+            }
           },
           {
             name:"imps",
@@ -68,7 +70,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
             enterSound: 'impsEnter',
-            
+            special(){
+              //not needed
+            }
           },
           {
             name:"slime",
@@ -78,7 +82,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "One wrong step to right or left is sure to spell your slimy death.",
             enterSound: 'slimeEnter',
-            
+            special(){
+              //if player rolls minimum damage, then the slime destroys one point players armor
+            }
           },
           {
             name:"kobold",
@@ -88,7 +94,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
             enterSound: 'koboldEnter',
-            
+            special() {
+              //when you defeat a kobold roll 1d6, on a 1 you must fight another kobold immediately.
+            }
           },
           {
             name:"gnoll",
@@ -98,7 +106,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "a warning growl behind sharp teeth, quickly now your sword unsheath.",
             enterSound: 'gnollEnter',
-            
+            special() {
+              //fleas! if you roll a 1 for attack you get fleas! Minus one damage until fleas is healed.
+            }
           },
           {
             name:"goblins",
@@ -108,7 +118,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
             enterSound: 'goblinEnter',
-            
+            special(){
+              //goblins smell bad. To fight them roll your damage roll twice and take the lower result.
+            }
           },
           
           // Level 2 NORMAL
@@ -120,6 +132,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
             enterSound: 'ghostEnter',
+            special(){
+              //ghosts are incorporeal and can not be escaped from
+            }
             
           },
           {
@@ -130,7 +145,10 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Lizard senses seek out prey, poison venom helps them slay.",
             enterSound: 'lizardmanEnter',
-            
+            special(){
+              //lizardman can poison you. if lizardman hits for max damage you are poisoned for one damage every time you attack
+              //until you recover health
+            }
           },
           {
             name:"curse",
@@ -140,7 +158,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
             enterSound: 'curseEnter',
-            
+            special(){
+              //none
+            }
           },
           {
             name:"bandits",
@@ -150,7 +170,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Shadows hide two men from sight. Their motives born of moral spite.",
             enterSound: 'banditsEnter',
-            
+            special(){
+              //if bandit rolls max damage then they attack again immediately!
+            }
           },
           
           // Level 1 VIRULENTS
@@ -300,7 +322,8 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
             enterSound: 'ghoulEnter',
-            
+            //you become rotten if the ghoul deals max damage.
+            //your hp is reduced by 1/6 every monster you fight until you are healed.
           },
           {
             name:"skeleton",
@@ -310,7 +333,10 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
             enterSound: 'skeletonEnter',
-            
+            special(){
+              //on death roll 1d6, on 4-6 the skeleton is dead.
+              //on a 1-3 fight another skeleton at 5 hp and 0 armor
+            }
           },
           {
             name:"swampling",
@@ -320,7 +346,10 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
             enterSound: 'swamplingEnter',
-            
+            special() {
+              //if you roll minimum damage you get the status blight
+              //deal half damage until blight is cured
+            }
           },
           
           //Level 3 VIRULENTS
@@ -368,6 +397,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Halfway bird and halfway horrid, You'll be telling tales quite sordid.",
             enterSound: 'harpyEnter',
+            special() {
+              //on death roll 1d6 on a 1 or 2 fight another harpy
+            }
             
           },
           {
@@ -378,6 +410,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:"It stands still by a rotting log, spores cloud up a toxic fog.",
             enterSound: 'mushroomEnter',
+            special() {
+              //on appear roll 1d6, on a 1-3 you are poisoned until healed
+            }
             
           },
           {
@@ -388,7 +423,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "she lives beneath a special tree, deaf to any mortal plea.",
             enterSound: 'dryadEnter',
-            
+            special() {
+              //each turn roll 1d6, on a 1, you are attacked by the dryad and lose your attack turn.
+            }
           },
           {
             name:"golem",
@@ -398,7 +435,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "a guardian immune to death, you cannot kill what has no breath.",
             enterSound: 'golemEnter',
-            
+            special() {
+              //when golem reaches 0 hp, it survives and deals half damage until you deal 10+ damage once.
+            }
           },
           
           // Level 5
@@ -411,7 +450,7 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning: "Human-like but one thing proves, instead of feet they have black hooves.",
             enterSound: 'demonEnter',
-            
+            //if demons health reaches 5 hp it takes on it's true form and deals 2d10 damage until killed.
           },
           {
             name:"banshee",
@@ -421,7 +460,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "she moans in anguish, ghostly, gritty. Her eyes shine bright to see your pity.",
             enterSound: 'bansheeEnter',
-            
+            special() {
+              //on encounter roll 1d6, on 1-2 you are sticken with fear and can not be reckless or flee.
+            }
           },
           
           // BOSSES
@@ -434,6 +475,11 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/magicalIcon.png"),
             warning: "Whirling nacre tp body bound, a yearning mind in learn-lust drown.",
             enterSound: 'lichEnter',
+            special() {
+              //you cant run from the lich
+              //if lich rolls max damage, it retreats and summons a skeleton with 1d8 damage 8 hp and 0 armor.
+              //when the skeleton dies the lich returns
+            }
             
           },
           {
@@ -444,6 +490,9 @@ export const store = {
             attackTypeImage: require("./assets/imgs/icons/physicalIcon.png"),
             warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.',
             enterSound: 'dragonEnter',
+            special() {
+              //dragons take half damage from non magical attacks
+            }
             
           },
         ],
