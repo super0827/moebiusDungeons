@@ -37,7 +37,7 @@
           <section class="damageReadout" v-if="storeAnim.hurt">
              <section class="flexRow">
                <section class="indicatorWrapper">
-              <img class="attackIndicator" :src="storeState.monster.attackTypeImage" alt="">
+              <img class="attackIndicator" :src="storeState.player.attackTypeImage" alt="">
               <h2 class="attackValue">
                 {{ storeState.playerDealtDamage }} 
               </h2>
@@ -147,7 +147,7 @@ export default {
   },
   created(){
     this.$sound.play(this.storeState.monster.enterSound);
-  }
+  },
 }
 </script>
 
