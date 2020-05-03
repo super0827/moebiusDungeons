@@ -431,6 +431,9 @@ export default {
     created() {
         this.$sound.play(this.storeState.monster.enterSound);
     },
+    mounted() {
+        this.storeState.monster.special();
+    }
 }
 </script>
 
