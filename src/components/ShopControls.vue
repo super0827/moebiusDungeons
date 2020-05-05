@@ -58,6 +58,9 @@ export default {
     },
     buy(itemBought) {
       if(itemBought.cost <= this.storeState.player.coins && itemBought.bought === false) {
+        
+        let roll = this.randomRoll(2);
+        
         switch (itemBought.cost) {
           case 1:
             this.$sound.play(`oneCoin${roll}`)
