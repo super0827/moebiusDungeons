@@ -34,8 +34,8 @@
     <!-- GUI -->
       <transition name="fade" mode="out-in">
         <component 
-        :key="storeState.phase"
-        :is="storeState.phase"
+        :key="phase"
+        :is="phase"
         ></component>
       </transition> 
 
