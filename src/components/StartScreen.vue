@@ -19,13 +19,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
     name: 'StartScreen',
     methods: {
         startGame () {
-            this.$store.commit('changePhase', 'CharacterSelect');
+            this.$store.commit('mutate', {property: 'phase', with: 'CharacterSelect'});
             this.$sound.play('startblip');
         }
     },
