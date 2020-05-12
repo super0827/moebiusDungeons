@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-
-// import shuffle from 'lodash.shuffle';
+import shuffle from 'lodash.shuffle';
 
 Vue.use(Vuex)
 
@@ -26,14 +24,12 @@ export const store = new Vuex.Store({
     playerLog: [],
     monsterLog: [],
     magicAttack: false,
+    music:null,
     duration: 1000,
   },
   mutations: {
-    enterAnimation(state, bool) {
-        state.isEntering = bool;
-    },
-    changePhase(state, newPhase) {
-        state.phase = newPhase;
+    mutate(state, payload) {
+      state[payload.property] = payload.with;
     }
   },
   getters: {
