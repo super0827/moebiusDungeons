@@ -1,8 +1,9 @@
 <template>
+
+<section class="flexRow">
   <section class="columns">
       
       <h3>YOU</h3>
-
       <section 
       class="portraitWrapper"
       :class="{'animated pulse' : storeAnim.hurt, 
@@ -69,43 +70,6 @@
           </transition>
       </section>
 
-
-      <section class="flexRow stats">
-
-        <section>
-          <p>
-          <animated-number 
-          :value="storeState.player.health"
-          :duration="storeState.duration"
-          :formatValue="store.wholeNumber"
-          />
-          </p>
-
-          <img src="../assets/imgs/icons/healthIcon.png">
-        </section>
-        
-        <section>
-          <p><animated-number 
-          :value="storeState.player.armor"
-          :duration="storeState.duration"
-          :formatValue="store.wholeNumber"
-          /></p>
-          <img src="../assets/imgs/icons/armorIcon.png">
-        </section>
-        
-        <section>
-          <p>
-          <animated-number 
-          :value="storeState.player.attackMax"
-          :duration="storeState.duration"
-          :formatValue="store.wholeNumber"
-          />
-          </p>
-          <img :src="storeState.player.attackTypeImage">
-        </section>
-
-      </section>
-
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
         <h1 class="coinValue">
@@ -117,18 +81,28 @@
         </h1>
       </section>
 
+
   </section>
+
+      <player-stats/>
+
+
+</section>
+
+  
 </template>
 
 <script>
 import { store } from "../store";
 import AnimatedNumber from "animated-number-vue";
+import PlayerStats from "./PlayerStats.vue";
 
 
 export default {
   name: 'PlayerPortrait',
   components: {
-    AnimatedNumber
+    AnimatedNumber,
+    PlayerStats
   },
   data() {
     return {
@@ -142,6 +116,7 @@ export default {
 </script>
 
 <style scoped>
+
 .portraitWrapper {
   display:grid;
   height:233px;
@@ -263,5 +238,9 @@ export default {
 
 .test {
   position:fixed;
+}
+
+.coinWrapper {
+  margin-top:10px;
 }
 </style>
