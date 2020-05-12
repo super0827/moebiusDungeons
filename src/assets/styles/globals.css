@@ -18,6 +18,17 @@ body {
     margin:0 10px;
 }
 
+.statColumn {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items: space-around;
+    max-width:100px;
+    min-width:100px;
+    width:100px;
+    height:290px;
+}
+
 .iconImageSize {
     width:75px;
   }
@@ -72,6 +83,12 @@ p {
     align-items: flex-start;
 }
 
+.flexRowStats {
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .flexColumn {
     display:flex;
     justify-content: center;
@@ -109,3 +126,52 @@ p {
     text-shadow: black -2px 2px 2px;
     position:absolute;
 }
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+  
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: gray;
+    color: #fff;
+    font-family:var(--paragraphs-type);
+    font-size:18px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+  
+    width: 200px;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -110px; /* Use half of the width (120/2 = 60), to center the tooltip */
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+  
+    padding:10px;
+    text-transform: uppercase;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  
+  
+  .tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: gray transparent transparent transparent;
+  }
