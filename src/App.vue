@@ -12,13 +12,12 @@
       <p>MONSTER</p>
       <section @click="store.newMonster()">New Monster</section>
       <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
-      <section @click="storeState.monster.health++">Monster HP Up</section>
-      <section @click="storeState.monster.health--">Monster HP Down</section>
+      <section @click="storeState.monster.health += 100">Monster HP 100</section>
+      <section @click="storeState.monster.health = 1">Monster HP 1</section>
       <br>
       <p>PLAYER</p>
-      <section @click="storeState.player.health++">Player HP Up</section>
-      <section @click="storeState.player.health--">Player HP Down</section>
-      <section @click="storeState.player.health = 1">Player HP = 1</section>
+      <section @click="storeState.player.health += 100">Player HP 100</section>
+      <section @click="storeState.player.health = 1">Player HP 1</section>
       <section @click="storeState.player.coins++">Coins Up</section>
       <br>
       <p>SCENES</p>
