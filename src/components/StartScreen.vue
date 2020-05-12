@@ -1,8 +1,9 @@
 <template>
 <section>
 
-    <section @click="startGame()" class="animated startScreen slower" :class="{'fadeIn' : storeState.isEntering, 
-    'rubberBand' : !storeState.isEntering }">
+    <section @click="startGame()" class="animated startScreen slower" 
+    :class="{'fadeIn' : isEntering, 
+    'rubberBand' : !isEntering }">
         <section class=" animated pulse infinite slower">
             <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
             <!-- <img src="../assets/imgs/icons/raceTypeIconMagic.png" alt=""> -->
@@ -18,21 +19,16 @@
 </template>
 
 <script>
-import { store } from "../store";
+import { mapState } from 'vuex'
 
 export default {
     name: 'StartScreen',
-    data() {
-        return {
-            storeState: store.state,
-        }
-    },
     methods: {
         startGame () {
-            this.storeState.phase = "CharacterSelect";
+            this.$store.commit('changePhase', 'CharacterSelect');
             this.$sound.play('startblip');
         }
-    }
+    },
 }
 </script>
 
