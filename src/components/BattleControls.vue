@@ -2,9 +2,8 @@
 <section class="columnsMiddle battleOptions"
 >
 
-    <p>
-        {{storeState.monster.warning}}
-    </p>
+    <stat-bars/>
+
 
     <br>
 
@@ -21,6 +20,7 @@
 <script>
 import { store } from "../store";
 import { Howl } from "howler";
+import StatBars from './StatBars.vue'
 
 
 const chit = new Howl({
@@ -32,6 +32,9 @@ const chit = new Howl({
 
 export default {
     name: 'BattleControls',
+     components: {
+      StatBars,
+    },
     data() {
         return {
             storeState: store.state,
@@ -445,7 +448,7 @@ export default {
     }
 
     p {
-        font-size:20px;
+        font-size:12px;
         text-transform:uppercase;
     }
 
@@ -496,6 +499,5 @@ export default {
         min-width:200px;
         text-align:center;
         margin:0 10px;  
-        height:449px;
     }
 </style>
