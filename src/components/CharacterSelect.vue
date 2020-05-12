@@ -2,7 +2,8 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering }">CHOOSE YOUR CHARACTER</h1>
+    <h1 class="animated" :class="{'zoomInDown' : isEntering, 
+    'zoomOutUp' : !isEntering }">CHOOSE YOUR CHARACTER</h1>
 
     <section class="chooseChar">
         <section
@@ -17,7 +18,8 @@
         :attackTypeImage="characters.attackTypeImage"
         @click="setPlayer(characters)"
         class="columns animated"
-        :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
+        :class="{ [characters.inAnimations]: isEntering, 
+        [characters.outAnimations]: !isEntering }">
         
             <h2>{{characters.name}}</h2>
             <h3>{{characters.description1}}</h3>
@@ -48,13 +50,12 @@ import InstructionsScreen from './InstructionsScreen';
 
 export default {
   name: 'CharacterSelect',
+  music: ['charSelectMusic'],
   components: {
         InstructionsScreen,
   },
   data() {
       return {
-          store: store,
-          storeState: store.state,
           instructions: false,
           characterClasses: [
               {name:"swordsman",
@@ -108,12 +109,8 @@ export default {
         else if (this.instructions == true){
            this.$sound.pause('charSelectMusic', {fade:1000, volume:.1});
         }
-
     }
   },
-  created() {
-        this.$sound.play('charSelectMusic', {fade:2000});
-    },
 }
 </script>
 
