@@ -1,10 +1,13 @@
 <template>
+<section class="flexRow">
+   <monster-stats/>
 <section 
   key="monsterPortComp"
   class="columns" 
 >
     
       <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
+      
       
       <section 
       class="portraitWrapper"
@@ -14,11 +17,14 @@
       'animated tada' : storeAnim.monsterDead
       }"
       >
+        <div class="tooltip">
         <!-- Monster Image -->
         <img 
         class="portrait" 
         :src="storeState.monster.portrait"
         >
+        <span class="tooltiptext">{{storeState.monster.warning}}</span>
+        </div>
 
         <!-- Animated Damage Tips -->
         <transition appear
@@ -77,43 +83,7 @@
 
           <section v-if="storeState.monster.dire" class="direOverlay"></section>
       </section>
-      
-      <section class="flexRow stats">
 
-        <section>
-          <p>
-            <animated-number
-            :value="storeState.monster.health"
-            :duration="storeState.duration"
-            :formatValue="store.wholeNumber"
-            />
-          </p>
-          <img src="../assets/imgs/icons/healthIcon.png">
-        </section>
-        
-        <section>
-          <p>
-            <animated-number 
-          :value="storeState.monster.attackMax"
-          :duration="storeState.duration"
-          :formatValue="store.wholeNumber"
-          />
-          </p>
-          <img src="../assets/imgs/icons/armorIcon.png">
-        </section>
-        
-        <section>
-          <p>
-          <animated-number 
-          :value="storeState.monster.attackMax"
-          :duration="storeState.duration"
-          :formatValue="store.wholeNumber"
-          />
-          </p>
-          <img :src="storeState.monster.attackTypeImage">
-        </section>
-
-      </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
@@ -124,7 +94,10 @@
           :formatValue="store.wholeNumber"
           />
         </h1>
+
       </section>
+</section>
+
 </section>
 </template>
 
@@ -132,11 +105,14 @@
 <script>
 import { store } from "../store";
 import AnimatedNumber from "animated-number-vue";
+import MonsterStats from "./MonsterStats.vue";
+
 
 export default {
   name: 'MonsterPortrait',
     components: {
-      AnimatedNumber
+      AnimatedNumber,
+      MonsterStats
     },
   data() {
       return {
@@ -284,4 +260,15 @@ export default {
 .test {
   position:fixed;
 }
+
+p {
+  text-transform:uppercase;
+}
+
+.coinWrapper {
+  margin-top:10px;
+}
+
+
+
 </style>
