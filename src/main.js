@@ -8,18 +8,25 @@ import SoundPlugin from '@/plugins/SoundPlugin';
 import { mapState } from 'vuex';
 Vue.use(SoundPlugin);
 
-
-//global mixins
+//animation and bkg music handling
 Vue.mixin({
-  beforeCreate: function () {
-    store.commit('enterAnimation', true);
+  created: function () {
+    store.commit('mutate', {property: 'isEntering', with: true});
+    if(this.$options.music) {
+      store.commit('mutate', {property: 'music', with: this.$options.music});
+      this.$sound.play(store.state.music, {fade: 2000});
+    }
   },
   beforeDestroy: function () {
-    store.commit('enterAnimation', false);
+    store.commit('mutate', {property: 'isEntering', with: false});
+    if(this.$options.music) {
+      this.$sound.pause(store.state.music, {fade: 2000});
+    }
   },
   computed: mapState([
     'isEntering',
-    'phase'
+    'phase',
+    'music'
   ]),
 })
 
