@@ -24,7 +24,7 @@ export const store = new Vuex.Store({
     playerLog: [],
     monsterLog: [],
     magicAttack: false,
-    music:null,
+    music: undefined,
     duration: 1000,
 
     helper: false,
