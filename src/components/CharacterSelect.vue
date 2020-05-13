@@ -35,10 +35,10 @@
         </section>
     </section>
 
-<h1 id="about" @mouseenter="$sound.play('chit')" @click="instructionsHandle()"> HUH? </h1>
+<h1 id="about" @mouseenter="$sound.play('chit')" @click="toggleHelp()"> HUH? </h1>
 
 <transition name='fade'>
-    <instructions-screen @close-instructions="instructionsHandle()" v-if="helper"/>
+    <instructions-screen @close-instructions="instructionsHandle()" v-if="this.helper"/>
 </transition>
 
 </section>
@@ -47,10 +47,14 @@
 <script>
 import { store } from "../store";
 import InstructionsScreen from './InstructionsScreen';
+import gameData from './mixins/gameData';
+import helperToggles from './mixins/helperToggles';
+import gameAnimations from './mixins/gameAnimations';
 
 export default {
   name: 'CharacterSelect',
   music: ['charSelectMusic'],
+  mixins: [gameData, helperToggles, gameAnimations],
   components: {
         InstructionsScreen,
   },
@@ -96,19 +100,10 @@ export default {
   methods: {
     setPlayer(passedPlayer) {
         console.log(`You're playing as the ${passedPlayer.name}`);
-        store.commit('mutate', {property: 'player', with: passedPlayer});
-        store.commit('mutate', {property: 'phase', with: 'DungeonPhase'});
+        this.$store.commit('mutate', {property: 'player', with: passedPlayer});
+        this.$store.commit('mutate', {property: 'phase', with: 'DungeonPhase'});
         this.$sound.play('charPick');
     },
-    instructionsHandle(){
-        this.instructions = !this.instructions;
-        if (this.instructions){
-            this.$sound.pause('charSelectMusic', {fade:1000, volume:.1});
-        }
-        else {
-            
-        }
-    }
   },
 }
 </script>
