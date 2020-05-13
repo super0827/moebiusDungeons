@@ -3,7 +3,7 @@
 
     <!-- DEBUGGING -->
 
-    <section class="debugBar">
+    <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
         DEBUG BAR
       </section>
@@ -28,6 +28,9 @@
       <p>END GAME</p>
       <section @click="store.sceneChange('WinScreen')">Win Screen</section>
       <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
+      <br>
+      <section @click="testMode = !testMode">Enable Testing Mode</section>
+
       </article>
     </section>
 
@@ -47,7 +50,7 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
-import { store } from "./store"
+import gameData from './components/mixins/gameData';
 
 import StartScreen from './components/StartScreen.vue';
 
@@ -61,6 +64,7 @@ import LoseScreen from './components/LoseScreen.vue';
 
 export default {
   name: 'App',
+  mixins: [gameData],
   components: {
     StartScreen,
     CharacterSelect,
@@ -71,9 +75,7 @@ export default {
   },
   data() {
     return {
-      helper: "",
-      storeState: store.state,
-      store: store,
+      testMode: false,
       debugShow: false,
     }
   },
