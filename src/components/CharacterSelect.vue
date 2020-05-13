@@ -38,7 +38,7 @@
 <h1 id="about" @mouseenter="$sound.play('chit')" @click="instructionsHandle()"> HUH? </h1>
 
 <transition name='fade'>
-    <instructions-screen @close-instructions="instructionsHandle()" v-if="instructions"/>
+    <instructions-screen @close-instructions="instructionsHandle()" v-if="helper"/>
 </transition>
 
 </section>
@@ -96,18 +96,17 @@ export default {
   methods: {
     setPlayer(passedPlayer) {
         console.log(`You're playing as the ${passedPlayer.name}`);
-        this.storeState.player = passedPlayer;
-        store.sceneChange('DungeonPhase');
-        this.$sound.play('charPick')
-        this.$sound.pause('charSelectMusic', {fade:1000, volume:0 });
+        store.commit('mutate', {property: 'player', with: passedPlayer});
+        store.commit('mutate', {property: 'phase', with: 'DungeonPhase'});
+        this.$sound.play('charPick');
     },
     instructionsHandle(){
         this.instructions = !this.instructions;
-        if (this.instructions == false){
-            this.$sound.pause('charSelectMusic', {fade:1000, volume:1});
+        if (this.instructions){
+            this.$sound.pause('charSelectMusic', {fade:1000, volume:.1});
         }
-        else if (this.instructions == true){
-           this.$sound.pause('charSelectMusic', {fade:1000, volume:.1});
+        else {
+            
         }
     }
   },

@@ -26,13 +26,12 @@ export const store = new Vuex.Store({
     magicAttack: false,
     music:null,
     duration: 1000,
+
+    helper: false,
   },
   mutations: {
     mutate(state, payload) {
       state[payload.property] = payload.with;
     }
-  },
-  getters: {
-    flavor: state => state.flavor
   },
 })
