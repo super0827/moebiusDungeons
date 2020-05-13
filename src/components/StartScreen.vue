@@ -19,9 +19,12 @@
 </template>
 
 <script>
+import gameData from './mixins/gameData';
+import gameAnimations from './mixins/gameAnimations';
 
 export default {
     name: 'StartScreen',
+    mixins: [gameData, gameAnimations],
     methods: {
         startGame () {
             this.$store.commit('mutate', {property: 'phase', with: 'CharacterSelect'});
