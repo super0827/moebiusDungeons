@@ -19,7 +19,7 @@
 
 <script>
 import { Howl } from "howler";
-import StatBars from './StatBars.vue'
+import StatBar from './StatBar.vue'
 
 
 const chit = new Howl({
@@ -32,7 +32,7 @@ const chit = new Howl({
 export default {
     name: 'BattleControls',
      components: {
-      StatBars,
+      StatBar,
     },
     data() {
         return {
