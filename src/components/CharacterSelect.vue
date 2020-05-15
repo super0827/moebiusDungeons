@@ -38,7 +38,7 @@
 <h1 id="about" @mouseenter="$sound.play('chit')" @click="toggleHelp()"> HUH? </h1>
 
 <transition name='fade'>
-    <instructions-screen @close-instructions="instructionsHandle()" v-if="this.helper"/>
+    <instructions-screen @close-instructions="$store.commit('mutate', {property:'helper', with:false})" v-if="this.helper"/>
 </transition>
 
 </section>
@@ -46,6 +46,7 @@
 
 <script>
 import InstructionsScreen from './InstructionsScreen';
+
 import gameData from './mixins/gameData';
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
