@@ -46,13 +46,11 @@
 </template>
 
 <script>
-import { store } from "../store";
 
     export default {
          name: 'StatBars',
         data() {
             return {
-                 storeState: store.state,
                  healthBar: {
                      'grid-template-columns': 'repeat(' + this.hpTotal + ',1fr)',
                  },

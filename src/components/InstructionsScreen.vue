@@ -31,13 +31,11 @@
 </template>
 
 <script>
-import { store } from "../store";
 
 export default {
   name: 'InstructionsScreen',
   data() {
       return {
-          storeState: store.state,
       }
   },
 }

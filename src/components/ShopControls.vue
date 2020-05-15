@@ -41,15 +41,12 @@
 </template>
 
 <script>
-import { store } from "../store";
 
 export default {
   name: 'ShopControls',
   data() {
     return {
-      storeState: store.state,
       shake: false,
-      store: store,
     }
   },
   methods: {

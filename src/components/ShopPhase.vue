@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { store } from "../store";
 
 import ShopControls from './ShopControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
@@ -58,18 +57,10 @@ export default {
     },
     data() {
         return {
-            storeState: store.state,
             helper:false,
-            randomBkg: Number,
-        }
-    },
-    methods: {
-        randomRoll(rollMax){
-            return Math.floor(Math.random() * Math.floor(rollMax) + 1);
         }
     },
     created() {
-        this.randomBkg = this.randomRoll(3);
         this.$sound.play(`shopMusic${this.randomBkg}`, {fade: 1200, volume: .2});
 
         let roll = this.randomRoll(2);

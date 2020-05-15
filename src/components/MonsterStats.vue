@@ -42,7 +42,7 @@
 
 
 <script>
-import { store } from "../store";
+
 import AnimatedNumber from "animated-number-vue";
 
 export default {
@@ -52,8 +52,7 @@ export default {
     },
     data() {
         return {
-        store: store,
-        storeState: store.state,
+
         }
     },
 }

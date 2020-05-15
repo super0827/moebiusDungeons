@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import { store } from "../store";
 import AnimatedNumber from "animated-number-vue";
 import PlayerStats from "./PlayerStats.vue";
 

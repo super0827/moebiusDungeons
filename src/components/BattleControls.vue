@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { store } from "../store";
 import { Howl } from "howler";
 import StatBars from './StatBars.vue'
 
@@ -37,13 +36,9 @@ export default {
     },
     data() {
         return {
-            storeState: store.state,
-            storeChar: store.characters,
             combatActive: false,
             monsterAttacking: false,
             specialAttack: "",
-            monsterAnim: store.animations.monster,
-            playerAnim: store.animations.player,
             turnTailAvailable: true,
         }
     },

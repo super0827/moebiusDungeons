@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { store } from "../store"
 
 import BattleControls from './BattleControls.vue';
 import PlayerPortrait from "./PlayerPortrait.vue";
@@ -73,20 +72,12 @@ export default {
         PlayerReadout,
         MonsterReadout,
     },
-    methods: {
-        randomRoll(rollMax){
-            return Math.floor(Math.random() * Math.floor(rollMax) + 1);
-        },
-    },
     data() {
         return {
             helper: false,
-            storeState: store.state,
-            randomBkg: Number,
         }
     },
     created() {
-        this.randomBkg = this.randomRoll(5);
         this.$sound.play(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: .2});
         this.storeState.playerLog = [];
         this.storeState.monsterLog = [];

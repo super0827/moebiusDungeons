@@ -15,13 +15,12 @@
 </template>
 
 <script>
-import { store } from "../store";
+
 
 export default {
     name: 'ShopPortrait',
     data() {
       return {
-        storeState: store.state, 
       }
     },
 }

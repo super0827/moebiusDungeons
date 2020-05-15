@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import { store } from "../store";
 import InstructionsScreen from './InstructionsScreen';
 import gameData from './mixins/gameData';
 import helperToggles from './mixins/helperToggles';

@@ -103,7 +103,6 @@
 
 
 <script>
-import { store } from "../store";
 import AnimatedNumber from "animated-number-vue";
 import MonsterStats from "./MonsterStats.vue";
 
@@ -116,9 +115,6 @@ export default {
     },
   data() {
       return {
-          storeState: store.state,
-          storeAnim: store.animations.monster,
-          store: store,
       }
   },
   created(){
