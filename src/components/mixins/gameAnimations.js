@@ -3,6 +3,18 @@ import { store } from '../../store/store'
 export default {
     //scene change animations, 
     //bkg music handling, 
+    beforeDestroy: function(){
+        if(store.state.phase == 'DungeonPhase') {
+            if(this.state.monsterRoster > this.characters.monsterCharacters.length) {
+                this.state.monsterRoster = this.characters.monsterCharacters.length;
+                this.state.finalBoss = true; 
+			}
+			else {
+                this.state.monster = this.characters.monsterCharacters[this.state.monsterRoster];
+  			}
+  				console.log(`new monster is ${this.state.monster.name}`);
+        	}
+    },
     created: function () {
         store.commit('mutate', {property: 'isEntering', with: true});
         if(this.$options.music) {

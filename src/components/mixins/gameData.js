@@ -1,12 +1,15 @@
-import { store } from '../../store/store'
 import { mapState } from 'vuex';
 
 export default {
     computed: mapState([
         'isEntering',
+        'helper',
         'phase',
         'music',
         'player',
-        'helper'
+        'monster',
+        'playerLog',
+        'monsterLog',
+        'monsterRoster',
     ])
 };
