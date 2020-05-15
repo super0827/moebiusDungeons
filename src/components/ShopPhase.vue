@@ -14,7 +14,7 @@
 
     <section class="flexRow">
         <!-- Player Portrait -->
-        <player-portrait
+        <character-token
         class="animated"
         :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering }"
         key="playerPortraitShop"/>  
@@ -42,7 +42,7 @@
 <script>
 
 import ShopControls from './ShopControls.vue';
-import PlayerPortrait from "./PlayerPortrait.vue";
+import CharacterToken from "./CharacterToken.vue";
 import ShopPortrait from "./ShopPortrait.vue";
 import ShopHelp from "./ShopHelp.vue";
 
@@ -50,7 +50,7 @@ import ShopHelp from "./ShopHelp.vue";
 export default {
     name: 'ShopPhase',
     components:{
-        PlayerPortrait,
+        CharacterToken,
         ShopControls,
         ShopPortrait,
         ShopHelp,
