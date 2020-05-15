@@ -1,7 +1,7 @@
 <template>
 <section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
     <section class="flexColumn animated"
-    :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
+    :class="{'zoomInDown' :isEntering, 'zoomOutUp' : !isEntering}">
         <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
@@ -15,34 +15,34 @@
         
         <player-readout
         class="animated"
-        :class="{'zoomInLeft' : storeState.isEntering, 
-        'zoomOutLeft' : !storeState.isEntering}"
+        :class="{'zoomInLeft' : isEntering, 
+        'zoomOutLeft' : !isEntering}"
         />
 
         <!-- Player Portrait and Stats -->
-        <player-portrait
+        <character-token
         class="animated"
-        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
+        :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering}"
         />
 
         <!-- Dungeon Controls -->
         <battle-controls
         class="animated"
-        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
+        :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering}"
         key="battleControls"/>
 
         <!-- Monster Portrait -->
-        <monster-portrait
+        <character-token
         key="monsterPortrait"
         class="animated"
-        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering}"
+        :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering}"
         @monster-is-dead="gameplayScene = 'shop'"
         />
 
         <monster-readout
         class="animated"
-        :class="{'zoomInRight' : storeState.isEntering, 
-        'zoomOutRight' : !storeState.isEntering}"
+        :class="{'zoomInRight' : isEntering, 
+        'zoomOutRight' : !isEntering}"
         />
     </section>
     
@@ -56,43 +56,35 @@
 <script>
 
 import BattleControls from './BattleControls.vue';
-import PlayerPortrait from "./PlayerPortrait.vue";
-import MonsterPortrait from "./MonsterPortrait.vue";
+import CharacterToken from "./CharacterToken.vue";
+
 import BattleHelp from './BattleHelp.vue';
+
 import PlayerReadout from './PlayerReadout.vue';
 import MonsterReadout from './MonsterReadout.vue';
+
+import gameData from './mixins/gameData';
+import helperToggles from './mixins/helperToggles';
+import gameAnimations from './mixins/gameAnimations';
 
 export default {
     name: 'DungeonPhase',
     components: {
         BattleHelp,
-        PlayerPortrait,
+        CharacterToken,
         BattleControls,
-        MonsterPortrait,
         PlayerReadout,
         MonsterReadout,
     },
+    mixins: [gameData, helperToggles, gameAnimations],
     data() {
         return {
-            helper: false,
         }
     },
-    created() {
-        this.$sound.play(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: .2});
-        this.storeState.playerLog = [];
-        this.storeState.monsterLog = [];
-    },
-    beforeDestroy() {
-        this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: 0});
-    },
-    watch: {
-        helper: function() {
-            if(this.helper === true){
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.05})
-            } else {
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.2})
-            }
-        }
+    beforeDestroy: function() {
+        const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
+        const newRoster = this.$store.monsterRoster + increment;
+        this.$store.commit('mutate', {property: 'monsterRoster', with: newRoster});
     }
 }
 </script>
