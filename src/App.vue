@@ -79,13 +79,13 @@ export default {
       debugShow: false,
     }
   },
-  created(){
+  beforeMount(){
 console.log(`
- _____         _   _            ____                              
+_____         _   _            ____                              
 |     |___ ___| |_|_|_ _ ___   |    \ _ _ ___ ___ ___ ___ ___ ___ 
 | | | | . | -_| . | | | |_ -|  |  |  | | |   | . | -_| . |   |_ -|
 |_|_|_|___|___|___|_|___|___|  |____/|___|_|_|_  |___|___|_|_|___|
-                                             |___|  
+                                            |___|  
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMWKOkdlc:ccccdk0NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMM0,            .:0MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -129,16 +129,23 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWO,,OWM0,.dWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMKc'co,.oNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNkc:oKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- 
+
 Created by Sean Yager, (c) Misuse of Mana LLC.
 
-If you're a game dev company or individual looking to hire an artist with full stack front end designer with backend
-knowledge, experience with Vue, React, Webpack, and Node.js, send me an email.
+If you're a game dev company or individual looking to hire an artist with
+full stack front end designer with backend knowledge, experience with Vue,
+React, Webpack, and Node.js, send me an email.
 
-I'm a former web dev student of Austin Coding Academy, and want to hear from you.
+I'm a former web dev student of Austin Coding Academy, and
+would love to hear from you.
 
 contact@seanyager.com
 `);
+
+    const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
+    const newRoster = this.$store.monster.roster + increment;
+    this.$store.monster.commit('mutate', {property: 'roster', with: newRoster});
+
   }
 }
 </script>
