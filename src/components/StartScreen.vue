@@ -2,7 +2,7 @@
 <section>
 
     <section @click="startGame()" class="animated startScreen slower" 
-    :class="{'fadeIn' : isEntering, 
+    :class="{'fadeIn' :isEntering, 
     'rubberBand' : !isEntering }">
         <section class=" animated pulse infinite slower">
             <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
@@ -19,15 +19,15 @@
 </template>
 
 <script>
-import gameData from './mixins/gameData';
 import gameAnimations from './mixins/gameAnimations';
+import { mapState } from 'vuex';
 
 export default {
     name: 'StartScreen',
-    mixins: [gameData, gameAnimations],
+    mixins: [gameAnimations],
     methods: {
         startGame () {
-            this.$store.commit('mutate', {property: 'phase', with: 'CharacterSelect'});
+            this.$store.commit('gameData/mutate', {property: 'phase', with: 'CharacterSelect'});
             this.$sound.play('startblip');
         }
     },

@@ -46,22 +46,22 @@
 
 <script>
 import InstructionsScreen from './InstructionsScreen';
+import { mapState } from 'vuex';
 
-import gameData from './mixins/gameData';
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
+import gameMusic from './mixins/gameMusic';
 
 export default {
   name: 'CharacterSelect',
   music: ['charSelectMusic'],
-  mixins: [gameData, helperToggles, gameAnimations],
+  mixins: [helperToggles, gameAnimations, gameMusic],
   components: {
         InstructionsScreen,
   },
   data() {
       return {
-          instructions: false,
-          characterClasses: [
+            characterClasses: [
               {name:"swordsman",
               type:'player', 
               portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
@@ -105,6 +105,9 @@ export default {
         this.$sound.play('charPick');
     },
   },
+  computed: mapState({
+        isEntering: state => state.gameData.isEntering,
+    }),
 }
 </script>
 

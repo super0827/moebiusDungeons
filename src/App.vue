@@ -10,24 +10,24 @@
 
       <article v-if="debugShow">
       <p>MONSTER</p>
-      <section @click="store.newMonster()">New Monster</section>
-      <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
-      <section @click="storeState.monster.health += 100">Monster HP 100</section>
-      <section @click="storeState.monster.health = 1">Monster HP 1</section>
+      <section>New Monster</section>
+      <section>Reset Monster Roster</section>
+      <section>Monster HP 100</section>
+      <section>Monster HP 1</section>
       <br>
       <p>PLAYER</p>
-      <section @click="storeState.player.health += 100">Player HP 100</section>
-      <section @click="storeState.player.health = 1">Player HP 1</section>
-      <section @click="storeState.player.coins++">Coins Up</section>
+      <section>Player HP 100</section>
+      <section>Player HP 1</section>
+      <section>Coins Up</section>
       <br>
       <p>SCENES</p>
-      <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
-      <section @click="store.sceneChange('ShopPhase')">Shop</section>
-      <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
+      <section>Char Select</section>
+      <section>Shop</section>
+      <section>Dungeon</section>
       <br>   
       <p>END GAME</p>
-      <section @click="store.sceneChange('WinScreen')">Win Screen</section>
-      <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
+      <section>Win Screen</section>
+      <section>Lose Screen</section>
       <br>
       <section @click="testMode = !testMode">Enable Testing Mode</section>
 
@@ -37,8 +37,8 @@
     <!-- GUI -->
       <transition name="fade" mode="out-in">
         <component 
-        :key="phase"
-        :is="phase"
+        :key="$store.state.gameData.phase"
+        :is="$store.state.gameData.phase"
         ></component>
       </transition> 
 
@@ -50,21 +50,17 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
-import gameData from './components/mixins/gameData';
-
 import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
 import ShopPhase from './components/ShopPhase.vue';
 
-
 import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
 
 export default {
   name: 'App',
-  mixins: [gameData],
   components: {
     StartScreen,
     CharacterSelect,
@@ -142,9 +138,7 @@ would love to hear from you.
 contact@seanyager.com
 `);
 
-    const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
-    const newRoster = this.$store.monster.roster + increment;
-    this.$store.monster.commit('mutate', {property: 'roster', with: newRoster});
+    // this.$store.commit('');
 
   }
 }

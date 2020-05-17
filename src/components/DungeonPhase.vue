@@ -63,7 +63,6 @@ import BattleHelp from './BattleHelp.vue';
 import PlayerReadout from './PlayerReadout.vue';
 import MonsterReadout from './MonsterReadout.vue';
 
-import gameData from './mixins/gameData';
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
 
@@ -76,7 +75,7 @@ export default {
         PlayerReadout,
         MonsterReadout,
     },
-    mixins: [gameData, helperToggles, gameAnimations],
+    mixins: [helperToggles, gameAnimations],
     data() {
         return {
         }
