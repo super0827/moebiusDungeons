@@ -3,7 +3,6 @@ import App from './App.vue'
 import { store } from './store/store'
 import { mapState } from 'vuex'
 
-
 Vue.config.productionTip = false;
 
 //credit for this plugin goes to eli-crow on github

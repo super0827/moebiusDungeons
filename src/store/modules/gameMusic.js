@@ -1,5 +1,4 @@
 import { shuffle } from 'lodash.shuffle'
-import { SoundPlugin } from
 
 const state = () => ({
     music: {type: Array},
@@ -7,15 +6,21 @@ const state = () => ({
 
 const mutations = {
     newMusic(state, payload) {
-        state.music = payload;
+        state.music = payload.newMusic;
         state.music = shuffle(state.music)
     }
 }
 
+const getters = {
+    musicPick: (state) => {
+        return state.music[0];
+    }
+}
+
 const actions = {
-    changeMusic ({ commit }) {  
-        return new Promise ((resolve, reject) => {
-            commit('newMusic');
+    changeMusic (context) {  
+        return new Promise ((resolve) => {
+            context.commit('newMusic', { newMusic:context.getters.musicPick});
             resolve();
         }) 
     },
@@ -29,6 +34,7 @@ export default {
     namespaced: true,
     state,
     mutations,
+    getters,
     actions,
 }
         
