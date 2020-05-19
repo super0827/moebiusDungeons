@@ -1,6 +1,14 @@
 <template>
 
 <section class="flexRow">
+      <character-stats v-if="who === 'monster'"
+        :health="health"
+        :armor="armor"
+        :attack="attack"
+        :attackImage="attackTypeImg"
+        :who="'monster'"
+      />
+
   <section class="columns">
       
       <h3>YOU</h3>
@@ -20,7 +28,7 @@
           enter-active-class="animated jackInTheBox"
           leave-active-class="animated fadeOut"
         >
-          <h1 v-if="blocking" class="blocked">BLOCKED!</h1>
+          <h1 v-if="isBlocking" class="blocked">BLOCKED!</h1>
         </transition>
 
         <transition appear
@@ -58,12 +66,12 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <section v-if="storeAnim.portEffect" 
+            <section v-if="porteffect" 
               class="damagedOverlay"
               :class="{ 
-                red : storeAnim.portEffectRed, 
-                green : storeAnim.portEffectGreen, 
-                purple : storeAnim.portEffectPurple 
+                red : porteffecctRed, 
+                green : porteffectGreen,
+                purple : porteffectPurple,
               }"
             >
             </section>  
@@ -84,22 +92,28 @@
 
   </section>
 
-      <stat-bar/>
+      <character-stats v-if="who === 'player'"
+      :health="health"
+      :armor="armor"
+      :attack="attack"
+      :attackImage="attackTypeImg"
+      />
 
 </section>
 </template>
 
 <script>
 import AnimatedNumber from "animated-number-vue";
-import StatBar from "./StatBar.vue";
+import CharacterStats from "./CharacterStats.vue";
 
 export default {
   name: 'CharacterToken',
   components: {
     AnimatedNumber,
-    StatBar
+    CharacterStats
   },
   props: [
+    'who',
     'name',
     'portrait',
     'health',
@@ -117,6 +131,11 @@ export default {
     'enemyAttackTypeImage',
     'enemyAttackDamage',
     'enemyReducedAttackDamage',
+
+    'porteffect',
+    'porteffectRed',
+    'porteffectGreen',
+    'porteffectRed',
   ],
   methods: {
     wholeNumber(value) {
