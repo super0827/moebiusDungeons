@@ -38,7 +38,7 @@
 <h1 id="about" @mouseenter="$sound.play('chit')" @click="toggleHelp()"> HUH? </h1>
 
 <transition name='fade'>
-    <instructions-screen @close-instructions="$store.commit('mutate', {property:'helper', with:false})" v-if="this.helper"/>
+    <instructions-screen v-if="this.helper"/>
 </transition>
 
 </section>
@@ -54,13 +54,13 @@ import gameMusic from './mixins/gameMusic';
 
 export default {
   name: 'CharacterSelect',
-  music: ['charSelectMusic'],
   mixins: [helperToggles, gameAnimations, gameMusic],
   components: {
-        InstructionsScreen,
+      InstructionsScreen,
   },
   data() {
       return {
+            music: ['charSelectMusic'],
             characterClasses: [
               {name:"swordsman",
               type:'player', 
@@ -100,14 +100,11 @@ export default {
   methods: {
     setPlayer(passedPlayer) {
         console.log(`You're playing as the ${passedPlayer.name}`);
-        this.$store.commit('mutate', {property: 'player', with: passedPlayer});
-        this.$store.commit('mutate', {property: 'phase', with: 'DungeonPhase'});
+        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
+        this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
         this.$sound.play('charPick');
     },
   },
-  computed: mapState({
-        isEntering: state => state.gameData.isEntering,
-    }),
 }
 </script>
 
