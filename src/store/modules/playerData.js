@@ -34,6 +34,12 @@ const mutations = {
     },
     loseHealth(state) {
       state.info.health -= 10;
+    },
+    addArmor(state) {
+      state.info.armor += 1;
+    },
+    loseArmor(state) {
+      state.info.armor -= 1;
     }
 }
 
