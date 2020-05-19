@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash.shuffle'
 
 const state = () => ({
-    phase: "StartScreen",
+    phase: "DungeonPhase",
     isEntering: true,
     helper: false,
     duration: {type: Number},
@@ -23,10 +23,14 @@ const action = {
 
 const getters = {
     healthGauge: (state, getters, rootState) => {
-        return rootState.monsterData.info.health + rootState.playerData.info.health
+        let hpGauge = rootState.monsterData.info.health + rootState.playerData.info.health
+        console.log('hp bar is: ',hpGauge)
+        return hpGauge
     },
     armorGauge: (state, getters, rootState) => {
-        return rootState.monsterData.info.armor + rootState.playerData.info.armor
+        let armGauge = rootState.monsterData.info.armor + rootState.playerData.info.armor
+        console.log('arm bar is: ',armGauge)
+        return armGauge;
     },
     attackGauge: (state, getters, rootState) => {
         return rootState.monsterData.info.attackMax + rootState.playerData.info.attackMax
