@@ -8,7 +8,7 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="helper = !helper" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
+        <h1 @click="toggleHelp()" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
     </transition>
     
     <section class="flexRow">
@@ -91,7 +91,7 @@
     
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="helper = false" v-if="helper==true"/>
+        <battle-help key="battleHelper" @close="toggleHelp()" v-if="helper==true"/>
     </transition>
 </section>
 </template>
