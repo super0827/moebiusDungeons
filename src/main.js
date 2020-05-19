@@ -14,10 +14,18 @@ Vue.use(SoundPlugin);
 //nearly if not all components mounted directly to App need these
 //computed properties to function properly
 export const mixinGlobalState = {
-  computed : mapState({
-    isEntering: state => state.gameData.isEntering,
-    helper: state => state.gameData.helper,
-  }),
+  computed: {
+    ...mapState({
+      isEntering: state => state.gameData.isEntering,
+      helper: state => state.gameData.helper,
+      currentMusic: state => state.musicData.music,
+    }),
+  },
+  methods: {
+    wholeNumber(value) {
+      return `${Math.ceil(value)}`;
+    },
+  }
 }
 
 //apply mixinGlobals to the Vue instance
