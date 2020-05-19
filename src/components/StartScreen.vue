@@ -20,6 +20,7 @@
 
 <script>
 import gameAnimations from './mixins/gameAnimations';
+
 import { mapState } from 'vuex';
 
 export default {
