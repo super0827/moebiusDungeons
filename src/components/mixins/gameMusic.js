@@ -1,17 +1,26 @@
 import { store } from '../../store/store'
+import { mapGetters } from 'vuex'
 
 export default {
-    created: function () {
-        //should mutate gameData music to become the current top level components $options music value
-        store.dispatch('gameMusic/changeMusic', this.$options.music)
-        .then(store.dispatch('gameMusic/playMusic'));
+    created() {
+        // should mutate gameData music to become the current top level components $options music value
+        store.commit({
+            type: 'musicData/newMusic', 
+            value: this.music,
+        })
+        this.$sound.play(this.bkgMusic, {fade: 2000})
+
     },
-    beforeDestroy: function () {
-        if(this.$options.music) {
-            this.$sound.pause(store.state.gameData.music, {fade: 2000, volume:0 });
-        }
+    destroyed() {
+            this.$sound.pause(this.bkgMusic, {fade: 2000, volume:0 });
     },
+    computed: {
+        ...mapGetters( 'musicData', {
+            bkgMusic: 'musicPick'
+        })
+    }
 };
+
 
 // beforeDestroy: function(){
 //     if(store.state.gameData.phase == 'DungeonPhase') {
