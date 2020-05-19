@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import gameData from './modules/gameData'
-import gameMusic from './modules/gameMusic'
+import musicData from './modules/musicData'
 import playerData from './modules/playerData'
 import monsterData from './modules/monsterData'
 import shopkeepData from './modules/shopkeepData'
@@ -13,7 +13,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   modules: {
     gameData,
-    gameMusic,
+    musicData,
     playerData,
     monsterData,
     shopkeepData,
