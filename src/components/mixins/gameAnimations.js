@@ -1,10 +1,10 @@
 import { store } from '../../store/store'
 
 export default {
-    created: function () {
+    created() {
         store.commit('gameData/mutate', {property: 'isEntering', with: true});
     },
-    beforeDestroy: function () {
+    beforeDestroy() {
         store.commit('gameData/mutate', {property: 'isEntering', with: false});
     },
 };
