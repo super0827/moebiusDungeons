@@ -1,17 +1,23 @@
 import { store } from '../../store/store'
+import { mapGetters } from 'vuex'
 
 export default {
     watch: {
         //helpers toggling, audio ducking
         helper: function(value){
             if (value == true) {
-                this.$sound.pause(store.state.musicData.music, {fade:1000, volume:.1});
+                this.$sound.pause(this.bkgMusic, {fade:1000, volume:.1});
                 
             }
             else {
-                this.$sound.pause(store.state.musicData.music, {fade:1000, volume:1});
+                this.$sound.pause(this.bkgMusic, {fade:1000, volume:1});
             }
         }
+    },
+    computed: {
+        ...mapGetters( 'musicData', {
+            bkgMusic: 'musicPick'
+        })
     },
     methods: {
         toggleHelp() {
