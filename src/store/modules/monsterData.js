@@ -477,7 +477,6 @@ const mutations = {
         state.roster += increment;
         let roster = state.roster;
         state.info = state.variants[roster];
-        console.log(`from monsterdata.js ${state.variants[roster]}`)
       }
 }
 
