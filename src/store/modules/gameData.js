@@ -22,19 +22,36 @@ const action = {
 }
 
 const getters = {
-    healthGauge: (state, getters, rootState) => {
-        let hpGauge = rootState.monsterData.info.health + rootState.playerData.info.health
-        console.log('hp bar is: ',hpGauge)
-        return hpGauge
+
+    // HEALTH BAR CALCULATOR
+    healthBar: (state, getters, rootState) => {
+        const monster = rootState.monsterData.info.health
+        const player = rootState.playerData.info.health
+        const hpPool =  monster + player
+        if (monster <= 0) return 100
+        else if (player <= 0) return 0
+        else return (player / hpPool) * 100; 
     },
-    armorGauge: (state, getters, rootState) => {
-        let armGauge = rootState.monsterData.info.armor + rootState.playerData.info.armor
-        console.log('arm bar is: ',armGauge)
-        return armGauge;
+
+    //ARMOR BAR CALCULATOR
+    armorBar: (state, getters, rootState) => {
+        const monster = rootState.monsterData.info.armor
+        const player = rootState.playerData.info.armor
+        const armPool =  monster + player
+        if (monster <= 0) return 100
+        else if (player <= 0) return 0
+        else return (player / armPool) * 100
     },
-    attackGauge: (state, getters, rootState) => {
-        return rootState.monsterData.info.attackMax + rootState.playerData.info.attackMax
-    }
+
+    //ATTACK BAR CALCULATOR
+    attackBar: (state, getters, rootState) => {
+        const monster = rootState.monsterData.info.attackMax
+        const player = rootState.playerData.info.attackMax
+        const armPool =  monster + player
+        if (monster <= 0) return 100
+        else if (player <= 0) return 0
+        else return (player / armPool) * 100
+    },
 }
 
 export default {
