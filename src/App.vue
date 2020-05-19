@@ -17,7 +17,7 @@
       <br>
       <p>PLAYER</p>
       <section>Player HP 100</section>
-      <section>Player HP 1</section>
+      <section @click="$store.commit('playerData/addHealth', {property: 'info.health', with:10})">Player HP +10</section>
       <section>Coins Up</section>
       <br>
       <p>SCENES</p>
@@ -35,12 +35,12 @@
     </section>
 
     <!-- GUI -->
-      <transition name="fade" mode="out-in">
+     <transition name="fade" mode="out-in">
         <component 
-        :key="$store.state.gameData.phase"
-        :is="$store.state.gameData.phase"
+        :key="phase"
+        :is="phase"
         ></component>
-      </transition> 
+      </transition>
 
 </div>
 </template>
@@ -49,6 +49,8 @@
 import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
+
+import { mapState } from 'vuex'
 
 import StartScreen from './components/StartScreen.vue';
 
@@ -74,6 +76,11 @@ export default {
       testMode: false,
       debugShow: false,
     }
+  },
+  computed: {
+      ...mapState('gameData', {
+          phase: state => state.phase
+      })
   },
   beforeMount(){
 console.log(`
@@ -138,7 +145,7 @@ would love to hear from you.
 contact@seanyager.com
 `);
 
-    // this.$store.commit('');
+  
 
   }
 }
