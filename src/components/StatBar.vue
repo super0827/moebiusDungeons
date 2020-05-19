@@ -1,45 +1,48 @@
 <template>
     <div class="barContainer">
-        <section class="bar" id="bar1" :style="healthBar">
+
+        <!-- HEALTH BAR -->
+        <section class="bar" id="bar1" :style="{gridTemplateColumns: 'repeat(' + this.hpWidth + ', 1fr)'}">
+            <!-- PLAYER -->
             <section 
-            :key="'php' + this.playerHP" 
-            :style="this.playerHealthBar"
+            :key="'php' + playerHP" 
+            :style="{ gridColumnStart: 1, gridColumnEnd: this.playerHP + 1 }"
             class="blackBar"
             >
             </section>
             
             <section 
-            :key="'mhp' + this.monsterHP" 
-            :style="this.monsterHealthBar"
+            :key="'mhp' + monsterHP" 
+            :style="{ gridColumnStart: this.playerHP + 1, gridColumnEnd: this.hpWidth + 1}"
             class="redBar">
             </section>
         </section>
 
-        <section class="bar" id="bar2" :style="armorBar">
+        <section class="bar" id="bar2" :style="{ gridTemplateColumns: 'repeat(' + this.armWidth + ', 1fr)' }">
             <section 
-            :key="'parm' + this.playerARM" 
-            :style="playerArmorBar"
+            :key="'parm' + playerARM" 
+            :style="{ gridColumnStart: 1, gridColumnEnd: this.playerARM  + 1}"
             class="blackBar"
             >
             </section>
             
             <section 
-            :key="'marm' + this.monsterARM" 
-            :style="monsterArmorBar"
+            :key="'marm' + monsterARM" 
+            :style="{  gridColumnStart: this.playerARM + 1, gridColumnEnd: this.armWidth + 1 }"
             class="redBar">
             </section>
         </section>
             
-        <section class="bar" id="bar3" :style="atkBar">
+        <section class="bar" id="bar3" :style="{ gridTemplateColumns: 'repeat(' + this.atkWidth + ', 1fr)' }">
             <section 
-            :key="'patk' + this.playerATK" 
-            :style="playerAtkBar"
+            :key="'patk' + playerATK" 
+            :style="{ gridColumnStart: 1, gridColumnEnd: this.playerATK + 1 }"
             class="blackBar"
             ></section>
             
             <section 
-            :key="'matk' + this.monsterATK" 
-            :style="monsterAtkBar"
+            :key="'matk' + monsterATK" 
+            :style="{ gridColumnStart: this.playerATK + 1, gridColumnEnd: this.atkWidth + 1}"
             class="redBar"></section>
         </section>
     </div>
@@ -54,7 +57,7 @@ import { mapGetters, mapState } from 'vuex';
         data() {
             return {
                  healthBar: {
-                     'grid-template-columns': 'repeat(' + this.hpWidth + ',1fr)',
+                     
                  },
                  armorBar: {
                      'grid-template-columns': 'repeat(' + this.armWidth + ', 1fr)',
@@ -62,55 +65,25 @@ import { mapGetters, mapState } from 'vuex';
                  atkBar: {
                      'grid-template-columns': 'repeat(' + this.atkWidth + ', 1fr)',
                  },
-                 playerHealthBar: {
-                     gridColumnStart: 1,
-                     gridColumnEnd: this.playerHP,
-                 },
-                 monsterHealthBar: {
-                     gridColumnStart: this.playerHP,
-                     gridColumnEnd: this.hpWidth,
-                 },
-
-                 playerArmorBar: {
-                     gridColumnStart: 1,
-                     gridColumnEnd: this.playerARM,
-                 },
-                 monsterArmorBar: {
-                     gridColumnStart: this.playerARM,
-                     gridColumnEnd: this.armWidth,
-                 },
-
-                 playerAtkBar: {
-                     gridColumnStart: 1,
-                     gridColumnEnd: this.playerATK,
-                 },
-                 monsterAtkBar: {
-                     gridColumnStart: this.playerATK,
-                     gridColumnEnd: this.atkWidth,
-                 }
             }
         },
         computed: {
-             ...mapGetters('gameData', {
+             ...mapGetters('gameData/', {
                  hpWidth: 'healthGauge',
                  armWidth: 'armorGauge',
                  atkWidth: 'attackGauge',
-
              }),
-             ...mapState('playerData', {
+             ...mapState('playerData/', {
                  playerHP: state => state.info.health,
                  playerARM: state => state.info.armor,
                  playerATK: state => state.info.attackMax,
              }),
-             ...mapState('monsterData', {
+             ...mapState('monsterData/', {
                  monsterHP: state => state.info.health,
                  monsterARM: state => state.info.armor,
                  monsterATK: state => state.info.attackMax,
              })
-         },
-        created() {
-            console.log(this.playerHealthBar)
-        }
+        },
     }
 </script>
 
