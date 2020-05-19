@@ -5,18 +5,17 @@ export default {
         //helpers toggling, audio ducking
         helper: function(value){
             if (value == true) {
-                this.$sound.pause(store.state.music, {fade:1000, volume:.1});
+                this.$sound.pause(store.state.musicData.music, {fade:1000, volume:.1});
                 
             }
             else {
-                this.$sound.pause(store.state.music, {fade:1000, volume:1});
+                this.$sound.pause(store.state.musicData.music, {fade:1000, volume:1});
             }
         }
     },
     methods: {
-        //method to call
         toggleHelp() {
-            store.state.helper = !store.state.helper;
+            store.commit('gameData/toggleHelp');
         }
     }
 };
