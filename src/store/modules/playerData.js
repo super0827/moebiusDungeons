@@ -1,5 +1,13 @@
 const state = () => ({
-    info: {type: Object},
+    info:  {
+      name:"swordsman",
+      type:'player', 
+      portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
+      description1:"Slicing and Dicing",
+      description2:"Bruiser class, high damage, good armor, high health.", 
+      coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
+      attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"), 
+    },
     permenantTraits: [],
     tempTraits: [],
     thisDamage: {type: Number},
@@ -15,7 +23,6 @@ const state = () => ({
       portEffectGreen: false,
       isDead: false,
     },
-    statSide: 'right',
 })
 
 const mutations = {
@@ -24,7 +31,9 @@ const mutations = {
     },
     addHealth(state) {
       state.info.health += 10;
-      console.log(state.info.health)
+    },
+    loseHealth(state) {
+      state.info.health -= 10;
     }
 }
 
