@@ -83,12 +83,6 @@ p {
     align-items: flex-start;
 }
 
-.flexRowStats {
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
 .flexColumn {
     display:flex;
     justify-content: center;
