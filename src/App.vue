@@ -16,8 +16,8 @@
       <section>Monster HP 1</section>
       <br>
       <p>PLAYER</p>
-      <section>Player HP 100</section>
-      <section @click="$store.commit('playerData/addHealth', {property: 'info.health', with:10})">Player HP +10</section>
+      <section @click="$store.commit('playerData/addHealth')">Player HP +10</section>
+      <section @click="$store.commit('playerData/loseHealth')">Player HP -10</section>
       <section>Coins Up</section>
       <br>
       <p>SCENES</p>
