@@ -2,29 +2,29 @@
     <div class="barContainer">
         <section class="bar" id="bar1" :style="healthBar">
             <section 
-            :key="'php' + storeState.player.health" 
-            :style="playerHealthBar"
+            :key="'php' + this.playerHP" 
+            :style="this.playerHealthBar"
             class="blackBar"
             >
             </section>
             
             <section 
-            :key="'mhp' + storeState.monster.health" 
-            :style="monsterHealthBar"
+            :key="'mhp' + this.monsterHP" 
+            :style="this.monsterHealthBar"
             class="redBar">
             </section>
         </section>
 
         <section class="bar" id="bar2" :style="armorBar">
             <section 
-            :key="'parm' + storeState.player.armor" 
+            :key="'parm' + this.playerARM" 
             :style="playerArmorBar"
             class="blackBar"
             >
             </section>
             
             <section 
-            :key="'marm' + storeState.monster.armor" 
+            :key="'marm' + this.monsterARM" 
             :style="monsterArmorBar"
             class="redBar">
             </section>
@@ -32,13 +32,13 @@
             
         <section class="bar" id="bar3" :style="atkBar">
             <section 
-            :key="'patk' + storeState.player.maxAttack" 
+            :key="'patk' + this.playerATK" 
             :style="playerAtkBar"
             class="blackBar"
             ></section>
             
             <section 
-            :key="'matk' + storeState.monster.maxAttack" 
+            :key="'matk' + this.monsterATK" 
             :style="monsterAtkBar"
             class="redBar"></section>
         </section>
@@ -47,51 +47,70 @@
 
 <script>
 
+import { mapGetters, mapState } from 'vuex';
+
     export default {
          name: 'StatBars',
         data() {
             return {
                  healthBar: {
-                     'grid-template-columns': 'repeat(' + this.hpTotal + ',1fr)',
+                     'grid-template-columns': 'repeat(' + this.hpWidth + ',1fr)',
                  },
                  armorBar: {
-                     'grid-template-columns': 'repeat(' + this.armorTotal + ', 1fr)',
+                     'grid-template-columns': 'repeat(' + this.armWidth + ', 1fr)',
                  },
                  atkBar: {
-                     'grid-template-columns': 'repeat(' + this.atkTotal + ', 1fr)',
+                     'grid-template-columns': 'repeat(' + this.atkWidth + ', 1fr)',
                  },
-                 hpTotal: store.state.player.health + store.state.monster.health,
-                 armorTotal: store.state.player.armor + store.state.monster.armor,
-                 atkTotal: store.state.player.attackMax + store.state.monster.attackMax,
-                 
                  playerHealthBar: {
                      gridColumnStart: 1,
-                     gridColumnEnd: store.state.player.health,
+                     gridColumnEnd: this.playerHP,
                  },
                  monsterHealthBar: {
-                     gridColumnStart: store.state.player.health,
-                     gridColumnEnd: this.hpTotal,
+                     gridColumnStart: this.playerHP,
+                     gridColumnEnd: this.hpWidth,
                  },
 
                  playerArmorBar: {
                      gridColumnStart: 1,
-                     gridColumnEnd: store.state.player.armor,
+                     gridColumnEnd: this.playerARM,
                  },
                  monsterArmorBar: {
-                     gridColumnStart: store.state.player.armor,
-                     gridColumnEnd: this.armorTotal,
+                     gridColumnStart: this.playerARM,
+                     gridColumnEnd: this.armWidth,
                  },
 
                  playerAtkBar: {
                      gridColumnStart: 1,
-                     gridColumnEnd: store.state.player.attackMax,
+                     gridColumnEnd: this.playerATK,
                  },
                  monsterAtkBar: {
-                     gridColumnStart: store.state.player.attackMax,
-                     gridColumnEnd: this.atkTotal,
+                     gridColumnStart: this.playerATK,
+                     gridColumnEnd: this.atkWidth,
                  }
             }
         },
+        computed: {
+             ...mapGetters('gameData', {
+                 hpWidth: 'healthGauge',
+                 armWidth: 'armorGauge',
+                 atkWidth: 'attackGauge',
+
+             }),
+             ...mapState('playerData', {
+                 playerHP: state => state.info.health,
+                 playerARM: state => state.info.armor,
+                 playerATK: state => state.info.attackMax,
+             }),
+             ...mapState('monsterData', {
+                 monsterHP: state => state.info.health,
+                 monsterARM: state => state.info.armor,
+                 monsterATK: state => state.info.attackMax,
+             })
+         },
+        created() {
+            console.log(this.playerHealthBar)
+        }
     }
 </script>
 
