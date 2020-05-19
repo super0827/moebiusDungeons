@@ -18,6 +18,9 @@
       <p>PLAYER</p>
       <section @click="$store.commit('playerData/addHealth')">Player HP +10</section>
       <section @click="$store.commit('playerData/loseHealth')">Player HP -10</section>
+      <section @click="$store.commit('playerData/addArmor')">Player ARM +1</section>
+      <section @click="$store.commit('playerData/loseArmor')">Player ARM -1</section>
+
       <section>Coins Up</section>
       <br>
       <p>SCENES</p>
