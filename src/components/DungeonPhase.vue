@@ -13,7 +13,7 @@
     
     <section class="flexRow">
         
-        <player-readout
+        <turn-log
         class="animated"
         :class="{'zoomInLeft' : isEntering, 
         'zoomOutLeft' : !isEntering}"
@@ -23,6 +23,28 @@
         <character-token
         class="animated"
         :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering}"
+        :who="'player'"
+        :name="playerName"
+        :portrait="playerPortrait"
+        :health="playerHealth"
+        :armor="playerArmor"
+        :attack="playerAttack"
+        :attackType="playerAttackType"
+        :attackTypeImg="playerAttackTypeImage"
+        :coins="playerCoins"
+        :isHurt="playerisHurt"
+        :isBlocking="playerisBlocking"
+        :isAttacking="playerisAttacking"
+        :isDead="playerisDead"
+        :statSide="playerStatSide"
+        :enemyAttackType="monsterAttackType"
+        :enemyAttackTypeImage="monsterAttackTypeImage"
+        :enemyAttackDamage="monsterAttackDamage"
+        :enemyReducedAttackDamage="monsterAdjustedDamage"
+        :portEffect="playerportEffect"
+        :porteffectRed="playerporteffectRed"
+        :porteffectGreen="playerporteffectGreen"
+        :porteffectPurple="playerporteffectPurple"
         />
 
         <!-- Dungeon Controls -->
@@ -36,12 +58,33 @@
         key="monsterPortrait"
         class="animated"
         :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering}"
-        @monster-is-dead="gameplayScene = 'shop'"
+        :who="'monster'"
+        :name="monsterName"
+        :portrait="monsterPortrait"
+        :health="monsterHealth"
+        :armor="monsterArmor"
+        :attack="monsterAttack"
+        :attackType="monsterAttackType"
+        :attackTypeImg="monsterAttackTypeImage"
+        :coins="monsterCoins"
+        :isHurt="monsterisHurt"
+        :isBlocking="monsterisBlocking"
+        :isAttacking="monsterisAttacking"
+        :isDead="monsterisDead"
+        :statSide="monsterStatSide"
+        :enemyAttackType="playerAttackType"
+        :enemyAttackTypeImage="playerAttackTypeImage"
+        :enemyAttackDamage="playerAttackDamage"
+        :enemyReducedAttackDamage="playerAdjustedDamage"
+        :portEffect="monsterportEffect"
+        :porteffectRed="monsterporteffectRed"
+        :porteffectGreen="monsterporteffectGreen"
+        :porteffectPurple="monsterporteffectPurple"
         />
 
-        <monster-readout
+        <turn-log
         class="animated"
-        :class="{'zoomInRight' : isEntering, 
+        :class="{'zoomInRight' : isEntering,
         'zoomOutRight' : !isEntering}"
         />
     </section>
@@ -54,36 +97,79 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
 
 import BattleControls from './BattleControls.vue';
 import CharacterToken from "./CharacterToken.vue";
 
 import BattleHelp from './BattleHelp.vue';
 
-import PlayerReadout from './PlayerReadout.vue';
-import MonsterReadout from './MonsterReadout.vue';
+import TurnLog from './TurnLog.vue';
 
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
+import gameMusic from './mixins/gameMusic';
+import newMonster from './mixins/newMonster';
 
 export default {
     name: 'DungeonPhase',
+    mixins: [helperToggles, gameAnimations, gameMusic, newMonster],
     components: {
         BattleHelp,
         CharacterToken,
         BattleControls,
-        PlayerReadout,
-        MonsterReadout,
+        TurnLog,
     },
-    mixins: [helperToggles, gameAnimations],
     data() {
         return {
+            music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
         }
     },
-    beforeDestroy: function() {
-        const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
-        const newRoster = this.$store.monsterRoster + increment;
-        this.$store.commit('mutate', {property: 'monsterRoster', with: newRoster});
+    computed: {
+        ...mapState('playerData', {
+            playerName: state => state.info.name,
+            playerPortrait: state => state.info.portrait,
+            playerHealth: state => state.info.health,
+            playerArmor: state => state.info.armor,
+            playerAttack: state => state.info.attackMax,
+            playerAttackType: state => state.info.attackType,
+            playerAttackTypeImage: state => state.info.attackTypeImage,
+            playerCoins: state => state.info.coins,
+            playerStatSide: state => state.statSide,
+            playerAttackDamage: state => state.thisDamage,
+            playerAdjustedDamage: state => state.thisAdjDamage,
+            
+            playerisHurt: state => state.animations.hurt,
+            playerisBlocking: state => state.animations.blocking,
+            playerisAttacking: state => state.animations.attacking,
+            playerisDead: state => state.animations.isDead,
+            playerportEffect: state => state.animations.portEffect,
+            playerporteffectRed: state => state.animations.portEffectRed,
+            playerporteffectGreen: state => state.animations.portEffectGreen,
+            playerporteffectPurple: state => state.animations.portEffectPurple
+        }),
+        ...mapState('monsterData', {
+            monsterName: state => state.info.name,
+            monsterPortrait: state => state.info.portrait,
+            monsterHealth: state => state.info.health,
+            monsterArmor: state => state.info.armor,
+            monsterAttack: state => state.info.attackMax,
+            monsterAttackType: state => state.info.attackType,
+            monsterAttackTypeImage: state => state.info.attackTypeImage,
+            monsterCoins: state => state.info.coins,
+            monsterStatSide: state => state.statSide,
+            monsterAttackDamage: state => state.thisDamage,
+            monsterAdjustedDamage: state => state.thisAdjDamage,
+            
+            monsterisHurt: state => state.animations.hurt,
+            monsterisBlocking: state => state.animations.blocking,
+            monsterisAttacking: state => state.animations.attacking,
+            monsterisDead: state => state.animations.isDead,
+            monsterportEffect: state => state.animations.portEffect,
+            monsterporteffectRed: state => state.animations.portEffectRed,
+            monsterporteffectGreen: state => state.animations.portEffectGreen,
+            monsterporteffectPurple: state => state.animations.portEffectPurple
+        }),
     }
 }
 </script>
