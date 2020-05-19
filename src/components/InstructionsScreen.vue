@@ -24,7 +24,7 @@
   </p>
 
 <br>
-  <h1 @mouseenter="$sound.play('chit')" class="animated pulse slow infinite" id="proceed" @click="$emit('close-instructions')">
+  <h1 @mouseenter="$sound.play('chit')" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
       UNDERSTOOD.
   </h1>
 </section>
@@ -32,8 +32,11 @@
 
 <script>
 
+import helperToggles from '../components/mixins/helperToggles'
+
 export default {
   name: 'InstructionsScreen',
+  mixins: [helperToggles],
   data() {
       return {
       }
