@@ -4,7 +4,7 @@ const state = () => ({
     phase: "DungeonPhase",
     isEntering: true,
     helper: false,
-    duration: {type: Number},
+    duration: 1000,
 })
 
 const mutations = {
@@ -22,7 +22,6 @@ const action = {
 }
 
 const getters = {
-
     // HEALTH BAR CALCULATOR
     healthBar: (state, getters, rootState) => {
         const monster = rootState.monsterData.info.health
