@@ -5,20 +5,23 @@ const state = () => ({
     isEntering: true,
     helper: false,
     duration: 1000,
+    combatLocked: false,
+    turnTailUsed: false,
 })
 
 const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
-    
+    toggle(state, payload) {
+        state[payload.property] = !state[payload.property];
+    },
     toggleHelp(state){
         state.helper = !state.helper
     }
 }
 
-const action = {
-
+const actions = {
 }
 
 const getters = {
