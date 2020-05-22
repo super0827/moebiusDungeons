@@ -4,7 +4,6 @@ const state = () => ({
     tempTraits: [],
     isBoss: false,
     thisDamage: {type: Number},
-    thisAdjDamage: {type: Number},
     log: [],
     animations: {
       blocking: false,
@@ -472,6 +471,12 @@ const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
+    take_damage(state, payload) {
+      state.info.health -= payload.damage;
+    },
+    toggle(state, payload) {
+      state.animations[payload.property] = !state.animations[payload.property];
+    },
     newMonster(state) {
         const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
         state.roster += increment;
@@ -480,9 +485,51 @@ const mutations = {
       }
 }
 
+const getters = {
+  thisAdjDamage: (state, getters, rootState) => {
+    let num;
+    if( state.info.attackType === 'physical') {
+      num = state.thisDamage - rootState.monsterData.info.armor;
+    }
+    else if ( state.info.attackType === 'magical') {
+      num = state.thisDamage;
+    }
+    if(num <= 0) return 0
+    else return num
+  },
+  monsterLog: (state) => {
+    let maxLog = state.log
+    if(maxLog.length > 4) {
+      maxLog.shift();
+    }
+    return maxLog
+  }
+}
+
+const actions = {
+  ROLL_DAMAGE({commit, state}) {
+    const randomRoll = Math.floor(Math.random() * (state.info.attackMax))
+    console.log(`monster attack: ${randomRoll}`);
+    commit('mutate', {property:'thisDamage', with:randomRoll})
+  },
+  TRADE_BLOWS(context){
+    if(context.state.info.health > 0) {
+      context.commit('toggle', {property:'attacking'});
+      context.dispatch('ROLL_DAMAGE')
+      context.dispatch('playerData/TAKE_DAMAGE', null, {root:true})
+      context.commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+    }
+  },
+  TAKE_DAMAGE(context){
+    context.commit('take_damage', {damage: context.rootGetters['playerData/thisAdjDamage']})
+  },
+}
+
 export default {
     namespaced: true,
     state,
     mutations,
+    getters,
+    actions
 }
         
