@@ -7,34 +7,46 @@
 
     <br>
 
-    <h2 @mouseenter="$sound.play('chit')" :class="{'striked' : combatActive || monsterAttacking }" @click="tradeBlows(storeState.player, storeState.monster)">Trade Blows</h2>
-    <h2 @mouseenter="$sound.play('chit')" :class="{'striked' : combatActive || monsterAttacking }" @click="beReckless(storeState.player, storeState.monster)">Be Reckless</h2>
+    <h2 @mouseenter="$sound.play('chit')" 
+    :class="{'striked' : combatLocked }" 
+    @click="TRADE_BLOWS()">Trade Blows</h2>
+    
+    <h2 @mouseenter="$sound.play('chit')" 
+    :class="{'striked' : combatLocked }" 
+    @click="RUN_SPECIAL()">Be Reckless</h2>
     
     <br>
 
-    <h3 @mouseenter="$sound.play('chit')" :class="{'striked' : combatActive || monsterAttacking || !turnTailAvailable }" @click="turnTail()">Turn Tail</h3>
+    <h3 @mouseenter="$sound.play('chit')" 
+    :class="{'striked' : turnTailUsed || combatLocked }" 
+    @click="turnTail()">Turn Tail</h3>
 
 </section>
 </template>
 
 <script>
 import StatBar from './StatBar.vue'
+import {mapActions, mapState} from 'vuex'
 
 export default {
     name: 'BattleControls',
      components: {
       StatBar,
     },
-    data() {
-        return {
-            combatActive: false,
-            monsterAttacking: false,
-            specialAttack: "",
-            turnTailAvailable: true,
-        }
+    computed: {
+        ...mapState('gameData', [
+            'combatLocked',
+            'turnTailUsed'
+        ])
     },
-    methods:{
-        
+    methods: {
+        ...mapActions( 'playerData', [
+            'ROLL_DAMAGE',
+            'TRADE_BLOWS',
+            'RUNSPECIAL',
+            'TURN_TAIL',
+            'ESCAPE',
+        ])
     }
 }
 </script>
