@@ -16,7 +16,9 @@
         <turn-log
         class="animated"
         :class="{'zoomInLeft' : isEntering, 
-        'zoomOutLeft' : !isEntering}"
+        'zoomOutLeft' : !isEntering
+        }"
+        :thisLog="playerLog"
         />
 
         <!-- Player Portrait and Stats -->
@@ -86,6 +88,7 @@
         class="animated"
         :class="{'zoomInRight' : isEntering,
         'zoomOutRight' : !isEntering}"
+        :thisLog="monsterLog"
         />
     </section>
     
@@ -170,6 +173,12 @@ export default {
             monsterporteffectGreen: state => state.animations.portEffectGreen,
             monsterporteffectPurple: state => state.animations.portEffectPurple
         }),
+        ...mapGetters('playerData', [
+            'playerLog',
+        ]),
+        ...mapGetters('monsterData', [
+            'monsterLog',
+        ])
     }
 }
 </script>
