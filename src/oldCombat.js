@@ -212,7 +212,6 @@ tradeBlows(attacker, defender) {
                 }
             }
 
-
             // DEFENDER TAKES SOME DAMAGE
             else {
                 //add "Took X Damage" to HUD log
@@ -224,8 +223,6 @@ tradeBlows(attacker, defender) {
                 //subtracts attackRoll from defender health to reflect damage taken
                 defender.health -= attackRoll;  
             }
-            
-
 
             //Clear out the special Attack
             if(attacker.type === 'monster'){
