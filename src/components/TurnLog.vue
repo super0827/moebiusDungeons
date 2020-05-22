@@ -18,22 +18,14 @@
 <script>
 
 export default {
-    name: 'PlayerReadout',
+    name: 'TurnLog',
     props: ['thisLog'],
-    watch: {
-        playerLog: function() {
-            if(this.playerLog.length > 4){
-                    this.playerLog.shift();
-            }
-        }
-    }
 }
 </script>
 
 <style scoped>
     .readout {
-        max-width:70px;
-        min-width:50px;
+        width:70px;
         text-align:center;
         margin:0 10px;
     }
