@@ -42,11 +42,11 @@
         :enemyAttackType="monsterAttackType"
         :enemyAttackTypeImage="monsterAttackTypeImage"
         :enemyAttackDamage="monsterAttackDamage"
-        :enemyReducedAttackDamage="monsterAdjustedDamage"
-        :portEffect="playerportEffect"
-        :porteffectRed="playerporteffectRed"
-        :porteffectGreen="playerporteffectGreen"
-        :porteffectPurple="playerporteffectPurple"
+        :enemyReducedAttackDamage="monsterRealDamage"
+        :porteffect="playerportEffect"
+        :redShine="redShinePlayer"
+        :greenShine="greenShinePlayer"
+        :purpleShine="purpleShinePlayer"
         />
 
         <!-- Dungeon Controls -->
@@ -71,17 +71,17 @@
         :coins="monsterCoins"
         :isHurt="monsterisHurt"
         :isBlocking="monsterisBlocking"
-        :isAttacking="monsterisAttacking"
+        :monsterisAttacking="monsterisAttacking"
         :isDead="monsterisDead"
         :statSide="monsterStatSide"
         :enemyAttackType="playerAttackType"
         :enemyAttackTypeImage="playerAttackTypeImage"
         :enemyAttackDamage="playerAttackDamage"
-        :enemyReducedAttackDamage="playerAdjustedDamage"
-        :portEffect="monsterportEffect"
-        :porteffectRed="monsterporteffectRed"
-        :porteffectGreen="monsterporteffectGreen"
-        :porteffectPurple="monsterporteffectPurple"
+        :enemyReducedAttackDamage="playerRealDamage"
+        :porteffect="monsterportEffect"
+        :redShine="redShineMonster"
+        :greenShine="greenShineMonster"
+        :purpleShine="purpleShineMonster"
         />
 
         <turn-log
@@ -140,16 +140,15 @@ export default {
             playerCoins: state => state.info.coins,
             playerStatSide: state => state.statSide,
             playerAttackDamage: state => state.thisDamage,
-            playerAdjustedDamage: state => state.thisAdjDamage,
             
             playerisHurt: state => state.animations.hurt,
             playerisBlocking: state => state.animations.blocking,
             playerisAttacking: state => state.animations.attacking,
             playerisDead: state => state.animations.isDead,
             playerportEffect: state => state.animations.portEffect,
-            playerporteffectRed: state => state.animations.portEffectRed,
-            playerporteffectGreen: state => state.animations.portEffectGreen,
-            playerporteffectPurple: state => state.animations.portEffectPurple
+            redShinePlayer: state => state.animations.redShine,
+            greenShinePlayer: state => state.animations.greenShine,
+            purpleShinePlayer: state => state.animations.purpleShine
         }),
         ...mapState('monsterData', {
             monsterName: state => state.info.name,
@@ -162,23 +161,24 @@ export default {
             monsterCoins: state => state.info.coins,
             monsterStatSide: state => state.statSide,
             monsterAttackDamage: state => state.thisDamage,
-            monsterAdjustedDamage: state => state.thisAdjDamage,
             
             monsterisHurt: state => state.animations.hurt,
             monsterisBlocking: state => state.animations.blocking,
             monsterisAttacking: state => state.animations.attacking,
             monsterisDead: state => state.animations.isDead,
             monsterportEffect: state => state.animations.portEffect,
-            monsterporteffectRed: state => state.animations.portEffectRed,
-            monsterporteffectGreen: state => state.animations.portEffectGreen,
-            monsterporteffectPurple: state => state.animations.portEffectPurple
+            redShineMonster: state => state.animations.redShine,
+            greenShineMonster: state => state.animations.greenShine,
+            purpleShineMonster: state => state.animations.purpleShine
         }),
-        ...mapGetters('playerData', [
-            'playerLog',
-        ]),
-        ...mapGetters('monsterData', [
-            'monsterLog',
-        ])
+        ...mapGetters('playerData', {
+            playerLog: 'playerLog',
+            playerRealDamage: 'thisAdjDamage'
+        }),
+        ...mapGetters('monsterData', {
+            monsterLog: 'monsterLog',
+            monsterRealDamage: 'thisAdjDamage'
+        })
     }
 }
 </script>
