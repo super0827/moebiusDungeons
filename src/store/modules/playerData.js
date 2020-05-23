@@ -20,9 +20,9 @@ const state = () => ({
       hurt: false,
       attacking:false,
       portEffect: false,
-      portEffectRed: false,
-      portEffectPurple: false,
-      portEffectGreen: false,
+      redShine: false,
+      purpleShine: false,
+      greenShine: false,
       isDead: false,
     },
 })
@@ -31,13 +31,13 @@ const mutations = {
   mutate(state, payload) {
     state[payload.property] = payload.with;
   },
-  toggle(state, payload) {
+  toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
   },
   incrementLog(state) {
     state.logNum++
   },
-  take_damage(state, payload) {
+  takeDamage(state, payload) {
     state.info.health -= payload.damage;
   },
   addToLog(state, payload){
@@ -75,47 +75,63 @@ const getters = {
       maxLog.shift();
     }
     return maxLog
-  }
+  },
 }
 
 const actions = {
-  ROLL_DAMAGE({commit, state, getters}) {
+  CHECK_HP({state, commit}){
+    return new Promise((resolve, reject) => {
+      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      if(state.info.health > 0){
+        resolve();
+      }
+      else if (state.info.health <= 0) {
+        commit('toggleAnimation', {property: 'isDead'})
+        reject();      
+      }
+    })
+  },
+  ROLL_DAMAGE({commit, state}) {
     return new Promise((resolve) => {
         // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
         const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
-        console.log(`monster attack: ${randomRoll}`);
+        console.log(`player attack = ${randomRoll}`);
         commit('mutate', {property:'thisDamage', with:randomRoll})
         setTimeout(() => {
-          if(state.thisDamage == randomRoll) resolve('damage')
+          if(state.thisDamage == randomRoll) resolve()
         }, 200)
     })
-    
   },
-  TRADE_BLOWS({commit, state, dispatch, getters}){
-    //ROLL FOR DAMAGE
-    dispatch('ROLL_DAMAGE')
-    //ANIMATE ATTACK AND DEAL DAMAGE
-    .then(() => { 
-      dispatch('DEAL_DAMAGE')
-    })
-    //ADD DAMAGE AMMOUNT TO LOG
+  TRADE_BLOWS({dispatch, getters}){
+    dispatch('CHECK_HP')
+    .then(() => { dispatch('ROLL_DAMAGE') })
+    .then(() => { dispatch('DEAL_DAMAGE') })
     .then(() => {
       dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`)
     })
-    //Monster Retaliates
     .then(() => {
-      dispatch('monsterData/TRADE_BLOWS', null, {root:true})
+      setTimeout(() => {
+        dispatch('monsterData/TRADE_BLOWS', null, {root:true})
+      },1500)
     })
   },
-  LOG_UPDATE({commit, getters, state}, payload) {
-    commit('addToLog', {id:state.logNum, message:payload});
+  LOG_UPDATE({commit, state}, payload) {
+    commit('addToLog', {id:state.logNum + 'player', message:payload});
     commit('incrementLog')
   },
   DEAL_DAMAGE({commit, getters}) {
     return new Promise((resolve) => {
-      commit('toggle', {property:'attacking'});
-      commit('monsterData/take_damage', {damage: getters.thisAdjDamage}, {root:true})
-
+      commit('toggleAnimation', {property:'attacking'});
+      if (getters.thisAdjDamage > 0) {
+        commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+        commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+        commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+      }
+      else if(getters.thisAdjDamage <= 0) {
+        commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
+        commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+        commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
+      }
     })
   },
   RUN_SPECIAL(context){

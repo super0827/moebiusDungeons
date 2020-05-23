@@ -5,14 +5,15 @@ const state = () => ({
     isBoss: false,
     thisDamage: {type: Number},
     log: [],
+    logNum: 0,
     animations: {
       blocking: false,
       hurt: false,
       attacking:false,
       portEffect: false,
-      portEffectRed: false,
-      portEffectPurple: false,
-      portEffectGreen: false,
+      redShine: false,
+      purpleShine: false,
+      greenShine: false,
       isDead: false,
     },
     variants: [
@@ -471,11 +472,17 @@ const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
-    take_damage(state, payload) {
+    toggleAnimation(state, payload) {
+      state.animations[payload.property] = !state.animations[payload.property];
+    },
+    incrementLog(state) {
+      state.logNum++
+    },
+    takeDamage(state, payload) {
       state.info.health -= payload.damage;
     },
-    toggle(state, payload) {
-      state.animations[payload.property] = !state.animations[payload.property];
+    addToLog(state, payload){
+      state.log.push(payload)
     },
     newMonster(state) {
         const increment = Math.floor(Math.random() * Math.floor(4)) + 1;
@@ -503,25 +510,65 @@ const getters = {
       maxLog.shift();
     }
     return maxLog
-  }
+  },
 }
 
 const actions = {
+  CHECK_HP({state, commit}){
+    return new Promise((resolve, reject) => {
+      if(state.info.health > 0){
+        resolve();
+      }
+      else if (state.info.health <= 0) {
+        commit('toggleAnimation', {property: 'isDead'})
+        reject();      
+      }
+    })
+  },
   ROLL_DAMAGE({commit, state}) {
-    const randomRoll = Math.floor(Math.random() * (state.info.attackMax))
-    console.log(`monster attack: ${randomRoll}`);
-    commit('mutate', {property:'thisDamage', with:randomRoll})
+    return new Promise((resolve) => {
+      // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
+      console.log(`monster attack = ${randomRoll}`);
+      commit('mutate', {property:'thisDamage', with:randomRoll})
+      setTimeout(() => {
+        if(state.thisDamage == randomRoll) resolve('damage')
+      }, 200)
+    })
   },
-  TRADE_BLOWS(context){
-    if(context.state.info.health > 0) {
-      context.commit('toggle', {property:'attacking'});
-      context.dispatch('ROLL_DAMAGE')
-      context.dispatch('playerData/TAKE_DAMAGE', null, {root:true})
-      context.commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-    }
+  TRADE_BLOWS({commit, dispatch, getters}){
+      dispatch('CHECK_HP')
+      .then(()=>{ dispatch('ROLL_DAMAGE') })
+      .then(() => { dispatch('DEAL_DAMAGE') })
+      .then (() => {  
+        dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`) 
+      })
+      .then(()=>{
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      })
   },
-  TAKE_DAMAGE(context){
-    context.commit('take_damage', {damage: context.rootGetters['playerData/thisAdjDamage']})
+  LOG_UPDATE({commit, state}, payload) {
+    commit('addToLog', {id:state.logNum + 'monster', message:payload});
+    commit('incrementLog')
+  },
+  DEAL_DAMAGE({commit, getters}) {
+    return new Promise((resolve) => {
+      commit('toggleAnimation', {property:'attacking'});
+      if (getters.thisAdjDamage > 0) {
+        commit('playerData/toggleAnimation', {property: 'hurt'}, {root:true})
+        commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
+        commit('playerData/toggleAnimation', {property: 'redShine'}, {root:true})
+        commit('playerData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+      }
+      else if(getters.thisAdjDamage <= 0) {
+        commit('playerData/toggleAnimation', {property: 'blocking'}, {root:true})
+        commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
+        commit('playerData/toggleAnimation', {property: 'purpleShine'}, {root:true})
+      }
+    })
+  },
+  RUN_SPECIAL(context){
+
   },
 }
 
