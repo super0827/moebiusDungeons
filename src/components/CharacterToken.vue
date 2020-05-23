@@ -11,11 +11,12 @@
 
   <section class="columns">
       
-      <h3>YOU</h3>
+      <h3 id="name">{{name}}</h3>
       <section 
       class="portraitWrapper"
       :class="{'animated pulse' : isHurt, 
-      'animated wobble' : isAttacking, 
+      'animated wobble' : isAttacking,
+      'animated reverseWobble' : monsterisAttacking, 
       'animated pulse' : isBlocking,
       'animated tada' : isDead 
       }"
@@ -69,9 +70,9 @@
             <section v-if="porteffect" 
               class="damagedOverlay"
               :class="{ 
-                red : porteffecctRed, 
-                green : porteffectGreen,
-                purple : porteffectPurple,
+                red : redShine, 
+                green : greenShine,
+                purple : purpleShine,
               }"
             >
             </section>  
@@ -125,6 +126,7 @@ export default {
     'isHurt',
     'isBlocking',
     'isAttacking',
+    'monsterisAttacking',
     'isDead',
     'statSide',
     'enemyAttackType',
@@ -133,9 +135,9 @@ export default {
     'enemyReducedAttackDamage',
 
     'porteffect',
-    'porteffectRed',
-    'porteffectGreen',
-    'porteffectRed',
+    'redShine',
+    'greenShine',
+    'purpleShine',
   ],
   methods: {
     wholeNumber(value) {
@@ -147,7 +149,9 @@ export default {
 </script>
 
 <style scoped>
-
+#name {
+  text-transform:uppercase;
+}
 .portraitWrapper {
   display:grid;
   height:233px;
