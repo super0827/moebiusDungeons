@@ -174,7 +174,7 @@ export default {
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
             playerRealDamage: 'thisAdjDamage',
-            playerArmor: 'armor'
+            playerArmor: 'calcArmor'
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',

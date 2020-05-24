@@ -90,7 +90,7 @@ const getters = {
     // return available.length
   },
   calcArmor: (state) => {
-    return state.tempTraits.armor + state.info.baseArmor
+    return state.tempArmor + state.info.baseArmor
   }
 }
 
