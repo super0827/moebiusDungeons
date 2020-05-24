@@ -515,36 +515,38 @@ const getters = {
 
 const actions = {
   CHECK_HP({state, commit}){
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if(state.info.health > 0){
         resolve();
       }
       else if (state.info.health <= 0) {
         commit('toggleAnimation', {property: 'isDead'})
-        reject();      
+        setTimeout(() => {
+          commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
+        }, 1100)
+        return
       }
     })
   },
   ROLL_DAMAGE({commit, state}) {
-    return new Promise((resolve) => {
       // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
       console.log(`monster attack = ${randomRoll}`);
       commit('mutate', {property:'thisDamage', with:randomRoll})
-      setTimeout(() => {
-        if(state.thisDamage == randomRoll) resolve('damage')
-      }, 200)
-    })
   },
-  TRADE_BLOWS({commit, dispatch, getters}){
+  TRADE_BLOWS({commit, dispatch, getters, state}){
       dispatch('CHECK_HP')
       .then(()=>{ dispatch('ROLL_DAMAGE') })
       .then(() => { dispatch('DEAL_DAMAGE') })
       .then (() => {  
         dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`) 
       })
-      .then(()=>{
-        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      .then(() => {
+        setTimeout(() => {
+          dispatch('RESET_ANIMATIONS')
+          dispatch('playerData/RESET_ANIMATIONS', null, {root: true})
+          commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        },1400)
       })
   },
   LOG_UPDATE({commit, state}, payload) {
@@ -552,7 +554,6 @@ const actions = {
     commit('incrementLog')
   },
   DEAL_DAMAGE({commit, getters}) {
-    return new Promise((resolve) => {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
         commit('playerData/toggleAnimation', {property: 'hurt'}, {root:true})
@@ -565,11 +566,15 @@ const actions = {
         commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'purpleShine'}, {root:true})
       }
-    })
   },
   RUN_SPECIAL(context){
 
   },
+  RESET_ANIMATIONS({state,commit}){
+    for (let item in state.animations){
+      if (state.animations[item] === true) commit('toggleAnimation', {property: item})
+    }
+  }
 }
 
 export default {

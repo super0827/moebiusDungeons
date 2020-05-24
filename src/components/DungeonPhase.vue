@@ -1,8 +1,8 @@
 <template>
 <section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
-    <section class="flexColumn animated"
+    <section class="flexRow animated"
     :class="{'zoomInDown' :isEntering, 'zoomOutUp' : !isEntering}">
-        <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
+        <img key="dungeonSigil" id="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
 
@@ -105,6 +105,7 @@ import { mapState, mapGetters } from 'vuex';
 import BattleControls from './BattleControls.vue';
 import CharacterToken from "./CharacterToken.vue";
 
+
 import BattleHelp from './BattleHelp.vue';
 
 import TurnLog from './TurnLog.vue';
@@ -133,7 +134,6 @@ export default {
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
             playerHealth: state => state.info.health,
-            playerArmor: state => state.info.armor,
             playerAttack: state => state.info.attackMax,
             playerAttackType: state => state.info.attackType,
             playerAttackTypeImage: state => state.info.attackTypeImage,
@@ -173,7 +173,8 @@ export default {
         }),
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
-            playerRealDamage: 'thisAdjDamage'
+            playerRealDamage: 'thisAdjDamage',
+            playerArmor: 'armor'
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',
@@ -186,6 +187,9 @@ export default {
 <style  scoped>
     .dungeonPhaseWrapper {
         position:relative;
+    }
+    #dungeonSigil {
+        margin-right:10px;
     }
     battle-help {
         position:absolute;

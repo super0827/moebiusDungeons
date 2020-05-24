@@ -7,13 +7,19 @@
 
     <br>
 
+    <special-bar/>
+
     <h2 @mouseenter="$sound.play('chit')" 
     :class="{'striked' : combatLocked }" 
     @click="TRADE_BLOWS()">Trade Blows</h2>
     
     <h2 @mouseenter="$sound.play('chit')" 
-    :class="{'striked' : combatLocked }" 
-    @click="RUN_SPECIAL()">Be Reckless</h2>
+    :class="{'striked' : combatLocked, 'striked': availableMettle <= 0}"
+    id="mettle" 
+    @click="RUN_SPECIAL()">
+    <img :src="mettleImg">
+        {{special}}
+    </h2>
     
     <br>
 
@@ -26,18 +32,27 @@
 
 <script>
 import StatBar from './StatBar.vue'
-import {mapActions, mapState} from 'vuex'
+import {mapActions, mapState, mapGetters} from 'vuex'
+import SpecialBar from "./SpecialBar.vue"
 
 export default {
     name: 'BattleControls',
      components: {
       StatBar,
+      SpecialBar
     },
     computed: {
         ...mapState('gameData', [
             'combatLocked',
             'turnTailUsed'
-        ])
+        ]),
+        ...mapState('playerData', {
+            special: state => state.info.special,
+            mettleImg: state => state.info.mettleImg,
+        }),
+        ...mapGetters('playerData', {
+            availableMettle: 'availableMettle'
+        }),
     },
     methods: {
         ...mapActions( 'playerData', [
@@ -82,7 +97,15 @@ export default {
         font-size:20px;
         text-transform:uppercase;
     }
-
+    #mettle {
+        display:flex;
+        justify-content:center;
+        align-items: center;    
+    }
+    #mettle img {
+        width:30px;
+        margin-right:10px;
+    }
     h2:hover {
         background: rgb(166, 207, 144);
     }

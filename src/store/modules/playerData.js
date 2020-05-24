@@ -7,11 +7,18 @@ const state = () => ({
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
       description1:"Slicing and Dicing",
       description2:"Bruiser class, high damage, good armor, high health.", 
-      coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
-      attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"), 
+      coins:0, health:12, baseArmor:2, attackMax:8, attackType: "physical",
+      attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+      mettleImg: require("@/assets/imgs/icons/mettleAvailable.png"),
+      special: "en'garde"
     },
+    mettle: [
+      {id:0, available:true},
+      {id:1, available:false},
+      {id:2, available:false}
+    ],
     permenantTraits: [],
-    tempTraits: [],
+    tempArmor:0,
     thisDamage: 0,
     log: [],
     logNum: 0,
@@ -76,35 +83,33 @@ const getters = {
     }
     return maxLog
   },
+  availableMettle: (state) => {
+    //NOT WORKING
+    // var values = Object.values(state.mettle);
+    // var available = values.filter(value => value === true);
+    // return available.length
+  },
+  calcArmor: (state) => {
+    return state.tempTraits.armor + state.info.baseArmor
+  }
 }
 
 const actions = {
   CHECK_HP({state, commit}){
-    return new Promise((resolve, reject) => {
-      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-      if(state.info.health > 0){
-        resolve();
-      }
-      else if (state.info.health <= 0) {
-        commit('toggleAnimation', {property: 'isDead'})
-        reject();      
-      }
-    })
+    if(state.info.health > 0){
+    }
+    else if (state.info.health <= 0) {
+      commit('toggleAnimation', {property: 'isDead'})     
+    }
   },
   ROLL_DAMAGE({commit, state}) {
-    return new Promise((resolve) => {
-        // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-        const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
-        console.log(`player attack = ${randomRoll}`);
-        commit('mutate', {property:'thisDamage', with:randomRoll})
-        setTimeout(() => {
-          if(state.thisDamage == randomRoll) resolve()
-        }, 200)
-    })
+    commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+    const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
+    console.log(`player attack = ${randomRoll}`);
+    commit('mutate', {property:'thisDamage', with:randomRoll})
   },
   TRADE_BLOWS({dispatch, getters}){
-    dispatch('CHECK_HP')
-    .then(() => { dispatch('ROLL_DAMAGE') })
+    dispatch('ROLL_DAMAGE')
     .then(() => { dispatch('DEAL_DAMAGE') })
     .then(() => {
       dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`)
@@ -134,8 +139,10 @@ const actions = {
       }
     })
   },
-  RUN_SPECIAL(context){
-
+  RUN_SPECIAL({state, commit}){
+    if(state.info.name === 'swordsman' && availableMettle > 0) {
+      commit('mutate', {property: 'tempArmor', with:2})
+    }
   },
   TURN_TAIL(context){
     //calculate success chance
@@ -148,6 +155,11 @@ const actions = {
   ESCAPE(context){
     //animate escape
     //change phase
+  },
+  RESET_ANIMATIONS({state,commit}){
+    for (let item in state.animations){
+      if (state.animations[item] === true) commit('toggleAnimation', {property: item})
+    }
   }
 }
 
