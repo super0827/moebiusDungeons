@@ -7,7 +7,7 @@ const state = () => ({
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
       description1:"Slicing and Dicing",
       description2:"Bruiser class, high damage, good armor, high health.", 
-      coins:0, health:12, baseArmor:2, attackMax:8, attackType: "physical",
+      coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/mettleAvailable.png"),
       special: "en'garde"
@@ -19,6 +19,8 @@ const state = () => ({
     ],
     permenantTraits: [],
     tempArmor:0,
+    tempHealth:0,
+    tempAttackMax:0,
     thisDamage: 0,
     log: [],
     logNum: 0,
@@ -89,8 +91,14 @@ const getters = {
     // var available = values.filter(value => value === true);
     // return available.length
   },
+  calcHealth: (state) => {
+    return state.tempHealth + state.info.baseHealth
+  },
   calcArmor: (state) => {
     return state.tempArmor + state.info.baseArmor
+  },
+  calcAttackMax: (state) => {
+    return state.tempAttackMax + state.info.baseAttackMax
   }
 }
 

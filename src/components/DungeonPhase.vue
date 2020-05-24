@@ -30,7 +30,7 @@
         :portrait="playerPortrait"
         :health="playerHealth"
         :armor="playerArmor"
-        :attack="playerAttack"
+        :attack="playerAttackMax"
         :attackType="playerAttackType"
         :attackTypeImg="playerAttackTypeImage"
         :coins="playerCoins"
@@ -65,7 +65,7 @@
         :portrait="monsterPortrait"
         :health="monsterHealth"
         :armor="monsterArmor"
-        :attack="monsterAttack"
+        :attack="monsterAttackMax"
         :attackType="monsterAttackType"
         :attackTypeImg="monsterAttackTypeImage"
         :coins="monsterCoins"
@@ -133,8 +133,8 @@ export default {
         ...mapState('playerData', {
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
-            playerHealth: state => state.info.health,
-            playerAttack: state => state.info.attackMax,
+            playerHealth: state => state.info.baseHealth,
+            playerAttack: state => state.info.baseAttackMax,
             playerAttackType: state => state.info.attackType,
             playerAttackTypeImage: state => state.info.attackTypeImage,
             playerCoins: state => state.info.coins,
@@ -153,9 +153,6 @@ export default {
         ...mapState('monsterData', {
             monsterName: state => state.info.name,
             monsterPortrait: state => state.info.portrait,
-            monsterHealth: state => state.info.health,
-            monsterArmor: state => state.info.armor,
-            monsterAttack: state => state.info.attackMax,
             monsterAttackType: state => state.info.attackType,
             monsterAttackTypeImage: state => state.info.attackTypeImage,
             monsterCoins: state => state.info.coins,
@@ -174,11 +171,17 @@ export default {
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
             playerRealDamage: 'thisAdjDamage',
-            playerArmor: 'calcArmor'
+            playerHealth: 'calcHealth',
+            playerArmor: 'calcArmor',
+            playerAttackMax: 'calcAttackMax'
+
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',
-            monsterRealDamage: 'thisAdjDamage'
+            monsterRealDamage: 'thisAdjDamage',
+            monsterHealth: 'calcHealth',
+            monsterArmor: 'calcArmor',
+            monsterAttackMax: 'calcAttackMax'
         })
     }
 }
