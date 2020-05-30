@@ -148,8 +148,8 @@ would love to hear from you.
 contact@seanyager.com
 `);
 
-  
-
+  this.$store.commit('monsterData/newMonster');
+  this.$store.commit('shopkeepData/newShopkeep')
   }
 }
 </script>
