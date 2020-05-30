@@ -1,7 +1,7 @@
 <template>
 <section class="shopPhaseWrapper" key="shopPhaseWrapper">
     <section class="flexColumn animated"
-        :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
+        :class="{'zoomInDown' : isEntering, 'zoomOutUp' : !isEntering}">
     
         <img key="shopSigil" class="iconImageSize" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
         <h1 class="textCenter phaseName">SHOP</h1> 
@@ -9,42 +9,65 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="helper = !helper" @mouseenter="$sound.play('chit')" id="shopHelp">SHOP HELP</h1>
+        <h1 @click="toggleHelp()" @mouseenter="$sound.play('chit')" id="shopHelp">SHOP HELP</h1>
     </transition>
 
     <section class="flexRow">
         <!-- Player Portrait -->
         <character-token
-        class="animated"
-        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering }"
+        class="animated character-token"
+        :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering }"
+        :who="'player'"
+        :name="playerName"
+        :portrait="playerPortrait"
+        :health="playerHealth"
+        :armor="playerArmor"
+        :attack="playerAttackMax"
+        :attackType="playerAttackType"
+        :attackTypeImg="playerAttackTypeImage"
+        :coins="playerCoins"
+        :isHurt="playerisHurt"
+        :isBlocking="playerisBlocking"
+        :isAttacking="playerisAttacking"
+        :isDead="playerisDead"
+        :statSide="playerStatSide"
+        :porteffect="playerportEffect"
+        :redShine="redShinePlayer"
+        :greenShine="greenShinePlayer"
+        :purpleShine="purpleShinePlayer"
         key="playerPortraitShop"/>  
 
         <!-- Shop Controls -->
         <shop-controls
         class="animated"
-        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering }"
+        :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering }"
         key="shopControls"/>
         
         <!-- Shop Portrait -->
         <shop-portrait
         class="animated"
-        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering }"
+        :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering }"
         key="shopPortrait"/>
     </section>
 
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <shop-help key="battleHelper" @close="helper = false" v-if="helper==true"/>
+        <shop-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
     </transition>
 </section>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
 
 import ShopControls from './ShopControls.vue';
 import CharacterToken from "./CharacterToken.vue";
 import ShopPortrait from "./ShopPortrait.vue";
 import ShopHelp from "./ShopHelp.vue";
+
+import helperToggles from './mixins/helperToggles';
+import gameAnimations from './mixins/gameAnimations';
+import gameMusic from './mixins/gameMusic';
 
 
 export default {
@@ -55,29 +78,40 @@ export default {
         ShopPortrait,
         ShopHelp,
     },
+    mixins: [helperToggles, gameAnimations, gameMusic],
     data() {
         return {
-            helper:false,
+            music:['shopMusic1', 'shopMusic2', 'shopMusic3'],
         }
     },
-    created() {
-        this.$sound.play(`shopMusic${this.randomBkg}`, {fade: 1200, volume: .2});
-
-        let roll = this.randomRoll(2);
-        this.$sound.play(this.storeState.shopkeep.welcome);
-    },
-    beforeDestroy() {
-        this.$sound.pause(`shopMusic${this.randomBkg}`, {fade: 1200, volume: 0});
-        this.$sound.play(this.storeState.shopkeep.goodbye);
-    },
-    watch: {
-        helper: function() {
-            if(this.helper === true){
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.05})
-            } else {
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.2})
-            }
-        }
+    computed: {
+        ...mapState('playerData', {
+            playerName: state => state.info.name,
+            playerPortrait: state => state.info.portrait,
+            playerHealth: state => state.info.baseHealth,
+            playerAttack: state => state.info.baseAttackMax,
+            playerAttackType: state => state.info.attackType,
+            playerAttackTypeImage: state => state.info.attackTypeImage,
+            playerCoins: state => state.info.coins,
+            playerStatSide: state => state.statSide,
+            playerAttackDamage: state => state.thisDamage,
+            
+            playerisHurt: state => state.animations.hurt,
+            playerisBlocking: state => state.animations.blocking,
+            playerisAttacking: state => state.animations.attacking,
+            playerisDead: state => state.animations.isDead,
+            playerportEffect: state => state.animations.portEffect,
+            redShinePlayer: state => state.animations.redShine,
+            greenShinePlayer: state => state.animations.greenShine,
+            purpleShinePlayer: state => state.animations.purpleShine
+        }),
+        ...mapGetters('playerData', {
+            playerLog: 'playerLog',
+            playerRealDamage: 'thisAdjDamage',
+            playerHealth: 'calcHealth',
+            playerArmor: 'calcArmor',
+            playerAttackMax: 'calcAttackMax'
+        }),
     }
 }
 </script>
@@ -95,6 +129,9 @@ export default {
     padding: 5px;
     background: rgb(218, 218, 218);
     cursor:pointer;
+}
+.character-token {
+    margin-right:10px;
 }
 shop-help {
     position:absolute;
