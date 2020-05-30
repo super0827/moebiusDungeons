@@ -94,7 +94,7 @@
     
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="toggleHelp()" v-if="helper==true"/>
+        <battle-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
     </transition>
 </section>
 </template>
@@ -104,20 +104,17 @@ import { mapState, mapGetters } from 'vuex';
 
 import BattleControls from './BattleControls.vue';
 import CharacterToken from "./CharacterToken.vue";
-
-
 import BattleHelp from './BattleHelp.vue';
-
 import TurnLog from './TurnLog.vue';
 
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
 import gameMusic from './mixins/gameMusic';
-import newMonster from './mixins/newMonster';
+
 
 export default {
     name: 'DungeonPhase',
-    mixins: [helperToggles, gameAnimations, gameMusic, newMonster],
+    mixins: [helperToggles, gameAnimations, gameMusic],
     components: {
         BattleHelp,
         CharacterToken,
@@ -174,7 +171,6 @@ export default {
             playerHealth: 'calcHealth',
             playerArmor: 'calcArmor',
             playerAttackMax: 'calcAttackMax'
-
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',
@@ -183,6 +179,10 @@ export default {
             monsterArmor: 'calcArmor',
             monsterAttackMax: 'calcAttackMax'
         })
+    },
+    destroyed: function () {
+        store.commit('monsterData/newMonster');
+        console.log(`Rolled a new monster.`)
     }
 }
 </script>
