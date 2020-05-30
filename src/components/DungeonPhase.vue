@@ -181,7 +181,7 @@ export default {
         })
     },
     destroyed: function () {
-        store.commit('monsterData/newMonster');
+        this.$store.commit('monsterData/newMonster');
         console.log(`Rolled a new monster.`)
     }
 }

@@ -131,6 +131,10 @@ export default {
     flex-direction: row;
 }
 
+.columns {
+    margin:0 10px;
+}
+
 .chooseChar img {
     max-width:200px;
 }

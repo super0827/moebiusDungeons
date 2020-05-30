@@ -112,6 +112,9 @@ export default {
             playerArmor: 'calcArmor',
             playerAttackMax: 'calcAttackMax'
         }),
+    },
+    destroyed: function() {
+        this.$store.commit('shopkeepData/newShopkeep');
     }
 }
 </script>

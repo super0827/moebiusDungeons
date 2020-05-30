@@ -82,8 +82,8 @@ const state = () => ({
 
 const mutations = {
     newShopkeep(state) {
-      // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length)) + 1;
-      const randomPick = 0;
+      const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
+      // const randomPick = 0;
       state.info = state.variants[randomPick]
       const inventory = shuffle(state.variants[randomPick].items);
       state.inventory = inventory.slice(0, 3)

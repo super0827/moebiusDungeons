@@ -1,8 +1,8 @@
 <template>
-<section>
+<section class="flexContainer">
 <section class="columns battleOptions">
   <!-- Shop Title Description -->
-  <h2 class="textCenter">{{ shopTitle}}</h2>
+  
     <section
     v-for="buyable in shopInventory"
     :key="buyable.name"
@@ -40,15 +40,17 @@
 
     <hr>
 
-    <section class="buySlot">
-      <h3 @click="store.sceneChange('DungeonPhase')">BACK TO THE DUNGEONS</h3>
+    <section  @click="$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})" class="buySlot">
+      <h3>BACK TO THE DUNGEONS</h3>
     </section>
 
 
 </section>
 
     <section class="itemIcons">
-
+      <img :src="item1" alt="">
+      <img :src="item2" alt="">
+      <img :src="item3" alt="">
     </section>
     </section>
 </template>
@@ -120,7 +122,9 @@ export default {
 </script>
 
 <style scoped>
-
+.flexContainer {
+  display:flex;
+}
 .itemImage{
     width:70px;
     height:70px;
@@ -140,9 +144,20 @@ hr {
 }
 
 .itemIcons {
-  width:100px;
-  height:500px;
-  background:red;
+  width:85px;
+  height:263px;
+  margin-left:10px;
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items: center;
+
+}
+
+.itemIcons img {
+  width:75px;
+  height:75px;
 }
 
 .itemRow {
@@ -179,8 +194,8 @@ p {
 }
 
 .battleOptions {
-  min-width:200px;
-  width:200px;
+  min-width:215px;
+  width:210px;
   margin:0;
 }
 

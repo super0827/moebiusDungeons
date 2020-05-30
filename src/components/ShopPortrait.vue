@@ -7,7 +7,7 @@
       
       <section class="flexRow stats">
 
-          <p> {{ saying }} </p>
+          <p> {{ shopTitle }} </p>
 
       </section>
 
@@ -28,6 +28,7 @@ export default {
             shopkeepName: state => state.info.name,
             shopPort: state => state.info.portrait,
             saying: state => state.info.saying,
+            shopTitle: state => state.info.shopTitle,
         }),
     },
     destroyed: function () {
@@ -43,6 +44,9 @@ export default {
     margin-left:10px;
 }
 h3 {
+    text-transform:uppercase;
+}
+p{
     text-transform:uppercase;
 }
 </style>
