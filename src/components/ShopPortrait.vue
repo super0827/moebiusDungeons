@@ -1,13 +1,13 @@
 <template>
  <section key="shopPortComp" class="columns">
 
-      <h3> {{ storeState.shopkeep.name }}</h3>
+      <h3> {{ shopkeepName }}</h3>
 
-      <img class="portrait" :src="storeState.shopkeep.portrait">
+      <img class="portrait" :src="shopPort">
       
       <section class="flexRow stats">
 
-          <p> {{ storeState.shopkeep.saying }} </p>
+          <p> {{ saying }} </p>
 
       </section>
 
@@ -15,13 +15,23 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 
 export default {
     name: 'ShopPortrait',
     data() {
       return {
       }
+    },
+    computed: {
+        ...mapState('shopkeepData', {
+            shopkeepName: state => state.info.name,
+            shopPort: state => state.info.portrait,
+            saying: state => state.info.saying,
+        }),
+    },
+    destroyed: function () {
+        store.commit('shopkeepData/newShopkeep');
     },
 }
 </script>
@@ -30,6 +40,7 @@ export default {
 .columns {
     width:200px;
     min-width:200px;
+    margin-left:10px;
 }
 h3 {
     text-transform:uppercase;
