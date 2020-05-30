@@ -492,14 +492,15 @@ const mutations = {
         state.roster += increment;
         let roster = state.roster;
         state.info = state.variants[roster];
-      }
+        console.log(`new monster is ${state.variants[roster].name}`)
+    }
 }
 
 const getters = {
-  thisAdjDamage: (state, getters, rootState) => {
+  thisAdjDamage: (state, getters, rootState, rootGetters) => {
     let num;
     if( state.info.attackType === 'physical') {
-      num = state.thisDamage - rootState.monsterData.info.baseArmor;
+      num = state.thisDamage - rootGetters['playerData/calcArmor']
     }
     else if ( state.info.attackType === 'magical') {
       num = state.thisDamage;
@@ -540,9 +541,9 @@ const actions = {
       }
     })
   },
-  ROLL_DAMAGE({commit, state}) {
+  ROLL_DAMAGE({commit, state, getters}) {
       // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-      const randomRoll = Math.floor(Math.random() * (state.info.baseAttackMax) + 1)
+      const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
       console.log(`monster attack = ${randomRoll}`);
       commit('mutate', {property:'thisDamage', with:randomRoll})
   },
@@ -580,7 +581,7 @@ const actions = {
       }
   },
   RUN_SPECIAL(context){
-
+    
   },
   RESET_ANIMATIONS({state,commit}){
     for (let item in state.animations){

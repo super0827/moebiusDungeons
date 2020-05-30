@@ -9,8 +9,9 @@ const state = () => ({
       description2:"Bruiser class, high damage, good armor, high health.", 
       coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-      mettleImg: require("@/assets/imgs/icons/mettleAvailable.png"),
-      special: "en'garde"
+      mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
+      special: "en'garde",
+      specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
     mettle: [
       {id:0, available:true},
@@ -67,10 +68,10 @@ const mutations = {
 }
 
 const getters = {
-  thisAdjDamage: (state, getters, rootState) => {
+  thisAdjDamage: (state, getters, rootState, rootGetters) => {
     let num;
     if( state.info.attackType === 'physical') {
-      num = state.thisDamage - rootState.monsterData.info.armor;
+      num = state.thisDamage - rootGetters['monsterData/calcArmor']
     }
     else if ( state.info.attackType === 'magical') {
       num = state.thisDamage;
@@ -86,10 +87,10 @@ const getters = {
     return maxLog
   },
   availableMettle: (state) => {
-    //NOT WORKING
-    // var values = Object.values(state.mettle);
-    // var available = values.filter(value => value === true);
-    // return available.length
+    var values = Object.values(state.mettle);
+    var available = values.filter(value => value === true);
+    console.log(available.length)
+    return available.length
   },
   calcHealth: (state) => {
     return state.tempHealth + state.info.baseHealth
@@ -110,9 +111,9 @@ const actions = {
       commit('toggleAnimation', {property: 'isDead'})     
     }
   },
-  ROLL_DAMAGE({commit, state}) {
+  ROLL_DAMAGE({commit, state, getters}) {
     commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-    const randomRoll = Math.floor(Math.random() * (state.info.attackMax) + 1)
+    const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
     console.log(`player attack = ${randomRoll}`);
     commit('mutate', {property:'thisDamage', with:randomRoll})
   },
@@ -147,9 +148,11 @@ const actions = {
       }
     })
   },
-  RUN_SPECIAL({state, commit}){
-    if(state.info.name === 'swordsman' && availableMettle > 0) {
-      commit('mutate', {property: 'tempArmor', with:2})
+  RUN_SPECIAL({state, commit, getters}){
+    if (getters.availableMettle > 0){
+      if(state.info.name === 'swordsman') {
+        commit('mutate', {property: 'tempArmor', with:2})
+      }
     }
   },
   TURN_TAIL(context){
