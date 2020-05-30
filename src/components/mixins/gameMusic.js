@@ -12,7 +12,7 @@ export default {
 
     },
     destroyed() {
-            this.$sound.pause(this.bkgMusic, {fade: 2000, volume:0 });
+        this.$sound.pause(this.bkgMusic, {fade: 2000, volume:0 });
     },
     computed: {
         ...mapGetters( 'musicData', {
