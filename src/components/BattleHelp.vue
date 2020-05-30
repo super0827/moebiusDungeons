@@ -54,13 +54,8 @@
                 If your attack doesn't kill the monster, it attacks you back so watch out!
             </p>
             <br>
-            <h2>Be Reckless</h2>
-            <p>As "Trade Blows" but your attack is multiplied by 1.5, and your 
-                armor is halved for this turn.
-                <br>
-                Good to use this when the monster is low on health. Use at your 
-                own risk! 
-            </p>
+            <h2>{{special}}</h2>
+            <p>{{description}}</p>
             <br>
             <h2>Turn Tail</h2>
             <p>
@@ -78,8 +73,17 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 export default {
   name: 'BattleHelp',
+  computed: {
+    ...mapState('playerData', {
+        special: state => state.info.special,
+        description: state => state.info.specialDescription
+    })
+  }
 }
 </script>
 
