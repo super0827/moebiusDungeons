@@ -12,7 +12,7 @@ const state = () => ({
               { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1 }, icon: require("@/assets/imgs/icons/items/boon.png")},
               { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', buy: () => {store.state.monster.coins *= 2 }, icon: require("@/assets/imgs/icons/items/fortune.png")},
               { bought: false, noSale: false, name: 'great blessing', cost: 2, description: '+3 ARM', buy: () => { store.state.player.armor += 3 }, icon: require("@/assets/imgs/icons/items/boon.png") },
-              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/armor.png") },
+              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/boostAttack.png") },
               { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/immune2.png") },
           ],
           saying:"Come in, are you hurt?",
@@ -23,12 +23,13 @@ const state = () => ({
           name:"graverobber", 
         portrait:require("@/assets/imgs/shopkeepers/graverobber.png"),
         items: [
-          { bought: false, noSale: false, name: 'nacre charm', cost: 1, description: 'ATK +1 | ARM +1 | HP -5', buy: () => { store.state.player.health -= 5; store.state.player.armor += 1; store.state.player.attackMax += 1 } },
-          { bought: false, noSale: false, name: 'detriment bangle', cost: 1, description: "Halves your HP | +3 ARM", buy: () => { store.state.player.armor += 3; store.state.player.health = Math.ceil(store.state.player.health / 2);} },
-          { bought: false, noSale: false, name: 'unlucky trinket', cost: 3, description: "Grants Double Attack to you and monsters.", buy: () => { store.state.playerTraits.push('double attack'); } },
-          { bought: false, noSale: false, name: 'hollow bone', cost: 2, description: "+4 ATK for next battle", buy: () => { store.state.playerTraitsTemp.push("hollow bone") } },
-          { bought: false, noSale: false, name: 'Demon Ring', cost: 4, description: 'ATK Type becomes Pyhsical | x2 ATK', buy: () => {store.state.monster.coins *= 2 }},
-          { bought: false, noSale: false, name: 'Dessicated Doll', cost: 5, description: 'Revive with 10 HP on death.', buy: () => { store.state.playerTraits.push('dessicated doll') }},
+          { bought: false, noSale: false, name: 'nacre charm', cost: 1, description: 'ATK +1 | ARM +1 | HP -5', buy: () => { store.state.player.health -= 5; store.state.player.armor += 1; store.state.player.attackMax += 1 }, icon: require("@/assets/imgs/icons/items/nacreCharm.png") },
+          { bought: false, noSale: false, name: 'detriment bangle', cost: 1, description: "Halves your HP | +3 ARM", buy: () => { store.state.player.armor += 3; store.state.player.health = Math.ceil(store.state.player.health / 2);}, icon: require("@/assets/imgs/icons/items/detrimentBangle.png") },
+          { bought: false, noSale: false, name: 'unlucky trinket', cost: 3, description: "Grants Double Attack to you and monsters.", buy: () => { store.state.playerTraits.push('double attack'); }, icon: require("@/assets/imgs/icons/items/unluckyTrinket.png") },
+          
+          { bought: false, noSale: false, name: 'hollow bone', cost: 2, description: "+4 ATK for next battle", buy: () => { store.state.playerTraitsTemp.push("hollow bone") }, icon: require("@/assets/imgs/icons/items/hollowBone.png") },
+          { bought: false, noSale: false, name: 'Demon Ring', cost: 4, description: 'ATK Type becomes Pyhsical | x2 ATK', buy: () => {store.state.monster.coins *= 2 }, icon: require("@/assets/imgs/icons/items/demonRing.png")},
+          { bought: false, noSale: false, name: 'Dessicated Doll', cost: 5, description: 'Revive with 10 HP on death.', buy: () => { store.state.playerTraits.push('dessicated doll') }, icon: require("@/assets/imgs/icons/items/dessicatedDoll.png")},
         ],
         saying:"Trust me, nothing I sell is cursed.",
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
@@ -39,17 +40,17 @@ const state = () => ({
         {name:"merchant", 
         portrait:require("@/assets/imgs/shopkeepers/merchant.png"),
         items: [
-          { bought: false, noSale: false, name: 'rations', cost: 1, description: '+5 HP', buy: () => { store.state.player.health += 5; } },
-          { bought: false, noSale: false, name: 'sewing kit', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1; } },
-          { bought: false, noSale: false, name: 'Mettle Poultice', cost: 1, description: '+2 ATK', buy: () => { store.state.player.attackMax += 2; } },
+          { bought: false, noSale: false, name: 'rations', cost: 1, description: '+5 HP', buy: () => { store.state.player.health += 5; },  icon: require("@/assets/imgs/icons/items/cheese.png") },
+          { bought: false, noSale: false, name: 'sewing kit', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
+          { bought: false, noSale: false, name: 'Mettle Poultice', cost: 1, description: '+2 ATK', buy: () => { store.state.player.attackMax += 2; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
           
-          { bought: false, noSale: false, name: 'simple meal', cost: 2, description: '+10 HP', buy: () => { store.state.player.health += 10; } },
-          { bought: false, noSale: false, name: 'armor kit', cost: 3, description: '+2 ARM', buy: () => { store.state.player.armor += 2; } },
-          { bought: false, noSale: false, name: 'Mettle Draght', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5; } },
+          { bought: false, noSale: false, name: 'simple meal', cost: 2, description: '+10 HP', buy: () => { store.state.player.health += 10; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
+          { bought: false, noSale: false, name: 'armor kit', cost: 3, description: '+2 ARM', buy: () => { store.state.player.armor += 2; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
+          { bought: false, noSale: false, name: 'Mettle Draght', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
           
-          { bought: false, noSale: false, name: 'kings feast', cost: 4, description: '+15 HP', buy: () => { store.state.player.health += 15; } },
-          { bought: false, noSale: false, name: 'etching kit', cost: 5, description: '+3 ARM', buy: () => { store.state.player.armor += 5; } },
-          { bought: false, noSale: false, name: 'Mettle Vulnerary', cost: 5, description: '+8 ATK', buy: () => { store.state.player.attackMax += 8; } },
+          { bought: false, noSale: false, name: 'kings feast', cost: 4, description: '+15 HP', buy: () => { store.state.player.health += 15; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
+          { bought: false, noSale: false, name: 'etching kit', cost: 5, description: '+3 ARM', buy: () => { store.state.player.armor += 5; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
+          { bought: false, noSale: false, name: 'Mettle Vulnerary', cost: 5, description: '+8 ATK', buy: () => { store.state.player.attackMax += 8; },  icon: require("@/assets/imgs/icons/items/dessicatedDoll.png") },
         ],
         saying:"Friend or foe, what are ya' buyin'?",
         shopTitle: "It's not much, but it's what I've got. All priced to move.",
@@ -82,8 +83,8 @@ const state = () => ({
 
 const mutations = {
     newShopkeep(state) {
-      const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-      // const randomPick = 0;
+     // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
+      const randomPick = 1;
       state.info = state.variants[randomPick]
       const inventory = shuffle(state.variants[randomPick].items);
       state.inventory = inventory.slice(0, 3)
