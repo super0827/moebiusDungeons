@@ -1,3 +1,5 @@
+import shuffle from 'lodash.shuffle'
+
 const state = () => ({
     info: {type: Object},
     inventory: [],
@@ -6,12 +8,12 @@ const state = () => ({
           name:"cleric", 
           portrait:require("@/assets/imgs/shopkeepers/cleric.png"),
           items: [
-              { bought: false, noSale: false, name: 'minor heal', cost: 1, description: '+6 HP', buy: () => { store.state.player.health += 6 } },
-              { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1 } },
-              { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', buy: () => {store.state.monster.coins *= 2 }},
-              { bought: false, noSale: false, name: ' great blessing', cost: 2, description: '+3 ARM', buy: () => { store.state.player.armor += 3 } },
-              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 } },
-              { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', buy: () => { store.state.player.attackMax += 5 } },
+              { bought: false, noSale: false, name: 'minor heal', cost: 1, description: '+6 HP', buy: () => { store.state.player.health += 6 }, icon: require("@/assets/imgs/icons/items/heal1.png")},
+              { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1 }, icon: require("@/assets/imgs/icons/items/boon.png")},
+              { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', buy: () => {store.state.monster.coins *= 2 }, icon: require("@/assets/imgs/icons/items/fortune.png")},
+              { bought: false, noSale: false, name: 'great blessing', cost: 2, description: '+3 ARM', buy: () => { store.state.player.armor += 3 }, icon: require("@/assets/imgs/icons/items/boon.png") },
+              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/armor.png") },
+              { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/immune2.png") },
           ],
           saying:"Come in, are you hurt?",
           shopTitle: "I can heal you... or perhaps you need the favor of the old gods?"
@@ -32,7 +34,6 @@ const state = () => ({
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
         welcome:'grWelcome',
         goodbye:'grOkay',
-
         },
 
         {name:"merchant", 
@@ -80,9 +81,14 @@ const state = () => ({
 })
 
 const mutations = {
-    mutate(state, payload) {
-        state[payload.property] = payload.with;
-      }
+    newShopkeep(state) {
+      // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length)) + 1;
+      const randomPick = 0;
+      state.info = state.variants[randomPick]
+      const inventory = shuffle(state.variants[randomPick].items);
+      state.inventory = inventory.slice(0, 3)
+      console.log(`new shopkeep is ${state.variants[randomPick].name}`)
+    }
 }
 
 export default {
