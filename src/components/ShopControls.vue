@@ -1,31 +1,38 @@
 <template>
+<section>
 <section class="columns battleOptions">
-  
   <!-- Shop Title Description -->
-  <h2 class="textCenter">{{ storeState.shopkeep.shopTitle}}</h2>
-
+  <h2 class="textCenter">{{ shopTitle}}</h2>
     <section
-    v-for="buyable in storeState.shopInventory"
+    v-for="buyable in shopInventory"
     :key="buyable.name"
     :name="buyable.name"
     :id="buyable.id"
     :description="buyable.description"
     :cost="buyable.cost"
-    :class="{'striked' : buyable.cost > storeState.player.coins, 'animated shake faster' : buyable.noSale }"
     @click="buy(buyable)"
-    class="buySlot">
-      <section class="information" :class="{'bought' : buyable.bought}">
+    class="itemRow"
+    >
+      <section class="information buySlot" 
+      :class="{'striked' : buyable.cost > coins, 
+      'animated shake faster' : buyable.noSale, 
+      'bought' : buyable.bought}">
+        <section>  
         <article class="cost">
           <img src="../assets/imgs/icons/coinIcon.png">
           <h1>{{ buyable.cost }}</h1>
         </article>
+        </section>
   
+      <section>
         <article>
           <h2>{{ buyable.name }}</h2>
           <p> {{ buyable.description }} </p>
         </article>
+      </section>
 
       </section>
+
         <article class="boughtAlert" v-if="buyable.bought">
           <h1>BOUGHT</h1>
         </article>
@@ -37,10 +44,18 @@
       <h3 @click="store.sceneChange('DungeonPhase')">BACK TO THE DUNGEONS</h3>
     </section>
 
+
 </section>
+
+    <section class="itemIcons">
+
+    </section>
+    </section>
 </template>
 
 <script>
+
+import {mapState} from 'vuex'
 
 export default {
   name: 'ShopControls',
@@ -48,6 +63,18 @@ export default {
     return {
       shake: false,
     }
+  },
+  computed: {
+    ...mapState('shopkeepData', {
+      shopTitle: state => state.info.shopTitle,
+      shopInventory: state => state.inventory,
+      item1: state => state.inventory[0].icon,
+      item2: state => state.inventory[1].icon,
+      item3: state => state.inventory[2].icon
+    }),
+    ...mapState('playerData', {
+      coins: state => state.info.coins
+    }),
   },
   methods: {
     randomRoll(rollMax){
@@ -94,6 +121,13 @@ export default {
 
 <style scoped>
 
+.itemImage{
+    width:70px;
+    height:70px;
+    margin-left:10px;
+    margin-top:10px;
+}
+
 hr {
   border:solid black 1px;
 }
@@ -102,15 +136,25 @@ hr {
   display:flex;
   justify-content:space-evenly;
   align-items: center;
+  width:200px;
 }
 
-.itemWrapper {
-  margin-top:10px;
+.itemIcons {
+  width:100px;
+  height:500px;
+  background:red;
+}
+
+.itemRow {
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .textCenter {
   margin:5px 5px 10px 5px;
   font-size:14px;
+  width:200px;
 }
 
 h2 {
@@ -137,6 +181,7 @@ p {
 .battleOptions {
   min-width:200px;
   width:200px;
+  margin:0;
 }
 
 .buySlot {
