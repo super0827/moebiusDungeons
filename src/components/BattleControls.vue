@@ -58,7 +58,7 @@ export default {
         ...mapActions( 'playerData', [
             'ROLL_DAMAGE',
             'TRADE_BLOWS',
-            'RUNSPECIAL',
+            'RUN_SPECIAL',
             'TURN_TAIL',
             'ESCAPE',
         ])
