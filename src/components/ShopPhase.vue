@@ -1,9 +1,9 @@
 <template>
 <section class="shopPhaseWrapper" key="shopPhaseWrapper">
-    <section class="flexColumn animated"
+    <section class="flexRow animated"
         :class="{'zoomInDown' : isEntering, 'zoomOutUp' : !isEntering}">
     
-        <img key="shopSigil" class="iconImageSize" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
+        <img key="shopSigil" class="iconImageSize shopSigil" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
         <h1 class="textCenter phaseName">SHOP</h1> 
     </section>
 
@@ -123,6 +123,9 @@ export default {
 .shopPhaseWrapper {
         position:relative;
     }
+.shopSigil {
+    margin-right:10px;
+}
 #shopHelp {
     font-size: 20px;
     position: fixed;
