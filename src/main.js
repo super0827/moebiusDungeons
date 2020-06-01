@@ -5,11 +5,6 @@ import { mapState } from 'vuex'
 
 Vue.config.productionTip = false;
 
-//credit for this plugin goes to eli-crow on github
-//thanks for helping with the project dude!
-import SoundPlugin from '@/plugins/SoundPlugin';
-Vue.use(SoundPlugin);
-
 //this export is in the global space to save time and stay concise
 //nearly if not all components mounted directly to App need these
 //computed properties to function properly
