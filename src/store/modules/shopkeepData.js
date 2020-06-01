@@ -36,7 +36,7 @@ const state = () => ({
         ],
         saying:"Trust me, nothing I sell is cursed.",
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
-        welcome:'grWelcome',
+        welcome:['grWelcome'],
         goodbye:'grOkay',
         },
 
