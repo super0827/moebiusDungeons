@@ -14,7 +14,7 @@
     @click="TRADE_BLOWS()">Trade Blows</h2>
     
     <h2 @mouseenter="$sound.play('chit')" 
-    :class="{'striked' : combatLocked, 'striked': availableMettle <= 0}"
+    :class="{'striked' : combatLocked, 'striked': mettle <= 0}"
     id="mettle" 
     @click="RUN_SPECIAL()">
     <img :src="mettleImg">
@@ -49,9 +49,7 @@ export default {
         ...mapState('playerData', {
             special: state => state.info.special,
             mettleImg: state => state.info.mettleImg,
-        }),
-        ...mapGetters('playerData', {
-            availableMettle: 'availableMettle'
+            mettle: 'mettle'
         }),
     },
     methods: {
