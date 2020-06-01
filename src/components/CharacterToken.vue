@@ -73,6 +73,7 @@
                 red : redShine, 
                 green : greenShine,
                 purple : purpleShine,
+                gold : goldShine,
               }"
             >
             </section>  
@@ -138,6 +139,7 @@ export default {
     'redShine',
     'greenShine',
     'purpleShine',
+    'goldShine',
   ],
   methods: {
     wholeNumber(value) {
@@ -222,12 +224,14 @@ export default {
 
 .purple {
     background: linear-gradient(0deg, rgb(187, 16, 187) 0%, rgba(255,192,0,0) 100%);
-
 }
 
 .green {
     background: linear-gradient(0deg, rgb(16, 187, 87) 0%, rgba(255,192,0,0) 100%);
+}
 
+.gold {
+    background: linear-gradient(0deg, rgb(255, 217, 0) 0%, rgba(255,192,0,0) 100%);
 }
 
 .damagedOverlay {
