@@ -1,11 +1,9 @@
 <template>
     <section class="centerRow">
         <p>METTLE</p>
-        <section v-for="slots in mettle" :key="slots.id">
-            <img :src="mettleImg" :class="{'used': !slots.available}"/>
-            <!-- <section :class="{'available': slots.available, 'used': !slots.available}"></section>
-            <section :class="{'available': slots.available, 'used': !slots.available}"></section> -->
-        </section>
+            <img :src="mettleImg" :class="{'used': mettle <= 0}"/>
+            <img :src="mettleImg" :class="{'used': mettle <= 1}"/>
+            <img :src="mettleImg" :class="{'used': mettle <= 2}"/>
     </section>
 </template>
 
