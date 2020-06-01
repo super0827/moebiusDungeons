@@ -22,6 +22,7 @@
 import gameAnimations from './mixins/gameAnimations';
 
 import { mapState } from 'vuex';
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
     name: 'StartScreen',
@@ -29,7 +30,7 @@ export default {
     methods: {
         startGame () {
             this.$store.commit('gameData/mutate', {property: 'phase', with: 'CharacterSelect'});
-            this.$sound.play('startblip');
+            UiSounds.startBlip.play();
         }
     },
 }
