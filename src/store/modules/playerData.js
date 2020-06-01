@@ -13,11 +13,7 @@ const state = () => ({
       special: "en'garde",
       specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
-    mettle: [
-      {id:0, available:true},
-      {id:1, available:false},
-      {id:2, available:false}
-    ],
+    mettle: 1,
     permenantTraits: [],
     tempArmor:0,
     tempHealth:0,
@@ -33,6 +29,7 @@ const state = () => ({
       redShine: false,
       purpleShine: false,
       greenShine: false,
+      goldShine:false,
       isDead: false,
     },
 })
@@ -46,6 +43,9 @@ const mutations = {
   },
   incrementLog(state) {
     state.logNum++
+  },
+  decrement(state, payload) {
+    state[payload]--
   },
   takeDamage(state, payload) {
     state.info.health -= payload.damage;
@@ -85,12 +85,6 @@ const getters = {
       maxLog.shift();
     }
     return maxLog
-  },
-  availableMettle: (state) => {
-    var values = Object.values(state.mettle);
-    var available = values.filter(value => value === true);
-    console.log(available.length)
-    return available.length
   },
   calcHealth: (state) => {
     return state.tempHealth + state.info.baseHealth
@@ -138,6 +132,7 @@ const actions = {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
         commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+        commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
       }
@@ -149,11 +144,26 @@ const actions = {
     })
   },
   RUN_SPECIAL({state, commit, getters}){
-    if (getters.availableMettle > 0){
+    if (state.mettle > 0){
       if(state.info.name === 'swordsman') {
-        commit('mutate', {property: 'tempArmor', with:2})
+        commit('toggleAnimation', {property: 'portEffect'})
+        commit('toggleAnimation', {property: 'goldShine'})
+        Vue.prototype.$sound.play('engarde')
+        commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
+      }
+      else if (state.info.name === 'mage') {
+        dispatch('DEAL_SPECIAL_DAMAGE', 5)
+      }
+      else if (state.info.name === 'varlet') {
+
       }
     }
+    commit('decrement', 'mettle')
+  },
+  DEAL_SPECIAL_DAMAGE({commit, getters}, dealtDamage) {
+    commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+    commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+    commit('monsterData/takeDamage', {damage: dealtDamage}, {root:true})
   },
   TURN_TAIL(context){
     //calculate success chance
@@ -171,7 +181,7 @@ const actions = {
     for (let item in state.animations){
       if (state.animations[item] === true) commit('toggleAnimation', {property: item})
     }
-  }
+  },
 }
 
 export default {
