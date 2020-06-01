@@ -47,6 +47,7 @@
         :redShine="redShinePlayer"
         :greenShine="greenShinePlayer"
         :purpleShine="purpleShinePlayer"
+        :goldShine="goldShinePlayer"
         />
 
         <!-- Dungeon Controls -->
@@ -145,7 +146,8 @@ export default {
             playerportEffect: state => state.animations.portEffect,
             redShinePlayer: state => state.animations.redShine,
             greenShinePlayer: state => state.animations.greenShine,
-            purpleShinePlayer: state => state.animations.purpleShine
+            purpleShinePlayer: state => state.animations.purpleShine,
+            goldShinePlayer: state => state.animations.goldShine,
         }),
         ...mapState('monsterData', {
             monsterName: state => state.info.name,
