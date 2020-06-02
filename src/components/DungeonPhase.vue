@@ -8,7 +8,7 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="toggleHelp()" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
+        <h1 @click="toggleHelp()" @mouseenter="UiSounds.chit.play()" id="dungeonHelp">DUNGEON HELP</h1>
     </transition>
     
     <section class="flexRow">
@@ -108,6 +108,8 @@ import CharacterToken from "./CharacterToken.vue";
 import BattleHelp from './BattleHelp.vue';
 import TurnLog from './TurnLog.vue';
 
+import UiSounds from '@/plugins/UiSounds.js'
+
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
 import gameMusic from './mixins/gameMusic';
@@ -125,6 +127,7 @@ export default {
     data() {
         return {
             music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
+            UiSounds : UiSounds
         }
     },
     computed: {
@@ -182,9 +185,8 @@ export default {
             monsterAttackMax: 'calcAttackMax'
         })
     },
-    destroyed: function () {
+    destroyed(){
         this.$store.commit('monsterData/newMonster');
-        console.log(`Rolled a new monster.`)
     }
 }
 </script>
