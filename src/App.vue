@@ -5,23 +5,49 @@
 
     <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
-        DEBUG BAR
+        <h3>DEBUG BAR</h3> 
       </section>
 
       <article v-if="debugShow">
       <p>MONSTER</p>
-      <section>New Monster</section>
-      <section>Reset Monster Roster</section>
-      <section>Monster HP 100</section>
-      <section>Monster HP 1</section>
+      
       <br>
-      <p>PLAYER</p>
-      <section @click="$store.commit('playerData/addHealth')">Player HP +10</section>
-      <section @click="$store.commit('playerData/loseHealth')">Player HP -10</section>
-      <section @click="$store.commit('playerData/addArmor')">Player ARM +1</section>
-      <section @click="$store.commit('playerData/loseArmor')">Player ARM -1</section>
 
-      <section>Coins Up</section>
+      <p>PLAYER</p>
+      
+      <section>
+        <span>HEALTH</span>
+        <section>
+        <button @click="$store.commit('playerData/decrement', 'baseHealth')">-</button>
+        <button @click="$store.commit('playerData/increment', 'baseHealth')">+</button> 
+        </section>
+      </section>
+     
+      <section>
+        <span>ARMOR</span>
+        <section>
+        <button @click="$store.commit('playerData/decrement', 'baseArmor')">-</button>
+        <button @click="$store.commit('playerData/increment', 'baseArmor')">+</button> 
+        </section>
+      </section>
+      
+      <section>
+        <span>ATTACK</span>
+        <section>
+        <button @click="$store.commit('playerData/decrement', 'baseAttackMax')">-</button>
+        <button @click="$store.commit('playerData/increment', 'baseAttackMax')">+</button> 
+        </section>
+      </section>
+      
+      <section>
+        <span>COINS</span>
+        <section>
+        <button @click="$store.commit('playerData/decrement', 'coins')">-</button>
+        <button @click="$store.commit('playerData/increment', 'coins')">+</button> 
+        </section>
+      </section>
+
+
       <br>
       <p>SCENES</p>
       <section>Char Select</section>
@@ -221,10 +247,19 @@ contact@seanyager.com
   text-transform:uppercase;
 }
 
+.debugBar h3 {
+  border: solid white 2px;
+  padding:0 50px;
+}
+
+.debugBar span {
+  margin-right:10px;
+}
+
 .debugBar section {
-  text-align:center;
+  display:flex;
+  justify-content:center;
   padding:1px;
   margin:3px;
-  border:solid #eee 2px;
 }
 </style>
