@@ -26,7 +26,7 @@
             <p>{{characters.description2}}</p>
         
             <section 
-            @mouseenter="$sound.play('chit')"
+            @mouseenter="UiSound.chit.play()"
             class="portContainer animated infinite" :id="characters.name">
                 <section class="overlay"></section>
                 <img :src="characters.portrait" :alt="characters.description2">
@@ -35,7 +35,7 @@
         </section>
     </section>
 
-<h1 id="about" @mouseenter="$sound.play('chit')" @click="toggleHelp()"> HUH? </h1>
+<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> HUH? </h1>
 
 <transition name='fade'>
     <instructions-screen v-if="this.helper"/>
@@ -47,6 +47,8 @@
 <script>
 import InstructionsScreen from './InstructionsScreen';
 import { mapState } from 'vuex';
+
+import UiSound from '@/plugins/UiSounds.js'
 
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
@@ -60,6 +62,7 @@ export default {
   },
   data() {
       return {
+            UiSound: UiSound,
             music: ['charSelectMusic'],
             characterClasses: [
               { 
@@ -114,7 +117,7 @@ export default {
         console.log(`You're playing as the ${passedPlayer.name}: logged from CharSelect.vue`);
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
-        this.$sound.play('charPick');
+        UiSound.charPick.play();
     },
   },
 }
