@@ -1,16 +1,16 @@
 import { store } from '../../store/store'
 import { mapGetters } from 'vuex'
+import bkg from '@/plugins/backgroundMusic.js'
 
 export default {
     watch: {
         //helpers toggling, audio ducking
         helper: function(value){
             if (value == true) {
-                this.$sound.pause(this.bkgMusic, {fade:1000, volume:.1});
-                
+                bkg[this.bkgMusic].fade(1,.2,1000); 
             }
             else {
-                this.$sound.pause(this.bkgMusic, {fade:1000, volume:1});
+                bkg[this.bkgMusic].fade(.2,1,1000); 
             }
         }
     },
