@@ -1,7 +1,7 @@
 <template>
 <section>
     <section class="helpModule">
-        <h1 @mouseenter="$sound.play('chit')" @click="$emit('close')" class="close">X</h1>
+        <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
 
 
         <h1 class="title">Battle Helper</h1>
@@ -75,9 +75,15 @@
 <script>
 
 import { mapState } from 'vuex'
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
   name: 'BattleHelp',
+  data() {
+      return {
+          UiSounds: UiSounds
+      }
+  },
   computed: {
     ...mapState('playerData', {
         special: state => state.info.special,
