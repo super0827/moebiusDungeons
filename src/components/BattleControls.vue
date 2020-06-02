@@ -9,12 +9,12 @@
 
     <special-bar/>
 
-    <h2 @mouseenter="$sound.play('chit')" 
+    <h2 @mouseenter="UiSounds.chit.play()" 
     :class="{'striked' : combatLocked }" 
     @click="TRADE_BLOWS()">Trade Blows</h2>
     
-    <h2 @mouseenter="$sound.play('chit')" 
-    :class="{'striked' : combatLocked, 'striked': mettle <= 0}"
+    <h2 @mouseenter="UiSounds.chit.play()" 
+    :class="{'striked' : combatLocked || mettle <= 0}"
     id="mettle" 
     @click="RUN_SPECIAL()">
     <img :src="mettleImg">
@@ -23,7 +23,7 @@
     
     <br>
 
-    <h3 @mouseenter="$sound.play('chit')" 
+    <h3 @mouseenter="UiSounds.chit.play()" 
     :class="{'striked' : turnTailUsed || combatLocked }" 
     @click="turnTail()">Turn Tail</h3>
 
@@ -34,12 +34,18 @@
 import StatBar from './StatBar.vue'
 import {mapActions, mapState, mapGetters} from 'vuex'
 import SpecialBar from "./SpecialBar.vue"
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
     name: 'BattleControls',
      components: {
       StatBar,
       SpecialBar
+    },
+    data() {
+        return {
+            UiSounds: UiSounds
+        }
     },
     computed: {
         ...mapState('gameData', [
