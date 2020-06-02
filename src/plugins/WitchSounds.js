@@ -103,7 +103,7 @@ const itsAllYours2 = new Howl({
 });
 
 const thankYou = new Howl({
-    src: [require('@/assets/audio/shopAudio/witch/thanksYou.mp3')],
+    src: [require('@/assets/audio/shopAudio/witch/thankYou.mp3')],
     loop: false,
     volume: 1,
 });

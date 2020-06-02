@@ -1,4 +1,4 @@
-import { mapActions } from "vuex";
+import PlayerSounds from '@/plugins/PlayerSounds.js'
 
 const state = () => ({
     info:  {
@@ -15,6 +15,7 @@ const state = () => ({
     },
     mettle: 1,
     permenantTraits: [],
+    temporaryTraits: [],
     tempArmor:0,
     tempHealth:0,
     tempAttackMax:0,
@@ -41,29 +42,35 @@ const mutations = {
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
   },
-  incrementLog(state) {
-    state.logNum++
+  increment(state, payload) {
+    state.info[payload]++
   },
   decrement(state, payload) {
-    state[payload]--
+    state.info[payload]--
   },
-  takeDamage(state, payload) {
-    state.info.health -= payload.damage;
+  incrementLog(state) {
+    state.logNum++
   },
   addToLog(state, payload){
     state.log.push(payload)
   },
-  addHealth(state) {
-    state.info.health += 10;
+  addCoins(state, payload) {
+    state.info.coins += payload
   },
-  loseHealth(state) {
-    state.info.health -= 10;
+
+  //SHOPKEEPER MUTATIONS
+  heal(state, payload) {
+    state.info.baseHealth += payload
   },
-  addArmor(state) {
-    state.info.armor += 1;
+  addArmor(state, payload) {
+    state.info.baseArmor += payload
   },
-  loseArmor(state) {
-    state.info.armor -= 1;
+  addAttack(state, payload) {
+    state.info.baseAttackMax += payload
+  },
+  addTempAbility(state, payload) {
+    state.temporaryTraits.push(payload)
+    console.log(state.temporaryTraits);
   }
 }
 
@@ -108,8 +115,11 @@ const actions = {
   ROLL_DAMAGE({commit, state, getters}) {
     commit('gameData/toggle', {property:'combatLocked'}, {root: true});
     const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
-    console.log(`player attack = ${randomRoll}`);
     commit('mutate', {property:'thisDamage', with:randomRoll})
+    let randomAttackSound = Math.floor(Math.random() * (3) + 1)
+    if (state.info.attackType === 'physical') {
+      PlayerSounds['playerMelee' + randomAttackSound].play();
+    }
   },
   TRADE_BLOWS({dispatch, getters}){
     dispatch('ROLL_DAMAGE')
@@ -143,19 +153,24 @@ const actions = {
       }
     })
   },
-  RUN_SPECIAL({state, commit, getters}){
+  RUN_SPECIAL({state, commit, getters, dispatch}){
     if (state.mettle > 0){
       if(state.info.name === 'swordsman') {
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
         commit('toggleAnimation', {property: 'portEffect'})
         commit('toggleAnimation', {property: 'goldShine'})
-        Vue.prototype.$sound.play('engarde')
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
+        PlayerSounds.armorUp.play();
+        setTimeout(() => {
+          commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+          dispatch('RESET_ANIMATIONS');
+        }, 1200)
       }
       else if (state.info.name === 'mage') {
         dispatch('DEAL_SPECIAL_DAMAGE', 5)
       }
       else if (state.info.name === 'varlet') {
-
+        
       }
     }
     commit('decrement', 'mettle')

@@ -31,7 +31,7 @@ const beCareful = new Howl({
 });
 
 const beCareful2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/cleric/beCarfeul2.mp3')],
+    src: [require('@/assets/audio/shopAudio/cleric/beCareful2.mp3')],
     loop: false,
     volume: 1,
 });
@@ -60,14 +60,14 @@ const feelingBetter2 = new Howl({
     volume: 1,
 });
 
-const moreCoins = new Howl({
-    src: [require('@/assets/audio/shopAudio/cleric/moreCoins.mp3')],
+const moreCoin = new Howl({
+    src: [require('@/assets/audio/shopAudio/cleric/moreCoin.mp3')],
     loop: false,
     volume: 1,
 });
 
-const moreCoins2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/cleric/moreCoins2.mp3')],
+const moreCoin2 = new Howl({
+    src: [require('@/assets/audio/shopAudio/cleric/moreCoin2.mp3')],
     loop: false,
     volume: 1,
 });
@@ -121,13 +121,13 @@ const thankYou2 = new Howl({
 });
 
 const notEnough = new Howl({
-    src: [require('@/assets/audio/shopAudio/cleric/notEnough.mp3')],
+    src: [require('@/assets/audio/shopAudio/cleric/thatsNotEnough.mp3')],
     loop: false,
     volume: 1,
 });
 
 const notEnough2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/cleric/notEnough2.mp3')],
+    src: [require('@/assets/audio/shopAudio/cleric/thatsNotEnough2.mp3')],
     loop: false,
     volume: 1,
 });
@@ -167,8 +167,8 @@ export default {
     byAmara2,
     feelingBetter,
     feelingBetter2,
-    moreCoins,
-    moreCoins2,
+    moreCoin,
+    moreCoin2,
     seeYouSoon,
     seeYouSoon2,
     staySafe,

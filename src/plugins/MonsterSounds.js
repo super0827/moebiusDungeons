@@ -1,19 +1,19 @@
 import {Howl, Howler} from 'howler'
 
 const batsEnter = new Howl({
-    src: [require('@/assets/audio/monsterEnter/bats.mp3')],
+    src: [require('@/assets/audio/monsterEnter/bats.wav')],
     loop: false,
     volume: 1,
 });
 
 const impsEnter = new Howl({
-    src: [require('@/assets/audio/monsterEnter/imp.mp3')],
+    src: [require('@/assets/audio/monsterEnter/imp.wav')],
     loop: false,
     volume: .4,
 });
 
 const slimeEnter = new Howl({
-    src: [require('@/assets/audio/monsterEnter/slime.mp3')],
+    src: [require('@/assets/audio/monsterEnter/slime.wav')],
     loop: false,
     volume: 1,
 });
@@ -73,7 +73,7 @@ const ghoulEnter = new Howl({
 });
 
 const skeletonEnter = new Howl({
-    src: [require('@/assets/audio/monsterEnter/skeleton.mp3')],
+    src: [require('@/assets/audio/monsterEnter/skeleton.wav')],
     loop: false,
     volume: 1,
 });

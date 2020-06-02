@@ -24,12 +24,6 @@ const playerMelee3 = new Howl({
     volume: 1,
 });
 
-const engarde = new Howl({
-    src: [require('@/assets/audio/playerSounds/armorup.wav')],
-    loop: false,
-    volume: 1,
-});
-
 const playerMagic1 = new Howl({
     src: [require('@/assets/audio/playerSounds/flame.wav')],
     loop: false,
@@ -48,15 +42,21 @@ const playerMagic3 = new Howl({
     volume: 1,
 });
 
+const armorUp = new Howl({
+    src: [require('@/assets/audio/playerSounds/armorUp.mp3')],
+    loop: false,
+    volume: 1,
+});
+
 
 export default {
     playerDead,
     playerMelee1,
     playerMelee2,
     playerMelee3,
-    engarde,
     playerMagic1,
     playerMagic2,
     playerMagic3,
+    armorUp
 
 };

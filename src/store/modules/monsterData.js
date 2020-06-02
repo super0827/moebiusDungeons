@@ -1,3 +1,6 @@
+import MonsterSounds from '@/plugins/MonsterSounds.js'
+import UiSounds from '@/plugins/UiSounds.js'
+
 const state = () => ({
     info: {type: Object},
     roster: 0,
@@ -475,6 +478,9 @@ const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
+    coinMultiply(state, payload) {
+      state.info.coins *= payload
+    },
     toggleAnimation(state, payload) {
       state.animations[payload.property] = !state.animations[payload.property];
     },
@@ -527,16 +533,20 @@ const getters = {
 }
 
 const actions = {
-  CHECK_HP({state, commit}){
+  CHECK_HP({state, commit, dispatch}){
     return new Promise((resolve) => {
       if(state.info.baseHealth > 0){
         resolve();
       }
       else if (state.info.baseHealth <= 0) {
+        dispatch('RESET_ANIMATIONS')
         commit('toggleAnimation', {property: 'isDead'})
+        let randomTrack = Math.floor(Math.random() * (3) + 1)
+        UiSounds['victory' + randomTrack].play()
+        commit('playerData/addCoins', state.info.coins, {root:true})
         setTimeout(() => {
           commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
-        }, 1100)
+        }, 1500)
         return
       }
     })
@@ -544,8 +554,14 @@ const actions = {
   ROLL_DAMAGE({commit, state, getters}) {
       // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
-      console.log(`monster attack = ${randomRoll}`);
       commit('mutate', {property:'thisDamage', with:randomRoll})
+      let randomAttackSound = Math.floor(Math.random() * (3) + 1)
+      if (state.info.attackType === 'physical') {
+        MonsterSounds['monsterMelee' + randomAttackSound].play();
+      }
+      else if (state.info.attackType === 'magical') {
+        MonsterSounds['monsterMagic' + randomAttackSound].play();
+      }
   },
   TRADE_BLOWS({commit, dispatch, getters, state}){
       dispatch('CHECK_HP')

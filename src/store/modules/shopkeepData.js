@@ -1,4 +1,9 @@
 import shuffle from 'lodash.shuffle'
+import ShopSounds from '@/plugins/ShopSounds.js'
+import ClericSounds from '@/plugins/ClericSounds.js'
+import MerchantSounds from '@/plugins/MerchantSounds.js'
+import GraveRobberSounds from '@/plugins/GraveRobberSounds.js'
+import WitchSounds from '@/plugins/WitchSounds.js'
 
 const state = () => ({
     info: {type: Object},
@@ -8,18 +13,24 @@ const state = () => ({
           name:"cleric", 
           portrait:require("@/assets/imgs/shopkeepers/cleric.png"),
           items: [
-              { bought: false, noSale: false, name: 'minor heal', cost: 1, description: '+5 HP', buy: () => { store.state.player.health += 6 }, icon: require("@/assets/imgs/icons/items/cleric/heal1.png")},
-              { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', buy: () => { store.state.player.armor += 1 }, icon: require("@/assets/imgs/icons/items/cleric/boon.png")},
-              { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', buy: () => {store.state.monster.coins *= 2 }, icon: require("@/assets/imgs/icons/items/cleric/fortune.png")},
+              { bought: false, noSale: false, name: 'minor heal', cost: 1, description: '+5 HP', effect: {action:'HEAL_PLAYER', payload: 5}, icon: require("@/assets/imgs/icons/items/cleric/heal1.png")},
+              { bought: false, noSale: false, name: 'minor blessing', cost: 1, description: '+1 ARM', effect: {action:"ADD_ARMOR", payload: 1}, icon: require("@/assets/imgs/icons/items/cleric/boon.png")},
+              { bought: false, noSale: false, name: 'fortune', cost: 2, description: 'doubles coin value of next monster', effect: {action:'FORTUNE'}, icon: require("@/assets/imgs/icons/items/cleric/fortune.png")},
               
-              { bought: false, noSale: false, name: 'greater heal', cost: 2, description: '+12 HP', buy: () => { store.state.player.health += 6 }, icon: require("@/assets/imgs/icons/items/cleric/heal2.png")},
-              { bought: false, noSale: false, name: 'great blessing', cost: 2, description: '+3 ARM', buy: () => { store.state.player.armor += 3 }, icon: require("@/assets/imgs/icons/items/cleric/boonGold.png") },
-              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/cleric/boostAttack.png") },
+              { bought: false, noSale: false, name: 'greater heal', cost: 2, description: '+12 HP',effect: {action:'HEAL_PLAYER', payload: 12}, icon: require("@/assets/imgs/icons/items/cleric/heal2.png")},
+              { bought: false, noSale: false, name: 'great blessing', cost: 2, description: '+3 ARM', buy: () => dispatch('ADD_ARMOR', 3), icon: require("@/assets/imgs/icons/items/cleric/boonGold.png") },
+              { bought: false, noSale: false, name: 'great miracle', cost: 3, description: '+5 ATK', buy: () => dispatch('ADD_ATTACK', 5), icon: require("@/assets/imgs/icons/items/cleric/boostAttack.png") },
               
-              { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', buy: () => { store.state.player.attackMax += 5 }, icon: require("@/assets/imgs/icons/items/cleric/immune2.png") },
+              { bought: false, noSale: false, name: 'boon', cost: 3, description: 'Immune to damage once', effect: {action:'ADD_TEMPORARY_ABILITY', payload: {ability:'immune', length:1, shine:'greenShine'}}, icon: require("@/assets/imgs/icons/items/cleric/immune2.png") },
           ],
           saying:"Come in, are you hurt?",
-          shopTitle: "I can heal you... or perhaps you need the favor of the old gods?"
+          shopTitle: "I can heal you... or perhaps you need the favor of the old gods?",
+          welcome:['hello', 'hello2', 'welcome', 'welcome2',],
+          welcomeBack:['youreBack', 'youreBack2' ],
+          goodbye:['goodbye', 'goodbye2', 'beCareful', 'beCareful2', 'seeYouSoon', 'seeYouSoon2', 'staySafe', 'staySafe2' ],
+          thankYou:['feelingBetter', 'feelingBetter2', 'thanks', 'thanks2', 'thankYou', 'thankYou2', ],
+          cantBuy:['moreCoin', 'moreCoin2', 'notEnough', 'notEnough2'],
+          bigBuy:['byAmara', 'byAmara2']
         },
 
         {
@@ -38,6 +49,9 @@ const state = () => ({
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
         welcome:['grWelcome'],
         goodbye:'grOkay',
+        thankYou:'',
+        cantBuy:'',
+        bigBuy:''
         },
 
         {name:"merchant", 
@@ -59,6 +73,9 @@ const state = () => ({
         shopTitle: "It's not much, but it's what I've got. All priced to move.",
         welcome:'meWelcome',
         goodbye:'meGoodbye',
+        thankYou:'',
+        cantBuy:'',
+        bigBuy:''
         },
 
         {name:"witch", 
@@ -79,25 +96,56 @@ const state = () => ({
           { bought: false, noSale: false, name: 'blood ritual', cost: 5, description: 'Thirds your HP | + lost HP to your ATK', buy: () => { let temp = Math.ceil((store.state.player.health / 3) * 2); store.state.player.health -= temp; store.state.player.attackMax += temp; }, icon: require("@/assets/imgs/icons/items/witch/bloodRitual.png") },
         ],
         saying:"Everything you see, all hand enchanted.",
-        shopTitle: "Some of my inventory tends to be virulent. Browse at your own risk."
+        shopTitle: "Some of my inventory tends to be virulent. Browse at your own risk.",
+        welcome:'meWelcome',
+        goodbye:'meGoodbye',
+        thankYou:'',
+        cantBuy:'',
+        bigBuy:''
         },
     ]
 })
 
 const mutations = {
-    newShopkeep(state) {
-      const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-      // const randomPick = 3;
-      state.info = state.variants[randomPick]
-      const inventory = shuffle(state.variants[randomPick].items);
-      state.inventory = inventory.slice(0, 3)
-      console.log(`new shopkeep is ${state.variants[randomPick].name}`)
-    }
+  newShopkeep(state) {
+    // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
+    const randomPick = 0;
+    state.info = state.variants[randomPick]
+    const inventory = shuffle(state.variants[randomPick].items);
+    state.inventory = inventory.slice(0, 3)
+    console.log(`new shopkeep is ${state.variants[randomPick].name}`)
+  },
+}
+
+const actions ={
+  ADD_TEMPORARY_ABILITY({commit, dispatch}, payload) {
+    commit('playerData/addTempAbility', payload, {root:true})
+    commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
+    commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
+    setTimeout(() => {
+      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
+    }, 1200)
+  },
+  //CLERIC ABILITIES, 
+   HEAL_PLAYER({commit}, payload) {
+     commit('playerData/heal', payload, {root:true})
+   },
+   ADD_ARMOR({commit}, payload) {
+     commit('playerData/addArmor', payload, {root:true})
+   },
+   ADD_ATTACK({commit}, payload) {
+     commit('playerData/addAttack', payload, {root:true})
+   },
+   FORTUNE({commit}, payload) {
+     commit('monsterData/coinMultiply', payload, {root:true})
+   }
 }
 
 export default {
     namespaced: true,
     state,
     mutations,
+    actions
 }
         
