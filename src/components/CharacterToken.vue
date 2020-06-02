@@ -23,6 +23,19 @@
       >
       <img class="portrait" :src="portrait">
 
+      <transition appear
+            type="animation"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
+            <section v-if="isDead"
+              class="deadOverlay"
+              :class="{ dead : isDead }"
+            >
+            <img src='../assets/imgs/icons/deadX.png' alt="">
+            </section>  
+          </transition>
+
       <!-- Animated Damage Tips -->
         <transition appear
           type="animation"
@@ -78,6 +91,18 @@
             >
             </section>  
           </transition>
+          
+          <transition appear
+            type="animation"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+          >
+            <section class="armorUp" v-if="name === 'swordsman' && goldShine">
+              <img src="../assets/imgs/icons/armorIcon.png" alt="">
+              <h1>2</h1>
+            </section>
+          </transition>
+
       </section>
 
       <section class="coinWrapper">
@@ -161,6 +186,11 @@ export default {
   grid-template-rows: 33% 34% 33%;
 }
 
+.portrait {
+  grid-row: 1/4;
+  grid-column:1/2;
+}
+
 .attackValue{
   position:relative;
   color:rgb(255, 166, 0);
@@ -218,8 +248,32 @@ export default {
   filter: drop-shadow(-1px 2px 5px orange) invert(1);
 }
 
+.armorUp {
+  width:100px;
+  position:absolute;
+  top:115px;
+}
+
+.armorUp h1 {
+  color:black;
+  position:absolute;
+  text-shadow: none;
+  left:82px;
+  top:-42px;
+  font-size:50px;
+}
+
+.armorUp img {
+  width:200px;
+  filter: drop-shadow(-1px 2px 5px blue) invert(1);
+}
+
 .red {
     background: linear-gradient(0deg, rgb(187, 16, 58) 0%, rgba(255,192,0,0) 100%);
+}
+
+.dead {
+    background: linear-gradient(0deg, rgb(58, 40, 44) 0%, rgba(53, 42, 44, 0.5) 100%);
 }
 
 .purple {
@@ -237,6 +291,16 @@ export default {
 .damagedOverlay {
   grid-row:3/4;
   grid-column:1/2;
+}
+
+.deadOverlay {
+  grid-row:1/4;
+  grid-column:1/2;
+}
+
+.deadOverlay img {
+  width:200px;
+  margin-top:15px;
 }
 
 .striked {
