@@ -31,9 +31,6 @@ export default {
             shopTitle: state => state.info.shopTitle,
         }),
     },
-    destroyed: function () {
-        store.commit('shopkeepData/newShopkeep');
-    },
 }
 </script>
 
