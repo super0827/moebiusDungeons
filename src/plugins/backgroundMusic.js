@@ -37,19 +37,19 @@ const dungeonMusic5 = new Howl({
 });
 
 const shopMusic1 = new Howl({
-    src: [require('@/assets/audio/dungeonMusic/eventidePP.mp3')],
+    src: [require('@/assets/audio/shopAudio/background/eventidePP.mp3')],
     loop: true,
     volume: .3,
 });
 
 const shopMusic2 = new Howl({
-    src: [require('@/assets/audio/dungeonMusic/sceneicEssencePP.mp3')],
+    src: [require('@/assets/audio/shopAudio/background/scenicEssencePP.mp3')],
     loop: true,
     volume: .3,
 });
 
 const shopMusic3 = new Howl({
-    src: [require('@/assets/audio/dungeonMusic/spiritualMomentPP.mp3')],
+    src: [require('@/assets/audio/shopAudio/background/spiritualMomentPP.mp3')],
     loop: true,
     volume: .3,
 });
