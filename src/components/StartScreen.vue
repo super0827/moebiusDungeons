@@ -1,7 +1,7 @@
 <template>
 <section>
 
-    <section @click="startGame()" class="animated startScreen slower" 
+    <section @click="startGame()" @mouseenter="UiSounds.chit.play()" class="animated startScreen slower" 
     :class="{'fadeIn' :isEntering, 
     'rubberBand' : !isEntering }">
         <section class=" animated pulse infinite slower">
@@ -27,6 +27,11 @@ import UiSounds from '@/plugins/UiSounds.js'
 export default {
     name: 'StartScreen',
     mixins: [gameAnimations],
+    data() {
+        return {
+            UiSounds: UiSounds
+        }
+    },
     methods: {
         startGame () {
             this.$store.commit('gameData/mutate', {property: 'phase', with: 'CharacterSelect'});

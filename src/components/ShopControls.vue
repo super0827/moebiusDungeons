@@ -58,6 +58,7 @@
 <script>
 
 import {mapState} from 'vuex'
+import ShopSounds from '@/plugins/ShopSounds.js'
 
 export default {
   name: 'ShopControls',
@@ -83,37 +84,34 @@ export default {
       return Math.floor(Math.random() * Math.floor(rollMax) + 1);
     },
     buy(itemBought) {
-      if(itemBought.cost <= this.storeState.player.coins && itemBought.bought === false) {
+      if(itemBought.cost <= this.coins && itemBought.bought === false) {
         
         let roll = this.randomRoll(2);
         
         switch (itemBought.cost) {
           case 1:
-            this.$sound.play(`oneCoin${roll}`)
-            this.$sound.play()
+            ShopSounds[`oneCoin${roll}`].play()
             break;
           case 2:
-            this.$sound.play(`twoCoin${roll}`)
+            ShopSounds[`twoCoin${roll}`].play()
             break;
           case 3:
-            this.$sound.play(`threeCoin${roll}`)
+            ShopSounds[`threeCoin${roll}`].play()
             break;
           case 4:
-            this.$sound.play(`fourCoin`)
+            ShopSounds[`fourCoin`].play()
             break;
           case 5:
-            this.$sound.play(`fiveCoin$`)
+            ShopSounds[`fiveCoin`].play()
             break;
         }
-
-        itemBought.buy();
+        this.$store.dispatch('shopkeepData/' + itemBought.effect.action, itemBought.effect.payload)
         itemBought.bought = true;
-        this.storeState.player.coins -= itemBought.cost;
       } else {
         itemBought.noSale = true;
-        this.$sound.play('cantBuy');
+        ShopSounds.cantBuy.play()
         setTimeout(() => {
-        itemBought.noSale = false;
+          itemBought.noSale = false;
         }, 500);
       }
     }

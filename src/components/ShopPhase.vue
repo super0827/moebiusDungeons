@@ -15,8 +15,8 @@
     <section class="flexRow">
         <!-- Player Portrait -->
         <character-token
-        class="animated character-token"
-        :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering }"
+        class="character-token"
+        :class="{'animated zoomInLeft' : isEntering, 'animated zoomOutLeft' : !isEntering }"
         :who="'player'"
         :name="playerName"
         :portrait="playerPortrait"
@@ -105,6 +105,12 @@ export default {
             greenShinePlayer: state => state.animations.greenShine,
             purpleShinePlayer: state => state.animations.purpleShine
         }),
+        ...mapState('shopkeepData', {
+            welcome: state => state.info.welcome,
+            goodbye: state => state.info.goodbye,
+            thankYou: state => state.info.thankYou,
+            
+        }),
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
             playerRealDamage: 'thisAdjDamage',
@@ -113,8 +119,11 @@ export default {
             playerAttackMax: 'calcAttackMax'
         }),
     },
-    destroyed: function() {
+    destroyed() {
         this.$store.commit('shopkeepData/newShopkeep');
+    },
+    created() {
+
     }
 }
 </script>

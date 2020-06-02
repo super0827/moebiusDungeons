@@ -24,7 +24,7 @@
   </p>
 
 <br>
-  <h1 @mouseenter="$sound.play('chit')" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
+  <h1 @mouseenter="UiSounds.chit.play()" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
       UNDERSTOOD.
   </h1>
 </section>
@@ -33,12 +33,14 @@
 <script>
 
 import helperToggles from '../components/mixins/helperToggles'
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
   name: 'InstructionsScreen',
   mixins: [helperToggles],
   data() {
       return {
+          UiSounds: UiSounds,
       }
   },
 }
