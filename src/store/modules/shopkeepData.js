@@ -47,11 +47,11 @@ const state = () => ({
         ],
         saying:"Trust me, nothing I sell is cursed.",
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
-        welcome:['grWelcome'],
-        goodbye:'grOkay',
-        thankYou:'',
-        cantBuy:'',
-        bigBuy:''
+        welcome:['heyThere', 'huh'],
+        goodbye:['okay'],
+        thankYou:['alright'],
+        cantBuy:['buyAnother'],
+        bigBuy:[],
         },
 
         {name:"merchant", 
@@ -71,11 +71,12 @@ const state = () => ({
         ],
         saying:"Friend or foe, what are ya' buyin'?",
         shopTitle: "It's not much, but it's what I've got. All priced to move.",
-        welcome:'meWelcome',
-        goodbye:'meGoodbye',
-        thankYou:'',
-        cantBuy:'',
-        bigBuy:''
+        welcome:['welcome', 'hello', 'hey',],
+        welcomeBack:['welcomeBack', 'welcomeBack2', 'welcomeBack3'],
+        goodbye:['comeBackSoon', 'comeAgain', 'nextTime', 'okay',],
+        thankYou:['fairTrade', 'goodPurchase', 'thanks'],
+        cantBuy:[],
+        bigBuy:[],
         },
 
         {name:"witch", 
@@ -97,11 +98,12 @@ const state = () => ({
         ],
         saying:"Everything you see, all hand enchanted.",
         shopTitle: "Some of my inventory tends to be virulent. Browse at your own risk.",
-        welcome:'meWelcome',
-        goodbye:'meGoodbye',
-        thankYou:'',
-        cantBuy:'',
-        bigBuy:''
+        welcome:[''],
+        welcomeBack:[], 
+        goodbye:[],
+        thankYou:[],
+        cantBuy:[],
+        bigBuy:[]
         },
     ]
 })
