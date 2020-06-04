@@ -40,7 +40,7 @@ const state = () => ({
           { bought: false, noSale: false, name: 'unlucky trinket', cost: 3, description: "+4 ATK | -2 ARM", effect: {action:'MULTI_STATS', payload:{attack:4, armor:-2}}, icon: require("@/assets/imgs/icons/items/graverobber/unluckyTrinket.png") },
           
           { bought: false, noSale: false, name: 'hollow bone', cost: 2, description: "+4 ATK for next battle", effect: {action:'ADD_TEMPORARY_STAT', payload:{where:'baseAttackMax', howMuch:4, shine:'redShine'}}, icon: require("@/assets/imgs/icons/items/graverobber/hollowBone.png") },
-          { bought: false, noSale: false, name: 'Demon Ring', cost: 4, description: 'ATK Type becomes Physical | Halve your Armor rounding down | x2 ATK', effect: {action:'DEMON_RING', payload:{where:'baseAttackMax', shine:'purpleShine'}}, icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")},
+          { bought: false, noSale: false, name: 'Demon Ring', cost: 4, description: 'ATK Type = Physical | Havles your ARM | x2 ATK', effect: {action:'DEMON_RING', payload:{where:'baseAttackMax', shine:'purpleShine'}}, icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")},
           { bought: false, noSale: false, name: 'Dessicated Doll', cost: 5, description: 'Revive with 10 HP on death.', effect: {action:'ADD_TEMPORARY_ABILITY', payload: {ability:'revive', length:9999, shine:'goldShine'}}, icon: require("@/assets/imgs/icons/items/graverobber/dessicatedDoll.png")},
         ],
         saying:"Trust me, nothing I sell is cursed.",
@@ -109,11 +109,11 @@ const state = () => ({
 const mutations = {
   newShopkeep(state) {
     const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-    // const randomPick = 0;
+    // const randomPick = 3;
     state.info = state.variants[randomPick]
     const inventory = shuffle(state.variants[randomPick].items);
-    // state.inventory = inventory.slice(0, 3)
-    state.inventory = inventory
+    state.inventory = inventory.slice(0, 3)
+    // state.inventory = inventory
     console.log(`new shopkeep is ${state.variants[randomPick].name}`)
   },
   recordVisit(state) {
