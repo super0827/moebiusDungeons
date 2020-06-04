@@ -44,7 +44,8 @@
         <section>
         <button @click="$store.commit('playerData/decrement', 'coins')">-</button>
         <button @click="$store.commit('playerData/increment', 'coins')">+</button> 
-        <button @click="$store.commit('playerData/addCoins', 99)">99</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
         </section>
       </section>
 
