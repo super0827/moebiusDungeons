@@ -1,5 +1,5 @@
 <template>
-<section class="columns">
+<section class="shop">
   <!-- Shop Title Description -->
   
     <!-- Full Item Roll -->
@@ -11,20 +11,22 @@
     :description="buyable.description"
     :cost="buyable.cost"
     @click="buy(buyable)"
+    @mouseenter="UiSounds.chit.play()"
+    :class="{
+      'striked' : buyable.cost > coins, 
+      'animated shake faster' : buyable.noSale, 
+      'bought' : buyable.bought }"
     class="itemRow"
     >
-        <section class="description"
-        :class="{'striked' : buyable.cost > coins, 
-        'animated shake faster' : buyable.noSale, 
-        'bought' : buyable.bought }">
-          <section>  
-            <article class="cost">
+        <section class="description">
+          <section class="cost">  
+            <article>
               <img src="../assets/imgs/icons/coinIcon.png">
               <h1>{{ buyable.cost }}</h1>
             </article>
           </section>
 
-          <section>
+          <section class="itemText">
             <article>
               <h2>{{ buyable.name }}</h2>
               <p> {{ buyable.description }} </p>
@@ -42,12 +44,6 @@
 
       </section>
 
-      <hr>
-
-    <section  @click="$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})" class="buySlot">
-      <h3>BACK TO THE DUNGEONS</h3>
-    </section>
-
 </section>
 
 
@@ -58,6 +54,7 @@
 import {mapState, mapGetters} from 'vuex'
 import shuffle from 'lodash.shuffle'
 
+import UiSounds from '@/plugins/UiSounds.js'
 import ShopSounds from '@/plugins/ShopSounds.js'
 import ClericSounds from '@/plugins/ClericSounds.js'
 import MerchantSounds from '@/plugins/MerchantSounds.js'
@@ -69,6 +66,7 @@ export default {
   data() {
     return {
       shake: false,
+      UiSounds: UiSounds,
       Cleric: ClericSounds,
       Graverobber: GraverobberSounds,
       Merchant: MerchantSounds,
@@ -188,37 +186,45 @@ export default {
 
 <style scoped>
 
-.columns {
-  width:400px;
+.shop {
+  margin-top:25px;
 }
 
 .itemRow {
   display:flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items:center;
   position:relative;
+  margin:4px 0px;
+}
+
+.itemRow:hover {
+    background: rgb(253,229,144);
+    cursor:pointer;
 }
 
 .description {
   border: solid 2px black;
-  padding:8px 12px;
-  margin:0 0 5px 0;
-  min-width:150px;
+  padding:5px 5px;
+  width:180px;
+  min-height:100%;
   display:flex;
   flex-direction:row;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
 }
 
 .itemIcon img {
-  width:75px;
-  height:75px;
+  width:68px;
+  margin-left:5px;
+  margin-top:5px;
+  margin-right:5px;
 }
 
-.textCenter {
-  margin:5px 5px 10px 5px;
-  font-size:14px;
-  width:200px;
+.itemText {
+  text-align:center;
+  width:100%;
+  margin-left:10px;
 }
 
 h2 {
@@ -255,24 +261,12 @@ p {
   margin:0 0 0px 0;
 }
 
-.buySlot:hover {
-  background: rgb(253,229,144);
-  cursor:pointer;
-}
-
-.buySlot:first-of-type {
-  margin:0px 0px 10px 0px;
-}
-
-.buySlot:last-of-type {
-  margin:10px 0 0 0;
-}
-
 .cost {
   position:relative;
+  width:30%;
 }
 
-.cost > img {
+.cost article > img {
   width:55px;
   max-width:55px;
   margin:0 10px 0 0;
@@ -285,8 +279,8 @@ p {
   margin-block-end: 0;
   line-height: 55px;
   top:0px;
+  text-align:center;
   width:55px;
-  left: 0;
 }
 
 .flexRow {
@@ -296,7 +290,6 @@ p {
 .striked {
   text-decoration:line-through;
   background: rgb(255, 75, 75);
-  border:crimson 2px solid;
 }
 
 .striked:hover{
@@ -310,16 +303,17 @@ p {
 }
 
 .boughtAlert h1{
-  color:black;
+  color:red;
   text-shadow: none;
   position:absolute;
-  left:17px;
-  top:32px;
+  left:15px;
+  top:10px;
   margin:0;
   padding:0;
   margin-block-start: 0;
   margin-block-end: 0;
-  opacity:.5;
+  opacity:1;
+  font-size:39px;
 }
 
 h1 {
