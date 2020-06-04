@@ -1,8 +1,8 @@
 <template>
-<section class="flexContainer">
-<section class="columns battleOptions">
+<section class="columns">
   <!-- Shop Title Description -->
   
+    <!-- Full Item Roll -->
     <section
     v-for="buyable in shopInventory"
     :key="buyable.name"
@@ -13,46 +13,44 @@
     @click="buy(buyable)"
     class="itemRow"
     >
-      <section class="information buySlot" 
-      :class="{'striked' : buyable.cost > coins, 
-      'animated shake faster' : buyable.noSale, 
-      'bought' : buyable.bought}">
-        <section>  
-        <article class="cost">
-          <img src="../assets/imgs/icons/coinIcon.png">
-          <h1>{{ buyable.cost }}</h1>
-        </article>
-        </section>
-  
-      <section>
-        <article>
-          <h2>{{ buyable.name }}</h2>
-          <p> {{ buyable.description }} </p>
-        </article>
-      </section>
+        <section class="description"
+        :class="{'striked' : buyable.cost > coins, 
+        'animated shake faster' : buyable.noSale, 
+        'bought' : buyable.bought }">
+          <section>  
+            <article class="cost">
+              <img src="../assets/imgs/icons/coinIcon.png">
+              <h1>{{ buyable.cost }}</h1>
+            </article>
+          </section>
 
-      </section>
+          <section>
+            <article>
+              <h2>{{ buyable.name }}</h2>
+              <p> {{ buyable.description }} </p>
+            </article>
+          </section>
+        </section>
+      
+        <section class="itemIcon">
+          <img :src="buyable.icon" alt="">
+        </section>
 
         <article class="boughtAlert" v-if="buyable.bought">
           <h1>BOUGHT</h1>
         </article>
-    </section>
 
-    <hr>
+      </section>
+
+      <hr>
 
     <section  @click="$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})" class="buySlot">
       <h3>BACK TO THE DUNGEONS</h3>
     </section>
 
-
 </section>
 
-    <section class="itemIcons">
-      <img :src="item1" alt="">
-      <img :src="item2" alt="">
-      <img :src="item3" alt="">
-    </section>
-    </section>
+
 </template>
 
 <script>
@@ -189,42 +187,9 @@ export default {
 </script>
 
 <style scoped>
-.flexContainer {
-  display:flex;
-}
-.itemImage{
-    width:70px;
-    height:70px;
-    margin-left:10px;
-    margin-top:10px;
-}
 
-hr {
-  border:solid black 1px;
-}
-
-.information {
-  display:flex;
-  justify-content:space-evenly;
-  align-items: center;
-  width:200px;
-}
-
-.itemIcons {
-  width:85px;
-  height:263px;
-  margin-left:10px;
-  margin-top:12px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  align-items: center;
-
-}
-
-.itemIcons img {
-  width:75px;
-  height:75px;
+.columns {
+  width:400px;
 }
 
 .itemRow {
@@ -232,6 +197,22 @@ hr {
   justify-content: flex-start;
   align-items: center;
   position:relative;
+}
+
+.description {
+  border: solid 2px black;
+  padding:8px 12px;
+  margin:0 0 5px 0;
+  min-width:150px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+
+.itemIcon img {
+  width:75px;
+  height:75px;
 }
 
 .textCenter {
@@ -271,8 +252,7 @@ p {
   position:relative;
   padding:10px;
   /* background: rgba(207, 207, 207, 1); */
-  border:2px solid black;
-  margin:0 0 10px 0;
+  margin:0 0 0px 0;
 }
 
 .buySlot:hover {
