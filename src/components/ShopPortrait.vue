@@ -11,16 +11,22 @@
 
       </section>
 
+      <section  @mouseenter="UiSounds.chit.play()" @click="$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})" class="backToDungeon">
+        <h3>BACK TO THE DUNGEON</h3>
+    </section>
+
   </section>
 </template>
 
 <script>
 import {mapState} from 'vuex'
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
     name: 'ShopPortrait',
     data() {
       return {
+          UiSounds:UiSounds,
       }
     },
     computed: {
@@ -45,5 +51,17 @@ h3 {
 }
 p{
     text-transform:uppercase;
+}
+
+.backToDungeon {
+  text-align:center;
+  border:2px solid black;
+  padding:5px 0;
+  margin-top:5px;
+}
+
+.backToDungeon:hover {
+  background: rgb(253,229,144);
+  cursor:pointer;
 }
 </style>
