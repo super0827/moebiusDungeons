@@ -185,6 +185,13 @@ export default {
             monsterAttackMax: 'calcAttackMax'
         })
     },
+    created() {
+        this.$store.dispatch('playerData/RESET_ANIMATIONS');
+        this.$store.dispatch('monsterData/RESET_ANIMATIONS');
+        this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
+        this.$store.commit('playerData/mutate', {property:'log', with:[]})
+        this.$store.commit('monsterData/mutate', {property:'log', with:[]})
+    },
     destroyed(){
         this.$store.commit('monsterData/newMonster');
     }
