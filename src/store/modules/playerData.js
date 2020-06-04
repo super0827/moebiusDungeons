@@ -7,7 +7,7 @@ const state = () => ({
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
       description1:"Slicing and Dicing",
       description2:"Bruiser class, high damage, good armor, high health.", 
-      coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
+      coins:99, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
       special: "en'garde",
@@ -54,13 +54,21 @@ const mutations = {
   addToLog(state, payload){
     state.log.push(payload)
   },
+  takeDamage(state, payload) {
+    state.info.baseHealth -= payload.damage;
+  },
   addCoins(state, payload) {
     state.info.coins += payload
   },
-
+  buyItem(state, payload) {
+    state.info.coins -= payload
+  },
   //SHOPKEEPER MUTATIONS
   heal(state, payload) {
     state.info.baseHealth += payload
+  },
+  halveHP(state) {
+    state.info.baseHealth = Math.ceil(state.info.baseHealth / 2);
   },
   addArmor(state, payload) {
     state.info.baseArmor += payload
@@ -70,7 +78,24 @@ const mutations = {
   },
   addTempAbility(state, payload) {
     state.temporaryTraits.push(payload)
-    console.log(state.temporaryTraits);
+  },
+  addTempStat(state, payload) {
+    state.payload.where.push(payload.howMuch)
+  },
+  physicalAttackType(state) {
+    state.info.attackType = 'physical';
+    state.info.attackTypeImage = 'require("@/assets/imgs/icons/physicalIcon.png")'
+  },
+  doubleAttack(state) {
+    state.info.baseAttackMax *= 2;
+  },
+  halveArmor(state) {
+    state.info.baseArmor = Math.floor(state.info.baseArmor / 2)
+  },
+  bloodRitual(state) {
+    let healththird = Math.ceil(state.info.baseHealth / 3);
+    state.info.baseHealth = Math.ceil(state.info.baseHealth / 3)
+    state.info.baseAttack += healththird;
   }
 }
 

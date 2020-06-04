@@ -57,14 +57,24 @@
 
 <script>
 
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
+import shuffle from 'lodash.shuffle'
+
 import ShopSounds from '@/plugins/ShopSounds.js'
+import ClericSounds from '@/plugins/ClericSounds.js'
+import MerchantSounds from '@/plugins/MerchantSounds.js'
+import GraverobberSounds from '@/plugins/GraverobberSounds.js'
+import WitchSounds from '@/plugins/WitchSounds.js'
 
 export default {
   name: 'ShopControls',
   data() {
     return {
       shake: false,
+      Cleric: ClericSounds,
+      Graverobber: GraverobberSounds,
+      Merchant: MerchantSounds,
+      Witch: WitchSounds
     }
   },
   computed: {
@@ -73,11 +83,33 @@ export default {
       shopInventory: state => state.inventory,
       item1: state => state.inventory[0].icon,
       item2: state => state.inventory[1].icon,
-      item3: state => state.inventory[2].icon
+      item3: state => state.inventory[2].icon,
+      shopkeep: state => state.info,
+      who: state => state.info.name,
+      visited: state => state.visited
     }),
     ...mapState('playerData', {
       coins: state => state.info.coins
     }),
+    ...mapGetters('shopkeepData', {
+       haveVisited: 'haveVisited',
+    }),
+    whosSound: function () {
+      switch (this.who) {
+        case 'cleric':
+          return this.Cleric
+          break;
+        case 'graverobber':
+          return this.Graverobber
+          break;
+        case 'merchant':
+          return this.Merchant
+          break;
+        case 'witch':
+          return this.Witch
+          break;
+      }
+    }
   },
   methods: {
     randomRoll(rollMax){
@@ -87,6 +119,20 @@ export default {
       if(itemBought.cost <= this.coins && itemBought.bought === false) {
         
         let roll = this.randomRoll(2);
+
+        if(itemBought.cost <= 4){
+          let randomSound = this.randomRoll(this.shopkeep.thankYou.length-1)
+          this.whosSound[this.shopkeep.thankYou[randomSound]].play()
+        }
+        else if (itemBought.cost === 5) {
+          if(this.shopkeep.bigBuy.length > 0) {
+            let randomSound = this.randomRoll(this.shopkeep.bigBuy.length-1)
+            this.whosSound[this.shopkeep.bigBuy[randomSound]].play()
+          }
+          else {
+            console.log(`No Sound Exists.`)
+          }
+        }
         
         switch (itemBought.cost) {
           case 1:
@@ -107,15 +153,38 @@ export default {
         }
         this.$store.dispatch('shopkeepData/' + itemBought.effect.action, itemBought.effect.payload)
         itemBought.bought = true;
+        this.$store.commit('playerData/buyItem', itemBought.cost)
       } else {
         itemBought.noSale = true;
-        ShopSounds.cantBuy.play()
+        
         setTimeout(() => {
-          itemBought.noSale = false;
+        if(this.shopkeep.cantBuy.length > 0){
+          this.whosSound[this.shopkeep.cantBuy[0]].play()
+          this.shopkeep.cantBuy.shift()
+        }
+        else if (this.shopkeep.cantBuy.length === 0) {
+         ShopSounds['cantBuy'].play()
+        }
+        itemBought.noSale = false;
         }, 500);
       }
     }
   },
+  mounted() {
+    if(this.haveVisited) {
+      let randomSound = this.randomRoll(this.shopkeep.welcomeBack.length-1)
+      this.whosSound[this.shopkeep.welcomeBack[randomSound]].play()
+    } else {
+      let randomSound = this.randomRoll(this.shopkeep.welcome.length-1)
+      this.whosSound[this.shopkeep.welcome[randomSound]].play()
+      this.$store.commit('shopkeepData/recordVisit')
+    }
+  },
+  beforeDestroy() {
+      let randomSound = this.randomRoll(this.shopkeep.goodbye.length-1)
+      console.log(randomSound)
+      this.whosSound[this.shopkeep.goodbye[randomSound]].play()
+  }
 }
 </script>
 
@@ -162,6 +231,7 @@ hr {
   display:flex;
   justify-content: flex-start;
   align-items: center;
+  position:relative;
 }
 
 .textCenter {
@@ -263,8 +333,8 @@ p {
   color:black;
   text-shadow: none;
   position:absolute;
-  top:20px;
-  left:6px;
+  left:17px;
+  top:32px;
   margin:0;
   padding:0;
   margin-block-start: 0;
