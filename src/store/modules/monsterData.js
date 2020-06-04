@@ -568,7 +568,7 @@ const actions = {
       .then(()=>{ dispatch('ROLL_DAMAGE') })
       .then(() => { dispatch('DEAL_DAMAGE') })
       .then (() => {  
-        dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`) 
+        dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`) 
       })
       .then(() => {
         setTimeout(() => {
@@ -582,7 +582,7 @@ const actions = {
     commit('addToLog', {id:state.logNum + 'monster', message:payload});
     commit('incrementLog')
   },
-  DEAL_DAMAGE({commit, getters}) {
+  DEAL_DAMAGE({commit, getters, dispatch}) {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
         commit('playerData/toggleAnimation', {property: 'hurt'}, {root:true})
@@ -595,6 +595,7 @@ const actions = {
         commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'purpleShine'}, {root:true})
       }
+      dispatch('playerData/CHECK_HP', null, {root:true})
   },
   RUN_SPECIAL(context){
     

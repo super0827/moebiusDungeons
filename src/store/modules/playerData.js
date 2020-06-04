@@ -7,7 +7,7 @@ const state = () => ({
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
       description1:"Slicing and Dicing",
       description2:"Bruiser class, high damage, good armor, high health.", 
-      coins:99, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
+      coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
       special: "en'garde",
@@ -39,6 +39,9 @@ const mutations = {
   mutate(state, payload) {
     state[payload.property] = payload.with;
   },
+  mutateInfo(state, payload) {
+    state.info[payload.property] = payload.with;
+  },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
   },
@@ -47,6 +50,9 @@ const mutations = {
   },
   decrement(state, payload) {
     state.info[payload]--
+  },
+  reduceMettle(state) {
+    state.mettle--
   },
   incrementLog(state) {
     state.logNum++
@@ -134,7 +140,7 @@ const actions = {
     if(state.info.health > 0){
     }
     else if (state.info.health <= 0) {
-      commit('toggleAnimation', {property: 'isDead'})     
+      commit('toggleAnimation', {property: 'isDead'})
     }
   },
   ROLL_DAMAGE({commit, state, getters}) {
@@ -150,7 +156,7 @@ const actions = {
     dispatch('ROLL_DAMAGE')
     .then(() => { dispatch('DEAL_DAMAGE') })
     .then(() => {
-      dispatch('LOG_UPDATE', `TRADE BLOWS DEALT ${getters.thisAdjDamage} DAMAGE`)
+      dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
     })
     .then(() => {
       setTimeout(() => {
@@ -186,6 +192,8 @@ const actions = {
         commit('toggleAnimation', {property: 'goldShine'})
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
         PlayerSounds.armorUp.play();
+        commit('reduceMettle');
+        console.log(state.info.mettle)
         setTimeout(() => {
           commit('gameData/toggle', {property:'combatLocked'}, {root: true});
           dispatch('RESET_ANIMATIONS');
