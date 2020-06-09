@@ -1,10 +1,8 @@
 <template>
     <div>
-        <section class="stats statColumn">
+        <section class="stats statColumn" v-if="who === 'player'">
 
-        <section class="flexRowStats"
-        :class="{ 'reverseSides': who === 'monster' }"
-        >
+        <section class="flexRowStats">
           <img src="../assets/imgs/icons/healthIcon.png">
           <p>
           <animated-number 
@@ -15,9 +13,18 @@
           </p>
         </section>
         
-        <section class="flexRowStats"
-        :class="{ 'reverseSides': who==='monster' }"
-        >
+        <section class="flexRowStats">
+          <img :src="attackImage">
+          <p>
+          <animated-number 
+          :value="attack"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </p>
+        </section>
+        
+        <section class="flexRowStats">
           <img src="../assets/imgs/icons/armorIcon.png">
           <p>
             <animated-number 
@@ -28,9 +35,36 @@
           </p>
         </section>
         
-        <section class="flexRowStats"
-        :class="{ 'reverseSides': who==='monster' }"
-        >
+
+      </section>  
+
+
+      <!-- MONSTER BAR -->
+      <section class="stats statColumn" v-if="who === 'monster'">
+
+        <section class="flexRowStats reverseSides">
+          <img src="../assets/imgs/icons/healthIcon.png">
+          <p>
+          <animated-number 
+          :value="health"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </p>
+        </section>
+        
+        <section class="flexRowStats reverseSides">
+          <img src="../assets/imgs/icons/armorIcon.png">
+          <p>
+            <animated-number 
+          :value="armor"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </p>
+        </section>
+        
+        <section class="flexRowStats reverseSides">
           <img :src="attackImage">
           <p>
           <animated-number 
