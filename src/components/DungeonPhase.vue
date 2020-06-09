@@ -26,6 +26,7 @@
         class="animated"
         :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering}"
         :who="'player'"
+        :enemy="playerEnemy"
         :name="playerName"
         :portrait="playerPortrait"
         :health="playerHealth"
@@ -48,6 +49,8 @@
         :greenShine="greenShinePlayer"
         :purpleShine="purpleShinePlayer"
         :goldShine="goldShinePlayer"
+        :blueShine="blueShinePlayer"
+        :yellowShine="yellowShinePlayer"
         />
 
         <!-- Dungeon Controls -->
@@ -63,6 +66,7 @@
         :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering}"
         :who="'monster'"
         :name="monsterName"
+        :enemy="monsterEnemy"
         :portrait="monsterPortrait"
         :health="monsterHealth"
         :armor="monsterArmor"
@@ -83,6 +87,9 @@
         :redShine="redShineMonster"
         :greenShine="greenShineMonster"
         :purpleShine="purpleShineMonster"
+
+        :specialDamage="specialDamage"
+        :specialDamageAnimation="specialDamageAnimation"
         />
 
         <turn-log
@@ -109,6 +116,7 @@ import BattleHelp from './BattleHelp.vue';
 import TurnLog from './TurnLog.vue';
 
 import UiSounds from '@/plugins/UiSounds.js'
+import MonsterSounds from '@/plugins/MonsterSounds.js'
 
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
@@ -127,7 +135,8 @@ export default {
     data() {
         return {
             music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
-            UiSounds : UiSounds
+            UiSounds : UiSounds,
+            MonsterSounds : MonsterSounds
         }
     },
     computed: {
@@ -141,7 +150,12 @@ export default {
             playerCoins: state => state.info.coins,
             playerStatSide: state => state.statSide,
             playerAttackDamage: state => state.thisDamage,
-            
+
+            specialDamage: state => state.specialDamage,
+            specialDamageAnimation: state => state.specialDamageAnimation,
+
+            monsterEnemy: state => state.info.name,
+
             playerisHurt: state => state.animations.hurt,
             playerisBlocking: state => state.animations.blocking,
             playerisAttacking: state => state.animations.attacking,
@@ -151,8 +165,14 @@ export default {
             greenShinePlayer: state => state.animations.greenShine,
             purpleShinePlayer: state => state.animations.purpleShine,
             goldShinePlayer: state => state.animations.goldShine,
+            blueShinePlayer: state => state.animations.blueShine,
+            yellowShinePlayer: state => state.animations.yellowShine
         }),
         ...mapState('monsterData', {
+            monsterEnter: state => state.info.enterSound,
+
+            playerEnemy: state => state.info.name,
+            
             monsterName: state => state.info.name,
             monsterPortrait: state => state.info.portrait,
             monsterAttackType: state => state.info.attackType,
@@ -186,6 +206,7 @@ export default {
         })
     },
     created() {
+        this.MonsterSounds[this.monsterEnter].play();
         this.$store.dispatch('playerData/RESET_ANIMATIONS');
         this.$store.dispatch('monsterData/RESET_ANIMATIONS');
         this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
