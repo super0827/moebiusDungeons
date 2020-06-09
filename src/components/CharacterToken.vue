@@ -10,11 +10,12 @@
       />
 
   <section class="columns">
-      
+
       <h3 id="name">{{name}}</h3>
       <section 
       class="portraitWrapper"
-      :class="{'animated pulse' : isHurt, 
+      :class="{
+      'animated pulse' : isHurt, 
       'animated wobble' : isAttacking,
       'animated reverseWobble' : monsterisAttacking, 
       'animated pulse' : isBlocking,
@@ -22,6 +23,12 @@
       }"
       >
       <img class="portrait" :src="portrait">
+
+      <section v-if="who === 'monster'" class="warning">
+        <p>
+          {{ warning }}
+        </p>
+      </section>
 
       <transition appear
             type="animation"
@@ -144,6 +151,14 @@
         </h1>
       </section>
 
+      <section class="inventory">
+        <section 
+          v-for="items in inventory"
+          :key="items.name"
+          >
+          <img :src="items.icon" alt="">
+        </section>
+      </section>
 
   </section>
 
@@ -179,6 +194,10 @@ export default {
     'attackType',
     'attackTypeImg',
     'coins',
+
+    'warning',
+    'inventory',
+
     'isHurt',
     'isBlocking',
     'isAttacking',
@@ -210,6 +229,14 @@ export default {
 </script>
 
 <style scoped>
+
+.inventory {
+  height:50px;
+  width:200px;
+  margin-top:10px;
+  background:red;
+}
+
 #name {
   text-transform:uppercase;
 }
@@ -223,6 +250,27 @@ export default {
 .portrait {
   grid-row: 1/4;
   grid-column:1/2;
+}
+
+.warning {
+  opacity:0;
+  grid-row: 1/4;
+  grid-column:1/2;
+  padding:20px;
+  background:rgba(0, 0, 0, .4);
+  text-transform:uppercase;
+  transition:all 1s;
+}
+
+.warning:hover {
+  opacity:1;
+  transition:all 1s;
+  cursor:pointer;
+}
+
+.warning p {
+  font-size:20px; 
+  color:white; 
 }
 
 .attackValue{

@@ -149,6 +149,11 @@ export default {
         }
         this.$store.dispatch('shopkeepData/' + itemBought.effect.action, itemBought.effect.payload)
         itemBought.bought = true;
+
+        if(itemBought.type === 'temporary' || itemBought.type === 'permanent') {
+          this.$store.commit('playerData/addToInventory', itemBought, {root:true})
+        }
+
         this.$store.commit('playerData/buyItem', itemBought.cost)
       } else {
         itemBought.noSale = true;

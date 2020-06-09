@@ -40,6 +40,14 @@ const state = () => ({
 })
 
 const mutations = {
+  addToInventory(state, payload) {
+    if(payload.type === 'temporary') {
+      state.temporaryTraits.push(payload);
+    }
+    else if (payload.type === "permanent") {
+      state.permenantTraits.push(payload);
+    }
+  },
   mutate(state, payload) {
     state[payload.property] = payload.with;
   },
@@ -139,6 +147,9 @@ const getters = {
   },
   varletCrit: (state, getters) => {
     return Math.floor(getters.calcAttackMax - (getters.calcAttackMax / 4));
+  },
+  inventory: (state, getters) => {
+    return state.temporaryTraits.concat(state.permenantTraits)
   }
 }
 

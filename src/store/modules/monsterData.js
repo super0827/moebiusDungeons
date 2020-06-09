@@ -68,7 +68,7 @@ const state = () => ({
            portrait:require("@/assets/imgs/monsters/kobold.png"), 
            coins:1, baseHealth:7, baseArmor:1, baseAttackMax:4, attackType: "physical",
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           warning: "greenish baseArmor, sharp teeth too - slay it quick 'fore it slays you!",
+           warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
            enterSound: 'koboldEnter',
            special() {
              //when you defeat a kobold roll 1d6, on a 1 you must fight another kobold immediately.
@@ -169,10 +169,9 @@ const state = () => ({
            type:'monster', 
            portrait:require("@/assets/imgs/monsters/imps.png"), 
            coins:2, baseHealth:12, baseArmor:1, baseAttackMax:2, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
            enterSound: 'impsEnter',
-           
          },
          {
            dire: true,
@@ -192,7 +191,7 @@ const state = () => ({
            portrait:require("@/assets/imgs/monsters/kobold.png"), 
            coins:2, baseHealth:11, baseArmor:1, baseAttackMax:6, attackType: "physical",
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           warning: "greenish baseArmor, sharp teeth too - slay it quick 'fore it slays you!",
+           warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
            enterSound: 'koboldEnter',
            
          },

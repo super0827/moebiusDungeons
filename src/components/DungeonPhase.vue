@@ -35,6 +35,9 @@
         :attackType="playerAttackType"
         :attackTypeImg="playerAttackTypeImage"
         :coins="playerCoins"
+
+        :inventory="playerInventory"
+
         :isHurt="playerisHurt"
         :isBlocking="playerisBlocking"
         :isAttacking="playerisAttacking"
@@ -75,6 +78,9 @@
         :attackTypeImg="monsterAttackTypeImage"
         :coins="monsterCoins"
         :isHurt="monsterisHurt"
+
+        :warning="monsterWarning"
+
         :isBlocking="monsterisBlocking"
         :monsterisAttacking="monsterisAttacking"
         :isDead="monsterisDead"
@@ -181,6 +187,8 @@ export default {
             monsterStatSide: state => state.statSide,
             monsterAttackDamage: state => state.thisDamage,
             
+            monsterWarning: state => state.info.warning,
+
             monsterisHurt: state => state.animations.hurt,
             monsterisBlocking: state => state.animations.blocking,
             monsterisAttacking: state => state.animations.attacking,
@@ -195,7 +203,8 @@ export default {
             playerRealDamage: 'thisAdjDamage',
             playerHealth: 'calcHealth',
             playerArmor: 'calcArmor',
-            playerAttackMax: 'calcAttackMax'
+            playerAttackMax: 'calcAttackMax',
+            playerInventory: 'inventory',
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',
