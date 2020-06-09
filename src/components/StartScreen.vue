@@ -14,6 +14,10 @@
             <!-- <img src="../assets/imgs/icons/monsterSigilIcon.png" alt=""> -->
         </section>
     </section>
+    
+    <section class="gumroadCenter">
+        <a class="gumroad-button" href="https://gum.co/CsdPh" target="_blank">Get the playable RPG book that inspired Moebius Dungeons</a>
+    </section>
 
 </section>
 </template>
@@ -62,5 +66,16 @@ h1 {
 img {
     height:150px;
     width:150px;
+}
+
+.gumroad-button {
+    margin-top:20px;
+}
+
+.gumroadCenter {
+    width:577.91;
+    display:flex;
+    align-items:center;
+    justify-content: center;
 }
 </style>
