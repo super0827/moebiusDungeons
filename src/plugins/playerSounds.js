@@ -48,6 +48,12 @@ const armorUp = new Howl({
     volume: 1,
 });
 
+const variagate = new Howl({
+    src: [require('@/assets/audio/playerSounds/variagate.mp3')],
+    loop: false,
+    volume: 1,
+});
+
 
 export default {
     playerDead,
@@ -57,6 +63,7 @@ export default {
     playerMagic1,
     playerMagic2,
     playerMagic3,
-    armorUp
+    armorUp,
+    variagate
 
 };
