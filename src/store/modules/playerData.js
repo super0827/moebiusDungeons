@@ -20,6 +20,8 @@ const state = () => ({
     tempHealth:0,
     tempAttackMax:0,
     thisDamage: 0,
+    specialDamage:0,
+    specialDamageAnimation:false,
     log: [],
     logNum: 0,
     animations: {
@@ -31,6 +33,8 @@ const state = () => ({
       purpleShine: false,
       greenShine: false,
       goldShine:false,
+      yellowShine: true,
+      blueShine:false,
       isDead: false,
     },
 })
@@ -132,6 +136,9 @@ const getters = {
   },
   calcAttackMax: (state) => {
     return state.tempAttackMax + state.info.baseAttackMax
+  },
+  varletCrit: (state, getters) => {
+    return Math.floor(getters.calcAttackMax - (getters.calcAttackMax / 4));
   }
 }
 
@@ -192,26 +199,42 @@ const actions = {
         commit('toggleAnimation', {property: 'goldShine'})
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
         PlayerSounds.armorUp.play();
-        commit('reduceMettle');
-        console.log(state.info.mettle)
+      }
+      else if (state.info.name === 'mage') {
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        commit('toggleAnimation', {property: 'portEffect'})
+        commit('toggleAnimation', {property: 'blueShine'})
+        dispatch('DEAL_SPECIAL_DAMAGE', 12)
+        PlayerSounds.variagate.play();
+      }
+      else if (state.info.name === 'varlet') {
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        commit('toggleAnimation', {property: 'portEffect'})
+        commit('toggleAnimation', {property: 'yellowShine'})
+        dispatch('DEAL_SPECIAL_DAMAGE', getters.varletCrit)
+        console.log(getters.varletCrit)
+      }
+
+      commit('reduceMettle');
         setTimeout(() => {
           commit('gameData/toggle', {property:'combatLocked'}, {root: true});
           dispatch('RESET_ANIMATIONS');
         }, 1200)
-      }
-      else if (state.info.name === 'mage') {
-        dispatch('DEAL_SPECIAL_DAMAGE', 5)
-      }
-      else if (state.info.name === 'varlet') {
-        
-      }
+
     }
     commit('decrement', 'mettle')
   },
-  DEAL_SPECIAL_DAMAGE({commit, getters}, dealtDamage) {
-    commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+  DEAL_SPECIAL_DAMAGE({commit, getters, dispatch}, dealtDamage) {
     commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+    commit('mutate', {property:'specialDamageAnimation', with:true})
+    commit('mutate', {property:'specialDamage', with:dealtDamage})
     commit('monsterData/takeDamage', {damage: dealtDamage}, {root:true})
+    setTimeout(() => {
+      dispatch('RESET_ANIMATIONS');
+      commit('mutate', {property:'specialDamageAnimation', with:false})
+      dispatch('monsterData/CHECK_HP', null, {root: true})
+    }, 1200)
+
   },
   TURN_TAIL(context){
     //calculate success chance
