@@ -15,10 +15,18 @@
     
     <h2 @mouseenter="UiSounds.chit.play()" 
     :class="{'striked' : combatLocked || mettle <= 0}"
-    id="mettle" 
+    class="flexColumn"
     @click="RUN_SPECIAL()">
-    <img :src="mettleImg">
         {{special}}
+    
+    <section class="mettleCost">
+        <p>
+            Costs
+        <img :src="mettleImg">
+            
+        </p>
+    </section>
+      
     </h2>
     
     <br>
@@ -101,21 +109,33 @@ export default {
         font-size:20px;
         text-transform:uppercase;
     }
-    #mettle {
-        display:flex;
-        justify-content:center;
-        align-items: center;    
-    }
-    #mettle img {
-        width:30px;
-        margin-right:10px;
-    }
     h2:hover {
         background: rgb(166, 207, 144);
     }
     
     h3:hover {
         background: rgb(166, 207, 144);
+    }
+
+    .mettleCost {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mettleCost img {
+        width:20px;
+        height:20px;
+        position:relative;
+        top:5px;
+    }
+
+    .mettleCost p {
+        display: block;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
     }
 
     .striked {
