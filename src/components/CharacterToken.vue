@@ -74,6 +74,24 @@
             </section>
           </section>
         </transition>
+        
+        <transition appear
+          type="animation"
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
+          <section class="damageReadout" v-if="specialDamageAnimation && who === 'monster'">
+            <section id="mageSpecial" v-if="enemy === 'mage'">
+              <img src="../assets/imgs/icons/magicalIcon.png" alt="">
+              <h1 id="damageAmountMage">{{specialDamage}}</h1>
+            </section>
+
+            <section id="varletSpecial" v-if="enemy === 'varlet'">
+              <img src="../assets/imgs/icons/physicalIcon.png" alt="">
+              <h1 id="damageAmountVarlet">{{specialDamage}}</h1>
+            </section>
+          </section>
+        </transition>
 
         <transition appear
             type="animation"
@@ -86,7 +104,9 @@
                 red : redShine, 
                 green : greenShine,
                 purple : purpleShine,
+                blue: blueShine,
                 gold : goldShine,
+                yellow: yellowShine
               }"
             >
             </section>  
@@ -100,6 +120,14 @@
             <section class="armorUp" v-if="name === 'swordsman' && goldShine">
               <img src="../assets/imgs/icons/armorIcon.png" alt="">
               <h1>2</h1>
+            </section>
+
+             <section class="variagate" v-if="name === 'mage' && blueShine">
+              <img src="../assets/imgs/icons/magicalIcon.png" alt="">
+            </section>
+             
+            <section class="backstab" v-if="name === 'varlet' && yellowShine">
+              <img src="../assets/imgs/icons/physicalIcon.png" alt="">
             </section>
           </transition>
 
@@ -124,6 +152,7 @@
       :armor="armor"
       :attack="attack"
       :attackImage="attackTypeImg"
+      :who="'player'"
       />
 
 </section>
@@ -141,6 +170,7 @@ export default {
   },
   props: [
     'who',
+    'enemy',
     'name',
     'portrait',
     'health',
@@ -155,6 +185,8 @@ export default {
     'monsterisAttacking',
     'isDead',
     'statSide',
+    'specialDamage',
+    'specialDamageAnimation',
     'enemyAttackType',
     'enemyAttackTypeImage',
     'enemyAttackDamage',
@@ -165,6 +197,8 @@ export default {
     'greenShine',
     'purpleShine',
     'goldShine',
+    'blueShine',
+    'yellowShine'
   ],
   methods: {
     wholeNumber(value) {
@@ -254,6 +288,7 @@ export default {
   top:115px;
 }
 
+
 .armorUp h1 {
   color:black;
   position:absolute;
@@ -266,6 +301,52 @@ export default {
 .armorUp img {
   width:200px;
   filter: drop-shadow(-1px 2px 5px blue) invert(1);
+}
+
+.variagate, .backstab {
+  width:100px;
+  position:absolute;
+  top:115px;
+}
+
+.variagate img {
+  width:200px;
+  filter: drop-shadow(-1px 2px 5px orange) invert(1);
+}
+
+.backstab img {
+  width:200px;
+  filter: drop-shadow(-1px 2px 5px violet) invert(1);
+}
+
+#mageSpecial img {
+  height:200px;
+  width:200px;
+  position:relative;
+  top:120px;
+  filter: drop-shadow(-1px 2px 5px blue) invert(1);
+}
+
+#varletSpecial img {
+  height:200px;
+  width:200px;
+  position:relative;
+  top:120px;
+  filter: drop-shadow(-1px 2px 5px violet) invert(1);
+}
+
+#damageAmountMage {
+  z-index:9999;
+  position:relative;
+  top:-80px;
+  font-size:40px;
+}
+
+#damageAmountVarlet {
+  z-index:9999;
+  position:relative;
+  top:-96px;
+  font-size:40px;
 }
 
 .red {
@@ -286,6 +367,14 @@ export default {
 
 .gold {
     background: linear-gradient(0deg, rgb(255, 217, 0) 0%, rgba(255,192,0,0) 100%);
+}
+
+.blue {
+    background: linear-gradient(0deg, rgb(0, 132, 255) 0%, rgba(255,192,0,0) 100%);
+}
+
+.yellow {
+     background: linear-gradient(0deg, rgb(238, 255, 0) 0%, rgba(255,192,0,0) 100%);
 }
 
 .damagedOverlay {
