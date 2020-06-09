@@ -7,7 +7,8 @@
             <section class="center"></section>
             <section 
             :style="{ width: healthBar + '%' }"
-            class="greenBar"
+            class="barSize"
+            :class="{ 'greenBar': healthBarAbove, 'redBar': !healthBarAbove }"
             >
             </section>
         </section>
@@ -16,8 +17,9 @@
         <section class="bar" id="bar2">
             <section class="center"></section>
             <section 
-            :style="{ width: armorBar + '%' }"
-            class="greenBar"
+            :style="{ width: playerAttackVsArmor + '%' }"
+            class="barSize"
+            :class="{ 'greenBar': attackBarAbove, 'redBar': !attackBarAbove }"
             >
             </section>
         </section>
@@ -26,8 +28,9 @@
         <section class="bar" id="bar3">
             <section class="center"></section>
             <section 
-            :style="{ width: attackBar + '%' }"
-            class="greenBar"
+            :style="{ width: playerArmorVsAttack + '%' }"
+            class="barSize"
+            :class="{ 'greenBar': defendBarAbove, 'redBar': !defendBarAbove }"
             ></section>
         </section>
     </div>
@@ -42,9 +45,21 @@ import { mapGetters, mapState } from 'vuex';
         computed: {
              ...mapGetters('gameData/', {
                  healthBar: 'healthBar',
-                 armorBar: 'armorBar',
-                 attackBar: 'attackBar'
+                 playerAttackVsArmor: 'playerAttackVsArmor',
+                 playerArmorVsAttack: 'playerArmorVsAttack'
              }),
+             healthBarAbove: function() {
+                 if (this.healthBar > 49) return true;
+                 else if (this.healthBar < 50 ) return false;
+             },
+             attackBarAbove: function() {
+                 if (this.playerAttackVsArmor > 49) return true;
+                 else if (this.playerAttackVsArmor < 50 ) return false;
+             },
+             defendBarAbove: function() {
+                 if (this.playerArmorVsAttack > 49) return true;
+                 else if (this.playerArmorVsAttack < 50 ) return false;
+             },
         },
     }
 </script>
@@ -56,11 +71,20 @@ import { mapGetters, mapState } from 'vuex';
     width:200px;
     height:8px;
 }
-.greenBar {
-    background: rgb(26, 230, 145);
+
+.barSize {
     height:8px;
     transition: width 1s ease-in-out;
 }
+
+.greenBar {
+    background: rgb(26, 230, 145);
+}
+
+.redBar {
+    background: rgb(240, 8, 8);
+}
+
 .center {
     height:12px;
     width:2px;
