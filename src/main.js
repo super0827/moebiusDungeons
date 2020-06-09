@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import { store } from './store/store'
 import { mapState } from 'vuex'
+import gumroad from './plugins/gumroad.js'
 
 Vue.config.productionTip = false;
 
@@ -22,6 +23,8 @@ export const mixinGlobalState = {
     },
   }
 }
+
+Vue.use(gumroad);
 
 //apply mixinGlobals to the Vue instance
 Vue.mixin(mixinGlobalState);
