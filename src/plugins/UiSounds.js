@@ -7,7 +7,7 @@ const chit = new Howl({
 });
 
 const startBlip = new Howl({
-    src: [require('@/assets/audio/uiSounds/startBlip.ogg')],
+    src: [require('@/assets/audio/uiSounds/startBlip.wav')],
     loop: false,
     volume: 1,
 });
