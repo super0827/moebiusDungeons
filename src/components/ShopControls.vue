@@ -130,6 +130,7 @@ export default {
           }
         }
         
+        // PLAYS COIN SOUNDS ON BUY
         switch (itemBought.cost) {
           case 1:
             ShopSounds[`oneCoin${roll}`].play()
@@ -147,22 +148,32 @@ export default {
             ShopSounds[`fiveCoin`].play()
             break;
         }
+
+        // RUNS CORRESPONDING EFFECT IN SHOPKEEPDATA.JS 
         this.$store.dispatch('shopkeepData/' + itemBought.effect.action, itemBought.effect.payload)
         itemBought.bought = true;
 
+        // ADDS ICON TO PLAYERS INVENTORY IF THEY'RE TEMPORARY OR PERMANENT
         if(itemBought.type === 'temporary' || itemBought.type === 'permanent') {
           this.$store.commit('playerData/addToInventory', itemBought, {root:true})
+          console.log(`added ${itemBought.name} to inventory`)
         }
 
+        // SUBTRACTS COST OF ITEM FROM PLAYERS COINS
         this.$store.commit('playerData/buyItem', itemBought.cost)
-      } else {
+      } 
+      
+      else {
+        //TOGGLES ITEMS BOUGHT ANIMATION 
         itemBought.noSale = true;
         
         setTimeout(() => {
+        // PLAYS SHOPKEEP SOUND EFFECT FROM SHOPKEEPDATA.JS
         if(this.shopkeep.cantBuy.length > 0){
           this.whosSound[this.shopkeep.cantBuy[0]].play()
           this.shopkeep.cantBuy.shift()
         }
+
         else if (this.shopkeep.cantBuy.length === 0) {
          ShopSounds['cantBuy'].play()
         }
