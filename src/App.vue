@@ -9,6 +9,20 @@
       </section>
 
       <article v-if="debugShow">
+      <p>SCENES</p>
+
+      <section>
+        <section class="flexColumn">
+        <span>SCENE SELECT</span>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
+        </section>
+      </section>
+
       <p>MONSTER</p>
       
       <br>
@@ -18,32 +32,30 @@
       <section>
         <span>HEALTH</span>
         <section>
-        <button @click="$store.commit('playerData/decrement', 'baseHealth')">-</button>
-        <button @click="$store.commit('playerData/increment', 'baseHealth')">+</button> 
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
         </section>
       </section>
      
       <section>
         <span>ARMOR</span>
         <section>
-        <button @click="$store.commit('playerData/decrement', 'baseArmor')">-</button>
-        <button @click="$store.commit('playerData/increment', 'baseArmor')">+</button> 
+        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
         </section>
       </section>
       
       <section>
         <span>ATTACK</span>
         <section>
-        <button @click="$store.commit('playerData/decrement', 'baseAttackMax')">-</button>
-        <button @click="$store.commit('playerData/increment', 'baseAttackMax')">+</button> 
+        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
         </section>
       </section>
       
       <section>
         <span>COINS</span>
         <section>
-        <button @click="$store.commit('playerData/decrement', 'coins')">-</button>
-        <button @click="$store.commit('playerData/increment', 'coins')">+</button> 
         <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
         <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
         </section>
