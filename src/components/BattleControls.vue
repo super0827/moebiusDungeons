@@ -33,7 +33,7 @@
 
     <h3 @mouseenter="UiSounds.chit.play()" 
     :class="{'striked' : turnTailUsed || combatLocked }" 
-    @click="turnTail()">Turn Tail</h3>
+    @click="TURN_TAIL()">Turn Tail</h3>
 
 </section>
 </template>
