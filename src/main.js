@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { store } from './store/store'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import gumroad from './plugins/gumroad.js'
 
 Vue.config.productionTip = false;
@@ -15,6 +15,7 @@ export const mixinGlobalState = {
       isEntering: state => state.gameData.isEntering,
       helper: state => state.gameData.helper,
       currentMusic: state => state.musicData.music,
+      combatLocked: state => state.gameData.combatLocked,
     }),
   },
   methods: {
