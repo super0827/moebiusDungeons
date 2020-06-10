@@ -36,8 +36,6 @@
         :attackTypeImg="playerAttackTypeImage"
         :coins="playerCoins"
 
-        :inventory="playerInventory"
-
         :isHurt="playerisHurt"
         :isBlocking="playerisBlocking"
         :isAttacking="playerisAttacking"
@@ -204,7 +202,6 @@ export default {
             playerHealth: 'calcHealth',
             playerArmor: 'calcArmor',
             playerAttackMax: 'calcAttackMax',
-            playerInventory: 'inventory',
         }),
         ...mapGetters('monsterData', {
             monsterLog: 'monsterLog',
