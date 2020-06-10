@@ -150,16 +150,6 @@
           />
         </h1>
       </section>
-
-      <section class="inventory">
-        <section 
-          v-for="items in inventory"
-          :key="items.name"
-          >
-          <img :src="items.icon" alt="">
-        </section>
-      </section>
-
   </section>
 
       <character-stats v-if="who === 'player'"
