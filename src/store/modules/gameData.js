@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash.shuffle'
 
 const state = () => ({
-    phase: "ShopPhase",
+    phase: "DungeonPhase",
     isEntering: true,
     helper: false,
     duration: 1000,
@@ -58,7 +58,8 @@ const getters = {
         if (monster <= 0) return 100
         else if (player <= 1) return 5
         else if (rootState['monsterData'].info.attackType === 'magical') return 5;
-        else return (player / monster) * 100
+        else if ((player / monster) * 100 >= 100) return 100;
+        else return (player / monster) * 100;
     },
 }
 
