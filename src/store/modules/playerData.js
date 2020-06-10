@@ -1,4 +1,5 @@
 import PlayerSounds from '@/plugins/PlayerSounds.js'
+import UiSounds from '@/plugins/UiSounds.js'
 
 const state = () => ({
     info:  {
@@ -7,12 +8,14 @@ const state = () => ({
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
       description1:"Slicing and Dicing",
       description2:"Bruiser class, high damage, good armor, high health.", 
-      coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
+      coins:99, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
       special: "en'garde",
       specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
+
+    playerLock: false,
     mettle: 1,
     permenantTraits: [],
     temporaryTraits: [],
@@ -43,9 +46,11 @@ const mutations = {
   addToInventory(state, payload) {
     if(payload.type === 'temporary') {
       state.temporaryTraits.push(payload);
+      console.log(payload)
     }
     else if (payload.type === "permanent") {
       state.permenantTraits.push(payload);
+      console.log(payload)
     }
   },
   mutate(state, payload) {
@@ -56,12 +61,6 @@ const mutations = {
   },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
-  },
-  increment(state, payload) {
-    state.info[payload]++
-  },
-  decrement(state, payload) {
-    state.info[payload]--
   },
   reduceMettle(state) {
     state.mettle--
@@ -81,6 +80,7 @@ const mutations = {
   buyItem(state, payload) {
     state.info.coins -= payload
   },
+
   //SHOPKEEPER MUTATIONS
   heal(state, payload) {
     state.info.baseHealth += payload
@@ -149,7 +149,8 @@ const getters = {
     return Math.floor(getters.calcAttackMax - (getters.calcAttackMax / 4));
   },
   inventory: (state, getters) => {
-    return state.temporaryTraits.concat(state.permenantTraits)
+    let fullInventory = state.temporaryTraits.concat(state.permenantTraits);
+    return fullInventory;
   }
 }
 
@@ -162,7 +163,6 @@ const actions = {
     }
   },
   ROLL_DAMAGE({commit, state, getters}) {
-    commit('gameData/toggle', {property:'combatLocked'}, {root: true});
     const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
     commit('mutate', {property:'thisDamage', with:randomRoll})
     let randomAttackSound = Math.floor(Math.random() * (3) + 1)
@@ -170,60 +170,63 @@ const actions = {
       PlayerSounds['playerMelee' + randomAttackSound].play();
     }
   },
-  TRADE_BLOWS({dispatch, getters}){
-    dispatch('ROLL_DAMAGE')
-    .then(() => { dispatch('DEAL_DAMAGE') })
-    .then(() => {
-      dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
-    })
-    .then(() => {
-      setTimeout(() => {
-        dispatch('monsterData/TRADE_BLOWS', null, {root:true})
-      },1500)
-    })
+  TRADE_BLOWS({dispatch, commit, getters, rootState}){
+      //LOCK COMBAT
+      if (!rootState.gameData.combatLocked) {
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        dispatch('ROLL_DAMAGE')
+        .then(() => { dispatch('DEAL_DAMAGE') })
+        .then(() => {
+          setTimeout(() => {
+            dispatch('monsterData/TRADE_BLOWS', null, {root:true})
+          },1500)
+        })
+      }
   },
   LOG_UPDATE({commit, state}, payload) {
     commit('addToLog', {id:state.logNum + 'player', message:payload});
     commit('incrementLog')
   },
-  DEAL_DAMAGE({commit, getters}) {
-    return new Promise((resolve) => {
+  DEAL_DAMAGE({commit, dispatch, getters}) {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
+        dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
         commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
       }
       else if(getters.thisAdjDamage <= 0) {
+        dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
         commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
         commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
       }
-    })
   },
   RUN_SPECIAL({state, commit, getters, dispatch}){
+
     if (state.mettle > 0){
+      // LOCK COMBAT
+      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      commit('toggleAnimation', {property: 'portEffect'})
+
       if(state.info.name === 'swordsman') {
-        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-        commit('toggleAnimation', {property: 'portEffect'})
         commit('toggleAnimation', {property: 'goldShine'})
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
         PlayerSounds.armorUp.play();
+        dispatch('LOG_UPDATE', `+2 ARM`);
       }
       else if (state.info.name === 'mage') {
-        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-        commit('toggleAnimation', {property: 'portEffect'})
         commit('toggleAnimation', {property: 'blueShine'})
         dispatch('DEAL_SPECIAL_DAMAGE', 12)
         PlayerSounds.variagate.play();
+        dispatch('LOG_UPDATE', `VARIAGATE DEALT 12 DAMAGE`);
       }
       else if (state.info.name === 'varlet') {
-        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
-        commit('toggleAnimation', {property: 'portEffect'})
         commit('toggleAnimation', {property: 'yellowShine'})
         dispatch('DEAL_SPECIAL_DAMAGE', getters.varletCrit)
-        console.log(getters.varletCrit)
+        PlayerSounds.backstab.play();
+        dispatch('LOG_UPDATE', `BACKSTAB DEALT ${getters.varletCrit} DAMAGE`);
       }
 
       commit('reduceMettle');
@@ -233,7 +236,6 @@ const actions = {
         }, 1200)
 
     }
-    commit('decrement', 'mettle')
   },
   DEAL_SPECIAL_DAMAGE({commit, getters, dispatch}, dealtDamage) {
     commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
@@ -247,17 +249,56 @@ const actions = {
     }, 1200)
 
   },
-  TURN_TAIL(context){
-    //calculate success chance
-      //roll die for player and monster
-      //add their health to the roll
-      //display in the player log
-    //if player's roll is higher then they get away
-    //run escape
+  TURN_TAIL({commit, dispatch, state, rootState}){
+      if(!rootState.gameData.turnTailUsed) {
+        // Lock Controls
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        
+        //calculate success chance
+        let monsterRoll = Math.floor(Math.random()*6);
+        let playerRoll = Math.floor(Math.random()*6);
+        let monsterCalc = monsterRoll + rootState.monsterData.info.baseHealth
+        let playerCalc = playerRoll + state.info.baseHealth
+        
+        UiSounds.escape.play();
+        
+        // Updating Log
+        dispatch('LOG_UPDATE', `YOU'RE TURNING TAIL`);
+        dispatch('monsterData/LOG_UPDATE', `THE MONSTER LUNGES`, {root:true})
+        
+        // Initial Turn Tail Ambiguous Purple Animation
+        commit('toggleAnimation', {property: 'portEffect'})
+        commit('toggleAnimation', {property: 'purpleShine'})
+        commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+        commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
+        
+        setTimeout(() => {
+          //PLAYER ESCAPES
+          if(monsterCalc >= playerCalc) {
+            dispatch('RESET_ANIMATIONS');
+            dispatch('monsterData/RESET_ANIMATIONS', null, {root:true});
+            dispatch('ESCAPE')
+          }
+          //PLAYER CANT ESCAPE
+          else {
+            dispatch('RESET_ANIMATIONS');
+            dispatch('monsterData/RESET_ANIMATIONS', null, {root:true});
+            dispatch('CAUGHT')
+          }
+        },1200)
+      } 
+    },
+  ESCAPE({state, commit, getters, dispatch}){
+    commit('toggleAnimation', {property: 'portEffect'})
+    commit('toggleAnimation', {property: 'greenShine'})
+    setTimeout(() => {
+      commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})
+    }, 1200)
   },
-  ESCAPE(context){
-    //animate escape
-    //change phase
+  CAUGHT({commit, dispatch}) {
+    commit('gameData/mutate', {property:'turnTailUsed', with:true}, {root: true});
+    dispatch('LOG_UPDATE', `CAN'T GET AWAY!`);
+    dispatch('monsterData/TRADE_BLOWS', null, {root:true})
   },
   RESET_ANIMATIONS({state,commit}){
     for (let item in state.animations){
