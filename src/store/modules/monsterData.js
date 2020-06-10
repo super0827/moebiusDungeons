@@ -566,9 +566,6 @@ const actions = {
       dispatch('CHECK_HP')
       .then(()=>{ dispatch('ROLL_DAMAGE') })
       .then(() => { dispatch('DEAL_DAMAGE') })
-      .then (() => {  
-        dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`) 
-      })
       .then(() => {
         setTimeout(() => {
           dispatch('RESET_ANIMATIONS')
@@ -584,12 +581,14 @@ const actions = {
   DEAL_DAMAGE({commit, getters, dispatch}) {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
+        dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`) 
         commit('playerData/toggleAnimation', {property: 'hurt'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('playerData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
       }
       else if(getters.thisAdjDamage <= 0) {
+        dispatch('LOG_UPDATE', `ATTACK MISSED`) 
         commit('playerData/toggleAnimation', {property: 'blocking'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'purpleShine'}, {root:true})
