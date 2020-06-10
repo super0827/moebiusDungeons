@@ -13,11 +13,11 @@ export default {
         bkg[this.bkgMusic].fade(0,1,2000);
 
     },
-    destroyed() {
+    beforeDestroy() {
         bkg[this.bkgMusic].fade(1,0,2000);
-        bkg[this.bkgMusic].on('fade', () => {
-            bkg[this.bkgMusic].stop()
-        })
+        // bkg[this.bkgMusic].on('fade', () => {
+        //     bkg[this.bkgMusic].stop()
+        // })
     },
     computed: {
         ...mapGetters( 'musicData', {
