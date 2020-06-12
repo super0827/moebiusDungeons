@@ -1,7 +1,7 @@
 import { shuffle } from 'lodash.shuffle'
 
 const state = () => ({
-    phase: "DungeonPhase",
+    phase: "ShopPhase",
     isEntering: true,
     helper: false,
     duration: 1000,
