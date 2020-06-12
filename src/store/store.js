@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 
 import gameData from './modules/gameData'
-import musicData from './modules/musicData'
 import playerData from './modules/playerData'
 import monsterData from './modules/monsterData'
 import shopkeepData from './modules/shopkeepData'
@@ -47,7 +46,6 @@ export const store = new Vuex.Store({
   // plugins: process.env.NODE_ENV !== 'production' ? [logger] : [],
   modules: {
     gameData,
-    musicData,
     playerData,
     monsterData,
     shopkeepData,
