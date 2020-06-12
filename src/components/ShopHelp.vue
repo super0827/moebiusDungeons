@@ -1,8 +1,7 @@
 <template>
 <section>
     <section class="helpModule">
-        <h1 @mouseenter="$sound.play('chit')" @click="$emit('close')" class="close">X</h1>
-
+        <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
 
         <h1 class="title">Shop Helper</h1>
         
@@ -84,8 +83,15 @@
 </template>
 
 <script>
+import UiSounds from '@/plugins/UiSounds.js'
+
 export default {
   name: 'BattleHelp',
+  data() {
+      return {
+        UiSounds : UiSounds,
+      }
+  },
 }
 </script>
 
