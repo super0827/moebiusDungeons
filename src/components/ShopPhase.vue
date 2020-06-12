@@ -9,7 +9,7 @@
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="toggleHelp()" @mouseenter="$sound.play('chit')" id="shopHelp">SHOP HELP</h1>
+        <h1 @click="toggleHelp()" @mouseenter="UiSounds.chit.play()" id="shopHelp">SHOP HELP</h1>
     </transition>
 
     <section class="flexRow">
@@ -65,6 +65,8 @@ import CharacterToken from "./CharacterToken.vue";
 import ShopPortrait from "./ShopPortrait.vue";
 import ShopHelp from "./ShopHelp.vue";
 
+import UiSounds from "../plugins/UiSounds"
+
 import helperToggles from './mixins/helperToggles';
 import gameAnimations from './mixins/gameAnimations';
 import gameMusic from './mixins/gameMusic';
@@ -82,6 +84,7 @@ export default {
     data() {
         return {
             music:['shopMusic1', 'shopMusic2', 'shopMusic3'],
+            UiSounds: UiSounds,
         }
     },
     computed: {
