@@ -477,8 +477,8 @@ const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
-    coinMultiply(state, payload) {
-      state.info.coins *= payload
+    doubleCoins(state) {
+      state.info.coins *= 2
     },
     toggleAnimation(state, payload) {
       state.animations[payload.property] = !state.animations[payload.property];
@@ -498,7 +498,13 @@ const mutations = {
         let roster = state.roster;
         state.info = state.variants[roster];
         console.log(`new monster is ${state.variants[roster].name}`)
-    }
+    },
+    changeStats(state, payload){
+      if (payload.operator === 'add') state.info[payload.stat] += payload.value;
+      else if (payload.operator === 'minus') state.info[payload.stat] -= payload.value;
+      else if (payload.operator === 'multiply') state.info[payload.stat] *= payload.value;
+      else if (payload.operator === 'divide') state.info [payload.state] /= payload.value;
+    },
 }
 
 const getters = {
@@ -543,6 +549,7 @@ const actions = {
         let randomTrack = Math.floor(Math.random() * (3) + 1)
         UiSounds['victory' + randomTrack].play()
         commit('playerData/addCoins', state.info.coins, {root:true})
+
         setTimeout(() => {
           commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
         }, 1500)
@@ -570,7 +577,6 @@ const actions = {
         setTimeout(() => {
           dispatch('RESET_ANIMATIONS')
           dispatch('playerData/RESET_ANIMATIONS', null, {root: true})
-          commit('gameData/toggle', {property:'combatLocked'}, {root: true});
         },1400)
       })
   },
