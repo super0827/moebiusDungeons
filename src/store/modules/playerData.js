@@ -59,6 +59,12 @@ const mutations = {
   mutateInfo(state, payload) {
     state.info[payload.property] = payload.with;
   },
+  changeStats(state, payload){
+    if (payload.operator === 'add') state.info[payload.stat] += payload.value;
+    else if (payload.operator === 'minus') state.info[payload.stat] -= payload.value;
+    else if (payload.operator === 'multiply') state.info[payload.stat] *= payload.value;
+    else if (payload.operator === 'divide') Math.ceil(state.info [payload.state] /= payload.value);
+  },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
   },
@@ -157,6 +163,8 @@ const getters = {
 const actions = {
   CHECK_HP({state, commit}){
     if(state.info.health > 0){
+      //unlock combat
+      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
     }
     else if (state.info.health <= 0) {
       commit('toggleAnimation', {property: 'isDead'})
