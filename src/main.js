@@ -14,7 +14,6 @@ export const mixinGlobalState = {
     ...mapState({
       isEntering: state => state.gameData.isEntering,
       helper: state => state.gameData.helper,
-      currentMusic: state => state.musicData.music,
       combatLocked: state => state.gameData.combatLocked,
     }),
   },
