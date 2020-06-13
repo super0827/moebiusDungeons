@@ -63,7 +63,7 @@ export default {
         ...mapState('playerData', {
             special: state => state.info.special,
             mettleImg: state => state.info.mettleImg,
-            mettle: 'mettle'
+            mettle: state => state.info.mettle
         }),
     },
     methods: {

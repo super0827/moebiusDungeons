@@ -2,6 +2,8 @@
 <section class="shop">
   <!-- Shop Title Description -->
   
+    <special-bar/>
+
     <!-- Full Item Roll -->
     <section
     v-for="buyable in shopInventory"
@@ -61,8 +63,13 @@ import MerchantSounds from '@/plugins/MerchantSounds.js'
 import GraverobberSounds from '@/plugins/GraverobberSounds.js'
 import WitchSounds from '@/plugins/WitchSounds.js'
 
+import SpecialBar from '@/components/SpecialBar'
+
 export default {
   name: 'ShopControls',
+  components: {
+    SpecialBar,
+  },
   data() {
     return {
       shake: false,

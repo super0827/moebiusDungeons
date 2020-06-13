@@ -56,8 +56,16 @@
       <section>
         <span>COINS</span>
         <section>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
         <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
+        </section>
+      </section>
+      
+      <section>
+        <span>METTLE</span>
+        <section>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
+        <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
         </section>
       </section>
 

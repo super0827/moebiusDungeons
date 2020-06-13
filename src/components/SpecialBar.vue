@@ -15,7 +15,7 @@ import { mapGetters, mapState } from 'vuex';
         name: 'StatBars',
         computed: {
              ...mapState('playerData/', {
-                mettle: 'mettle',
+                mettle: state => state.info.mettle,
                 mettleImg: state => state.info.mettleImg,
              }),
         },

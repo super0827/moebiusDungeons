@@ -11,12 +11,12 @@ const state = () => ({
       coins:99, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
+      mettle: 1,
       special: "en'garde",
       specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
 
     playerLock: false,
-    mettle: 1,
     permenantTraits: [],
     temporaryTraits: [],
     tempArmor:0,
@@ -63,7 +63,15 @@ const mutations = {
     if (payload.operator === 'add') state.info[payload.stat] += payload.value;
     else if (payload.operator === 'minus') state.info[payload.stat] -= payload.value;
     else if (payload.operator === 'multiply') state.info[payload.stat] *= payload.value;
-    else if (payload.operator === 'divide') Math.ceil(state.info [payload.state] /= payload.value);
+    else if (payload.operator === 'divide') Math.ceil(state.info[payload.stat] /= payload.value);
+  },
+  transferStat(state, payload){
+    if(payload.operator === 'divide'){
+      let statModified = Math.ceil(state.info[payload.fromStat] / payload.value);
+      let transferAmount = state.info[payload.fromStat] - statModified;
+      state.info[payload.fromStat] = statModified;
+      state.info[payload.toStat] += transferAmount;
+    }
   },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
@@ -116,11 +124,6 @@ const mutations = {
   halveArmor(state) {
     state.info.baseArmor = Math.floor(state.info.baseArmor / 2)
   },
-  bloodRitual(state) {
-    let healththird = Math.ceil(state.info.baseHealth / 3);
-    state.info.baseHealth = Math.ceil(state.info.baseHealth / 3)
-    state.info.baseAttack += healththird;
-  }
 }
 
 const getters = {
@@ -213,7 +216,7 @@ const actions = {
   },
   RUN_SPECIAL({state, commit, getters, dispatch}){
 
-    if (state.mettle > 0){
+    if (state.info.mettle > 0){
       // LOCK COMBAT
       commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       commit('toggleAnimation', {property: 'portEffect'})
@@ -237,7 +240,7 @@ const actions = {
         dispatch('LOG_UPDATE', `BACKSTAB DEALT ${getters.varletCrit} DAMAGE`);
       }
 
-      commit('reduceMettle');
+      commit('changeStats', {stat:'mettle', value:1, operator:'minus'});
         setTimeout(() => {
           commit('gameData/toggle', {property:'combatLocked'}, {root: true});
           dispatch('RESET_ANIMATIONS');

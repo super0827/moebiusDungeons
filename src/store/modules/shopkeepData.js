@@ -1,5 +1,6 @@
 import shuffle from 'lodash.shuffle'
 import ShopSounds from '@/plugins/ShopSounds.js'
+import playerData from './playerData';
 
 
 const state = () => ({
@@ -140,7 +141,7 @@ const state = () => ({
               name: 'unlucky trinket', 
               cost: 3, 
               description: "+4 ATK | -2 ARM", 
-              effect: {action:'MULTI_STATS',
+              effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
                 {stat:'baseAttackMax', value:4, operator:'add'},
                 {stat:'baseArmor', value:2, operator:'minus'},
@@ -229,18 +230,16 @@ const state = () => ({
             icon: require("@/assets/imgs/icons/items/merchant/sewingKit.png")
           },
           
-
-          //METTLE CHANGE IMPLEMENTATION
           {
             type:'instant', 
             bought: false, 
             noSale: false, 
             name: 'Mettle Poultice', 
             cost: 1, 
-            description: '+2 ATK', 
+            description: '+1 METTLE', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'baseAttackMax', value:2, operator:'add'},
+              {stat:'mettle', value:1, operator:'add'},
             ]},  
             icon: require("@/assets/imgs/icons/items/merchant/poultice.png")
           },
@@ -278,11 +277,11 @@ const state = () => ({
             bought: false, 
             noSale: false, 
             name: 'Mettle Draght', 
-            cost: 3, 
-            description: '+5 ATK', 
+            cost: 2, 
+            description: '+2 METTLE', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'baseAttackMax', value:5, operator:'add'},
+              {stat:'mettle', value:2, operator:'add'},
             ]},  
             icon: require("@/assets/imgs/icons/items/merchant/draught.png")
           },
@@ -318,10 +317,10 @@ const state = () => ({
             bought: false, 
             noSale: false, 
             name: 'Mettle Vulnerary', 
-            cost: 5, description: '+8 ATK', 
+            cost: 3, description: '+3 METTLE', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'baseAttackMax', value:8, operator:'add'},
+              {stat:'mettle', value:3, operator:'add'},
             ]}, 
             icon: require("@/assets/imgs/icons/items/merchant/vulnary.png")
           },
@@ -434,7 +433,11 @@ const state = () => ({
             name: 'ancient rune', 
             cost: 3, 
             description: '+3 ATK | +2 ARM', 
-            effect: {action:"MULTI_STATS", payload: {attack:3, armor:2}}, 
+            effect: {action:"CHANGE_PLAYER_STATS",
+            payload:[
+              {stat:'baseAttackMax', value:3, operator:'add'},
+              {stat:'baseArmor', value:2, operator:'add'},
+            ]}, 
             icon: require("@/assets/imgs/icons/items/witch/ancientRune.png")
           },
 
@@ -477,10 +480,10 @@ const state = () => ({
             name: 'blood ritual', 
             cost: 5, 
             description: 'Thirds your HP | + lost HP to your ATK', 
-            effect: {action:"CHANGE_PLAYER_STATS",
-            payload:[
-              {stat:'baseHealth', value:3, operator:'divide'},
-            ]},
+            effect: {action:"TRANSFER_PLAYER_STAT",
+            payload:{
+              fromStat:'baseHealth', toStat:'baseAttackMax', value:3, operator:'divide'},
+            },
             icon: require("@/assets/imgs/icons/items/witch/bloodRitual.png")
           },
         ],
@@ -499,7 +502,7 @@ const state = () => ({
 const mutations = {
   newShopkeep(state) {
     // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-    const randomPick = 0;
+    const randomPick = 1;
     state.info = state.variants[randomPick]
     const inventory = shuffle(state.variants[randomPick].items);
     // state.inventory = inventory.slice(0, 3)
@@ -538,32 +541,19 @@ const actions ={
       dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
     }, 1200)
   },
-  DEMON_RING({commit, dispatch}, payload) {
-    commit('playerData/physicalAttackType', null, {root:true})
-    commit('playerData/halveArmor', null, {root:true})
-    commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
-    commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
-    setTimeout(() => {
-      dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
-    }, 1200)
-  },
   CHANGE_PLAYER_STATS({commit}, payload) {
       for(const slots in payload) {
         commit('playerData/changeStats', {stat:payload[slots].stat, value:payload[slots].value, operator:payload[slots].operator}, {root:true})
       }
+   },
+   TRANSFER_PLAYER_STAT({commit}, payload){
+      commit('playerData/transferStat', {fromStat:payload.fromStat, toStat:payload.toStat, value:payload.value, operator:payload.operator}, {root:true})
    },
    CHANGE_MONSTER_STATS({commit}, payload){
     for(const slots in payload) {
       commit('monsterData/changeStats', {stat:payload[slots].stat, value:payload[slots].value, operator:payload[slots].operator}, {root:true})
     }
    },
-   DETRIMENT_BANGLE({commit}, payload) {
-    commit('playerData/addArmor', payload.armor, {root:true})
-    commit('playerData/halveHP', null, {root:true})
-   },
-   BLOOD_RITUAL({commit}) {
-     commit('playerData/bloodRitual', null, {root:true});
-   }
 }
 
 export default {

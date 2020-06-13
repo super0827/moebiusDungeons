@@ -22,7 +22,6 @@ export default {
         oldMusic = pickedMusic;
         bkg[oldMusic].fade(1,0,2000);
         bkg[oldMusic].on('fade', () => {
-            console.log('stopped',counter, oldMusic)
             bkg[oldMusic].stop();
         })
     },

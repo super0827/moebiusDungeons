@@ -40,12 +40,11 @@ const getters = {
         const player = rootGetters['playerData/calcAttackMax']
         const monster = rootGetters['monsterData/calcArmor']
 
-        const reducedDamage = player - monster;
+        const armPool = player + monster;
 
-        if (reducedDamage <= 0) return 5
-        else if (monster === 0) return 100
-        else if (monster > player) return 5
-        else return (reducedDamage * 10)
+       if (monster <= 0) return 100;
+       else if (player <= 0) return 5;
+       else return (player / armPool) * 100
     },
 
     //ATTACK BAR CALCULATOR
