@@ -150,6 +150,8 @@
           />
         </h1>
       </section>
+
+      <inventory-bar v-if="who === 'player'"/>
   </section>
 
       <character-stats v-if="who === 'player'"
@@ -166,12 +168,14 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import CharacterStats from "./CharacterStats.vue";
+import InventoryBar from "./InventoryBar.vue";
 
 export default {
   name: 'CharacterToken',
   components: {
     AnimatedNumber,
-    CharacterStats
+    CharacterStats,
+    InventoryBar
   },
   props: [
     'who',
@@ -186,7 +190,6 @@ export default {
     'coins',
 
     'warning',
-    'inventory',
 
     'isHurt',
     'isBlocking',
@@ -219,14 +222,6 @@ export default {
 </script>
 
 <style scoped>
-
-.inventory {
-  height:50px;
-  width:200px;
-  margin-top:10px;
-  background:red;
-}
-
 #name {
   text-transform:uppercase;
 }

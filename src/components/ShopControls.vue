@@ -163,7 +163,6 @@ export default {
         // ADDS ICON TO PLAYERS INVENTORY IF THEY'RE TEMPORARY OR PERMANENT
         if(itemBought.type === 'temporary' || itemBought.type === 'permanent') {
           this.$store.commit('playerData/addToInventory', itemBought, {root:true})
-          console.log(`added ${itemBought.name} to inventory`)
         }
 
         // SUBTRACTS COST OF ITEM FROM PLAYERS COINS

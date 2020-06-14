@@ -46,11 +46,9 @@ const mutations = {
   addToInventory(state, payload) {
     if(payload.type === 'temporary') {
       state.temporaryTraits.push(payload);
-      console.log(payload)
     }
     else if (payload.type === "permanent") {
       state.permenantTraits.push(payload);
-      console.log(payload)
     }
   },
   mutate(state, payload) {
@@ -107,12 +105,6 @@ const mutations = {
   },
   addAttack(state, payload) {
     state.info.baseAttackMax += payload
-  },
-  addTempAbility(state, payload) {
-    state.temporaryTraits.push(payload)
-  },
-  addTempStat(state, payload) {
-    state.payload.where.push(payload.howMuch)
   },
   physicalAttackType(state) {
     state.info.attackType = 'physical';

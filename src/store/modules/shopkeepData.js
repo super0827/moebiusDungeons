@@ -169,8 +169,10 @@ const state = () => ({
               name: 'Demon Ring', 
               cost: 4, 
               description: 'ATK Type = Physical | Havles your ARM | x2 ATK', 
-              effect: {action:'DEMON_RING',
-              payload:{where:'baseAttackMax', shine:'purpleShine'}}, 
+              effect: {action:'CHANGE_PLAYER_STATS',
+              payload:[
+                {stat:'baseAttackMax', shine:'purpleShine'},
+              ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")
             },
             
