@@ -12,11 +12,10 @@ const state = () => ({
       attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
       mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
       mettle: 1,
+      curse:0,
       special: "en'garde",
       specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
-
-    playerLock: false,
     permenantTraits: [],
     temporaryTraits: [],
     tempArmor:0,
@@ -73,9 +72,6 @@ const mutations = {
   },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
-  },
-  reduceMettle(state) {
-    state.mettle--
   },
   incrementLog(state) {
     state.logNum++
@@ -156,13 +152,18 @@ const getters = {
 }
 
 const actions = {
-  CHECK_HP({state, commit}){
-    if(state.info.health > 0){
-      //unlock combat
+  CHECK_HP({state, commit, dispatch}){
+    if(state.info.baseHealth > 0){
+      //UNLOCK COMBAT
       commit('gameData/toggle', {property:'combatLocked'}, {root: true});
     }
-    else if (state.info.health <= 0) {
+    else if (state.info.baseHealth <= 0) {
+      dispatch('RESET_ANIMATIONS')
       commit('toggleAnimation', {property: 'isDead'})
+      PlayerSounds[playerDead].play()
+      setTimeout(() => {
+        commit('gameData/mutate', {property: 'phase', with:'LoseScreen'}, {root:true})
+      }, 1200)
     }
   },
   ROLL_DAMAGE({commit, state, getters}) {
@@ -173,17 +174,19 @@ const actions = {
       PlayerSounds['playerMelee' + randomAttackSound].play();
     }
   },
+  //RUNS WHEN TRADE BLOWS IS CLICKED
   TRADE_BLOWS({dispatch, commit, getters, rootState}){
-      //LOCK COMBAT
       if (!rootState.gameData.combatLocked) {
+        //LOCK COMBAT
         commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+        //ROLL FOR DAMAGE
         dispatch('ROLL_DAMAGE')
-        .then(() => { dispatch('DEAL_DAMAGE') })
-        .then(() => {
-          setTimeout(() => {
-            dispatch('monsterData/TRADE_BLOWS', null, {root:true})
-          },1500)
-        })
+        //DEAL THAT DAMAGE
+        dispatch('DEAL_DAMAGE')
+        //WAIT THEN RUN TRADE BLOWS FOR MONSTERS
+        setTimeout(() => {
+          dispatch('monsterData/TRADE_BLOWS', null, {root:true})
+        },1500)
       }
   },
   LOG_UPDATE({commit, state}, payload) {
@@ -206,9 +209,8 @@ const actions = {
         commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
       }
   },
-  RUN_SPECIAL({state, commit, getters, dispatch}){
-
-    if (state.info.mettle > 0){
+  RUN_SPECIAL({state, commit, getters, dispatch, rootState}){
+    if (state.info.mettle > 0 && !rootState.gameData.combatLocked){
       // LOCK COMBAT
       commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       commit('toggleAnimation', {property: 'portEffect'})
@@ -291,11 +293,13 @@ const actions = {
         },1200)
       } 
     },
-  ESCAPE({state, commit, getters, dispatch}){
+  ESCAPE({commit, dispatch}){
     commit('toggleAnimation', {property: 'portEffect'})
     commit('toggleAnimation', {property: 'greenShine'})
+    dispatch('LOG_UPDATE', `YOU GOT AWAY.`);
     setTimeout(() => {
-      commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})
+      commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
+      dispatch('RESET_ANIMATIONS')
     }, 1200)
   },
   CAUGHT({commit, dispatch}) {
