@@ -24,6 +24,13 @@
       </section>
 
       <p>MONSTER</p>
+      <section>
+        <span>HEALTH</span>
+        <section>
+          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+        </section>
+      </section>
       
       <br>
 
@@ -32,7 +39,7 @@
       <section>
         <span>HEALTH</span>
         <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
           <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
         </section>
       </section>
