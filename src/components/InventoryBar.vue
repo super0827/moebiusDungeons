@@ -1,4 +1,5 @@
 <template>
+    <transition name="fade" mode="out-in">
     <div class="inventory">
         <section v-for="items in inventory" :key="items.name">
             <span class="tooltip">
@@ -9,6 +10,7 @@
             </span>
         </section>
     </div>
+    </transition>
 </template>
 
 <script>
