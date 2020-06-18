@@ -8,7 +8,7 @@
         <h3>DEBUG BAR</h3> 
       </section>
 
-      <article v-if="debugShow">
+      <article class="debugContent" v-if="debugShow">
       <p>SCENES</p>
 
       <section>
@@ -290,5 +290,10 @@ contact@seanyager.com
   justify-content:center;
   padding:1px;
   margin:3px;
+}
+
+.debugContent { 
+  height:500px;
+  overflow-y: scroll;
 }
 </style>
