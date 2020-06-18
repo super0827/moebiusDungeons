@@ -221,6 +221,7 @@ export default {
     },
     destroyed(){
         this.$store.commit('monsterData/newMonster');
+        
     }
 }
 </script>
