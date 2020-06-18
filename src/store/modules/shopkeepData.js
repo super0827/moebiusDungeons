@@ -85,7 +85,7 @@ const state = () => ({
               name: 'boon', 
               cost: 3, 
               description: 'Immune to damage once', 
-              effect: {action:'ADD_TEMPORARY_ABILITY', payload: {ability:'immune', length:1, shine:'greenShine'}},
+              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'immune', length:1, shine:'greenShine'}},
               icon: require("@/assets/imgs/icons/items/cleric/immune2.png")
             },
           ],
@@ -109,7 +109,7 @@ const state = () => ({
               noSale: false, 
               name: 'nacre charm', 
               cost: 1, 
-              description: 'ATK +1 | ARM +1 | HP -5', 
+              description: '+1 ATK | +1 ARM | -5 HP', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
                 {stat:'baseAttackMax', value:1, operator:'add'},
@@ -157,7 +157,7 @@ const state = () => ({
               name: 'hollow bone', 
               cost: 2, 
               description: "+4 ATK for next battle", 
-              effect: {action:'ADD_TEMPORARY_STAT',
+              effect: {action:'ADD_TO_INVENTORY',
               payload:{where:'baseAttackMax', howMuch:4, shine:'redShine'}}, 
               icon: require("@/assets/imgs/icons/items/graverobber/hollowBone.png") 
             },
@@ -183,7 +183,7 @@ const state = () => ({
               name: 'Dessicated Doll', 
               cost: 5, 
               description: 'Revive with 10 HP on death.', 
-              effect: {action:'ADD_TEMPORARY_ABILITY', payload: {ability:'revive', length:9999, shine:'goldShine'}}, 
+              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:9999, shine:'goldShine'}}, 
               icon: require("@/assets/imgs/icons/items/graverobber/dessicatedDoll.png")
             },
           ],
@@ -503,12 +503,12 @@ const state = () => ({
 
 const mutations = {
   newShopkeep(state) {
-    // const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-    const randomPick = 1;
+    const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
+    // const randomPick = 1;
     state.info = state.variants[randomPick]
     const inventory = shuffle(state.variants[randomPick].items);
-    // state.inventory = inventory.slice(0, 3)
-    state.inventory = inventory
+    state.inventory = inventory.slice(0, 3)
+    // state.inventory = inventory
     console.log(`new shopkeep is ${state.variants[randomPick].name}`)
   },
   recordVisit(state) {
@@ -526,19 +526,11 @@ const getters = {
   }
 }
 
-const actions ={
-  ADD_TEMPORARY_ABILITY({commit, dispatch}, payload) {
-    commit('playerData/addTempAbility', payload, {root:true})
+const actions = {
+  ADD_TO_INVENTORY({commit, dispatch}, payload) {
     commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
     commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
-    setTimeout(() => {
-      dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
-    }, 1200)
-  },
-  ADD_TEMPORARY_STAT({commit, dispatch}, payload) {
-    commit('playerData/addTempStat', payload, {root:true})
-    commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
-    commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
+    commit('playerData/addToInventory', payload, {root:true})
     setTimeout(() => {
       dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
     }, 1200)
