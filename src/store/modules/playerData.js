@@ -298,7 +298,7 @@ const actions = {
     commit('toggleAnimation', {property: 'greenShine'})
     dispatch('LOG_UPDATE', `YOU GOT AWAY.`);
     setTimeout(() => {
-      commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
+      commit('gameData/mutate', {property: 'phase', with:'ShopSelect'}, {root:true})
       dispatch('RESET_ANIMATIONS')
     }, 1200)
   },

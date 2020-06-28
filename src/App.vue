@@ -17,6 +17,7 @@
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
@@ -114,9 +115,8 @@ import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
+import ShopSelect from './components/ShopSelect.vue';
 import ShopPhase from './components/ShopPhase.vue';
-
-import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
 
 export default {
@@ -125,8 +125,8 @@ export default {
     StartScreen,
     CharacterSelect,
     DungeonPhase,
+    ShopSelect,
     ShopPhase,
-    WinScreen,
     LoseScreen,
   },
   data() {

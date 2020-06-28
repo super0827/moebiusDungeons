@@ -554,7 +554,7 @@ const actions = {
         commit('playerData/addCoins', state.info.coins, {root:true})
 
         setTimeout(() => {
-          commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
+          commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
         }, 1500)
         return
       }

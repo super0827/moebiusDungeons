@@ -54,6 +54,12 @@ const shopMusic3 = new Howl({
     volume: .3,
 });
 
+const shopSelect = new Howl({
+    src: [require('@/assets/audio/shopAudio/background/gentleCorpBackingPP.mp3')],
+    loop: true,
+    volume: .3,
+});
+
 const loseScreen = new Howl({
     src: [require('@/assets/audio/miscBackground/gameOver.mp3')],
     loop: true,
@@ -72,5 +78,6 @@ export default {
     shopMusic1,
     shopMusic2,
     shopMusic3,
+    shopSelect,
     loseScreen
 };

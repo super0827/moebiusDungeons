@@ -5,6 +5,7 @@ import playerData from './playerData';
 
 const state = () => ({
     info: {type: Object},
+    shopChoice: [],
     inventory: [],
     visited:[],
     variants: [
@@ -502,6 +503,10 @@ const state = () => ({
 })
 
 const mutations = {
+  pickTwoShops(state) {
+    const randomizeShopKeeps = shuffle(state.variants[randomPick].items);
+    state.shopChoice = randomizeShopKeeps.slice(0,2);
+  },
   newShopkeep(state) {
     const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
     // const randomPick = 1;
@@ -509,8 +514,8 @@ const mutations = {
     const inventory = shuffle(state.variants[randomPick].items);
     state.inventory = inventory.slice(0, 3)
     // state.inventory = inventory
-    console.log(`new shopkeep is ${state.variants[randomPick].name}`)
   },
+
   recordVisit(state) {
     state.visited.push(state.info.name)
   }
