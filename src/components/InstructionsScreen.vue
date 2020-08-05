@@ -16,7 +16,7 @@
   </h3>
 
   <h3>
-      Rinse then repeat. Try to make it to the end alive.    
+      Rinse then repeat. How long can you survive?   
   </h3>
 
   <p>

@@ -477,6 +477,9 @@ const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
     },
+    mutateInfo(state, payload) {
+        state.info[payload.property] = payload.with;
+    },
     doubleCoins(state) {
       state.info.coins *= 2
     },
@@ -551,14 +554,13 @@ const actions = {
         commit('playerData/addCoins', state.info.coins, {root:true})
 
         setTimeout(() => {
-          commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
+          commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
         }, 1500)
         return
       }
     })
   },
   ROLL_DAMAGE({commit, state, getters}) {
-      // commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
       commit('mutate', {property:'thisDamage', with:randomRoll})
       let randomAttackSound = Math.floor(Math.random() * (3) + 1)

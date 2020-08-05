@@ -8,7 +8,7 @@
         <h3>DEBUG BAR</h3> 
       </section>
 
-      <article v-if="debugShow">
+      <article class="debugContent" v-if="debugShow">
       <p>SCENES</p>
 
       <section>
@@ -17,6 +17,7 @@
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
+          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
           <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
@@ -24,6 +25,13 @@
       </section>
 
       <p>MONSTER</p>
+      <section>
+        <span>HEALTH</span>
+        <section>
+          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+        </section>
+      </section>
       
       <br>
 
@@ -32,7 +40,7 @@
       <section>
         <span>HEALTH</span>
         <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
           <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
         </section>
       </section>
@@ -107,9 +115,8 @@ import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
+import ShopSelect from './components/ShopSelect.vue';
 import ShopPhase from './components/ShopPhase.vue';
-
-import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
 
 export default {
@@ -118,8 +125,8 @@ export default {
     StartScreen,
     CharacterSelect,
     DungeonPhase,
+    ShopSelect,
     ShopPhase,
-    WinScreen,
     LoseScreen,
   },
   data() {
@@ -283,5 +290,10 @@ contact@seanyager.com
   justify-content:center;
   padding:1px;
   margin:3px;
+}
+
+.debugContent { 
+  height:500px;
+  overflow-y: scroll;
 }
 </style>

@@ -125,9 +125,6 @@ export default {
     destroyed() {
         this.$store.commit('shopkeepData/newShopkeep');
     },
-    created() {
-
-    }
 }
 </script>
 

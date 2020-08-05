@@ -151,7 +151,9 @@
         </h1>
       </section>
 
-      <inventory-bar v-if="who === 'player'"/>
+      <transition name="fade" mode="out-in">
+        <inventory-bar v-if="who === 'player'"/>
+      </transition>
   </section>
 
       <character-stats v-if="who === 'player'"

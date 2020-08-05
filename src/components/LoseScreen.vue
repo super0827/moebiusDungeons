@@ -1,48 +1,48 @@
 <template>
 <section>
-<section id="playerDead" class="hidden">
+<section>
         <section class="animated pulse slower infinite">
             <h2>Death was always lurking.</h2>
-            <h2>These dungeons are dangerous, and rife with challenge.</h2>
+            <h2>These dungeons are dangerous, and rife with infinite challenge.</h2>
         </section>
     </section>
 
     <section class="hidden" id="gameStats">
         
         <h1 class="animated pulse slow">FINAL STATS</h1>
-        <p>You played as a <span id="playerType"></span></p>
+        <p>You played as a {{ name }}.</p>  
 
         <br>
         
         <section id="finalStats">
             <section id="monstersFoughtWrapper">
                 <h2>Monsters Fought:</h2>
-                <p id="monstersFought"></p>
+                <p id="monstersFought">{{ monstersFought }}</p>
             </section>
             
             <section id="totalDamageWrapper">
                 <h2>Total Damage Dealt:</h2>
-                <p id="totalDamage"></p>
+                <p id="totalDamage">{{ totalDamageDealt }}</p>
             </section>
 
             <section id="damageBlockedWrapper">
                 <h2>Damage Blocked:</h2>
-                <p id="damageBlocked"></p>
+                <p id="damageBlocked">{{ damageBlocked }}</p>
             </section>
 
             <section id="maxHealthWrapper">
                 <h2>Max Health:</h2>
-                <p id="maxHealth"></p>
+                <p id="maxHealth">{{ highestHealth }}</p>
             </section>
 
             <section id="mettleEarnedWrapper">
-                <h2>Mettle Earned:</h2>
-                <p id="mettleEarned"></p>
+                <h2>Coins Looted:</h2>
+                <p id="mettleEarned">{{ totalCoins }}</p>
             </section>
 
             <section id="itemsBoughtWrapper">
                 <h2>Items Bought</h2>
-                <p id="itemsBought"></p>
+                <p id="itemsBought">{{ itemsBought }}</p>
             </section>
         </section>
 
@@ -59,16 +59,37 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import LeaderBoard from '@/store/modules/leaderboardData'
+import PlayerData from '@/store/modules/playerData'
+import BackgroundMusic from '@/plugins/backgroundMusic'
+
 export default {
   name: 'LoseScreen',
+  data() {
+      return {
+        music: ['loseScreen'],  
+      }
+  },
   props: {
   },
-  created() {
-      this.$sound.play('loseScreen');
+  computed: {
+    ...mapState('leaderboardData', [
+        'highestHealth',
+        'highestArmor',
+        'highestAttack',
+        'monstersKilled',
+        'coinsSpent',
+        'totalCoins',
+        'totalDamageDealt',
+        'totalDamageTaken',
+        'itemsBought',
+        'monstersFought',
+    ]),
+    ...mapState('playerData', {
+        name: state => state.info.name,
+    })
   },
-  beforeDestroy() {
-      this.$sound.pause(`loseScreen`, {fade: 1200, volume: 0});
-  }
 }
 </script>
 
