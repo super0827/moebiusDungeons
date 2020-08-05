@@ -160,7 +160,7 @@ const actions = {
     else if (state.info.baseHealth <= 0) {
       dispatch('RESET_ANIMATIONS')
       commit('toggleAnimation', {property: 'isDead'})
-      PlayerSounds[playerDead].play()
+      PlayerSounds.playerDead.play()
       setTimeout(() => {
         commit('gameData/mutate', {property: 'phase', with:'LoseScreen'}, {root:true})
       }, 1200)
