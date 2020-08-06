@@ -9,88 +9,93 @@
       </section>
 
       <article class="debugContent" v-if="debugShow">
-      <p>SCENES</p>
+        <p>SCENES</p>
 
-      <section>
-        <section class="flexColumn">
-        <span>SCENE SELECT</span>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
-          <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
-        </section>
-      </section>
-
-      <p>MONSTER</p>
-      <section>
-        <span>HEALTH</span>
         <section>
-          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-          <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+          <section class="flexColumn">
+          <span>SCENE SELECT</span>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
+          </section>
         </section>
-      </section>
+
+        <p>MONSTER</p>
+        <section>
+          <span>HEALTH</span>
+          <section>
+            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+          </section>
+        </section>
+        
+        <br>
+
+        <p>PLAYER</p>
+        
+        <section>
+          <span>HEALTH</span>
+          <section>
+            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+          </section>
+        </section>
       
-      <br>
+        <section>
+          <span>ARMOR</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
+          </section>
+        </section>
+        
+        <section>
+          <span>ATTACK</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
+          </section>
+        </section>
+        
+        <section>
+          <span>COINS</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
+          </section>
+        </section>
+        
+        <section>
+          <span>METTLE</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
+          </section>
+        </section>
 
-      <p>PLAYER</p>
-      
-      <section>
-        <span>HEALTH</span>
-        <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
-        </section>
-      </section>
-     
-      <section>
-        <span>ARMOR</span>
-        <section>
-        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
-        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
-        </section>
-      </section>
-      
-      <section>
-        <span>ATTACK</span>
-        <section>
-        <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
-        </section>
-      </section>
-      
-      <section>
-        <span>COINS</span>
-        <section>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
-        </section>
-      </section>
-      
-      <section>
-        <span>METTLE</span>
-        <section>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
-        <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
-        </section>
-      </section>
+        <br>
 
+        <p>SHOPKEEPS</p>
+          <section>
+            <section class="flexColumn">
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:0})">CLERIC </button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:1})">GRAVEROBBER</button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:2})">MERCHANT</button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</button>
+            </section>
+        </section>
 
-      <br>
-      <p>SCENES</p>
-      <section>Char Select</section>
-      <section>Shop</section>
-      <section>Dungeon</section>
-      <br>   
-      <p>END GAME</p>
-      <section>Win Screen</section>
-      <section>Lose Screen</section>
-      <br>
-      <section @click="testMode = !testMode">Enable Testing Mode</section>
-
+        <br>
+        
+        <section>
+          <h3 @click="testMode = !testMode">Enable Testing Mode</h3>
+        </section>
       </article>
+      
     </section>
 
     <!-- GUI -->

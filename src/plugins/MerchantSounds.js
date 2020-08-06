@@ -1,50 +1,38 @@
 import {Howl, Howler} from 'howler'
 
-const welcome = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/welcome.mp3')],
+const anythingElse = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/anythingElse.mp3')],
     loop: false,
     volume: 1,
 });
 
 
-const comeAgain = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/comeAgain.mp3')],
+const areYouKidding = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/areYouKidding.mp3')],
     loop: false,
     volume: 1,
 });
 
-const alright = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/alright.mp3')],
+const backForMore = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/backForMore.mp3')],
     loop: false,
     volume: 1,
 });
 
-const welcomeBack = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/welcomeBack.mp3')],
+const cantAffordThat = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/cantAffordThat.mp3')],
     loop: false,
     volume: 1,
 });
 
-const welcomeBack2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/welcomeBack2.mp3')],
+const goLootSomething = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/goLootSomething.mp3')],
     loop: false,
     volume: 1,
 });
 
-const welcomeBack3 = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/welcomeBack3.mp3')],
-    loop: false,
-    volume: 1,
-});
-
-const thanks = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/thanks.mp3')],
-    loop: false,
-    volume: 1,
-});
-
-const hey = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/hey.mp3')],
+const goodChoice = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/goodChoice.mp3')],
     loop: false,
     volume: 1,
 });
@@ -55,38 +43,122 @@ const hello = new Howl({
     volume: 1,
 });
 
-const okay = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/okay.mp3')],
+const howsTheAdventuring = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/howsTheAdventuring.mp3')],
     loop: false,
     volume: 1,
 });
 
-const goodPurchase = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/goodPurchase.mp3')],
+const interestingChoice = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/interestingChoice.mp3')],
     loop: false,
     volume: 1,
 });
 
-const fairTrade = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/fairTrade.mp3')],
+const justCleanedOff = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/justCleanedOff.mp3')],
     loop: false,
     volume: 1,
 });
 
-const comeBackSoon = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/comeBackSoon.mp3')],
+const justPickedThatOut = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/justPickedThatOut.mp3')],
     loop: false,
     volume: 1,
 });
 
-const nextTime = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/nextTime.mp3')],
+const needMoreCoin = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/needMoreCoin.mp3')],
     loop: false,
     volume: 1,
 });
 
-const anytime = new Howl({
-    src: [require('@/assets/audio/shopAudio/merchant/anytime.mp3')],
+const needMoreCoin2 = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/needMoreCoin2.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const newStockToday = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/newStockToday.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const notACharity = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/notACharity.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const outOfYourMind = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/outOfYourMind.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const seeYouNextTime = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/seeYouNextTime.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const shortSomeCoin = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/shortSomeCoin.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const shortSomeCoin2 = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/shortSomeCoin2.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const spendItAllAtOnce = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/spendItAllAtOnce.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const staySafe = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/staySafe.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const takeALookAround = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/takeALookAround.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const thankYou = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/thankYou.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const trySomethingCheaper = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/trySomethingCheaper.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const welcome = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/welcome.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const welcomeBack = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/welcomeBack.mp3')],
+    loop: false,
+    volume: 1,
+});
+
+const wonderfulChoice = new Howl({
+    src: [require('@/assets/audio/shopAudio/merchant/wonderfulChoice.mp3')],
     loop: false,
     volume: 1,
 });
@@ -94,20 +166,32 @@ const anytime = new Howl({
 
 
 export default {
-    alright,
-    anytime,
-    comeAgain,
-    comeBackSoon,
-    fairTrade,
-    goodPurchase,
-    hello,
-    hey,
-    nextTime,
-    okay,
-    thanks,
-    welcome,
-    welcomeBack,
-    welcomeBack2,
-    welcomeBack3,
+  anythingElse,
+  areYouKidding,
+  backForMore,
+  cantAffordThat,
+  goLootSomething,
+  goodChoice,
+  hello,
+  howsTheAdventuring,
+  interestingChoice,
+  justCleanedOff,
+  justPickedThatOut,
+  needMoreCoin,
+  needMoreCoin2,
+  newStockToday,
+  notACharity,
+  outOfYourMind,
+  seeYouNextTime,
+  shortSomeCoin,
+  shortSomeCoin2,
+  spendItAllAtOnce,
+  staySafe,
+  takeALookAround,
+  thankYou,
+  trySomethingCheaper,
+  welcome,
+  welcomeBack,
+  wonderfulChoice
 };
 

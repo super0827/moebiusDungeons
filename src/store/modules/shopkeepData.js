@@ -330,12 +330,12 @@ const state = () => ({
         ],
         saying:"Friend or foe, what are ya' buyin'?",
         shopTitle: "It's not much, but it's what I've got. All priced to move.",
-        welcome:['welcome', 'hello', 'hey',],
-        welcomeBack:['welcomeBack', 'welcomeBack2', 'welcomeBack3'],
-        goodbye:['comeBackSoon', 'comeAgain', 'nextTime', 'okay',],
-        thankYou:['fairTrade', 'goodPurchase', 'thanks'],
-        cantBuy:[],
-        bigBuy:[],
+        welcome:['hello', 'howsTheAdventuring', 'newStockToday', 'takeALookAround', 'welcome'],
+        welcomeBack:['backForMore', 'welcomeBack'], 
+        goodbye:['seeYouNextTime', 'staySafe'],
+        thankYou:['anythingElse', 'goodChoice', 'interestingChoice', 'justPickedThatOut', 'thankYou'],
+        cantBuy:['areYouKidding', 'shortSomeCoin', 'shortSomeCoin2', 'cantAffordThat', 'trySomethingCheaper', 'outOfYourMind', 'notACharity','goLootSomething', 'needMoreCoin', 'needMoreCoin2'],
+        bigBuy:['justCleanedOff', 'spendItAllAtOnce', 'wonderfulChoice']
         },
 
         {
@@ -507,15 +507,21 @@ const mutations = {
     const randomizeShopKeeps = shuffle(state.variants[randomPick].items);
     state.shopChoice = randomizeShopKeeps.slice(0,2);
   },
-  newShopkeep(state) {
-    const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-    // const randomPick = 1;
-    state.info = state.variants[randomPick]
-    const inventory = shuffle(state.variants[randomPick].items);
-    state.inventory = inventory.slice(0, 3)
-    // state.inventory = inventory
+  newShopkeep(state, payload) {
+    if(!payload){
+      const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
+      // const randomPick = 1;
+      state.info = state.variants[randomPick]
+      const inventory = shuffle(state.variants[randomPick].items);
+      state.inventory = inventory.slice(0, 3)
+      // state.inventory = inventory
+    }
+    else {
+      state.info = state.variants[payload.shopkeep]
+      const inventory = shuffle(state.variants[payload.shopkeep].items);
+      state.inventory = inventory.slice(0, 3)
+    }
   },
-
   recordVisit(state) {
     state.visited.push(state.info.name)
   }
@@ -532,6 +538,12 @@ const getters = {
 }
 
 const actions = {
+  //DEBUG OPTION
+  PICK_SHOPKEEP ({commit}, payload){
+    console.log(payload)
+    commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
+    commit('newShopkeep', payload)
+  },
   ADD_TO_INVENTORY({commit, dispatch}, payload) {
     commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
     commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
