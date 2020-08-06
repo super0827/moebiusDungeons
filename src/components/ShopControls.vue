@@ -16,7 +16,7 @@
     @mouseenter="UiSounds.chit.play()"
     :class="{
       'striked' : buyable.cost > coins, 
-      'animated shake faster' : buyable.noSale, 
+      'animated shakeX faster' : buyable.noSale, 
       'bought' : buyable.bought }"
     class="itemRow"
     >
@@ -77,7 +77,8 @@ export default {
       Cleric: ClericSounds,
       Graverobber: GraverobberSounds,
       Merchant: MerchantSounds,
-      Witch: WitchSounds
+      Witch: WitchSounds,
+      failedBuy: 0,
     }
   },
   computed: {
@@ -175,15 +176,21 @@ export default {
         
         setTimeout(() => {
         // PLAYS SHOPKEEP SOUND EFFECT FROM SHOPKEEPDATA.JS
-        if(this.shopkeep.cantBuy.length > 0){
-          this.whosSound[this.shopkeep.cantBuy[0]].play()
-          this.shopkeep.cantBuy.shift()
+        if (this.failedBuy > 2){
+           this.$store.commit('gameData/mutate', {property:'phase', with:'DungeonPhase'}, {root:true})
         }
+        else { 
+          if(this.shopkeep.cantBuy.length > 0){
+            this.whosSound[this.shopkeep.cantBuy[0]].play()
+            this.shopkeep.cantBuy.shift()
+          }
 
-        else if (this.shopkeep.cantBuy.length === 0) {
-         ShopSounds['cantBuy'].play()
-        }
-        itemBought.noSale = false;
+          else if (this.shopkeep.cantBuy.length === 0) {
+            ShopSounds['cantBuy'].play()
+          }
+          this.failedBuy++;
+          itemBought.noSale = false;
+          }
         }, 500);
       }
     }
