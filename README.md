@@ -7,6 +7,7 @@ A Vue SPA based off of the Dungeons Of Amara Playable Book
 ```
 1. clone repo
 1. cd into local folder
+1. Switch to vuexRefactor branch
 1. npm run serve
 ```
 ## What is this?
