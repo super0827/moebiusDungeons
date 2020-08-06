@@ -1,29 +1,10 @@
-# moebiusdungeons
+# Moebius Dungeons - A Browser Dungeon Crawler
 
-## Project setup
+## Game Setup
+Fork and Clone this repo to your computer, then cd into your the new repository.
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+The game is incomplete as of 8/6/2020, if you have suggestions please make pull requests.
