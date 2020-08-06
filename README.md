@@ -6,9 +6,9 @@ A Vue SPA based off of the Dungeons Of Amara Playable Book
 ## Run Locally
 ```
 1. clone repo
-1. cd into local folder
-1. Switch to vuexRefactor branch
-1. npm run serve
+2. cd into local folder
+3. Switch to vuexRefactor branch
+4. npm run serve
 ```
 ## What is this?
 Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CSS.
