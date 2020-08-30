@@ -60,7 +60,7 @@ import UiSounds from '@/plugins/UiSounds.js'
 import ShopSounds from '@/plugins/ShopSounds.js'
 import ClericSounds from '@/plugins/ClericSounds.js'
 import MerchantSounds from '@/plugins/MerchantSounds.js'
-import GraverobberSounds from '@/plugins/GraverobberSounds.js'
+import GraverobberSounds from '@/plugins/GraveRobberSounds.js'
 import WitchSounds from '@/plugins/WitchSounds.js'
 
 import SpecialBar from '@/components/SpecialBar'

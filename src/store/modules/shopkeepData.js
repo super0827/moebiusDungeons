@@ -190,11 +190,12 @@ const state = () => ({
           ],
         saying:"Trust me, nothing I sell is cursed.",
         shopTitle: "Just buy somethin' quick, I don't wanna be seen fencing to the Kingloyal.",
-        welcome:['heyThere', 'huh'],
-        goodbye:['okay'],
-        thankYou:['alright', 'buyAnother'],
-        cantBuy:[],
-        bigBuy:[],
+        welcome:['heyThere', 'heyThereCoterie', 'heyThereCoterie2', 'huh', 'keepYourDistance',' wantSome', 'welcome', 'whatDoYouNeed', 'whatDoYouNeed2', 'whatDoYouNeed3'],
+        welcomeBack:['backForMore', 'backForMore2', 'backForMore3', 'enoughOfMe', 'enoughOfMe2', 'enoughOfMe3', 'knewYoudBeBack', 'knewYoudBeBack2',], 
+        goodbye:['illBeHere', 'illBeHere2', 'nextTime', 'nextTime2', 'okay', 'staySafe', 'staySafe2'],
+        thankYou:['alright', 'buyAnother', 'buyAnother2', 'buyAnother3', 'goodEye', 'goodEye2', 'heresOne', 'laugh', 'laugh2', ],
+        cantBuy:['noBargaining', 'noBargaining2', 'noDiscounts', 'notEnoughCoin', 'notEnoughCoin2', 'notEnoughCoin3', 'youreBroke'],
+        bigBuy:['gladToRidThat', 'gladYouBought', 'gladYouBought2', 'pickedAnother', 'pickedAnother2', 'thankYouSire',]
         },
 
 
