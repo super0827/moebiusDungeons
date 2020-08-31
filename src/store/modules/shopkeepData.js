@@ -505,7 +505,7 @@ const state = () => ({
 
 const mutations = {
   pickTwoShops(state) {
-    const randomizeShopKeeps = shuffle(state.variants[randomPick].items);
+    const randomizeShopKeeps = shuffle(state.variants);
     state.shopChoice = randomizeShopKeeps.slice(0,2);
   },
   newShopkeep(state, payload) {
@@ -517,9 +517,14 @@ const mutations = {
       state.inventory = inventory.slice(0, 3)
       // state.inventory = inventory
     }
-    else {
+    else if (typeof payload.shopkeep == 'number'){
       state.info = state.variants[payload.shopkeep]
       const inventory = shuffle(state.variants[payload.shopkeep].items);
+      state.inventory = inventory.slice(0, 3)
+    }
+    else {
+      state.info = payload.shopkeep;
+      const inventory = shuffle(state.info.items);
       state.inventory = inventory.slice(0, 3)
     }
   },
@@ -541,7 +546,6 @@ const getters = {
 const actions = {
   //DEBUG OPTION
   PICK_SHOPKEEP ({commit}, payload){
-    console.log(payload)
     commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
     commit('newShopkeep', payload)
   },
