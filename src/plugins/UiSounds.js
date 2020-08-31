@@ -3,7 +3,7 @@ import {Howl, Howler} from 'howler'
 const chit = new Howl({
     src: [require('@/assets/audio/uiSounds/chit.wav')],
     loop: false,
-    volume: 1,
+    volume: .5,
 });
 
 const startBlip = new Howl({

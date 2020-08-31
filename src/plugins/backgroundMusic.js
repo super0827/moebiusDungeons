@@ -39,25 +39,25 @@ const dungeonMusic5 = new Howl({
 const shopMusic1 = new Howl({
     src: [require('@/assets/audio/shopAudio/background/eventidePP.mp3')],
     loop: true,
-    volume: .3,
+    volume: .5,
 });
 
 const shopMusic2 = new Howl({
     src: [require('@/assets/audio/shopAudio/background/scenicEssencePP.mp3')],
     loop: true,
-    volume: .3,
+    volume: .5,
 });
 
 const shopMusic3 = new Howl({
     src: [require('@/assets/audio/shopAudio/background/spiritualMomentPP.mp3')],
     loop: true,
-    volume: .3,
+    volume: .5,
 });
 
 const shopSelect = new Howl({
     src: [require('@/assets/audio/shopAudio/background/gentleCorpBackingPP.mp3')],
     loop: true,
-    volume: .3,
+    volume: .1,
 });
 
 const loseScreen = new Howl({
