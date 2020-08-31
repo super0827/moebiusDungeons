@@ -500,7 +500,6 @@ const mutations = {
         state.roster += increment;
         let roster = state.roster;
         state.info = state.variants[roster];
-        console.log(`new monster is ${state.variants[roster].name}`)
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -554,7 +553,7 @@ const actions = {
         commit('playerData/addCoins', state.info.coins, {root:true})
 
         setTimeout(() => {
-          commit('gameData/mutate', {property:'phase', with:'ShopPhase'}, {root:true})
+          commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
         }, 1500)
         return
       }
