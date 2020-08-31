@@ -3,20 +3,20 @@
 <section class="characterSelectWrapper">
 
     <h1 class="animated" :class="{'zoomInDown' : isEntering, 
-    'zoomOutUp' : !isEntering }"></h1>
+    'zoomOutUp' : !isEntering }">Choose a Shopkeep</h1>
 
     <section class="chooseChar">
         <section
         v-for="characters in variants"
         :key="characters.name"
         :portrait="characters.portrait"
-        class="columns animated">
+        class="shopkeep columns animated">
         
             <h2>{{characters.name}}</h2>
 
-            <!-- NEEDS ON CLICK EVENT -->
             <section 
             @mouseenter="UiSound.chit.play()"
+            @click="toShopkeep(characters)"
             class="portContainer animated infinite" :id="characters.name">
                 <section class="overlay"></section>
                 <img :src="characters.portrait">
@@ -25,18 +25,13 @@
         </section>
     </section>
 
-<!-- <h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> HUH? </h1> -->
-
-<!-- <transition name='fade'>
-    <instructions-screen v-if="this.helper"/>
-</transition> -->
-
 </section>
 </template>
 
 <script>
 import InstructionsScreen from './InstructionsScreen';
 import { mapState } from 'vuex';
+import shuffle from 'lodash.shuffle'
 
 import UiSound from '@/plugins/UiSounds.js'
 
@@ -58,7 +53,7 @@ export default {
   },
   computed: {
         ...mapState('shopkeepData', {
-            variants: state => state.variants,
+            variants: state => state.shopChoice,
         }),
         
     },
@@ -68,9 +63,13 @@ export default {
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
     },
+    toShopkeep(chosenShopkeep) {
+        this.$store.commit('shopkeepData/newShopkeep', {shopkeep: chosenShopkeep});
+        this.$store.commit('gameData/mutate', {property: 'phase', with: 'ShopPhase'});
+    }
   },
   created() {
-    
+    this.$store.commit('shopkeepData/pickTwoShops');
   }
 }
 </script>
@@ -84,6 +83,10 @@ export default {
 .chooseChar {
     display:flex;
     flex-direction: row;
+}
+
+.shopkeep {
+    cursor:pointer;
 }
 
 .columns {
@@ -106,34 +109,19 @@ export default {
     position:relative;
 }
 
-#swordsman:hover, #mage:hover, #varlet:hover {
-    cursor:pointer;
-}
-#swordsman:hover .overlay {
-    background: linear-gradient(0deg, rgb(187, 16, 58) 0%, rgba(255,192,0,0) 100%);
+#graverobber:hover .overlay {
+    background: linear-gradient(0deg, rgb(136, 49, 136) 0%, rgba(255,192,0,0) 100%);
 }
 
-#mage:hover .overlay {
-    background: linear-gradient(0deg, rgb(0, 174, 255) 0%, rgba(255,192,0,0) 100%);
-    cursor:pointer;
+#cleric:hover .overlay {
+    background: linear-gradient(0deg, rgb(255, 208, 0) 0%, rgba(255,192,0,0) 100%);
 }
 
-#varlet:hover .overlay {
-    background: linear-gradient(0deg, rgb(238, 255, 0) 0%, rgba(255,192,0,0) 100%);
-    cursor:pointer;
+#witch:hover .overlay {
+    background: linear-gradient(0deg, rgb(255, 0, 106) 0%, rgba(255,192,0,0) 100%);
 }
 
-#about {
-    font-size: 20px;
-    position: fixed;
-    right: 10px;
-    top: 10px;
-    margin: 0;
-    padding: 5px;
-    background: rgb(218, 218, 218);
-}
-#about:hover {
-    background:rgb(185, 185, 185);
-    cursor:pointer;
+#merchant:hover .overlay {
+    background: linear-gradient(0deg, rgb(0, 255, 128) 0%, rgba(255,192,0,0) 100%);
 }
 </style>
