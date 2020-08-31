@@ -21,9 +21,6 @@ const mutations = {
     }
 }
 
-const actions = {
-}
-
 const getters = {
     // HEALTH BAR CALCULATOR
     healthBar: (state, getters, rootState, rootGetters) => {
