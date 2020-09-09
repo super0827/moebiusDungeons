@@ -1,11 +1,30 @@
 <template>
   <div id="app">
 
+    <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
     <!-- DEBUGGING -->
+
+    <transition name="fade" mode="out-in">
+    <section key="loginBar" v-if="phase != 'Loading'" class="user">
+
+      <div class="loginBar" v-if="user.data != null">
+        <p>{{user.data.displayName}}</p>
+        <p>|</p>
+        <p class="clickable" @click="signOut">Sign Out</p>
+      </div>
+
+      <div v-else-if="user.data == null" class="loginBar">
+        <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</p>
+        <p>|</p>
+        <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Register'})" class="clickable">Sign Up</p>
+      </div>
+   
+    </section>
+    </transition>
 
     <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
-        <h3>DEBUG BAR</h3> 
+        <h3>DEBUG BAR</h3>
       </section>
 
       <article class="debugContent" v-if="debugShow">
@@ -116,6 +135,8 @@ import './assets/styles/transitions.css';
 
 import { mapState } from 'vuex'
 
+import * as firebase from "firebase";
+
 import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
@@ -123,6 +144,11 @@ import DungeonPhase from './components/DungeonPhase.vue';
 import ShopSelect from './components/ShopSelect.vue';
 import ShopPhase from './components/ShopPhase.vue';
 import LoseScreen from './components/LoseScreen.vue';
+import Keypress from 'vue-keypress';
+import Login from './components/authentication/Login.vue';
+import Loading from './components/authentication/Loading.vue';
+
+import Register from './components/authentication/Register.vue';
 
 export default {
   name: 'App',
@@ -133,17 +159,37 @@ export default {
     ShopSelect,
     ShopPhase,
     LoseScreen,
+    Keypress,
+    Login,
+    Register,
+    Loading
   },
   data() {
     return {
-      testMode: false,
+      testMode: true,
       debugShow: false,
+    }
+  },
+  methods: {
+    toggleDebug(response) {
+      this.testMode = !this.testMode
+    },
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           this.$store.commit('gameData/mutate', {property: 'phase', with: 'Login'});
+        });
     }
   },
   computed: {
       ...mapState('gameData', {
           phase: state => state.phase
-      })
+      }),
+      ...mapState('authData', {
+          user: state => state.user 
+      }),
   },
   beforeMount(){
 console.log(`
@@ -210,11 +256,22 @@ contact@seanyager.com
 
   this.$store.commit('monsterData/newMonster');
   this.$store.commit('shopkeepData/newShopkeep')
-  }
+  },
 }
 </script>
 
 <style>
+.loginBar {
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+}
+
+.loginBar .clickable:hover {
+  cursor:pointer;
+  color:gold;
+}
+
 #app {
   overflow:hidden;
   width:100vw;
@@ -300,5 +357,22 @@ contact@seanyager.com
 .debugContent { 
   height:500px;
   overflow-y: scroll;
+}
+
+.user {
+  margin:10px;
+  font-family: var(--paragraphs-type);
+  text-align:center;
+  display:inline;
+  position:fixed;
+  font-size:13px;
+  top:0px;
+  z-index:999999;
+  min-width:200px;
+  opacity:0.7;
+  color:white;
+  left:0px;
+  background:black;
+  text-transform:uppercase;
 }
 </style>
