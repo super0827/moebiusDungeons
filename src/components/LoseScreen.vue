@@ -84,7 +84,9 @@ export default {
         'totalDamageDealt',
         'totalDamageTaken',
         'itemsBought',
+        'damageBlocked',
         'monstersFought',
+        
     ]),
     ...mapState('playerData', {
         name: state => state.info.name,
