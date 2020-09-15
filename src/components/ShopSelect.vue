@@ -105,7 +105,6 @@ export default {
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'ShopPhase'});
     },
     retireGame() {
-        console.log(this.user.data);
         const recUser = this.user.data.displayName.split(" ").join("").toLowerCase();
         const recEmail = this.user.data.email;
 
