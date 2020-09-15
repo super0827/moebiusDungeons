@@ -35,7 +35,7 @@
         </section>
     </section>
 
-<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> HUH? </h1>
+<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> What Is This? </h1>
 
 <transition name='fade'>
     <instructions-screen v-if="this.helper"/>
