@@ -1,19 +1,22 @@
+import firebase from "firebase";
+
 const state = () => ({
    user: {
        loggedIn: false,
        data: null,
-   }
+   },
 })
 
 const mutations = {
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
-    SET_USER(state, data) {
-      state.user.data = data;
+    SET_USER(state, name) {
+      console.log(`Setting User: name is ${name}`)
+      state.user.data = {...state.user.data, displayName: name}
     },
-    SET_NAME(state, value) {
-      state.user.data.displayName = value;
+    LOG_OUT_USER(state) {
+      state.user.data = null
     }
 }
 
@@ -24,18 +27,39 @@ const getters = {
 }
 
 const actions = {
-    fetchUser({ commit }, user) {
-        commit("SET_LOGGED_IN", user !== null);
-        if (user) {
-          commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
-          commit("SET_USER", {
-            displayName: user.displayName,
-            email: user.email
-          });
-        } else {
-          commit("SET_USER", null);
-          commit('gameData/mutate', {property: 'phase', with:'Login'}, {root:true})
+    fetchUser({ commit, dispatch }, user) {
+        console.log(`User in authData is:`)
+        console.log(user)
+        commit("SET_LOGGED_IN", user != null);
+        if (user.displayName != null) {
+          commit('SET_USER', user.displayName)
         }
+        commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
+    },
+    fetchUsername({commit}) {
+      // console.log(`running fetchUsername`)
+      // let user =  firebase.auth().currentUser;
+      // let db = firebase.firestore();
+      // let userRef = db.collection("users").doc(user.email);
+
+      // userRef.get().then(function(doc) {
+      //   if (doc.exists) {
+      //     let info = doc.data()
+      //     commit("SET_USER", info)
+      //   }
+      //   else {
+      //     // doc.data() will be undefined in this case
+      //     console.log("No such document!");
+      //   }
+      // })
+    },
+    createUser({commit, dispatch}, user) {
+      console.log(`creating user via firestore`)
+      let db = firebase.firestore();
+      db.collection('users').doc(user.email).set({
+        displayName: user.name,
+        profile_picture: 'https://api.adorable.io/avatars/70/' + user.email + '.png'
+      })
     }
 }
 
