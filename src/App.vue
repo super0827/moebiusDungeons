@@ -7,8 +7,8 @@
     <transition name="fade" mode="out-in">
     <section key="loginBar" v-if="phase != 'Loading'" class="user">
 
-      <div class="loginBar" v-if="user.data != null">
-        <p>{{user.data.displayName}}</p>
+      <div class="loginBar" v-if="user.loggedIn == true">
+        <p>{{user.data ? user.data.displayName : "..."}}</p>
         <p>|</p>
         <p class="clickable" @click="signOut">Sign Out</p>
       </div>
