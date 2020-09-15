@@ -18,12 +18,21 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.auth().onAuthStateChanged(user => {
-  store.dispatch("authData/fetchUser", user);
+firebase.auth().onAuthStateChanged( function(user) {
+  if (user != null){
+   console.log(`USER STATE IN MAIN.JS IS:`)
+   console.log(user)
+   store.dispatch('authData/fetchUser', user, {root:true})
+  }
+  else {
+    store.commit("authData/LOG_OUT_USER", null, {root:true})
+    store.commit("authData/SET_LOGGED_IN", false, {root:true})
+    store.commit("gameData/mutate", {property: 'phase', with: 'Login'}, {root:true})
+  }
 });
 
 //this export is in the global space to save time and stay concise
-//nearly if not all components mounted directly to App need these
+//nearly, if not all components mounted directly to App need these
 //computed properties to function properly
 export const mixinGlobalState = {
   computed: {
