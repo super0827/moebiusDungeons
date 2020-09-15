@@ -23,17 +23,6 @@
           <br>
             
           <div class="card-body">
-
-              <div class="flexRow flexCenter">
-              <img class="googleButton" @click="googleLogin" src="../../assets/imgs/icons/googleSignin.png" alt="">
-              </div>
-
-            <div class="flexRow flexCenter">
-              <p>
-              or register with your own unique email
-              </p>
-            </div>
-
             <div class="boxSection">
             <div v-if="error" class="alert alert-danger"><p>{{error}}</p></div>
             <form action="#" @submit.prevent="submit">
@@ -134,9 +123,6 @@
 <script>
 import firebase from "firebase";
 
-var provider = new firebase.auth.GoogleAuthProvider();
-
-
 export default {
   data() {
     return {
@@ -149,41 +135,22 @@ export default {
     };
   },
   methods: {
-    googleLogin() {
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      var user = result.user;
-    })
-    .then(() => {
-      this.startGame()
-    })
-    .catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
-    });    
-  },
   submit() {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => {
-            data.user
-              .updateProfile({
-              displayName: this.form.name
-            })         
+        .then((data) => {
+          var user = firebase.auth().currentUser;
+          user.updateProfile({
+            displayName: this.form.name
+          })
+          console.log(`in the registrations: name is ${this.form.name}`)
+          this.$store.commit(`authData/SET_USER`, this.form.name, {root:true})
         })
-        .then( data => {
-          this.$store.commit('authData/SET_NAME', this.form.name) 
-        }
-        )
         .catch(err => {
           this.error = err.message;
         });
     },
-    startGame(){
-      this.$store.commit('gameData/mutate', {property: 'phase', with: 'CharacterSelect'}, {root:true});
-    }
   },
   created() {
     firebase.auth().useDeviceLanguage();
