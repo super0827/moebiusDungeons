@@ -1,5 +1,3 @@
-import { shuffle } from 'lodash.shuffle'
-
 const state = () => ({
     phase: "Loading",
     isEntering: true,
@@ -68,9 +66,6 @@ const getters = {
     playerArmorVsAttack: (state, getters, rootState, rootGetters) => {
         const player = rootGetters['playerData/calcArmor']
         const monster = rootGetters['monsterData/calcAttackMax']
-        const armVsMonAtk =  monster + player
-        const monsterType = rootState['monsterData'].info.attackType
-        console.log(`Monster Type = ${monsterType}`)
         if (monster <= 0) return 100
         else if (player <= 1) return 5
         else if (rootState['monsterData'].info.attackType === 'magical') return 5;
