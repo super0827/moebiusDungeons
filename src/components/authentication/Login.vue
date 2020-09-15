@@ -76,9 +76,9 @@
 
             <hr>
 
-            <div class="boxSection link">
+            <div @click="goToSignup()" class="boxSection link">
                   <h3>New To Moebius Dungeons?</h3>
-                  <p @click="goToSignup()">Sign Up Here.</p>
+                  <p >Sign Up Here.</p>
             </div>
           </div>
         </div>
@@ -108,8 +108,7 @@ export default {
   methods: {
     googleLogin() {
     let self = this;
-    firebase.auth().signInWithPopup(provider).then((result) => {
-    })
+    firebase.auth().signInWithPopup(provider)
     .then(() => {
       this.startGame()
     })
@@ -125,7 +124,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(data => {
-          this.startGame();
+          this.$store.commit('gameData/mutate', {property:'phase', with:'CharacterSelect'}, {root:true})
         })
         .catch(err => {
           this.error = err.message;
@@ -134,10 +133,6 @@ export default {
     goToSignup() {
       this.$store.commit('gameData/mutate', {property: 'phase', with: 'Register'});
     },
-    startGame() {
-      this.$store.commit('gameData/mutate', {property:'phase', with:'CharacterSelect'}, {root:true})
-    }
-
   }
 };
 </script>
