@@ -139,13 +139,13 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        .then((data) => {
+        .then(() => {
           var user = firebase.auth().currentUser;
           user.updateProfile({
             displayName: this.form.name
           })
-          console.log(`in the registrations: name is ${this.form.name}`)
-          this.$store.commit(`authData/SET_USER`, this.form.name, {root:true})
+          this.$store.commit(`authData/SET_USER`, {displayName: this.form.name, email: user.email}, {root:true})
+          // this.$store.dispatch(`authData/detectUser`, user, {root:true})
         })
         .catch(err => {
           this.error = err.message;
