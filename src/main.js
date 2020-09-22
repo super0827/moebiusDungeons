@@ -18,13 +18,15 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// listener for when auth status changes, managed by firebase
 firebase.auth().onAuthStateChanged( function(user) {
   if (user != null){
-   console.log(`USER STATE IN MAIN.JS IS:`)
-   console.log(user)
-   store.dispatch('authData/fetchUser', user, {root:true})
+    //If user exists, get user info
+    store.dispatch('authData/fetchUser', user, {root:true})
+    store.dispatch('authData/detectUser', user, {root:true})
   }
   else {
+    //if no user set all info to null and false
     store.commit("authData/LOG_OUT_USER", null, {root:true})
     store.commit("authData/SET_LOGGED_IN", false, {root:true})
     store.commit("gameData/mutate", {property: 'phase', with: 'Login'}, {root:true})
