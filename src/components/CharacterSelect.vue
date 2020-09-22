@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     setPlayer(passedPlayer) {
-        console.log(`You're playing as the ${passedPlayer.name}: logged from CharSelect.vue`);
+        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
         UiSound.charPick.play();
