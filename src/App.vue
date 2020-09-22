@@ -6,8 +6,9 @@
 
     <transition name="fade" mode="out-in">
     <section key="loginBar" v-if="phase != 'Loading'" class="user">
-
+      
       <div class="loginBar" v-if="user.loggedIn == true">
+        <img :src="avatar" alt="">
         <p>{{user.data ? user.data.displayName : "..."}}</p>
         <p>|</p>
         <p class="clickable" @click="signOut">Sign Out</p>
@@ -34,6 +35,7 @@
           <section class="flexColumn">
           <span>SCENE SELECT</span>
             <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'SavedGame'})">SAVED GAME SCREEN</button>
             <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
             <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
             <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
@@ -133,10 +135,11 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import * as firebase from "firebase";
 
+import SavedGame from './components/SavedGame.vue';
 import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
@@ -153,6 +156,7 @@ import Register from './components/authentication/Register.vue';
 export default {
   name: 'App',
   components: {
+    SavedGame,
     StartScreen,
     CharacterSelect,
     DungeonPhase,
@@ -185,11 +189,14 @@ export default {
   },
   computed: {
       ...mapState('gameData', {
-          phase: state => state.phase
+        phase: state => state.phase
       }),
       ...mapState('authData', {
-          user: state => state.user 
+        user: state => state.user 
       }),
+      ...mapGetters('authData', {
+        avatar: 'userIcon',
+      })
   },
   beforeMount(){
 console.log(`
@@ -265,6 +272,7 @@ contact@seanyager.com
   display:flex;
   align-items:center;
   justify-content:space-around;
+  padding:5px 0;
 }
 
 .loginBar .clickable:hover {
