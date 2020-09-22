@@ -110,7 +110,10 @@ export default {
     let self = this;
     firebase.auth().signInWithPopup(provider)
     .then(() => {
-      this.startGame()
+      var user = firebase.auth().currentUser;
+      // console.log(`Google signin - ${user}`)
+      // this.$store.dispatch('authData/fetchUser', user, {root:true})
+      // this.$store.dispatch('authData/detectUser', user, {root:true})
     })
     .catch(function(error) {
       var errorCode = error.code;
@@ -123,9 +126,9 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(data => {
-          this.$store.commit('gameData/mutate', {property:'phase', with:'CharacterSelect'}, {root:true})
-        })
+        // .then(data => {
+        //   this.$store.dispatch('authData/fetchUser', data, {root:true})
+        // })
         .catch(err => {
           this.error = err.message;
         });
