@@ -8,12 +8,16 @@ const state = () => ({
 })
 
 const mutations = {
+    SET_SAVED_GAME(state, payload){
+      state.user.data = {...state.user.data, save: payload}
+    },
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
-    SET_USER(state, name) {
-      console.log(`Setting User: name is ${name}`)
-      state.user.data = {...state.user.data, displayName: name}
+    SET_USER(state, payload) {
+      console.log(`user has been authenticated - set displayName and email - FROM authData`)
+      state.user.data = {...state.user.data, displayName: payload.displayName},
+      state.user.data = {...state.user.data, email: payload.email}
     },
     LOG_OUT_USER(state) {
       state.user.data = null
@@ -23,42 +27,54 @@ const mutations = {
 const getters = {
     user(state){
         return state.user
-      }
+    },
+    userIcon: state => {
+      const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.email + ".png"
+      return userIcon;
+    }
 }
 
 const actions = {
-    fetchUser({ commit, dispatch }, user) {
-        console.log(`User in authData is:`)
-        console.log(user)
+    updateSavedGame({commit}, user) {
+      var db = firebase.firestore();
+      var userPath = db.collection('users').doc(thisUser.email);
+      
+      userPath.set({
+        saveExists: false,
+        saveState: {},
+      })
+
+    },
+    loadSavedGame({commit}, user) {
+      //logic here to load a saved game if found
+    },
+    fetchUser({ commit }, user) {
+        //set login state based on user truthyness
         commit("SET_LOGGED_IN", user != null);
         if (user.displayName != null) {
-          commit('SET_USER', user.displayName)
+          //sets display name and email in the case that the display name exists immediately after registration
+          commit('SET_USER', user)
         }
-        commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
+        commit('gameData/mutate', {property: 'phase', with:'SavedGame'}, {root:true})
     },
-    fetchUsername({commit}) {
-      // console.log(`running fetchUsername`)
-      // let user =  firebase.auth().currentUser;
-      // let db = firebase.firestore();
-      // let userRef = db.collection("users").doc(user.email);
+    detectUser({ commit }, thisUser) {
+      //get ref to firestore
+      var db = firebase.firestore();
+      var userPath = db.collection('users').doc(thisUser.email);
 
-      // userRef.get().then(function(doc) {
-      //   if (doc.exists) {
-      //     let info = doc.data()
-      //     commit("SET_USER", info)
-      //   }
-      //   else {
-      //     // doc.data() will be undefined in this case
-      //     console.log("No such document!");
-      //   }
-      // })
-    },
-    createUser({commit, dispatch}, user) {
-      console.log(`creating user via firestore`)
-      let db = firebase.firestore();
-      db.collection('users').doc(user.email).set({
-        displayName: user.name,
-        profile_picture: 'https://api.adorable.io/avatars/70/' + user.email + '.png'
+      userPath.get().then(function(doc){
+        if (doc.exists) {
+          console.log(`Setting game save data from authData`)
+          commit("SET_SAVED_GAME", doc.data())
+        }
+        else {
+          console.log(`user did not exist : creating new data`)
+          //create new save instance document
+          userPath.set({
+            saveExists: false,
+            saveState: {},
+          })
+        }
       })
     }
 }
