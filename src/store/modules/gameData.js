@@ -1,17 +1,35 @@
-import { shuffle } from 'lodash.shuffle'
-
 const state = () => ({
-    phase: "StartScreen",
+    phase: "Loading",
     isEntering: true,
     helper: false,
     duration: 1000,
     combatLocked: false,
     turnTailUsed: false,
+    tracker: {
+        monsterDefeated: [],
+        damageDealt: 0,
+        damageBlocked: 0,
+        maxHealth: 0,
+        maxArmor:0,
+        maxDamage:0,
+        coinsLooted: 0,
+        coinsSpent: 0,
+        mettleUsed: 0,
+        difficultyScale:1
+    }
 })
 
 const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
+    },
+    addToTracker(state, payload) {
+        if(payload.what != "monsterDefeated"){
+            state.tracker[payload.what] += payload.with
+        } 
+        else {
+            state.tracker[payload.what].push(payload.with)    
+        }
     },
     toggle(state, payload) {
         state[payload.property] = !state[payload.property];
@@ -48,9 +66,6 @@ const getters = {
     playerArmorVsAttack: (state, getters, rootState, rootGetters) => {
         const player = rootGetters['playerData/calcArmor']
         const monster = rootGetters['monsterData/calcAttackMax']
-        const armVsMonAtk =  monster + player
-        const monsterType = rootState['monsterData'].info.attackType
-        console.log(`Monster Type = ${monsterType}`)
         if (monster <= 0) return 100
         else if (player <= 1) return 5
         else if (rootState['monsterData'].info.attackType === 'magical') return 5;

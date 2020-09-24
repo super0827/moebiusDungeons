@@ -35,7 +35,7 @@
         </section>
     </section>
 
-<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> HUH? </h1>
+<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> What Is This? </h1>
 
 <transition name='fade'>
     <instructions-screen v-if="this.helper"/>
@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     setPlayer(passedPlayer) {
-        console.log(`You're playing as the ${passedPlayer.name}: logged from CharSelect.vue`);
+        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
         UiSound.charPick.play();

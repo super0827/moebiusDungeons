@@ -201,6 +201,7 @@ const actions = {
         commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+        commit('gameData/addToTracker', {what:'damageDealt', with:getters.thisAdjDamage}, {root:true})
       }
       else if(getters.thisAdjDamage <= 0) {
         dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
@@ -247,6 +248,8 @@ const actions = {
     commit('mutate', {property:'specialDamageAnimation', with:true})
     commit('mutate', {property:'specialDamage', with:dealtDamage})
     commit('monsterData/takeDamage', {damage: dealtDamage}, {root:true})
+    // Track Special Damage
+    commit('gameData/addToTracker', {what:'damageDealt', with:dealtDamage}, {root:true})
     setTimeout(() => {
       dispatch('RESET_ANIMATIONS');
       commit('mutate', {property:'specialDamageAnimation', with:false})
