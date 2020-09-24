@@ -1,10 +1,20 @@
-# Moebius Dungeons - A Browser Dungeon Crawler
+# Moebius Dungeons - A Browser RPG Roguelike Game
 
-## Game Setup
-Fork and Clone this repo to your computer, then cd into your the new repository.
+A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG Book
+[Dungeons Of Amara Book](https://gum.co/CsdPh)
+
+## Run Locally
 ```
-npm install
-npm run serve
+1. clone repo
+2. cd into local folder
+3. git checkout 
+    3a. checkout vuexRefactor branch for experimental changes
+    3b. checkout the main branch for a stable release
+4. npm run serve to run on local host
 ```
 
-The game is incomplete as of 8/6/2020, if you have suggestions please make pull requests.
+## What is this?
+Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CSS.
+The project is based off of Sean Yager's gameified book titled ["Dungeons Of Amara"](https://gum.co/CsdPh)
+
+## Moebius Dungeons is an Expirement in Vue.js 
