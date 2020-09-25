@@ -7,7 +7,7 @@
         </section>
     </section>
 
-    <section class="hidden" id="gameStats">
+    <section id="gameStats">
         
         <h1 class="animated pulse slow">FINAL STATS</h1>
         <p>You played as a {{ name }}.</p>  
@@ -48,13 +48,14 @@
 
         <footer id="thankYou">
             <h2>Thanks for playing!</h2>
-            <p>Screenshot this page and post it to twitter, brag to your friends about your high score, or click the button below to send me your stats and play again!</p>
+            <p>Screenshot this page and post it to twitter, brag to your friends about your high score, or click the button below to submit your stats and play again!</p>
         </footer>
 
-        <section class="playAgain">    
-            <p onclick="window.location.reload();">DELVE THE DUNGEONS AGAIN, ADVENTURER</p>
-        </section>
     </section>
+       
+        <section class="playAgain">    
+            <p @click="reset()">DELVE THE DUNGEONS AGAIN, ADVENTURER</p>
+        </section>
 </section>
 </template>
 
@@ -97,4 +98,159 @@ export default {
 
 <style scoped>
 
+#gameStats {
+    background-image:url('../assets/imgs/backgrounds/scrollHeader.png');
+    background-size: contain;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-color:rgb(218,218,218);
+    
+    width:70%;
+    border:rgb(70,70,70) solid 2px;
+    margin:0 auto 20px auto;
+    text-align:center;
+
+    
+    color:rgb(70,70,70);
+    transition: none;
+}
+
+#gameStats h1 {
+    margin-top:50px;
+    margin-bottom:0px;  
+    text-align:center;
+}
+
+#finalStats {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    grid-gap: 10px;
+
+    width:80%;
+    margin:0 auto 0px auto;
+}
+
+#finalStats h2 {
+    margin:0;
+    font-size:18px;
+    color:rgb(70,70,70);
+}
+
+#whowasI {
+    margin-bottom:10px;
+}
+
+#gameStats p {
+    color:rgb(70,70,70);
+}
+
+#monstersFoughtWrapper {
+    grid-column: 1/2;
+    grid-row:1/2;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#totalDamageWrapper {
+    grid-column: 2/3;
+    grid-row:1/2;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#damageBlockedWrapper {
+    grid-column: 3/4;
+    grid-row:1/2;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#maxHealthWrapper {
+    grid-column: 1/2;
+    grid-row:2/3;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#mettleEarnedWrapper {
+    grid-column: 2/3;
+    grid-row:2/3;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#itemsBoughtWrapper {
+    grid-column: 3/4;
+    grid-row:2/3;
+    border:rgb(70,70,70) solid 2px;
+    padding:10px;
+}
+
+#thankYou {
+    margin:10px auto;
+    width:80%;
+}
+
+#playerDead h2{
+    text-align:center;
+    font-size:25px;
+}
+
+#playerDead {
+    margin-bottom:14px;
+}
+
+#statForm {
+    margin:20px auto;
+    display:flex;
+}
+
+#statForm input[type=submit] {
+    background:black;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:20px;
+    padding:20px;
+    margin:0 auto;
+    border:none;
+}
+
+#playerType {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+#instructions {
+    width:50%;
+}
+
+#instructions h2 {
+    background:black;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:20px;
+    padding:20px;
+    margin:0 auto;
+    border:none;
+}
+
+.playAgain p {
+    background:black;
+    color:white !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:20px;
+    padding:20px;
+    margin:0 auto;
+    text-align:center;
+    width:60%;
+    border:none;
+    transition:background-color 3s ease-in-out;
+}
+
+.playAgain p:hover {
+    background:rgb(102, 0, 0);
+    cursor:pointer;
+    transition:background-color 3s ease-in-out;
+}
 </style>
