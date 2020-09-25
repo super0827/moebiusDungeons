@@ -18,3 +18,4 @@ Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CS
 The project is based off of Sean Yager's gameified book titled ["Dungeons Of Amara"](https://gum.co/CsdPh)
 
 ## Moebius Dungeons is an Expirement in Vue.js 
+Moebius Dungeons was developed as an expiriment while completing my Full Stack Certification from Austin Coding Academy. Over the course of 2020 the game took on many different iterations as my full stack comprehension grew. 
