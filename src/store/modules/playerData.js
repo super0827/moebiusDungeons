@@ -155,7 +155,8 @@ const actions = {
   CHECK_HP({state, commit, dispatch}){
     if(state.info.baseHealth > 0){
       //UNLOCK COMBAT
-      commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      commit('gameData/toggle', { property:'combatLocked' }, {root: true});
+      commit('authData/updateSavedGame', state.info, {root:true} )
     }
     else if (state.info.baseHealth <= 0) {
       dispatch('RESET_ANIMATIONS')
