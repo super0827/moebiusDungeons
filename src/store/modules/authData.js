@@ -11,6 +11,7 @@ const mutations = {
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
     },
+
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
@@ -35,18 +36,17 @@ const getters = {
 }
 
 const actions = {
-    updateSavedGame({commit}, user) {
+    updateSavedGame({state, commit}, payload) {
       var db = firebase.firestore();
-      var userPath = db.collection('users').doc(thisUser.email);
+      var userPath = db.collection('users').doc(user.data.email);
       
       userPath.set({
-        saveExists: false,
-        saveState: {},
+        saveExists: true,
+        saveState: {
+          monster: null, //should be info from monsterData.js
+          player: null, //should be info from playerData.js
+        },
       })
-
-    },
-    loadSavedGame({commit}, user) {
-      //logic here to load a saved game if found
     },
     fetchUser({ commit }, user) {
         //set login state based on user truthyness
@@ -64,12 +64,15 @@ const actions = {
 
       userPath.get().then(function(doc){
         if (doc.exists) {
-          console.log(`Setting game save data from authData`)
+          if(doc.data().saveExists) {
+            console.log(`Setting game save data in authData`)
+          }
+          console.log(`Save document exists, but is empty`)
           commit("SET_SAVED_GAME", doc.data())
         }
         else {
           console.log(`user did not exist : creating new data`)
-          //create new save instance document
+          //create new save instance document on firebase
           userPath.set({
             saveExists: false,
             saveState: {},
