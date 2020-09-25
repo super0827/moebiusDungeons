@@ -24,6 +24,8 @@ firebase.auth().onAuthStateChanged( function(user) {
     //If user exists, get user info
     store.dispatch('authData/fetchUser', user, {root:true})
     store.dispatch('authData/detectUser', user, {root:true})
+    store.commit('authData/SET_SAVED_GAME', user, {root:true})
+
   }
   else {
     //if no user set all info to null and false
