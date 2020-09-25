@@ -1,24 +1,30 @@
 <template>
+<section class="flexRow">
+   <monster-stats/>
 <section 
   key="monsterPortComp"
- class="columns" 
+  class="columns" 
 >
     
       <h3 class="uppercase"> {{ storeState.monster.name }} </h3>
+      
       
       <section 
       class="portraitWrapper"
       :class="{ 'animated pulse' : storeAnim.hurt, 
       'animated reverseWobble' : storeAnim.attacking, 
       'animated pulse' : storeAnim.blocking,
-      'animated tada' : storeAnim.monsterDead, 
+      'animated tada' : storeAnim.monsterDead
       }"
       >
+        <div class="tooltip">
         <!-- Monster Image -->
         <img 
         class="portrait" 
         :src="storeState.monster.portrait"
         >
+        <span class="tooltiptext">{{storeState.monster.warning}}</span>
+        </div>
 
         <!-- Animated Damage Tips -->
         <transition appear
@@ -35,17 +41,27 @@
           leave-active-class="animated fadeOut"
         >
           <section class="damageReadout" v-if="storeAnim.hurt">
-              <h2 class="calculatedDamage"> {{ storeState.playerafterArmorDealtDamage }} </h2>
-             
              <section class="flexRow">
+               <section class="indicatorWrapper">
+              <img class="attackIndicator" :src="storeState.player.attackTypeImage" alt="">
               <h2 class="attackValue">
                 {{ storeState.playerDealtDamage }} 
               </h2>
-              <h3 class="versus">vs.</h3>
-              <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack }">
-                  {{ storeState.monster.armor }} 
+               </section>
+
+              <h2 class="versus">vs.</h2>
+              
+              <section class="indicatorWrapper">
+              <img class="armorIndicator" src="../assets/imgs/icons/armorIcon.png" alt="">
+              <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack}">
+              {{ storeState.monster.armor }} 
               </h2>
+              </section>
              </section>
+
+             <section>
+              <h2 class="calculatedDamage"> {{ storeState.playerafterArmorDealtDamage }} </h2>
+            </section>
           </section>
         </transition>
           
@@ -67,44 +83,42 @@
 
           <section v-if="storeState.monster.dire" class="direOverlay"></section>
       </section>
-      
-      <section class="flexRow stats">
 
-        <section>
-          <p>{{ storeState.monster.health }}</p>
-          <img src="../assets/imgs/icons/healthIcon.png">
-        </section>
-        
-        <section>
-          <p>{{ storeState.monster.armor }}</p>
-          <img src="../assets/imgs/icons/armorIcon.png">
-        </section>
-        
-        <section>
-          <p> d{{ storeState.monster.attackMax }}</p>
-          <img :src="storeState.monster.attackTypeImage">
-        </section>
-
-      </section>
 
       <section class="coinWrapper">
         <img src="../assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">{{ storeState.monster.coins }}</h1>
+        <h1 class="coinValue">
+          <animated-number 
+          :value="storeState.monster.coins"
+          :duration="storeState.duration"
+          :formatValue="store.wholeNumber"
+          />
+        </h1>
+
       </section>
+</section>
+
 </section>
 </template>
 
 
 <script>
-import { store } from "../store";
+import AnimatedNumber from "animated-number-vue";
+import MonsterStats from "./MonsterStats.vue";
+
 
 export default {
   name: 'MonsterPortrait',
+    components: {
+      AnimatedNumber,
+      MonsterStats
+    },
   data() {
       return {
-          storeState: store.state,
-          storeAnim: store.animations.monster,
       }
+  },
+  created(){
+    this.$sound.play(this.storeState.monster.enterSound);
   },
 }
 </script>
@@ -127,8 +141,8 @@ export default {
   color:rgb(255, 166, 0);
   text-shadow: black 2px 2px 2px;
   font-size:40px;
-  margin:5px;
-  padding:5px;
+  margin:0px;
+  padding:0px;
   text-decoration: none;
 }
 
@@ -136,8 +150,8 @@ export default {
   color:rgb(0, 179, 255);
   text-shadow: black 2px 2px 2px;
   font-size:40px;
-  margin:5px;
-  padding:5px;
+  margin:0px;
+  padding:0px;
   text-decoration: none;
 }
 
@@ -157,11 +171,31 @@ export default {
 }
 
 .versus {
-    line-height:40px;
-    font-size:20px;
-    margin:0;
-    padding:0;
-    color:rgb(192, 192, 192);
+    color:rgb(255, 255, 255);
+    line-height:70px;
+    margin:5px;
+    padding:5px;
+    text-decoration: none;
+}
+
+.indicatorWrapper {
+  position:relative;
+}
+
+.attackIndicator {
+  width:50px;
+  position:absolute;
+  left:-15px;
+  top:50px;
+  filter: drop-shadow(-1px 2px 5px blue) invert(1);
+}
+
+.armorIndicator {
+  width:50px;
+  position:absolute;
+  left:-15px;
+  top:50px;
+  filter: drop-shadow(-1px 2px 5px orange) invert(1);
 }
 
 .red {
@@ -222,4 +256,15 @@ export default {
 .test {
   position:fixed;
 }
+
+p {
+  text-transform:uppercase;
+}
+
+.coinWrapper {
+  margin-top:10px;
+}
+
+
+
 </style>

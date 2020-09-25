@@ -2,7 +2,8 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering }">MOEBIUS DUNGEONS</h1>
+    <h1 class="animated" :class="{'zoomInDown' : isEntering, 
+    'zoomOutUp' : !isEntering }">CHOOSE YOUR CHARACTER</h1>
 
     <section class="chooseChar">
         <section
@@ -17,13 +18,16 @@
         :attackTypeImage="characters.attackTypeImage"
         @click="setPlayer(characters)"
         class="columns animated"
-        :class="{ [characters.inAnimations]: storeState.isEntering, [characters.outAnimations]: !storeState.isEntering }">
+        :class="{ [characters.inAnimations]: isEntering, 
+        [characters.outAnimations]: !isEntering }">
         
             <h2>{{characters.name}}</h2>
             <h3>{{characters.description1}}</h3>
             <p>{{characters.description2}}</p>
         
-            <section class="portContainer animated infinite" :id="characters.name">
+            <section 
+            @mouseenter="UiSound.chit.play()"
+            class="portContainer animated infinite" :id="characters.name">
                 <section class="overlay"></section>
                 <img :src="characters.portrait" :alt="characters.description2">
             </section>
@@ -31,61 +35,96 @@
         </section>
     </section>
 
-<h1 id="about" @click="store.sceneChange('InstructionsScreen')"> HUH? </h1>
+<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> What Is This? </h1>
+
+<transition name='fade'>
+    <instructions-screen v-if="this.helper"/>
+</transition>
+
 </section>
 </template>
 
 <script>
-import { store } from "../store"
+import InstructionsScreen from './InstructionsScreen';
+import { mapState } from 'vuex';
+
+import UiSound from '@/plugins/UiSounds.js'
+
+import helperToggles from './mixins/helperToggles';
+import gameAnimations from './mixins/gameAnimations';
+import gameMusic from './mixins/gameMusic';
 
 export default {
   name: 'CharacterSelect',
+  mixins: [helperToggles, gameAnimations, gameMusic],
+  components: {
+      InstructionsScreen,
+  },
   data() {
       return {
-          store: store,
-          storeState: store.state,
-          characterClasses: [
-              {name:"swordsman",
-              type:'player', 
-              portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
-              description1:"Slicing and Dicing", 
-              description2:"Bruiser class, high damage, good armor, high health.", 
-              coins:0, health:12, armor:2, attackMax:8, attackType: "physical",
-              attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
-              inAnimations: "zoomInLeft",
-              outAnimations: "zoomOutLeft"
+            UiSound: UiSound,
+            music: ['charSelectMusic'],
+            characterClasses: [
+              { 
+                name:"swordsman",
+                type:'player', 
+                portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
+                description1:"Slicing and Dicing",
+                description2:"Bruiser class, high damage, good armor, high health.", 
+                coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
+                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"),
+                mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
+                mettle: 1,
+                curse:0,
+                special: "en'garde",
+                specialDescription:"Spend one mettle hone your guard and permenantly gain 1 armor.",
+                inAnimations: "zoomInLeft",
+                outAnimations: "zoomOutLeft"
               },
 
-              {name:"mage",
-              type:'player', 
-              portrait:require("../assets/imgs/playableCharacters/mage.png"), 
-              description1:"Spellslinging", 
-              description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
-              coins:0, health:6, armor:0, attackMax:10, attackType: "magical", 
-              attackTypeImage: require("../assets/imgs/icons/magicalIcon.png"), 
-              inAnimations: "zoomInUp",
-              outAnimations: "zoomOutDown",
+              {
+                name:"mage",
+                type:'player', 
+                portrait:require("../assets/imgs/playableCharacters/mage.png"), 
+                description1:"Spellslinging", 
+                description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
+                coins:0, baseHealth:6, baseArmor:0, baseAttackMax:10, attackType: "magical", 
+                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png"),
+                mettleImg: require("@/assets/imgs/icons/mageMettle.png"),
+                mettle: 1,
+                curse:0,
+                special: "variagate",
+                specialDescription:"Spend one mettle to deal 12 damage to the enemy that ignores armor. The monster won’t attack you back when you use Variagate.",
+                inAnimations: "zoomInUp",
+                outAnimations: "zoomOutDown",
               },
 
-              {name:"varlet",
-              type:'player', 
-              portrait:require("../assets/imgs/playableCharacters/varlet.png"), 
-              description1:"Sneaky and Roguish", 
-              description2:"Avoids damage on critical hits, mid tier stats.", 
-              coins:1, health:8, armor:1, attackMax:6, attackType: "physical", 
-              attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"), 
-              inAnimations: "zoomInRight",
-              outAnimations: "zoomOutRight",
+              {
+                name:"varlet",
+                type:'player', 
+                portrait:require("../assets/imgs/playableCharacters/varlet.png"), 
+                description1:"Sneaky and Roguish", 
+                description2:"Avoids damage on critical hits, mid tier stats.", 
+                coins:1, baseHealth:8, baseArmor:1, baseAttackMax:6, attackType: "physical", 
+                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"),
+                mettleImg: require("@/assets/imgs/icons/varletMettle.png"),
+                mettle: 1,
+                curse:0,
+                special: "Backstab",
+                specialDescription:"Spend 1 Mettle to deal 2/3 your max damage to the monster. The monster won’t attack you back when you use Backstab.",
+                inAnimations: "zoomInRight",
+                outAnimations: "zoomOutRight",
               },
           ],
       }
   },
   methods: {
     setPlayer(passedPlayer) {
-        console.log(`You're playing as the ${passedPlayer.name}`);
-        this.storeState.player = passedPlayer;
-        store.sceneChange('DungeonPhase');
-      }
+        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
+        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
+        this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
+        UiSound.charPick.play();
+    },
   },
 }
 </script>
@@ -93,11 +132,16 @@ export default {
 <style scoped>
 .characterSelectWrapper {
     text-align:center;
+    position:relative;
 }
 
 .chooseChar {
     display:flex;
     flex-direction: row;
+}
+
+.columns {
+    margin:0 10px;
 }
 
 .chooseChar img {

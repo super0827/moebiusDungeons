@@ -15,7 +15,18 @@ body {
     max-width:200px;
     min-width:200px;
     text-align:center;
-    margin:0 10px;
+    margin:0 0px;
+}
+
+.statColumn {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items: space-around;
+    max-width:100px;
+    min-width:100px;
+    width:100px;
+    height:290px;
 }
 
 .iconImageSize {
