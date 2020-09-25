@@ -15,14 +15,11 @@
 </template>
 
 <script>
-import { store } from "../store"
 
 export default {
     name: 'MonsterReadout',
     data() {
         return {
-            storeState: store.state,
-            monsterLog: store.state.monsterLog,
         }
     },
     watch: {

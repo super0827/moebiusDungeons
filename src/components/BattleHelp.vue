@@ -1,7 +1,7 @@
 <template>
 <section>
     <section class="helpModule">
-        <h1 @mouseenter="$sound.play('chit')" @click="$emit('close')" class="close">X</h1>
+        <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
 
 
         <h1 class="title">Battle Helper</h1>
@@ -54,13 +54,8 @@
                 If your attack doesn't kill the monster, it attacks you back so watch out!
             </p>
             <br>
-            <h2>Be Reckless</h2>
-            <p>As "Trade Blows" but your attack is multiplied by 1.5, and your 
-                armor is halved for this turn.
-                <br>
-                Good to use this when the monster is low on health. Use at your 
-                own risk! 
-            </p>
+            <h2>{{special}}</h2>
+            <p>{{description}}</p>
             <br>
             <h2>Turn Tail</h2>
             <p>
@@ -78,8 +73,23 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+import UiSounds from '@/plugins/UiSounds.js'
+
 export default {
   name: 'BattleHelp',
+  data() {
+      return {
+          UiSounds: UiSounds
+      }
+  },
+  computed: {
+    ...mapState('playerData', {
+        special: state => state.info.special,
+        description: state => state.info.specialDescription
+    })
+  }
 }
 </script>
 

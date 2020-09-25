@@ -1,43 +1,131 @@
 <template>
   <div id="app">
 
+    <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
     <!-- DEBUGGING -->
 
-    <section class="debugBar">
+    <transition name="fade" mode="out-in">
+    <section key="loginBar" v-if="phase != 'Loading'" class="user">
+      
+      <div class="loginBar" v-if="user.loggedIn == true">
+        <img :src="avatar" alt="">
+        <p>{{user.data ? user.data.displayName : "..."}}</p>
+        <p>|</p>
+        <p class="clickable" @click="signOut">Sign Out</p>
+      </div>
+
+      <div v-else-if="user.data == null" class="loginBar">
+        <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</p>
+        <p>|</p>
+        <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Register'})" class="clickable">Sign Up</p>
+      </div>
+   
+    </section>
+    </transition>
+
+    <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
-        DEBUG BAR
+        <h3>DEBUG BAR</h3>
       </section>
 
-      <article v-if="debugShow">
-      <p>MONSTER</p>
-      <section @click="store.newMonster()">New Monster</section>
-      <section @click="storeState.monsterRoster = 0">Reset Monster Roster</section>
-      <section @click="storeState.monster.health += 100">Monster HP 100</section>
-      <section @click="storeState.monster.health = 1">Monster HP 1</section>
-      <br>
-      <p>PLAYER</p>
-      <section @click="storeState.player.health += 100">Player HP 100</section>
-      <section @click="storeState.player.health = 1">Player HP 1</section>
-      <section @click="storeState.player.coins++">Coins Up</section>
-      <br>
-      <p>SCENES</p>
-      <section @click="store.sceneChange('CharacterSelect')">Char Select</section>
-      <section @click="store.sceneChange('ShopPhase')">Shop</section>
-      <section @click="store.sceneChange('DungeonPhase')">Dungeon</section>
-      <br>   
-      <p>END GAME</p>
-      <section @click="store.sceneChange('WinScreen')">Win Screen</section>
-      <section @click="store.sceneChange('LoseScreen')">Lose Screen</section>
+      <article class="debugContent" v-if="debugShow">
+        <p>SCENES</p>
+
+        <section>
+          <section class="flexColumn">
+          <span>SCENE SELECT</span>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'SavedGame'})">SAVED GAME SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
+            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
+          </section>
+        </section>
+
+        <p>MONSTER</p>
+        <section>
+          <span>HEALTH</span>
+          <section>
+            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+          </section>
+        </section>
+        
+        <br>
+
+        <p>PLAYER</p>
+        
+        <section>
+          <span>HEALTH</span>
+          <section>
+            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
+            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+          </section>
+        </section>
+      
+        <section>
+          <span>ARMOR</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
+          </section>
+        </section>
+        
+        <section>
+          <span>ATTACK</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
+          </section>
+        </section>
+        
+        <section>
+          <span>COINS</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
+          </section>
+        </section>
+        
+        <section>
+          <span>METTLE</span>
+          <section>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
+          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
+          </section>
+        </section>
+
+        <br>
+
+        <p>SHOPKEEPS</p>
+          <section>
+            <section class="flexColumn">
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:0})">CLERIC </button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:1})">GRAVEROBBER</button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:2})">MERCHANT</button>
+              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</button>
+            </section>
+        </section>
+
+        <br>
+        
+        <section>
+          <h3 @click="testMode = !testMode">Enable Testing Mode</h3>
+        </section>
       </article>
+      
     </section>
 
     <!-- GUI -->
-      <transition name="fade" mode="out-in">
+     <transition name="fade" mode="out-in">
         <component 
-        :key="storeState.phase"
-        :is="storeState.phase"
+        :key="phase"
+        :is="phase"
         ></component>
-      </transition> 
+      </transition>
 
 </div>
 </template>
@@ -47,43 +135,76 @@ import './assets/styles/globals.css';
 import './assets/styles/animatedCSS.css';
 import './assets/styles/transitions.css';
 
-import { store } from "./store"
+import { mapState, mapGetters } from 'vuex'
 
+import * as firebase from "firebase";
+
+import SavedGame from './components/SavedGame.vue';
 import StartScreen from './components/StartScreen.vue';
 
 import CharacterSelect from './components/CharacterSelect.vue';
 import DungeonPhase from './components/DungeonPhase.vue';
+import ShopSelect from './components/ShopSelect.vue';
 import ShopPhase from './components/ShopPhase.vue';
-
-
-import WinScreen from './components/WinScreen.vue';
 import LoseScreen from './components/LoseScreen.vue';
+import Keypress from 'vue-keypress';
+import Login from './components/authentication/Login.vue';
+import Loading from './components/authentication/Loading.vue';
+
+import Register from './components/authentication/Register.vue';
 
 export default {
   name: 'App',
   components: {
+    SavedGame,
     StartScreen,
     CharacterSelect,
     DungeonPhase,
+    ShopSelect,
     ShopPhase,
-    WinScreen,
     LoseScreen,
+    Keypress,
+    Login,
+    Register,
+    Loading
   },
   data() {
     return {
-      helper: "",
-      storeState: store.state,
-      store: store,
+      testMode: true,
       debugShow: false,
     }
   },
-  created(){
+  methods: {
+    toggleDebug(response) {
+      this.testMode = !this.testMode
+    },
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           this.$store.commit('gameData/mutate', {property: 'phase', with: 'Login'});
+        });
+    }
+  },
+  computed: {
+      ...mapState('gameData', {
+        phase: state => state.phase
+      }),
+      ...mapState('authData', {
+        user: state => state.user 
+      }),
+      ...mapGetters('authData', {
+        avatar: 'userIcon',
+      })
+  },
+  beforeMount(){
 console.log(`
- _____         _   _            ____                              
+_____         _   _            ____                              
 |     |___ ___| |_|_|_ _ ___   |    \ _ _ ___ ___ ___ ___ ___ ___ 
 | | | | . | -_| . | | | |_ -|  |  |  | | |   | . | -_| . |   |_ -|
 |_|_|_|___|___|___|_|___|___|  |____/|___|_|_|_  |___|___|_|_|___|
-                                             |___|  
+                                            |___|  
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMWKOkdlc:ccccdk0NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMM0,            .:0MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -127,21 +248,38 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWO,,OWM0,.dWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMKc'co,.oNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNkc:oKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- 
+
 Created by Sean Yager, (c) Misuse of Mana LLC.
 
-If you're a game dev company or individual looking to hire an artist with full stack front end designer with backend
-knowledge, experience with Vue, React, Webpack, and Node.js, send me an email.
+If you're a game dev company or individual looking to hire an artist with
+full stack front end designer with backend knowledge, experience with Vue,
+React, Webpack, and Node.js, send me an email.
 
-I'm a former web dev student of Austin Coding Academy, and want to hear from you.
+I'm a former web dev student of Austin Coding Academy, and
+would love to hear from you.
 
 contact@seanyager.com
 `);
-  }
+
+  this.$store.commit('monsterData/newMonster');
+  this.$store.commit('shopkeepData/newShopkeep')
+  },
 }
 </script>
 
 <style>
+.loginBar {
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:5px 0;
+}
+
+.loginBar .clickable:hover {
+  cursor:pointer;
+  color:gold;
+}
+
 #app {
   overflow:hidden;
   width:100vw;
@@ -208,10 +346,41 @@ contact@seanyager.com
   text-transform:uppercase;
 }
 
+.debugBar h3 {
+  border: solid white 2px;
+  padding:0 50px;
+}
+
+.debugBar span {
+  margin-right:10px;
+}
+
 .debugBar section {
-  text-align:center;
+  display:flex;
+  justify-content:center;
   padding:1px;
   margin:3px;
-  border:solid #eee 2px;
+}
+
+.debugContent { 
+  height:500px;
+  overflow-y: scroll;
+}
+
+.user {
+  margin:10px;
+  font-family: var(--paragraphs-type);
+  text-align:center;
+  display:inline;
+  position:fixed;
+  font-size:13px;
+  top:0px;
+  z-index:999999;
+  min-width:200px;
+  opacity:0.7;
+  color:white;
+  left:0px;
+  background:black;
+  text-transform:uppercase;
 }
 </style>

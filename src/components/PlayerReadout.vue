@@ -16,13 +16,11 @@
 </template>
 
 <script>
-import { store } from "../store"
 
 export default {
     name: 'PlayerReadout',
     data() {
         return {
-            storeState: store.state,
             playerLog: store.state.playerLog,
         }
     },

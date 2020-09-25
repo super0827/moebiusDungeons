@@ -1,107 +1,227 @@
 <template>
 <section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
-    <section class="flexColumn animated"
-    :class="{'zoomInDown' : storeState.isEntering, 'zoomOutUp' : !storeState.isEntering}">
-        <img key="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
+    <section class="flexRow animated"
+    :class="{'zoomInDown' :isEntering, 'zoomOutUp' : !isEntering}">
+        <img key="dungeonSigil" id="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
 
     <!-- Battle Helper Button -->
     <transition name="fade" mode="out-in">
-        <h1 @click="helper = !helper" @mouseenter="$sound.play('chit')" id="dungeonHelp">DUNGEON HELP</h1>
+        <h1 @click="toggleHelp()" @mouseenter="UiSounds.chit.play()" id="dungeonHelp">DUNGEON HELP</h1>
     </transition>
     
     <section class="flexRow">
         
-        <player-readout
+        <turn-log
         class="animated"
-        :class="{'zoomInLeft' : storeState.isEntering, 
-        'zoomOutLeft' : !storeState.isEntering}"
+        :class="{'zoomInLeft' : isEntering, 
+        'zoomOutLeft' : !isEntering
+        }"
+        :thisLog="playerLog"
         />
 
         <!-- Player Portrait and Stats -->
-        <player-portrait
+        <character-token
         class="animated"
-        :class="{'zoomInLeft' : storeState.isEntering, 'zoomOutLeft' : !storeState.isEntering}"
+        :class="{'zoomInLeft' : isEntering, 'zoomOutLeft' : !isEntering}"
+        :who="'player'"
+        :enemy="playerEnemy"
+        :name="playerName"
+        :portrait="playerPortrait"
+        :health="playerHealth"
+        :armor="playerArmor"
+        :attack="playerAttackMax"
+        :attackType="playerAttackType"
+        :attackTypeImg="playerAttackTypeImage"
+        :coins="playerCoins"
+
+        :isHurt="playerisHurt"
+        :isBlocking="playerisBlocking"
+        :isAttacking="playerisAttacking"
+        :isDead="playerisDead"
+        :statSide="playerStatSide"
+        :enemyAttackType="monsterAttackType"
+        :enemyAttackTypeImage="monsterAttackTypeImage"
+        :enemyAttackDamage="monsterAttackDamage"
+        :enemyReducedAttackDamage="monsterRealDamage"
+        :porteffect="playerportEffect"
+        :redShine="redShinePlayer"
+        :greenShine="greenShinePlayer"
+        :purpleShine="purpleShinePlayer"
+        :goldShine="goldShinePlayer"
+        :blueShine="blueShinePlayer"
+        :yellowShine="yellowShinePlayer"
         />
 
         <!-- Dungeon Controls -->
         <battle-controls
         class="animated"
-        :class="{'zoomInUp' : storeState.isEntering, 'zoomOutDown' : !storeState.isEntering}"
+        :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering}"
         key="battleControls"/>
 
         <!-- Monster Portrait -->
-        <monster-portrait
+        <character-token
         key="monsterPortrait"
         class="animated"
-        :class="{'zoomInRight' : storeState.isEntering, 'zoomOutRight' : !storeState.isEntering}"
-        @monster-is-dead="gameplayScene = 'shop'"
+        :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering}"
+        :who="'monster'"
+        :name="monsterName"
+        :enemy="monsterEnemy"
+        :portrait="monsterPortrait"
+        :health="monsterHealth"
+        :armor="monsterArmor"
+        :attack="monsterAttackMax"
+        :attackType="monsterAttackType"
+        :attackTypeImg="monsterAttackTypeImage"
+        :coins="monsterCoins"
+        :isHurt="monsterisHurt"
+
+        :warning="monsterWarning"
+
+        :isBlocking="monsterisBlocking"
+        :monsterisAttacking="monsterisAttacking"
+        :isDead="monsterisDead"
+        :statSide="monsterStatSide"
+        :enemyAttackType="playerAttackType"
+        :enemyAttackTypeImage="playerAttackTypeImage"
+        :enemyAttackDamage="playerAttackDamage"
+        :enemyReducedAttackDamage="playerRealDamage"
+        :porteffect="monsterportEffect"
+        :redShine="redShineMonster"
+        :greenShine="greenShineMonster"
+        :purpleShine="purpleShineMonster"
+
+        :specialDamage="specialDamage"
+        :specialDamageAnimation="specialDamageAnimation"
         />
 
-        <monster-readout
+        <turn-log
         class="animated"
-        :class="{'zoomInRight' : storeState.isEntering, 
-        'zoomOutRight' : !storeState.isEntering}"
+        :class="{'zoomInRight' : isEntering,
+        'zoomOutRight' : !isEntering}"
+        :thisLog="monsterLog"
         />
     </section>
     
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="helper = false" v-if="helper==true"/>
+        <battle-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
     </transition>
 </section>
 </template>
 
 <script>
-import { store } from "../store"
+import { mapState, mapGetters } from 'vuex';
 
 import BattleControls from './BattleControls.vue';
-import PlayerPortrait from "./PlayerPortrait.vue";
-import MonsterPortrait from "./MonsterPortrait.vue";
+import CharacterToken from "./CharacterToken.vue";
 import BattleHelp from './BattleHelp.vue';
-import PlayerReadout from './PlayerReadout.vue';
-import MonsterReadout from './MonsterReadout.vue';
+import TurnLog from './TurnLog.vue';
+
+import UiSounds from '@/plugins/UiSounds.js'
+import MonsterSounds from '@/plugins/MonsterSounds.js'
+
+import helperToggles from './mixins/helperToggles';
+import gameAnimations from './mixins/gameAnimations';
+import gameMusic from './mixins/gameMusic';
+
 
 export default {
     name: 'DungeonPhase',
+    mixins: [helperToggles, gameAnimations, gameMusic],
     components: {
         BattleHelp,
-        PlayerPortrait,
+        CharacterToken,
         BattleControls,
-        MonsterPortrait,
-        PlayerReadout,
-        MonsterReadout,
-    },
-    methods: {
-        randomRoll(rollMax){
-            return Math.floor(Math.random() * Math.floor(rollMax) + 1);
-        },
+        TurnLog,
     },
     data() {
         return {
-            helper: false,
-            storeState: store.state,
-            randomBkg: Number,
+            music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
+            UiSounds : UiSounds,
+            MonsterSounds : MonsterSounds
         }
+    },
+    computed: {
+        ...mapState('playerData', {
+            playerName: state => state.info.name,
+            playerPortrait: state => state.info.portrait,
+            playerHealth: state => state.info.baseHealth,
+            playerAttack: state => state.info.baseAttackMax,
+            playerAttackType: state => state.info.attackType,
+            playerAttackTypeImage: state => state.info.attackTypeImage,
+            playerCoins: state => state.info.coins,
+            playerStatSide: state => state.statSide,
+            playerAttackDamage: state => state.thisDamage,
+
+            specialDamage: state => state.specialDamage,
+            specialDamageAnimation: state => state.specialDamageAnimation,
+
+            monsterEnemy: state => state.info.name,
+
+            playerisHurt: state => state.animations.hurt,
+            playerisBlocking: state => state.animations.blocking,
+            playerisAttacking: state => state.animations.attacking,
+            playerisDead: state => state.animations.isDead,
+            playerportEffect: state => state.animations.portEffect,
+            redShinePlayer: state => state.animations.redShine,
+            greenShinePlayer: state => state.animations.greenShine,
+            purpleShinePlayer: state => state.animations.purpleShine,
+            goldShinePlayer: state => state.animations.goldShine,
+            blueShinePlayer: state => state.animations.blueShine,
+            yellowShinePlayer: state => state.animations.yellowShine
+        }),
+        ...mapState('monsterData', {
+            monsterEnter: state => state.info.enterSound,
+
+            playerEnemy: state => state.info.name,
+            
+            monsterName: state => state.info.name,
+            monsterPortrait: state => state.info.portrait,
+            monsterAttackType: state => state.info.attackType,
+            monsterAttackTypeImage: state => state.info.attackTypeImage,
+            monsterCoins: state => state.info.coins,
+            monsterStatSide: state => state.statSide,
+            monsterAttackDamage: state => state.thisDamage,
+            
+            monsterWarning: state => state.info.warning,
+
+            monsterisHurt: state => state.animations.hurt,
+            monsterisBlocking: state => state.animations.blocking,
+            monsterisAttacking: state => state.animations.attacking,
+            monsterisDead: state => state.animations.isDead,
+            monsterportEffect: state => state.animations.portEffect,
+            redShineMonster: state => state.animations.redShine,
+            greenShineMonster: state => state.animations.greenShine,
+            purpleShineMonster: state => state.animations.purpleShine
+        }),
+        ...mapGetters('playerData', {
+            playerLog: 'playerLog',
+            playerRealDamage: 'thisAdjDamage',
+            playerHealth: 'calcHealth',
+            playerArmor: 'calcArmor',
+            playerAttackMax: 'calcAttackMax',
+        }),
+        ...mapGetters('monsterData', {
+            monsterLog: 'monsterLog',
+            monsterRealDamage: 'thisAdjDamage',
+            monsterHealth: 'calcHealth',
+            monsterArmor: 'calcArmor',
+            monsterAttackMax: 'calcAttackMax'
+        })
     },
     created() {
-        this.randomBkg = this.randomRoll(5);
-        this.$sound.play(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: .2});
-        this.storeState.playerLog = [];
-        this.storeState.monsterLog = [];
+        this.MonsterSounds[this.monsterEnter].play();
+        this.$store.dispatch('playerData/RESET_ANIMATIONS');
+        this.$store.dispatch('monsterData/RESET_ANIMATIONS');
+        this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
+        this.$store.commit('playerData/mutate', {property:'log', with:[]})
+        this.$store.commit('monsterData/mutate', {property:'log', with:[]})
     },
-    beforeDestroy() {
-        this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume: 0});
-    },
-    watch: {
-        helper: function() {
-            if(this.helper === true){
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.05})
-            } else {
-                this.$sound.pause(`dungeonMusic${this.randomBkg}`, {fade: 1200, volume:.2})
-            }
-        }
+    destroyed(){
+        this.$store.commit('monsterData/newMonster');
+        
     }
 }
 </script>
@@ -109,6 +229,9 @@ export default {
 <style  scoped>
     .dungeonPhaseWrapper {
         position:relative;
+    }
+    #dungeonSigil {
+        margin-right:10px;
     }
     battle-help {
         position:absolute;

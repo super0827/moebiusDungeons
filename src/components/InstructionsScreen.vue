@@ -16,7 +16,7 @@
   </h3>
 
   <h3>
-      Rinse then repeat. Try to make it to the end alive.    
+      Rinse then repeat. How long can you survive?   
   </h3>
 
   <p>
@@ -24,20 +24,23 @@
   </p>
 
 <br>
-  <h1 @mouseenter="$sound.play('chit')" class="animated pulse slow infinite" id="proceed" @click="$emit('close-instructions')">
+  <h1 @mouseenter="UiSounds.chit.play()" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
       UNDERSTOOD.
   </h1>
 </section>
 </template>
 
 <script>
-import { store } from "../store";
+
+import helperToggles from '../components/mixins/helperToggles'
+import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
   name: 'InstructionsScreen',
+  mixins: [helperToggles],
   data() {
       return {
-          storeState: store.state,
+          UiSounds: UiSounds,
       }
   },
 }
