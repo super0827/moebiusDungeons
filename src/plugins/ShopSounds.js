@@ -13,19 +13,19 @@ const oneCoin1 = new Howl({
 });
 
 const oneCoin2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/oneCoin2.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/onecoin2.mp3')],
     loop: false,
     volume: 1,
 });
 
 const twoCoin1 = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/twoCoin1.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/twocoin1.mp3')],
     loop: false,
     volume: 1,
 });
 
 const twoCoin2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/twoCoin2.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/twocoin2.mp3')],
     loop: false,
     volume: 1,
 });
@@ -37,19 +37,19 @@ const threeCoin1 = new Howl({
 });
 
 const threeCoin2 = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/threeCoin2.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/threecoin2.mp3')],
     loop: false,
     volume: 1,
 });
 
 const fourCoin = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/fourCoin.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/fourcoin.mp3')],
     loop: false,
     volume: 1,
 });
 
 const fiveCoin = new Howl({
-    src: [require('@/assets/audio/shopAudio/coins/fiveCoin.mp3')],
+    src: [require('@/assets/audio/shopAudio/coins/fivecoin.mp3')],
     loop: false,
     volume: 1,
 });
