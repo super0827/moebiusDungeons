@@ -30,4 +30,4 @@ Here's a little gif of the difference in UI when I upgraded to using Vue.js. The
 
 ![](public/assets/dungeon-compare.gif)
 
-MORE TO BE WRITTEN SOON! STAY TUNED!
+MORE TO BE WRITTEN SOON! STAY TUNED! Thanks for reading!
