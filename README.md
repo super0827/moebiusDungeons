@@ -2,7 +2,7 @@
 
 :floppy_disk:
 
-[](src/assets/imgs/icons/items/merchant/armorKit.png)
+[YO!](src/assets/imgs/icons/items/merchant/armorKit.png)
 
 A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG Book
 [Dungeons Of Amara Book](https://gum.co/CsdPh)
