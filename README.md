@@ -1,8 +1,6 @@
 # Moebius Dungeons - A Browser RPG Roguelike Game
 
-:floppy_disk:
-
-[](src/assets/imgs/icons/items/merchant/armorKit.png)
+![Various items from the game, a potion, a demon ring, knight crest, and others.](public/assets/banner.png)
 
 A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG Book
 [Dungeons Of Amara Book](https://gum.co/CsdPh)
@@ -17,6 +15,8 @@ A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG B
 4. npm run serve to run on local host
 ```
 
+![Various sigils from the game, the shop sigil, kingloyal crest, knight crest, beasts crest.](public/assets/banner2.png)
+
 ## What is this?
 Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CSS.
 The project is based off of Sean Yager's gameified book titled ["Dungeons Of Amara"](https://gum.co/CsdPh)
@@ -28,3 +28,6 @@ Scaling up and looking ahead to what I wanted the game to become I realized quic
 
 Here's a little gif of the difference in UI when I upgraded to using Vue.js. The interface became much cleaner and more organized with the modularity that Vue.js Framework offered with it's reusable Components.
 
+![](public/assets/dungeon-compare.gif)
+
+MORE TO BE WRITTEN SOON! STAY TUNED!
