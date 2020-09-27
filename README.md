@@ -2,7 +2,7 @@
 
 ![Various items from the game, a potion, a demon ring, knight crest, and others.](public/assets/banner.png)
 
-:crossed-swords: :shield:
+:crossed_swords: :shield:
 
 A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG Book
 [Dungeons Of Amara Book](https://gum.co/CsdPh)
