@@ -4,6 +4,9 @@
 <br>
 
 ### Table of Contents
+
+<br>
+
 [Inspired By D.O.A.](#inspired-by-dungeons-of-amara)
 
 [How to Run MoDun Locally](#run-modun-locally)
@@ -15,7 +18,7 @@
 - [The Gameplay Loop :repeat:](#the-gameplay-loop--repeat-)
     - [Dungeon Phase :skull:](#dungeon-phase--skull-)
     - [Trade Blows :crossed_swords:](#trade-blows--crossed-swords-)
-    - [Special Abilities :sparkle:](#special-abilities--sparkle-)
+    - [Special Abilities :sparkles:](#special-abilities--sparkle-)
         + [En'garde](#en-garde)
         + [Variagate](#variagate)
         + [Peculate](#peculate)
@@ -29,6 +32,8 @@
   * [Rest to Regain Mettle :sleeping:](#rest-to-regain-mettle--sleeping-)
   * [Retire](#retire)
 - [Shop Phase](#shop-phase)
+
+## [My Contact Information](#get-in-touch)
 
 <br>
 <hr>
@@ -228,7 +233,9 @@ Play around in the shops and get a feel for your favorite items.
 
 ![Various items from the game, a potion, a demon ring, knight crest, and others.](public/assets/banner.png)
 
-# Rinse and Repeat!
+<br>
+
+# Get in Touch
 That's the core gist of Moebius Dungeons, thanks for reading this far.
 I'm always happy to hear from fans so reach out to say hi! I'm on most social media [@MisuseOfMana](https://www.instagram.com/misuseofmana)
 
