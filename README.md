@@ -162,7 +162,11 @@ The Varlet's ability (Peculate) allows for stealing coins when used to kill a mo
 Peculate **must be used to deal the killing blow to a monster to provide coins.**. Unlike the other class abilities, Peculate is a long con ability that requires pre-planning and setup, with a little luck mixed in. It's much more difficult to use effectively than the other abilities but pays off when used properly.
 
 ### Example: 
-    A monster has 12HP and your Max Attack is 8. You have one use of Peculate, which will deal 2 damage (1/4 of 8) per use. The monsters health must be 2 or less in order for Peculate to work properly.
+```
+A monster has 12HP and your Max Attack is 8. 
+You have one use of Peculate, which will deal 2 damage (1/4 of 8) per use. 
+The monsters health must be 2 or less in order for Peculate to work properly.
+```
 
 Peculate when used as the killing blow, grants the Varlet **2 more coins** on top of the coins you receive for defeating the monster.
 
