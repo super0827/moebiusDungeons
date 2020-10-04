@@ -8,7 +8,7 @@ const state = () => ({
     isBoss: false,
     thisDamage: {type: Number},
     log: [],
-    monsterRank: 'normal',
+    monsterRank: '',
     tempHealth: 0,
     tempArmor: 0,
     tempAttackMax: 0,
