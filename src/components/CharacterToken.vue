@@ -138,6 +138,16 @@
             </section>
           </transition>
 
+
+          <section v-if="monsterRank" 
+          class="animateRankOverlay"
+          :class="{
+            virulentOverlay : monsterRank === 'virulent',
+            fearsomeOverlay : monsterRank === 'fearsome',
+            bloodlessOverlay : monsterRank === 'bloodless',
+            flawlessOverlay : monsterRank === 'flawless'
+          }">
+          </section>
       </section>
 
       <section class="coinWrapper">
@@ -212,7 +222,9 @@ export default {
     'purpleShine',
     'goldShine',
     'blueShine',
-    'yellowShine'
+    'yellowShine',
+
+    'monsterRank'
   ],
   methods: {
     wholeNumber(value) {
@@ -461,6 +473,52 @@ export default {
   color:greenyellow;
   font-size:20px;
   text-shadow:black 2px 2px 2px;
+}
+
+.animateRankOverlay {
+  grid-row:1/4;
+  grid-column:1/2;
+    -webkit-animation: rankAnimation 9s ease infinite;
+    -moz-animation: rankAnimation 9s ease infinite;
+    animation: rankAnimation 9s ease infinite;
+}
+
+
+
+.virulentOverlay {
+  background: linear-gradient(45deg,rgba(255,0,250,.3) 0%,rgba(255,0,112,.3) 15%,rgba(255,125,248,.3) 30%,rgba(255,0,250,.3) 45%,rgba(255,125,248,.3) 60%,rgba(255,88,206,.3) 75%,rgba(255,0,250,.3) 90%,rgba(255,0,108,.3) 100%);
+  background-size: 800% 800%;
+}
+
+.fearsomeOverlay {
+  background: linear-gradient(45deg, rgba(255,0,0,.5) 0%, rgba(255,68,0,.5) 15%, rgba(255, 101, 101, 0.5) 30%, rgba(255,0,0,.5) 45%, rgba(255, 104, 104, 0.5) 60%, rgba(255,0,0,.5) 75%, rgba(255,68,0,.5) 90%, rgba(255,0,0,.5) 100%);
+  background-size: 800% 800%;
+}
+
+.bloodlessOverlay {
+  background: linear-gradient(45deg, rgba(255,132,0,0.5) 0%, rgba(255,166,0,0.5) 15%, rgba(255,200,112,0.3) 30%, rgba(255,132,0,0.5) 45%, rgba(255,200,112,0.5) 60%, rgba(255,200,112,0.5) 75%, rgba(255,166,0,0.5) 90%, rgba(255,132,0,0.5) 100%);  background-size: 800% 800%;
+  background-size: 800% 800%;
+}
+
+.flawlessOverlay {
+  background: linear-gradient(45deg, rgba(255,0,0,0.5) 0%, rgba(255,141,0,0.5) 10%, rgba(255,184,45,0.5) 20%, rgba(255,237,112,0.3) 30%, rgba(39,253,110,0.5) 40%, rgba(0,224,255,0.5) 50%, rgba(112,148,255,0.5) 60%, rgba(186,112,255,0.5) 70%, rgba(206,60,159,0.5) 80%, rgba(255,0,5,0.5) 90%, rgba(255,0,0,0.5) 100%);
+  background-size: 800% 800%;
+}
+
+@-webkit-keyframes rankAnimation {
+    0%{background-position:93% 0%}
+    50%{background-position:0% 100%}
+    100%{background-position:93% 0%}
+}
+@-moz-keyframes rankAnimation {
+    0%{background-position:93% 0%}
+    50%{background-position:0% 100%}
+    100%{background-position:93% 0%}
+}
+@keyframes rankAnimation {
+    0%{background-position:93% 0%}
+    50%{background-position:0% 100%}
+    100%{background-position:93% 0%}
 }
 
 .test {
