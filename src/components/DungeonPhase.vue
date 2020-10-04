@@ -94,6 +94,8 @@
 
         :specialDamage="specialDamage"
         :specialDamageAnimation="specialDamageAnimation"
+
+        :monsterRank="monsterRank"
         />
 
         <turn-log
@@ -194,7 +196,9 @@ export default {
             monsterportEffect: state => state.animations.portEffect,
             redShineMonster: state => state.animations.redShine,
             greenShineMonster: state => state.animations.greenShine,
-            purpleShineMonster: state => state.animations.purpleShine
+            purpleShineMonster: state => state.animations.purpleShine,
+
+            monsterRank: state => state.monsterRank,
         }),
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
