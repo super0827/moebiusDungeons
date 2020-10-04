@@ -81,7 +81,10 @@
             </section> 
           </transition>
 
-          <section v-if="storeState.monster.dire" class="direOverlay"></section>
+          <section v-if="storeState.monster.dire" key="" class="virulentOverlay"></section>
+          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
+          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
+          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
       </section>
 
 
@@ -105,7 +108,6 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import MonsterStats from "./MonsterStats.vue";
-
 
 export default {
   name: 'MonsterPortrait',
@@ -216,12 +218,6 @@ export default {
   grid-column:1/2;
 }
 
-.direOverlay{
-  grid-row:1/4;
-  grid-column:1/2;
-  background:rgba(255, 0, 98, 0.308);
-}
-
 .damageReadout {
     grid-row: 2/3;
     grid-column: 1/2;
@@ -264,7 +260,4 @@ p {
 .coinWrapper {
   margin-top:10px;
 }
-
-
-
 </style>
