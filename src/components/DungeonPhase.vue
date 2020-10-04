@@ -66,7 +66,7 @@
         class="animated"
         :class="{'zoomInRight' : isEntering, 'zoomOutRight' : !isEntering}"
         :who="'monster'"
-        :name="monsterName"
+        :name="monsterRank + ' ' + monsterName"
         :enemy="monsterEnemy"
         :portrait="monsterPortrait"
         :health="monsterHealth"
