@@ -111,6 +111,15 @@
         </section>
 
         <br>
+
+        <p>MONSTER RANKS</p>
+        <section class="flexColumn">
+              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: ''})">NORMAL</button>
+              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'virulent'})">VIRULENT</button>
+              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'fearsome'})">FEASRSOME</button>
+              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'bloodless'})">BLOODLESS</button>
+              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'flawless'})">FLAWLESS</button>
+            </section>
         
         <section>
           <h3 @click="testMode = !testMode">Enable Testing Mode</h3>
