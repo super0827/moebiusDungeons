@@ -207,8 +207,10 @@ export default {
   },
   beforeDestroy() {
       let randomSound = this.randomRoll(this.shopkeep.goodbye.length-1)
-      console.log(randomSound)
       this.whosSound[this.shopkeep.goodbye[randomSound]].play()
+      for (const items of this.shopkeep.items) {
+        console.log(items.bought = false)
+      }
   }
 }
 </script>
