@@ -1,6 +1,6 @@
 <template>
     <div class="inventory">
-        <section v-for="items in inventory" :key="items.name">
+        <section v-for="(items, index) in inventory" :key="items.name + index">
             <span class="tooltip">
                 <span class="tooltiptext">
                     {{items.description}}
