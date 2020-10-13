@@ -124,7 +124,7 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <section class="armorUp" v-if="name === 'swordsman' && goldShine">
+            <section class="armorUp" v-if="(name === 'swordsman' && goldShine) && armorUp">
               <img src="../assets/imgs/icons/armorIcon.png" alt="">
               <h1>2</h1>
             </section>
@@ -223,6 +223,8 @@ export default {
     'goldShine',
     'blueShine',
     'yellowShine',
+
+    'armorUp',
 
     'monsterRank'
   ],
