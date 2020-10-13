@@ -2,11 +2,11 @@ import MonsterSounds from '@/plugins/MonsterSounds.js'
 import UiSounds from '@/plugins/UiSounds.js'
 
 const state = () => ({
-    info: {type: Object},
+    info: {},
     roster: 0,
     tempTraits: [],
     isBoss: false,
-    thisDamage: {type: Number},
+    thisDamage: {},
     log: [],
     monsterRank: '',
     tempHealth: 0,
@@ -35,9 +35,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
            enterSound: 'batsEnter',
-           special(){
-             //on tradeblows or be reckless, bats should attack first
-           }
          },
          {
            name:"imps",
@@ -47,9 +44,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
            enterSound: 'impsEnter',
-           special(){
-             //not needed
-           }
          },
          {
            name:"slime",
@@ -59,9 +53,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "One wrong step to right or left is sure to spell your slimy death.",
            enterSound: 'slimeEnter',
-           special(){
-             //if player rolls minimum damage, then the slime destroys one point players baseArmor
-           }
          },
          {
            name:"kobold",
@@ -71,9 +62,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
            enterSound: 'koboldEnter',
-           special() {
-             //when you defeat a kobold roll 1d6, on a 1 you must fight another kobold immediately.
-           }
          },
          {
            name:"gnoll",
@@ -83,9 +71,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "a warning growl behind sharp teeth, quickly now your sword unsheath.",
            enterSound: 'gnollEnter',
-           special() {
-             //fleas! if you roll a 1 for attack you get fleas! Minus one damage until fleas is healed.
-           }
          },
          {
            name:"goblins",
@@ -95,9 +80,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
            enterSound: 'goblinEnter',
-           special(){
-             //goblins smell bad. To fight them roll your damage roll twice and take the lower result.
-           }
          },
          
          // Level 2 NORMAL
@@ -109,10 +91,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
            enterSound: 'ghostEnter',
-           special(){
-             //ghosts are incorporeal and can not be escaped from
-           }
-           
          },
          {
            name:"lizardman",
@@ -122,10 +100,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Lizard senses seek out prey, poison venom helps them slay.",
            enterSound: 'lizardmanEnter',
-           special(){
-             //lizardman can poison you. if lizardman hits for max damage you are poisoned for one damage every time you attack
-             //until you recover baseHealth
-           }
          },
          {
            name:"curse",
@@ -135,9 +109,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
            enterSound: 'curseEnter',
-           special(){
-             //none
-           }
          },
          {
            name:"bandits",
@@ -147,9 +118,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Shadows hide two men from sight. Their motives born of moral spite.",
            enterSound: 'banditsEnter',
-           special(){
-             //if bandit rolls max damage then they attack again immediately!
-           }
          },
          
          // Level 1 VIRULENTS
@@ -162,7 +130,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
            enterSound: 'batsEnter',
-           
          },
          {
            dire: true,
@@ -216,7 +183,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
            enterSound: 'goblinEnter',
-           
          },
          
          //MIMIC!
@@ -228,7 +194,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
            enterSound: 'mimicEnter',
-           
          },
          
          // LEVEL 2 VIRULENTS
@@ -241,7 +206,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
            enterSound: 'ghostEnter',
-           
          },
          {
            dire:true,
@@ -252,7 +216,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Lizard senses seek out prey, poison venom helps them slay.",
            enterSound: 'lizardmanEnter',
-           
          },
          {
            dire:true,
@@ -263,7 +226,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
            enterSound: 'curseEnter',
-           
          },
          {
            dire:true,
@@ -274,7 +236,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "Shadows hide two men from sight. Their motives born of moral spite.",
            enterSound: 'banditsEnter',
-           
          },
          
          //MIMIC
@@ -286,7 +247,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
            enterSound: 'mimicEnter',
-           
          },
          
          // LEVEL 3 NORMAL
@@ -309,10 +269,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
            enterSound: 'skeletonEnter',
-           special(){
-             //on death roll 1d6, on 4-6 the skeleton is dead.
-             //on a 1-3 fight another skeleton at 5 hp and 0 baseArmor
-           }
          },
          {
            name:"swampling",
@@ -322,10 +278,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
            warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
            enterSound: 'swamplingEnter',
-           special() {
-             //if you roll minimum damage you get the status blight
-             //deal half damage until blight is cured
-           }
          },
          
          //Level 3 VIRULENTS
@@ -338,7 +290,6 @@ const state = () => ({
            attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
            warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
            enterSound: 'ghoulEnter',
-           
          },
          {
            dire:true,
@@ -511,6 +462,21 @@ const mutations = {
 }
 
 const getters = {
+  snapshot: (state) => {
+      return {
+        info: state.info,
+        roster: state.roster,
+        tempTraits: state.tempTraits,
+        isBoss: state.isBoss,
+        thisDamage: state.thisDamage,
+        log: state.log,
+        monsterRank: state.monsterRank,
+        tempHealth: state.tempHealth,
+        tempArmor: state.tempArmor,
+        tempAttackMax: state.tempAttackMax,
+        logNum: state.logNum
+      }
+  },
   thisAdjDamage: (state, getters, rootState, rootGetters) => {
     let num;
     if( state.info.attackType === 'physical') {
@@ -586,7 +552,7 @@ const actions = {
     commit('addToLog', {id:state.logNum + 'monster', message:payload});
     commit('incrementLog')
   },
-  DEAL_DAMAGE({commit, getters, dispatch}) {
+  DEAL_DAMAGE({commit, getters, rootState, dispatch, }) {
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
         dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`) 
@@ -594,6 +560,12 @@ const actions = {
         commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('playerData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('playerData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+      }
+      else if (getters.thisAdjDamage > 0) {
+        commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
+        commit('playerData/toggleAnimation', {property: 'blueShine'}, {root:true})
+        dispatch('LOG_UPDATE', `Boon Prevented Damage`) 
+        commit('playerData/removeItemFromInv', 'boon', {root:true})
       }
       else if(getters.thisAdjDamage <= 0) {
         dispatch('LOG_UPDATE', `ATTACK MISSED`) 
