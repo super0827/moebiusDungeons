@@ -49,6 +49,11 @@ A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG B
 
 <br>
 
+### Mobius Dungeons needs to be refactored, and I can't do it alone.
+If you'd like to assist in refactoring the game, or would like to support me as a web developer you can donate to Moebius Dungeons via my [Paypal Account](paypal.me/MisuseofMana)
+
+<br>
+
 # Run MoDun Locally
 
 ```
