@@ -2,8 +2,7 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 class="animated" :class="{'zoomInDown' : isEntering, 
-    'zoomOutUp' : !isEntering }">Choose a Shopkeep</h1>
+    <h1 >Choose a Shopkeep</h1>
 
     <section class="chooseChar">
         <section
