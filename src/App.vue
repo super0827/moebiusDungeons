@@ -55,9 +55,28 @@
         </section>
         
         <br>
-
+        <p>ADD TEMP ITEMS</p>
+        <section>
+          <section>
+            <button @click="$store.commit('playerData/addToInventory', 
+            { 
+              type: 'temporary', 
+              bought: false, 
+              noSale: false, 
+              name: 'Dessicated Doll', 
+              cost: 5, 
+              description: 'Revive with 10 HP on death.', 
+              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:-1, shine:'goldShine'}}, 
+              icon: require('@/assets/imgs/icons/items/graverobber/dessicatedDoll.png')
+            }
+            )"> Dessicated Doll </button>
+            
+            
+          </section>
+        </section>
         <p>PLAYER</p>
         
+
         <section>
           <span>HEALTH</span>
           <section>
@@ -205,7 +224,11 @@ export default {
       }),
       ...mapGetters('authData', {
         avatar: 'userIcon',
-      })
+      }),
+      ...mapState('playerData', {
+        tempTraits: state => state.temporaryTraits,
+        permTraits: state => state.permanantTraits
+      }),
   },
   beforeMount(){
 console.log(`
