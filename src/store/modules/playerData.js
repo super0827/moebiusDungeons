@@ -2,7 +2,7 @@ import PlayerSounds from '@/plugins/PlayerSounds.js'
 import UiSounds from '@/plugins/UiSounds.js'
 
 const state = () => ({
-    info:  {
+    info: {
       name:"swordsman",
       type:'player', 
       portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
@@ -16,7 +16,7 @@ const state = () => ({
       special: "en'garde",
       specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
     },
-    permenantTraits: [],
+    permanantTraits: [],
     temporaryTraits: [],
     tempArmor:0,
     tempHealth:0,
@@ -37,17 +37,27 @@ const state = () => ({
       goldShine:false,
       yellowShine: true,
       blueShine:false,
+      armorUp: false,
       isDead: false,
     },
 })
 
 const mutations = {
+  REMOVE_TEMP_STATS(state){
+    state.tempAttackMax = 0;
+  },
+  removeItemFromInv(state, payload) {
+    state.temporaryTraits = state.temporaryTraits.filter(item => item.name != payload)
+  },
+  changeInventory(state){
+    state.temporaryTraits = state.temporaryTraits.filter(item => item.effect.payload.length != 0)
+  },
   addToInventory(state, payload) {
     if(payload.type === 'temporary') {
       state.temporaryTraits.push(payload);
     }
     else if (payload.type === "permanent") {
-      state.permenantTraits.push(payload);
+      state.permanantTraits.push(payload);
     }
   },
   mutate(state, payload) {
@@ -61,6 +71,14 @@ const mutations = {
     else if (payload.operator === 'minus') state.info[payload.stat] -= payload.value;
     else if (payload.operator === 'multiply') state.info[payload.stat] *= payload.value;
     else if (payload.operator === 'divide') Math.ceil(state.info[payload.stat] /= payload.value);
+  },
+  changeTempStats(state, payload){
+    console.log(`change stats payload:` + JSON.stringify( payload ))
+    if (payload.operator === 'add') state[payload.stat] += payload.value;
+    else if (payload.operator === 'minus') state[payload.stat] -= payload.value;
+    else if (payload.operator === 'multiply') state[payload.stat] *= payload.value;
+    else if (payload.operator === 'divide') Math.ceil(state[payload.stat] /= payload.value);
+    console.log(`TEMPS - ARMOR:` + state.tempArmor + `ATTACK:` + state.tempAttackMax + `HEALTH: ` + state.tempHealth);
   },
   transferStat(state, payload){
     if(payload.operator === 'divide'){
@@ -93,8 +111,8 @@ const mutations = {
   heal(state, payload) {
     state.info.baseHealth += payload
   },
-  halveHP(state) {
-    state.info.baseHealth = Math.ceil(state.info.baseHealth / 2);
+  halveHP(state, getters) {
+    state.info.baseHealth = Math.ceil(getters.calcHealth / 2);
   },
   addArmor(state, payload) {
     state.info.baseArmor += payload
@@ -106,15 +124,30 @@ const mutations = {
     state.info.attackType = 'physical';
     state.info.attackTypeImage = 'require("@/assets/imgs/icons/physicalIcon.png")'
   },
-  doubleAttack(state) {
-    state.info.baseAttackMax *= 2;
+  doubleAttack(state, getters) {
+    state.info.baseAttackMax = ((getters.calcAttack * 2) - state.tempAttackMax);
   },
-  halveArmor(state) {
-    state.info.baseArmor = Math.floor(state.info.baseArmor / 2)
+  halveArmor(state, getters) {
+    state.info.baseArmor = Math.floor((getters.calcArmor / 2) - state.tempArmor)
   },
 }
 
 const getters = {
+  snapshot: (state, getters, rootState) => {
+    return {
+      info: state.info,
+      permanantTraits: state.permanantTraits,
+      temporaryTraits: state.temporaryTraits,
+      tempArmor: state.tempArmor,
+      tempHealth: state.tempHealth,
+      tempAttackMax: state.tempAttackMax,
+      thisDamage: state.thisDamage,
+      specialDamage: state.specialDamage,
+      log: state.log,
+      logNum: state.logNum,
+      currentPhase: rootState['gameData'].phase
+    }
+  },
   thisAdjDamage: (state, getters, rootState, rootGetters) => {
     let num;
     if( state.info.attackType === 'physical') {
@@ -146,19 +179,51 @@ const getters = {
     return Math.floor(getters.calcAttackMax - (getters.calcAttackMax / 4));
   },
   inventory: (state, getters) => {
-    let fullInventory = state.temporaryTraits.concat(state.permenantTraits);
+    let fullInventory = state.temporaryTraits.concat(state.permanantTraits);
     return fullInventory;
+  },
+  trackedStats: (state, getters) => {
+    let trackedKeys = {
+      health: getters.calcHealth,
+      armor: getters.calcArmor,
+      attack: getters.calcAttackMax,
+    }
   }
 }
 
 const actions = {
-  CHECK_HP({state, commit, dispatch}){
-    if(state.info.baseHealth > 0){
+  CHECK_INVENTORY({state, commit}){
+    if(state.temporaryTraits) {
+      for(const items of state.temporaryTraits){
+        items.effect.payload.length -= 1;
+      }
+    }
+    commit('changeInventory')
+  },
+  CHECK_HP({state, getters, commit, dispatch}){
+    let canRevive = false 
+    canRevive = state.temporaryTraits.find(item => item.name == 'Dessicated Doll')
+
+    if(getters.calcHealth > 0){
       //UNLOCK COMBAT
       commit('gameData/toggle', { property:'combatLocked' }, {root: true});
-      commit('authData/updateSavedGame', state.info, {root:true} )
+      dispatch('RESET_ANIMATIONS')
+      dispatch('authData/updateSavedGame', null, {root:true} )
     }
-    else if (state.info.baseHealth <= 0) {
+    else if(getters.calcHealth <= 0 && canRevive){
+      dispatch('RESET_ANIMATIONS')
+      commit('toggleAnimation', {property: 'portEffect'})
+      commit('toggleAnimation', {property: 'goldShine'})
+      PlayerSounds.playerRevive.play()
+      setTimeout(() => {
+        dispatch('RESET_ANIMATIONS', null);
+      }, 1000)
+      commit('mutateInfo', {property:'baseHealth', with:10})
+      commit('removeItemFromInv', 'Dessicated Doll')
+      dispatch('LOG_UPDATE', `The doll fades away`)
+      commit('gameData/toggle', { property:'combatLocked' }, {root: true});
+    }
+    else if (getters.calcHealth <= 0 && !canRevive) {
       dispatch('RESET_ANIMATIONS')
       commit('toggleAnimation', {property: 'isDead'})
       PlayerSounds.playerDead.play()
@@ -219,6 +284,7 @@ const actions = {
 
       if(state.info.name === 'swordsman') {
         commit('toggleAnimation', {property: 'goldShine'})
+        commit('toggleAnimation', {property: 'armorUp'})
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
         PlayerSounds.armorUp.play();
         dispatch('LOG_UPDATE', `+2 ARM`);
@@ -316,6 +382,11 @@ const actions = {
       if (state.animations[item] === true) commit('toggleAnimation', {property: item})
     }
   },
+
+  // THIS ACTION RUNS AFTER COMBAT PHASES TO CHECK ON STAT CHANGES
+  NEW_HIGH_SCORES({state, commit}){
+
+  }
 }
 
 export default {
