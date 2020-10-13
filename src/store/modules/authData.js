@@ -26,9 +26,6 @@ const mutations = {
 }
 
 const getters = {
-    user(state){
-        return state.user
-    },
     userIcon: state => {
       const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.email + ".png"
       return userIcon;
@@ -36,15 +33,31 @@ const getters = {
 }
 
 const actions = {
-    updateSavedGame({state, commit}, payload) {
+    updateSavedGame({state, rootGetters}) {
+      console.log(`Updating Saved Game from Auth Data`)
+      console.log(rootGetters['monsterData/snapshot'])
       var db = firebase.firestore();
-      var userPath = db.collection('users').doc(user.data.email);
+      var userPath = db.collection('users').doc(state.user.data.email);
+
+      userPath.set(
+        {
+          saveExists: true,
+          saveState: {
+            monster: { ...rootGetters['monsterData/snapshot'] },
+            player: { ...rootGetters['playerData/snapshot'] }
+          },
+        }
+      )
+    },
+    deleteSavedGame({state}) {
+      var db = firebase.firestore();
+      var userPath = db.collection('users').doc(state.user.data.email);
       
       userPath.set({
-        saveExists: true,
+        saveExists: false,
         saveState: {
-          monster: null, //should be info from monsterData.js
-          player: null, //should be info from playerData.js
+          monster: null, 
+          player: null, 
         },
       })
     },
@@ -65,10 +78,9 @@ const actions = {
       userPath.get().then(function(doc){
         if (doc.exists) {
           if(doc.data().saveExists) {
-            console.log(`Setting game save data in authData`)
+            console.log(`Loading save data to User`)
+            commit("SET_SAVED_GAME", doc.data())
           }
-          console.log(`Save document exists, but is empty`)
-          commit("SET_SAVED_GAME", doc.data())
         }
         else {
           console.log(`user did not exist : creating new data`)
