@@ -149,8 +149,8 @@ export default {
         ...mapState('playerData', {
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
-            playerHealth: state => state.info.baseHealth,
-            playerAttack: state => state.info.baseAttackMax,
+            // playerHealth: state => state.info.baseHealth,
+            // playerAttack: state => state.info.baseAttackMax,
             playerAttackType: state => state.info.attackType,
             playerAttackTypeImage: state => state.info.attackTypeImage,
             playerCoins: state => state.info.coins,
@@ -172,7 +172,9 @@ export default {
             purpleShinePlayer: state => state.animations.purpleShine,
             goldShinePlayer: state => state.animations.goldShine,
             blueShinePlayer: state => state.animations.blueShine,
-            yellowShinePlayer: state => state.animations.yellowShine
+            yellowShinePlayer: state => state.animations.yellowShine,
+
+            curse: state => state.info.curse,
         }),
         ...mapState('monsterData', {
             monsterEnter: state => state.info.enterSound,
@@ -197,6 +199,8 @@ export default {
             redShineMonster: state => state.animations.redShine,
             greenShineMonster: state => state.animations.greenShine,
             purpleShineMonster: state => state.animations.purpleShine,
+
+            armorUp: state => state.animations.armorUp,
 
             monsterRank: state => state.monsterRank,
         }),
@@ -225,7 +229,9 @@ export default {
     },
     destroyed(){
         this.$store.commit('monsterData/newMonster');
-        
+        this.$store.dispatch('playerData/CHECK_INVENTORY')
+        this.$store.commit('playerData/REMOVE_TEMP_STATS')
+
     }
 }
 </script>
