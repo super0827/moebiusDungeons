@@ -42,8 +42,8 @@ const state = () => ({
               name: 'fortune', 
               cost: 2, 
               description: 'doubles coin value of next monster', 
-              effect: {action:'CHANGE_MONSTER_STATS', payload:[{stat:'coins', value:2, operator:'multiply', length: 1}]},
-              icon: require("@/assets/imgs/icons/items/cleric/fortune.png")
+              effect: {action:'CHANGE_MONSTER_STATS', payload:[{stat:'coins', value:2, length:1, operator:'multiply', length: 1}]},
+              icon: require('@/assets/imgs/icons/items/cleric/fortune.png')
             },
               
             {
@@ -109,13 +109,14 @@ const state = () => ({
               bought: false, 
               noSale: false, 
               name: 'nacre charm', 
-              cost: 1, 
+              cost: 1,
               description: '+1 ATK | +1 ARM | -5 HP', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
                 {stat:'baseAttackMax', value:1, operator:'add'},
                 {stat:'baseArmor', value:1, operator:'add'},
-                {stat:'baseHealth', value:5, operator:'minus'}
+                {stat:'baseHealth', value:5, operator:'minus'},
+                {stat:'curse', value:0.15, operator:'add'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/nacreCharm.png") 
             },
@@ -131,6 +132,7 @@ const state = () => ({
               payload:[
                 {stat:'baseArmor', value:3, operator:'add'},
                 {stat:'baseHealth', value:2, operator:'divide'},
+                {stat:'curse', value:0.25, operator:'add'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/detrimentBangle.png") 
             },
@@ -146,11 +148,11 @@ const state = () => ({
               payload:[
                 {stat:'baseAttackMax', value:4, operator:'add'},
                 {stat:'baseArmor', value:2, operator:'minus'},
+                {stat:'curse', value:0.25, operator:'add'},
               ]},  
               icon: require("@/assets/imgs/icons/items/graverobber/unluckyTrinket.png") 
             },
 
-            //NEED NEW ACTION
             { 
               type: 'temporary', 
               bought: false, 
@@ -159,7 +161,7 @@ const state = () => ({
               cost: 2, 
               description: "+4 ATK for next battle", 
               effect: {action:'ADD_TO_INVENTORY',
-              payload:{where:'baseAttackMax', howMuch:4, shine:'redShine'}}, 
+              payload:{stat:'tempAttackMax', value:4, operator:'add', length:1, shine:'redShine'}}, 
               icon: require("@/assets/imgs/icons/items/graverobber/hollowBone.png") 
             },
 
@@ -172,7 +174,8 @@ const state = () => ({
               description: 'ATK Type = Physical | Havles your ARM | x2 ATK', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
-                {stat:'baseAttackMax', shine:'purpleShine'},
+                {stat:'baseArmor', value:3, operator:'add', shine:'purpleShine'},
+                {stat:'baseHealth', value:2, operator:'divide'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")
             },
@@ -184,7 +187,7 @@ const state = () => ({
               name: 'Dessicated Doll', 
               cost: 5, 
               description: 'Revive with 10 HP on death.', 
-              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:9999, shine:'goldShine'}}, 
+              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:-1, shine:'goldShine'}}, 
               icon: require("@/assets/imgs/icons/items/graverobber/dessicatedDoll.png")
             },
           ],
@@ -553,6 +556,7 @@ const actions = {
     commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
     commit('playerData/toggleAnimation', {property: payload.shine}, {root:true})
     commit('playerData/addToInventory', payload, {root:true})
+    commit('playerData/changeTempStats', payload, {root:true})
     setTimeout(() => {
       dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
     }, 1200)
