@@ -60,7 +60,9 @@ const backstab = new Howl({
     volume: 1,
 });
 
-
+const playerRevive = new Howl({
+    src: [require('@/assets/audio/playerSounds/playerRevive.wav')]
+})
 
 
 export default {
@@ -73,5 +75,6 @@ export default {
     playerMagic3,
     armorUp,
     variagate,
-    backstab
+    backstab,
+    playerRevive
 };
