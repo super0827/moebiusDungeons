@@ -42,7 +42,7 @@ const state = () => ({
               name: 'fortune', 
               cost: 2, 
               description: 'doubles coin value of next monster', 
-              effect: {action:'CHANGE_MONSTER_STATS', payload:[{stat:'coins', value:2, operator:'multiply'}]},
+              effect: {action:'CHANGE_MONSTER_STATS', payload:[{stat:'coins', value:2, operator:'multiply', length: 1}]},
               icon: require("@/assets/imgs/icons/items/cleric/fortune.png")
             },
               
