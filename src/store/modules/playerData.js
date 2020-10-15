@@ -2,6 +2,7 @@ import PlayerSounds from '@/plugins/PlayerSounds.js'
 import UiSounds from '@/plugins/UiSounds.js'
 
 const state = () => ({
+    playerLoaded: false,
     info: {
       name:"swordsman",
       type:'player', 
@@ -192,6 +193,13 @@ const getters = {
 }
 
 const actions = {
+  loadSavedGame({state, commit}, payload){
+    commit('mutate', {property:'playerLoaded', with:true})
+    for(const property in payload){
+      commit('mutate', {property:property, with:payload[property]})
+    }
+    commit('mutate', {property:'playerLoaded', with:false})
+  },
   CHECK_INVENTORY({state, commit}){
     if(state.temporaryTraits) {
       for(const items of state.temporaryTraits){
@@ -207,11 +215,10 @@ const actions = {
     if(getters.calcHealth > 0){
       //UNLOCK COMBAT
       commit('gameData/toggle', { property:'combatLocked' }, {root: true});
-      dispatch('RESET_ANIMATIONS')
       dispatch('authData/updateSavedGame', null, {root:true} )
+      dispatch('RESET_ANIMATIONS');
     }
     else if(getters.calcHealth <= 0 && canRevive){
-      dispatch('RESET_ANIMATIONS')
       commit('toggleAnimation', {property: 'portEffect'})
       commit('toggleAnimation', {property: 'goldShine'})
       PlayerSounds.playerRevive.play()
@@ -238,6 +245,9 @@ const actions = {
     let randomAttackSound = Math.floor(Math.random() * (3) + 1)
     if (state.info.attackType === 'physical') {
       PlayerSounds['playerMelee' + randomAttackSound].play();
+    }
+    else if (state.info.attackType === 'magical') {
+      PlayerSounds['playerMagic' + randomAttackSound].play();
     }
   },
   //RUNS WHEN TRADE BLOWS IS CLICKED
@@ -267,8 +277,7 @@ const actions = {
         commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
         commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
         commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
-        commit('gameData/addToTracker', {what:'damageDealt', with:getters.thisAdjDamage}, {root:true})
-      }
+        commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:getters.thisAdjDamage}, {root:true})      }
       else if(getters.thisAdjDamage <= 0) {
         dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
         commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
@@ -285,9 +294,9 @@ const actions = {
       if(state.info.name === 'swordsman') {
         commit('toggleAnimation', {property: 'goldShine'})
         commit('toggleAnimation', {property: 'armorUp'})
-        commit('mutate', {property: 'tempArmor', with:state.tempArmor+=2})
+        commit('mutate', {property: 'tempArmor', with:state.tempArmor+=1})
         PlayerSounds.armorUp.play();
-        dispatch('LOG_UPDATE', `+2 ARM`);
+        dispatch('LOG_UPDATE', `+1 ARM`);
       }
       else if (state.info.name === 'mage') {
         commit('toggleAnimation', {property: 'blueShine'})
@@ -308,6 +317,8 @@ const actions = {
           dispatch('RESET_ANIMATIONS');
         }, 1200)
 
+      dispatch('authData/updateSavedGame', null, {root:true})
+
     }
   },
   DEAL_SPECIAL_DAMAGE({commit, getters, dispatch}, dealtDamage) {
@@ -315,8 +326,6 @@ const actions = {
     commit('mutate', {property:'specialDamageAnimation', with:true})
     commit('mutate', {property:'specialDamage', with:dealtDamage})
     commit('monsterData/takeDamage', {damage: dealtDamage}, {root:true})
-    // Track Special Damage
-    commit('gameData/addToTracker', {what:'damageDealt', with:dealtDamage}, {root:true})
     setTimeout(() => {
       dispatch('RESET_ANIMATIONS');
       commit('mutate', {property:'specialDamageAnimation', with:false})
