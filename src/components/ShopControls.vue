@@ -168,6 +168,9 @@ export default {
 
         // SUBTRACTS COST OF ITEM FROM PLAYERS COINS
         this.$store.commit('playerData/buyItem', itemBought.cost)
+
+        this.$store.commit('leaderboardData/incrementByValue', {property:'coinsSpent', with:itemBought.cost}, {root:true})
+        this.$store.dispatch('authData/updateSavedGame', null, {root:true})
       } 
       
       else {
@@ -208,9 +211,6 @@ export default {
   beforeDestroy() {
       let randomSound = this.randomRoll(this.shopkeep.goodbye.length-1)
       this.whosSound[this.shopkeep.goodbye[randomSound]].play()
-      for (const items of this.shopkeep.items) {
-        console.log(items.bought = false)
-      }
   }
 }
 </script>
