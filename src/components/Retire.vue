@@ -1,8 +1,6 @@
 <template>
 <section>
     <section class="helpModule">
-        <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
-
 
         <h1 class="title">BE CAREFUL!</h1>
         
@@ -13,7 +11,7 @@
                     
                     <h3>If you're sure you want to retire click "I'm Sure".</h3>
 
-            <h3>Otherwise, click "Keep Adventuring" or click the "X" to close this window.</h3>
+            <h3>Otherwise, click "Keep Adventuring" to press onward.</h3>
 
             <hr>
 
@@ -50,38 +48,22 @@ export default {
     }
 
     .helpModule {
-        position:absolute;
+        position:fixed;
         top:0px;
-        left:-50px;
+        left:0px;
         padding: 0px 50px;
         z-index:99999;
-        height:100%;
-        width:100%;
-        background:rgba(255, 255, 255, 0.94);
+        height:100vh;
+        width:100vw;
+        background:rgba(22, 21, 21, 0.99);
         display:flex;
-        justify-content:flex-start;
+        justify-content:center;
         align-items: center;
         flex-direction: column;
     }
 
-    .close {
-        position:absolute;
-        font-size:35px;
-        top:0;
-        right:0;
-        color:rgb(0, 0, 0);
-        margin:10px 10px;
-        line-height:35px;
-        text-decoration: none;
-    }
-
-    .close:hover {
-        cursor:pointer;
-        color:rgb(255, 0, 0)
-    }
-
     p {
-        color:black;
+        color:white;
         font-size:15px;
     }
 
@@ -94,8 +76,8 @@ export default {
         text-decoration:none;
     }
 
-    h1, h2 {
-        color:black;
+    h1, h2, h3 {
+        color:white;
         margin:2px;
     }
 
@@ -106,6 +88,7 @@ export default {
     .exitMenu .red{
         background:rgba(163, 72, 72, 0.5);
         cursor:pointer;
+        color:black;
         padding:10px;
     }
     
@@ -116,6 +99,7 @@ export default {
     
     .exitMenu .green{
     background:rgba(106, 148, 120, .5);
+    color:black;
     cursor:pointer;
     padding:10px;
     }
@@ -126,8 +110,8 @@ export default {
     }
 
     hr {
-        background:black;
-        border:black 1px solid;
+        background:white;
+        border:white 1px solid;
     }
 
     .help {
@@ -143,6 +127,11 @@ export default {
         flex-direction: column;
         padding:10px;
         text-align: center;
+    }
+
+    .close {
+        color:red;
+        text-align:right;
     }
 
     .help img {
