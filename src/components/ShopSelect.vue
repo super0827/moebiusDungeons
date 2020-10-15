@@ -47,7 +47,7 @@
    
     <!--  Retire Confirmation -->
     <transition name="fade" mode="out-in">
-        <retire key="retireConfirm" @close="toggleRetire()" @retire="retireGame()" v-if="retire"/>
+        <retire class="retire" key="retireConfirm" @close="toggleRetire()" @retire="retireGame()" v-if="retire"/>
     </transition>
 
 
@@ -86,6 +86,7 @@ export default {
   },
   computed: {
         ...mapState('shopkeepData', {
+            shopLoaded: state => state.shopLoaded,
             variants: state => state.shopChoice,
         }),
         ...mapState('playerData', {
@@ -121,12 +122,22 @@ export default {
     }
   },
   created() {
-    this.$store.commit('shopkeepData/pickTwoShops');
+    if(!this.shopLoaded){
+        this.$store.commit('shopkeepData/pickTwoShops');
+        this.$store.dispatch('authData/updateSavedGame', null, {root:true} )
+    }
+    else {
+        this.$store.commit('shopkeepData/mutate', {property:'shopLoaded', with:false}, {root:true})
+    }
   }
 }
 </script>
 
 <style scoped>
+
+.retire {
+    z-index:9999999;
+}
 
 #about {
     font-size: 20px;
