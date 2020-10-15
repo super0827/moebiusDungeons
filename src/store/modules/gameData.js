@@ -5,31 +5,11 @@ const state = () => ({
     duration: 1000,
     combatLocked: false,
     turnTailUsed: false,
-    tracker: {
-        monsterDefeated: [],
-        damageDealt: 0,
-        damageBlocked: 0,
-        maxHealth: 0,
-        maxArmor:0,
-        maxDamage:0,
-        coinsLooted: 0,
-        coinsSpent: 0,
-        mettleUsed: 0,
-        difficultyScale:1
-    }
 })
 
 const mutations = {
     mutate(state, payload) {
         state[payload.property] = payload.with;
-    },
-    addToTracker(state, payload) {
-        if(payload.what != "monsterDefeated"){
-            state.tracker[payload.what] += payload.with
-        } 
-        else {
-            state.tracker[payload.what].push(payload.with)    
-        }
     },
     toggle(state, payload) {
         state[payload.property] = !state[payload.property];
@@ -74,10 +54,17 @@ const getters = {
     },
 }
 
+const actions = {
+    loadSavedGame({state, commit}, payload){
+        commit('mutate', {property:'phase', with:payload})
+    }
+}
+
 export default {
     namespaced: true,
     state,
     mutations,
-    getters
+    getters,
+    actions
 }
         
