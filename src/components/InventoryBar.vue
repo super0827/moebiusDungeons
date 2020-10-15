@@ -3,7 +3,7 @@
         <section v-for="(items, index) in inventory" :key="items.name + index">
             <span class="tooltip">
                 <span class="tooltiptext">
-                    {{items.description}}
+                    <p>{{items.description}}</p>
                 </span>
                 <img :src="items.icon" alt="items.name">
             </span>
@@ -54,6 +54,7 @@
   z-index: 1;
   top: -5px;
   right: 110%;
+  text-transform:uppercase;
 }
 
 .tooltip .tooltiptext::after {
