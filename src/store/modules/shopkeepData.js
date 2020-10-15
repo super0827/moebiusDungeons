@@ -4,7 +4,8 @@ import playerData from './playerData';
 
 
 const state = () => ({
-    info: {type: Object},
+    shopLoaded: false,
+    info: {},
     shopChoice: [],
     inventory: [],
     visited:[],
@@ -507,6 +508,9 @@ const state = () => ({
 })
 
 const mutations = {
+  mutate(state, payload) {
+    state[payload.property] = payload.with;
+  },
   pickTwoShops(state) {
     const randomizeShopKeeps = shuffle(state.variants);
     state.shopChoice = randomizeShopKeeps.slice(0,2);
@@ -514,11 +518,9 @@ const mutations = {
   newShopkeep(state, payload) {
     if(!payload){
       const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
-      // const randomPick = 1;
       state.info = state.variants[randomPick]
       const inventory = shuffle(state.variants[randomPick].items);
       state.inventory = inventory.slice(0, 3)
-      // state.inventory = inventory
     }
     else if (typeof payload.shopkeep == 'number'){
       state.info = state.variants[payload.shopkeep]
@@ -537,6 +539,14 @@ const mutations = {
 }
 
 const getters = {
+  snapshot: (state, commit) => {
+    return {
+      info: state.info,
+      shopChoice: state.shopChoice,
+      inventory: state.inventory,
+      visited: state.visited
+    }
+  },
   haveVisited: (state, commit) => {
     if (state.visited.indexOf(state.info.name) > -1) {
       return true;
@@ -547,7 +557,12 @@ const getters = {
 }
 
 const actions = {
-  //DEBUG OPTION
+  loadSavedGame({state, commit}, payload){
+      commit('mutate', {property:'shopLoaded', with:true})
+      for(const property in payload){
+        commit('mutate', {property:property, with:payload[property]})
+      }
+  },
   PICK_SHOPKEEP ({commit}, payload){
     commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
     commit('newShopkeep', payload)
