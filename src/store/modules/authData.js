@@ -53,22 +53,21 @@ const actions = {
 
       userPath.get().then(function(doc){
         if (doc.exists) {
-          // if(doc.data().saveExists) {
-          //   dispatch('leaderboardData/loadSavedGame', state.user.data.save.saveState.leaderBoard, {root:true})
-          //   dispatch('gameData/loadSavedGame', state.user.data.save.saveState.player.currentPhase, {root:true})
-          //   if( rootState['gameData'].phase === 'DungeonPhase'){
-          //     dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
-          //     dispatch('monsterData/loadSavedGame', state.user.data.save.saveState.monster, {root:true})
-          //   }
-          //   else if ( rootState['gameData'].phase === 'ShopSelect' || rootState['gameData'].phase === 'ShopPhase'){
-          //     dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
+          if(doc.data().saveExists) {
+            dispatch('leaderboardData/loadSavedGame', state.user.data.save.saveState.leaderBoard, {root:true})
+            dispatch('gameData/loadSavedGame', state.user.data.save.saveState.player.currentPhase, {root:true})
+            if( rootState['gameData'].phase === 'DungeonPhase'){
+              dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
+              dispatch('monsterData/loadSavedGame', state.user.data.save.saveState.monster, {root:true})
+            }
+            else if ( rootState['gameData'].phase === 'ShopSelect' || rootState['gameData'].phase === 'ShopPhase'){
+              dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
               
-          //     if(doc.data().saveState.shopPick.shopChoice || doc.data().saveState.shopPick.inventory) {
-          //       dispatch('shopkeepData/loadSavedGame', state.user.data.save.saveState.shopPick, {root:true})
-          //     }
-          //   }
-            
-          // }
+              if(doc.data().saveState.shopPick.shopChoice || doc.data().saveState.shopPick.inventory) {
+                dispatch('shopkeepData/loadSavedGame', state.user.data.save.saveState.shopPick, {root:true})
+              }
+            }
+          }
         }
       })
     },
