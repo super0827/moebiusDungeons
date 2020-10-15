@@ -34,6 +34,8 @@
                     type="email"
                     class="form-control"
                     name="email"
+                    placeholder="Email"
+                    autocomplete="email"
                     value
                     required
                     autofocus
@@ -55,7 +57,8 @@
                     type="password"
                     class="form-control"
                     name="password"
-                    autocomplete="on"
+                    placeholder="Password"
+                    autocomplete="current-password"
                     required
                     v-model="form.password"
                   />
