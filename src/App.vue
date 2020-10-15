@@ -23,6 +23,10 @@
     </section>
     </transition>
 
+    <section class="version">
+      <p>v.1.0.0</p>
+    </section>
+
     <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
         <h3>DEBUG BAR</h3>
@@ -225,13 +229,14 @@ export default {
       ...mapGetters('authData', {
         avatar: 'userIcon',
       }),
-      ...mapState('playerData', {
-        tempTraits: state => state.temporaryTraits,
-        permTraits: state => state.permanantTraits
-      }),
+      ...mapGetters('leaderboardData',{
+        leaderBoard: 'snapshot',
+      })
   },
-  beforeMount(){
-console.log(`
+  mounted() {
+    this.$store.commit('monsterData/newMonster');
+    this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
+    console.log(`
 _____         _   _            ____                              
 |     |___ ___| |_|_|_ _ ___   |    \ _ _ ___ ___ ___ ___ ___ ___ 
 | | | | . | -_| . | | | |_ -|  |  |  | | |   | . | -_| . |   |_ -|
@@ -292,10 +297,7 @@ would love to hear from you.
 
 contact@seanyager.com
 `);
-
-  this.$store.commit('monsterData/newMonster');
-  this.$store.commit('shopkeepData/newShopkeep')
-  },
+  }
 }
 </script>
 
@@ -304,7 +306,7 @@ contact@seanyager.com
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:5px 0;
+  padding:5px 5px;
 }
 
 .loginBar .clickable:hover {
@@ -341,7 +343,6 @@ contact@seanyager.com
   margin:0 auto;
   position:relative;
 }
-
 
 /* HELPERS */
     #dungeonHelp {
@@ -413,6 +414,20 @@ contact@seanyager.com
   color:white;
   left:0px;
   background:black;
+  text-transform:uppercase;
+}
+
+.version {
+  margin:10px 20px 10px 10px;
+  font-family: var(--paragraphs-type);
+  text-align:center;
+  display:inline;
+  position:fixed;
+  font-size:13px;
+  bottom:0px;
+  z-index:999999;
+  color:black;
+  right:0px;
   text-transform:uppercase;
 }
 </style>
