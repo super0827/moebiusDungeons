@@ -17,7 +17,7 @@
         <section id="finalStats">
             <section id="monstersFoughtWrapper">
                 <h2>Monsters Fought:</h2>
-                <p id="monstersFought">{{ monstersFought }}</p>
+                <p id="monstersFought">{{ monstersKilled }}</p>
             </section>
             
             <section id="totalDamageWrapper">
@@ -41,9 +41,14 @@
             </section>
 
             <section id="itemsBoughtWrapper">
-                <h2>Items Bought</h2>
-                <p id="itemsBought">{{ itemsBought }}</p>
+                <h2>Coins Spent</h2>
+                <p id="itemsBought">{{ coinsSpent }}</p>
             </section>
+        </section>
+
+        <section>
+            <h1>FINAL SCORE</h1>
+            <h3></h3>
         </section>
 
         <footer id="thankYou">
@@ -60,7 +65,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import LeaderBoard from '@/store/modules/leaderboardData'
 import PlayerData from '@/store/modules/playerData'
 import BackgroundMusic from '@/plugins/backgroundMusic'
@@ -84,14 +89,23 @@ export default {
         'totalCoins',
         'totalDamageDealt',
         'totalDamageTaken',
-        'itemsBought',
         'damageBlocked',
-        'monstersFought',
-        
     ]),
+    ...mapGetters('monsterData', {
+            monsterRank: 'monsterRank',
+        }),
     ...mapState('playerData', {
         name: state => state.info.name,
-    })
+    }),
+    playerScore: function() {
+        let score = this.highestHealth + this.highestArmor + this.highestAttack + this.monstersKilled.length + this.coinsSpent + this.totalCoins + this.totalDamageDealt + this.totalDamageTaken + this.damageBlocked
+        if(this.monsterRank === '') return score
+        else if (this.monsterRank === 'virulent') return Math.floor(score * 2)
+        else if (this.monsterRank === 'fearsome') return Math.floor(score * 2.5)
+        else if (this.monsterRank === 'bloodless') return Math.floor(score * 3)
+        else if (this.monsterRank === 'flawless') return Math.floor(score * 4)
+
+    }
   },
 }
 </script>
