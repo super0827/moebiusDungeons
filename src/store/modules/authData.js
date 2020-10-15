@@ -11,12 +11,10 @@ const mutations = {
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
     },
-
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
     },
     SET_USER(state, payload) {
-      console.log(`user has been authenticated - set displayName and email - FROM authData`)
       state.user.data = {...state.user.data, displayName: payload.displayName},
       state.user.data = {...state.user.data, email: payload.email}
     },
@@ -34,8 +32,6 @@ const getters = {
 
 const actions = {
     updateSavedGame({state, rootGetters}) {
-      console.log(`Updating Saved Game from Auth Data`)
-      console.log(rootGetters['monsterData/snapshot'])
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
 
@@ -43,11 +39,38 @@ const actions = {
         {
           saveExists: true,
           saveState: {
-            monster: { ...rootGetters['monsterData/snapshot'] },
-            player: { ...rootGetters['playerData/snapshot'] }
+            monster: rootGetters['monsterData/snapshot'] ,
+            player: rootGetters['playerData/snapshot'],
+            shopPick: rootGetters['shopkeepData/snapshot'],
+            leaderBoard: rootGetters['leaderboardData/snapshot']
           },
         }
       )
+    },
+    loadSavedGame({state, dispatch, rootState}){
+      var db = firebase.firestore();
+      var userPath = db.collection('users').doc(state.user.data.email);
+
+      userPath.get().then(function(doc){
+        if (doc.exists) {
+          // if(doc.data().saveExists) {
+          //   dispatch('leaderboardData/loadSavedGame', state.user.data.save.saveState.leaderBoard, {root:true})
+          //   dispatch('gameData/loadSavedGame', state.user.data.save.saveState.player.currentPhase, {root:true})
+          //   if( rootState['gameData'].phase === 'DungeonPhase'){
+          //     dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
+          //     dispatch('monsterData/loadSavedGame', state.user.data.save.saveState.monster, {root:true})
+          //   }
+          //   else if ( rootState['gameData'].phase === 'ShopSelect' || rootState['gameData'].phase === 'ShopPhase'){
+          //     dispatch('playerData/loadSavedGame', state.user.data.save.saveState.player, {root:true})
+              
+          //     if(doc.data().saveState.shopPick.shopChoice || doc.data().saveState.shopPick.inventory) {
+          //       dispatch('shopkeepData/loadSavedGame', state.user.data.save.saveState.shopPick, {root:true})
+          //     }
+          //   }
+            
+          // }
+        }
+      })
     },
     deleteSavedGame({state}) {
       var db = firebase.firestore();
@@ -57,7 +80,9 @@ const actions = {
         saveExists: false,
         saveState: {
           monster: null, 
-          player: null, 
+          player: null,
+          shopPick: null,
+          leaderboard: null,
         },
       })
     },
@@ -78,13 +103,10 @@ const actions = {
       userPath.get().then(function(doc){
         if (doc.exists) {
           if(doc.data().saveExists) {
-            console.log(`Loading save data to User`)
             commit("SET_SAVED_GAME", doc.data())
           }
         }
         else {
-          console.log(`user did not exist : creating new data`)
-          //create new save instance document on firebase
           userPath.set({
             saveExists: false,
             saveState: {},
