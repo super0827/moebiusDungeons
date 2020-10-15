@@ -89,6 +89,8 @@ export default {
     },
     computed: {
         ...mapState('playerData', {
+            playerLoaded: state => state.playerLoaded,
+
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
             playerHealth: state => state.info.baseHealth,
@@ -112,6 +114,7 @@ export default {
             welcome: state => state.info.welcome,
             goodbye: state => state.info.goodbye,
             thankYou: state => state.info.thankYou,
+            shopLoaded: state => state.shoploaded,
             
         }),
         ...mapGetters('playerData', {
@@ -122,6 +125,14 @@ export default {
             playerAttackMax: 'calcAttackMax'
         }),
     },
+    created() {
+        if(this.shopLoaded) {
+            this.$store.commit('shopData/mutate', {property:'shopLoaded', with:false}, {root:true})
+        }
+    },
+    mounted() {
+        this.$store.dispatch('authData/updateSavedGame', null, {root:true})
+    },
     destroyed() {
         this.$store.commit('shopkeepData/newShopkeep');
     },
@@ -130,8 +141,8 @@ export default {
 
 <style scoped>
 .shopPhaseWrapper {
-        position:relative;
-    }
+    position:relative;
+}
 .shopSigil {
     margin-right:10px;
 }
