@@ -147,6 +147,8 @@ export default {
     },
     computed: {
         ...mapState('playerData', {
+            playerLoaded: state => state.playerLoaded,
+
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
             // playerHealth: state => state.info.baseHealth,
@@ -177,6 +179,8 @@ export default {
             curse: state => state.info.curse,
         }),
         ...mapState('monsterData', {
+            monsterLoaded: state => state.monsterLoaded,
+
             monsterEnter: state => state.info.enterSound,
 
             playerEnemy: state => state.info.name,
@@ -201,8 +205,6 @@ export default {
             purpleShineMonster: state => state.animations.purpleShine,
 
             armorUp: state => state.animations.armorUp,
-
-            monsterRank: state => state.monsterRank,
         }),
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
@@ -216,19 +218,33 @@ export default {
             monsterRealDamage: 'thisAdjDamage',
             monsterHealth: 'calcHealth',
             monsterArmor: 'calcArmor',
-            monsterAttackMax: 'calcAttackMax'
+            monsterAttackMax: 'calcAttackMax',
+            monsterRank: 'monsterRank'
         })
     },
     created() {
-        this.MonsterSounds[this.monsterEnter].play();
-        this.$store.dispatch('playerData/RESET_ANIMATIONS');
-        this.$store.dispatch('monsterData/RESET_ANIMATIONS');
-        this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
-        this.$store.commit('playerData/mutate', {property:'log', with:[]})
-        this.$store.commit('monsterData/mutate', {property:'log', with:[]})
+        if(!this.playerLoaded){
+            console.log(`Generating Monster for Dungeon Phase`)
+            this.MonsterSounds[this.monsterEnter].play();
+            this.$store.dispatch('playerData/RESET_ANIMATIONS');
+            this.$store.dispatch('monsterData/RESET_ANIMATIONS');
+            this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
+            this.$store.commit('playerData/mutate', {property:'log', with:[]})
+            this.$store.commit('monsterData/mutate', {property:'log', with:[]})
+            this.$store.dispatch('authData/updateSavedGame', null, {root:true} )
+        }
+        else {
+            console.log(`Retrieving Monster from Database`)
+            this.MonsterSounds[this.monsterEnter].play();
+            this.$store.dispatch('playerData/RESET_ANIMATIONS');
+            this.$store.dispatch('monsterData/RESET_ANIMATIONS');
+            this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
+            this.$store.commit('playerData/mutate', {property:'playerLoaded', with:false})
+        }
     },
     destroyed(){
         this.$store.commit('monsterData/newMonster');
+        this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
         this.$store.dispatch('playerData/CHECK_INVENTORY')
         this.$store.commit('playerData/REMOVE_TEMP_STATS')
 
