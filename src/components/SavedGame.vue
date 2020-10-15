@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div class="relative">
+        <h1 @click="toggleHelp()" @mouseenter="UiSounds.chit.play()" id="credits">ABOUT</h1>
+
         <div class="flexColumn">
         <h1>Welcome To The</h1>
         <h1>Moebius Dungeons</h1>
@@ -8,12 +10,12 @@
 <br>
         
         <div class="flexRow">
-            <div @click="startNewGame()" class="newGame nodule block">
-                <h3>Start A New Game</h3>
+            <div @click="startNewGame()" @mouseenter="UiSounds.chit.play()" class="newGame nodule block">
+                <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
                 <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
             </div>
 
-            <div v-if="save" class="resumeGame nodule block flexColumn">
+            <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="save" class="resumeGame nodule block flexColumn">
                 <h1>Saved Game</h1>
 
                 <img class="portraitSize" :src="player.info.portrait" alt="">
@@ -57,21 +59,48 @@
         </p>
         <br>
         <div class="flexColumn">
-        <a class="gumroad-button" href="https://gum.co/CsdPh" target="_blank">Get The RPG Book That Inspired This Game</a>
+        <a @mouseenter="UiSounds.chit.play()" href="https://gum.co/CsdPh" target="_blank"><h2 class="leaderboardsSmaller">Get The RPG Book That Inspired This Game</h2></a>
         <br>
         <p>Always Remember. A Loyal Squire Will Never Tire</p>
+
+        <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
         </div>
+    
+    <transition name="fade" mode="out-in">
+        <credits-overlay key="battleHelper" @close="toggleHelp()" v-if="helper"/>
+    </transition>
+
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import CreditsOverlay from './CreditsOverlay';
+import helperToggles from './mixins/helperToggles';
+import UiSounds from "../plugins/UiSounds";
 
     export default {
         name:"SavedGame",
+        mixins: [helperToggles],
+        components: {
+            CreditsOverlay
+        },
+        data() {
+            return {
+                UiSounds: UiSounds,
+            }
+        },
         methods: {
             startNewGame() {
                 this.$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
+                this.$store.dispatch('authData/deleteSavedGame', null, {root:true})
+            },
+            ...mapActions( 'authData', [
+                'loadSavedGame',
+                'deleteSavedGame'
+            ]),
+            toLeaderboards() {
+                this.$store.commit('gameData/mutate', {property: 'phase', with: 'LeaderBoards'})
             }
         },
         computed: {
@@ -102,11 +131,44 @@ import { mapState } from 'vuex';
 </script>
 
 <style scoped>
+.relative {
+    position:relative;
+}
+#credits {
+    font-size: 20px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    margin: 0;
+    padding: 5px;
+    background: rgb(218, 218, 218);
+    cursor:pointer;
+}
 h3, h1 {
     text-align:center;
 }
-
+.leaderboards {
+    background:rgb(218,218,218);
+    padding:10px;
+    margin:10px 0px;
+}
+.leaderboardsSmaller {
+    background:rgb(218,218,218);
+    font-size:15px;
+    color:black;
+    text-decoration: none;
+    padding:10px;
+    margin:10px 0px;
+}
+.leaderboards:hover, .leaderboardsSmaller:hover {
+    background:rgb(255, 241, 179);
+    color:grey;
+    cursor:pointer;
+}
 .resumeGame h1 {
+    font-size:20px;
+}
+.small {
     font-size:20px;
 }
 
