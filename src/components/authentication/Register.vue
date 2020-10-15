@@ -39,6 +39,8 @@
                     type="name"
                     class="form-control"
                     name="name"
+                    placeholder="Your Desired Username"
+                    autocomplete="nickname"
                     value
                     required
                     autofocus
@@ -64,6 +66,8 @@
                     type="email"
                     class="form-control"
                     name="email"
+                    placeholder="Email"
+                    autocomplete="email"
                     value
                     required
                     autofocus
@@ -88,7 +92,8 @@
                     type="password"
                     class="form-control"
                     name="password"
-                    autocomplete="on"
+                    placeholder="Password"
+                    autocomplete="new-password"
                     required
                     v-model="form.password"
                   />
