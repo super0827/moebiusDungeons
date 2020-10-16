@@ -119,7 +119,6 @@ const state = () => ({
            enterSound: 'banditsEnter',
          },
          
-         //MIMIC!
          {
            name:"mimic",
            type:'monster', 
@@ -257,8 +256,9 @@ const mutations = {
     newMonster(state) {
         const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
         state.roster += increment;
-        if(state.roster > state.variants.length) state.roster = increment;
+        if(state.roster >= state.variants.length) state.roster = increment;
         state.info = state.variants[state.roster];
+        console.log(`new roster number is ${state.roster}, monster is ${JSON.stringify(state.variants[state.roster])}`)
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -394,6 +394,28 @@ const actions = {
           }, 300)
         }, 1500)
       }
+  },
+  SPECIAL_CHECK_HP ({state, commit, dispatch}) {
+    if (state.info.baseHealth <= 0) {
+      dispatch('RESET_ANIMATIONS')
+      commit('toggleAnimation', {property: 'isDead'})
+      let randomTrack = Math.floor(Math.random() * (3) + 1)
+      UiSounds['victory' + randomTrack].play()
+      commit('playerData/addCoins', state.info.coins, {root:true})
+      commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
+      
+      setTimeout(() => {
+        commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
+        setTimeout(() => {
+          commit('leaderboardData/addToList', {property: 'monstersKilled', with:state.info.name}, {root:true})
+        }, 300)
+      }, 1500)
+    }
+    if(state.info.baseHealth > 0){
+      setTimeout(() => {
+        commit('gameData/toggle', {property:'combatLocked'}, {root: true});
+      }, 1200)
+    }
   },
   ROLL_DAMAGE({state, commit, dispatch, getters}) {
       const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
