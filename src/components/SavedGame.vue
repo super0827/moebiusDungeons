@@ -7,7 +7,7 @@
         <h1>Moebius Dungeons</h1>
         </div>
 
-        <p>There are likely a ton of bugs in this game, if you find any please send me an email and a description of the bug so I can fix it! If you have any ideas send them my way as well!</p>
+        <p>There are likely a ton of bugs in this game, if you find any please send me an email with a description of the bug so I can fix it!  <a href="https://discord.gg/U2pn7xq" target="_blank">If you use discord, you can report bugs here too.</a> Gameplay ideas are always welcome too so send them my way.</p>
         <h3><a href="mailto:moebuisdungeons@gmail.com">moebiusdungeons@gmail.com</a></h3>
 
 <br>
@@ -136,6 +136,7 @@ import UiSounds from "@/plugins/UiSounds";
 .relative {
     position:relative;
     max-width:500px;
+    text-align:center;
 }
 #credits {
     font-size: 20px;
