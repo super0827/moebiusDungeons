@@ -5,6 +5,7 @@ const state = () => ({
     duration: 1000,
     combatLocked: false,
     turnTailUsed: false,
+    leaderboard:[]
 })
 
 const mutations = {
@@ -16,6 +17,12 @@ const mutations = {
     },
     toggleHelp(state){
         state.helper = !state.helper
+    },
+    addToLeaderboard(state, payload){
+        state.leaderboard.push(payload)
+    },
+    clearLeaderboard(state){
+      state.leaderboard = [];  
     }
 }
 
