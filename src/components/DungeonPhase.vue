@@ -151,8 +151,6 @@ export default {
 
             playerName: state => state.info.name,
             playerPortrait: state => state.info.portrait,
-            // playerHealth: state => state.info.baseHealth,
-            // playerAttack: state => state.info.baseAttackMax,
             playerAttackType: state => state.info.attackType,
             playerAttackTypeImage: state => state.info.attackTypeImage,
             playerCoins: state => state.info.coins,
@@ -224,7 +222,6 @@ export default {
     },
     created() {
         if(!this.playerLoaded){
-            console.log(`Generating Monster for Dungeon Phase`)
             this.MonsterSounds[this.monsterEnter].play();
             this.$store.dispatch('playerData/RESET_ANIMATIONS');
             this.$store.dispatch('monsterData/RESET_ANIMATIONS');
@@ -234,7 +231,6 @@ export default {
             this.$store.dispatch('authData/updateSavedGame', null, {root:true} )
         }
         else {
-            console.log(`Retrieving Monster from Database`)
             this.MonsterSounds[this.monsterEnter].play();
             this.$store.dispatch('playerData/RESET_ANIMATIONS');
             this.$store.dispatch('monsterData/RESET_ANIMATIONS');
