@@ -74,6 +74,8 @@ p {
 
 .uppercase {
     text-transform: uppercase;
+    font-family: var(--paragraphs-type);
+
 }
 
 /* Stat Styles */
