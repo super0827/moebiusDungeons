@@ -124,9 +124,7 @@ export default {
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
 
-        this.$store.dispatch('leaderboardData/compareToHighScore', {property: 'highestHealth', with: passedPlayer.baseHealth})
-        this.$store.dispatch('leaderboardData/compareToHighScore', {property: 'highestArmor', with: passedPlayer.baseArmor})
-        this.$store.dispatch('leaderboardData/compareToHighScore', {property: 'highestAttack', with: passedPlayer.baseAttackMax})
+        this.$store.dispatch('leaderboardData/compareToHighScore')
         this.$store.commit('leaderboardData/incrementByValue', {property: 'totalCoins', with: passedPlayer.coins})
         UiSound.charPick.play();
     },
