@@ -150,7 +150,6 @@ export default {
             displayName: this.form.name
           })
           this.$store.commit(`authData/SET_USER`, {displayName: this.form.name, email: user.email}, {root:true})
-          // this.$store.dispatch(`authData/detectUser`, user, {root:true})
         })
         .catch(err => {
           this.error = err.message;
