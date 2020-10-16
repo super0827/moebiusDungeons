@@ -1,6 +1,6 @@
 <template>
 <section class="wrapper">
-    <section v-if="health < 0" class="animated pulse slower infinite">
+    <section v-if="health <= 0">
         <h1>Death was always lurking.</h1>
         <h3>These dungeons are dangerous, and rife with infinite challenge.</h3>
         <p>When you die in the dungeons you can't submit your score to the leaderboards.</p>
@@ -147,7 +147,7 @@ export default {
     margin:5px;
 }
 
-.commas:last-child::after
+.commas span:last-of-type:after
 {
     content:'';
 }
