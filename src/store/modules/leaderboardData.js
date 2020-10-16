@@ -34,10 +34,10 @@ const mutations = {
 }
 
 const actions = {
-  compareToHighScore({state, commit}, payload) {
-    if(state[payload.property] < payload.with) {
-      commit('mutate', payload)
-    }
+  compareToHighScore({state, commit, rootState, rootGetters}) {
+    if(state.highestHealth < rootGetters['playerData/calcHealth']) commit('mutate', {property:'highestHealth', with:rootGetters['playerData/calcHealth']})
+    if(state.highestArmor < rootGetters['playerData/calcArmor']) commit('mutate', {property:'highestArmor', with:rootGetters['playerData/calcArmor']})
+    if(state.highestAttack < rootGetters['playerData/calcAttackMax']) commit('mutate', {property:'highestAttack', with:rootGetters['playerData/calcAttackMax']})
   },
   loadSavedGame({state, commit}, payload){
     commit('mutate', {property:'shopLoaded', with:true})
@@ -48,7 +48,7 @@ const actions = {
 }
 
 const getters = {
-  snapshot: (state, commit) => {
+  snapshot: (state, getters, rootState, rootGetters) => {
     return {
       highestHealth: state.highestHealth,
       highestArmor: state.highestArmor,
@@ -59,8 +59,19 @@ const getters = {
       totalDamageDealt: state.totalDamageDealt,
       totalDamageTaken: state.totalDamageTaken,
       damageBlocked: state.damageBlocked,
+      highScore: getters.highScore,
+      icon: rootGetters['authData/userIcon'],
+      playedAs: rootState['playerData'].info.name,
     }
   },
+  highScore: (state, getters, rootState, rootGetters ) => {
+    let score = (state.highestHealth + state.highestArmor + state.highestAttack + state.monstersKilled.length + state.coinsSpent + state.totalCoins + state.totalDamageDealt + state.totalDamageTaken + state.damageBlocked)
+    if(rootGetters['monsterData/monsterRank'] === '') return score
+        else if (rootGetters['monsterData/monsterRank'] === 'virulent') return Math.floor(score * 2)
+        else if (rootGetters['monsterData/monsterRank'] === 'fearsome') return Math.floor(score * 2.5)
+        else if (rootGetters['monsterData/monsterRank'] === 'bloodless') return Math.floor(score * 3)
+        else if (rootGetters['monsterData/monsterRank'] === 'flawless') return Math.floor(score * 4)
+  }
 }
 
 export default {
