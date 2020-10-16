@@ -11,7 +11,7 @@ module.exports = {
         ],
     },  
     outputDir: "docs",
-    
+    publicPath: './',
     chainWebpack: (config) => {
         config.module
             .rule('txt')
