@@ -74,12 +74,10 @@ const mutations = {
     else if (payload.operator === 'divide') Math.ceil(state.info[payload.stat] /= payload.value);
   },
   changeTempStats(state, payload){
-    console.log(`change stats payload:` + JSON.stringify( payload ))
     if (payload.operator === 'add') state[payload.stat] += payload.value;
     else if (payload.operator === 'minus') state[payload.stat] -= payload.value;
     else if (payload.operator === 'multiply') state[payload.stat] *= payload.value;
     else if (payload.operator === 'divide') Math.ceil(state[payload.stat] /= payload.value);
-    console.log(`TEMPS - ARMOR:` + state.tempArmor + `ATTACK:` + state.tempAttackMax + `HEALTH: ` + state.tempHealth);
   },
   transferStat(state, payload){
     if(payload.operator === 'divide'){
@@ -88,6 +86,7 @@ const mutations = {
       state.info[payload.fromStat] = statModified;
       state.info[payload.toStat] += transferAmount;
     }
+    dispatch('leaderboardData', {property:state.info[payload.toStat], with:state.info[property.stat]}, {root:true})
   },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
@@ -183,13 +182,6 @@ const getters = {
     let fullInventory = state.temporaryTraits.concat(state.permanantTraits);
     return fullInventory;
   },
-  trackedStats: (state, getters) => {
-    let trackedKeys = {
-      health: getters.calcHealth,
-      armor: getters.calcArmor,
-      attack: getters.calcAttackMax,
-    }
-  }
 }
 
 const actions = {
@@ -214,9 +206,11 @@ const actions = {
 
     if(getters.calcHealth > 0){
       //UNLOCK COMBAT
-      commit('gameData/toggle', { property:'combatLocked' }, {root: true});
       dispatch('authData/updateSavedGame', null, {root:true} )
-      dispatch('RESET_ANIMATIONS');
+      commit('gameData/toggle', { property:'combatLocked' }, {root: true});
+      setTimeout(() => {
+        dispatch('RESET_ANIMATIONS')
+      }, 1500)
     }
     else if(getters.calcHealth <= 0 && canRevive){
       commit('toggleAnimation', {property: 'portEffect'})
@@ -269,22 +263,32 @@ const actions = {
     commit('addToLog', {id:state.logNum + 'player', message:payload});
     commit('incrementLog')
   },
-  DEAL_DAMAGE({commit, dispatch, getters}) {
+  DEAL_DAMAGE({commit, dispatch, getters, rootState}) {
       commit('toggleAnimation', {property:'attacking'});
-      if (getters.thisAdjDamage > 0) {
-        dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
-        commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
-        commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
-        commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
-        commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
-        commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:getters.thisAdjDamage}, {root:true})      }
-      else if(getters.thisAdjDamage <= 0) {
-        dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
-        commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
-        commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
-        commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
-      }
-  },
+      // if(getters.calcArmor >= rootState['monsterData'].info.baseAttackMax && rootState['monsterData'].info.attackType === 'physical'){
+      //   dispatch('LOG_UPDATE', `THE MONSTER IS NO MATCH FOR YOU.`)
+      //   commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+      //   commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+      //   commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+      //   commit('monsterData/takeDamage', {damage: rootState['monsterData'].info.baseHeath}, {root:true})
+
+      // }
+      // else if (getters.calcArmor < rootState['monsterData'].info.baseAttackMax && rootState['monsterData'].info.attackType === 'physical') {
+        if (getters.thisAdjDamage > 0) {
+          dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
+          commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+          commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+          commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+          commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+          commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:getters.thisAdjDamage}, {root:true})      }
+          else if(getters.thisAdjDamage <= 0) {
+            dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
+            commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
+            commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+            commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
+          }
+        // }
+      },
   RUN_SPECIAL({state, commit, getters, dispatch, rootState}){
     if (state.info.mettle > 0 && !rootState.gameData.combatLocked){
       // LOCK COMBAT
@@ -329,7 +333,6 @@ const actions = {
     setTimeout(() => {
       dispatch('RESET_ANIMATIONS');
       commit('mutate', {property:'specialDamageAnimation', with:false})
-      dispatch('monsterData/CHECK_HP', null, {root: true})
     }, 1200)
 
   },
