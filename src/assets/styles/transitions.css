@@ -5,6 +5,13 @@
     opacity: 0;
   }
 
+  .fade-fast-enter-active, .fade-fast-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-fast-enter, .fade-fast-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
   
   .list-complete-item {
     transition: all 1s;
