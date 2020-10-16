@@ -9,8 +9,9 @@ module.exports = {
                 jQuery: 'jquery',
             }),
         ],
-        outputDir: "docs",
-    },
+    },  
+    outputDir: "docs",
+    
     chainWebpack: (config) => {
         config.module
             .rule('txt')
