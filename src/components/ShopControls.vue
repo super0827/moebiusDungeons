@@ -159,6 +159,7 @@ export default {
 
         // RUNS CORRESPONDING EFFECT IN SHOPKEEPDATA.JS 
         this.$store.dispatch('shopkeepData/' + itemBought.effect.action, itemBought.effect.payload)
+        this.$store.dispatch('leaderboardData/compareToHighScore')
         itemBought.bought = true;
 
         // ADDS ICON TO PLAYERS INVENTORY IF THEY'RE TEMPORARY OR PERMANENT
