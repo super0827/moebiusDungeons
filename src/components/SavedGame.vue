@@ -7,6 +7,9 @@
         <h1>Moebius Dungeons</h1>
         </div>
 
+        <p>There are likely a ton of bugs in this game, if you find any please send me an email and a description of the bug so I can fix it!</p>
+        <h3><a href="mailto:moebuisdungeons@gmail.com">moebiusdungeons@gmail.com</a></h3>
+
 <br>
         
         <div class="flexRow">
@@ -16,10 +19,10 @@
             </div>
 
             <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="save" class="resumeGame nodule block flexColumn">
-                <h1>Saved Game</h1>
 
                 <img class="portraitSize" :src="player.info.portrait" alt="">
-                
+                <br>
+                <h1>Resume Game</h1>
                 <h3>{{savedPhase}}</h3>
 
                 <div class="flexRow whiteText">
@@ -55,12 +58,11 @@
         </div>
 <br>
         <p class="widthCap">
-            Hey there kingloyal. Sean Yager here, creator of Moebius Dungeons. This game is created in my free time, and I'm the only web developer on the team. If you'd like to help support the development of the game consider <a href="paypal.me/MisuseofMana">donating to my Paypal account</a> or consider buying the RPG poetry book that inspired this game.
+            Hey there kingloyal. Sean Yager here, creator of Moebius Dungeons. This game is created in my free time, and I'm the only web developer on the team. If you'd like to help support the development of the game consider <a @mouseenter="UiSounds.chit.play()" href="paypal.me/MisuseofMana">donating to my Paypal account</a> or consider <a @mouseenter="UiSounds.chit.play()" href="https://gum.co/CsdPh" target="_blank">buying the RPG poetry book that inspired this game.</a>
         </p>
-        <br>
+
         <div class="flexColumn">
-        <a @mouseenter="UiSounds.chit.play()" href="https://gum.co/CsdPh" target="_blank"><h2 class="leaderboardsSmaller">Get The RPG Book That Inspired This Game</h2></a>
-        <br>
+
         <p>Always Remember. A Loyal Squire Will Never Tire</p>
 
         <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
@@ -100,7 +102,7 @@ import UiSounds from "../plugins/UiSounds";
                 'deleteSavedGame'
             ]),
             toLeaderboards() {
-                this.$store.commit('gameData/mutate', {property: 'phase', with: 'LeaderBoards'})
+                this.$store.commit('gameData/mutate', {property: 'phase', with: 'LeaderBoard'})
             }
         },
         computed: {
@@ -189,14 +191,14 @@ h3, h1 {
 }
 
 .blackText h1 {
-    color:black;
-    text-shadow:white 0px 0px 2px;
+    color:white;
+    text-shadow:black 1px 1px 2px;
     font-size:20px;
 }
 
 .whiteText h3 {
     color:white;
-    text-shadow:gold 1px 1px 2px;
+    text-shadow:black 1px 1px 2px;
     font-size:15px;
 }
 
