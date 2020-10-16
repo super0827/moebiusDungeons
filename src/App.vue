@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-
-    <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
-    <!-- DEBUGGING -->
-
     <transition name="fade" mode="out-in">
     <section key="loginBar" v-if="phase != 'Loading'" class="user">
       
       <div class="loginBar" v-if="user.loggedIn == true">
-        <img :src="avatar" alt="">
-        <p>{{user.data ? user.data.displayName : "..."}}</p>
-        <p>|</p>
+          <img :src="avatar" alt="">
+          <p>{{user.data ? user.data.displayName : "..."}}</p>
+          <p>|</p>
         <p class="clickable" @click="signOut">Sign Out</p>
       </div>
 
@@ -19,14 +15,22 @@
         <p>|</p>
         <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Register'})" class="clickable">Sign Up</p>
       </div>
-   
+
+      <!-- <div class="prefBar flexColumn" v-if="preferences">
+        <input
+          :v-model="newName"
+          placeholder="New Display Name"
+        >
+        <button>Change Display Name</button>
+      </div> -->
     </section>
     </transition>
 
     <section class="version">
       <p>v.1.0.0</p>
     </section>
-
+<!-- 
+    <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
     <section class="debugBar" v-if="!testMode">
       <section @click="debugShow = !debugShow">
         <h3>DEBUG BAR</h3>
@@ -147,9 +151,9 @@
         <section>
           <h3 @click="testMode = !testMode">Enable Testing Mode</h3>
         </section>
-      </article>
-      
+      </article> 
     </section>
+      -->
 
     <!-- GUI -->
      <transition name="fade" mode="out-in">
@@ -179,6 +183,8 @@ import DungeonPhase from './components/DungeonPhase.vue';
 import ShopSelect from './components/ShopSelect.vue';
 import ShopPhase from './components/ShopPhase.vue';
 import LoseScreen from './components/LoseScreen.vue';
+import LeaderBoard from './components/LeaderBoard.vue';
+import TermsPage from './components/TermsPage.vue';
 import Keypress from 'vue-keypress';
 import Login from './components/authentication/Login.vue';
 import Loading from './components/authentication/Loading.vue';
@@ -198,17 +204,23 @@ export default {
     Keypress,
     Login,
     Register,
-    Loading
+    Loading,
+    LeaderBoard,
+    TermsPage
   },
   data() {
     return {
       testMode: true,
       debugShow: false,
+      preferences: false,
     }
   },
   methods: {
     toggleDebug(response) {
       this.testMode = !this.testMode
+    },
+    togglePref(response) {
+      this.preferences = !this.preferences
     },
     signOut() {
       firebase
@@ -221,7 +233,8 @@ export default {
   },
   computed: {
       ...mapState('gameData', {
-        phase: state => state.phase
+        phase: state => state.phase,
+        leaderboard: state => state.leaderboard
       }),
       ...mapState('authData', {
         user: state => state.user 
@@ -305,8 +318,9 @@ contact@seanyager.com
 .loginBar {
   display:flex;
   align-items:center;
-  justify-content:space-around;
+  justify-content:space-evenly;
   padding:5px 5px;
+  min-width:200px;
 }
 
 .loginBar .clickable:hover {
@@ -335,6 +349,22 @@ contact@seanyager.com
 .phaseName {
   font-size:40px;
   margin:10px 0;
+}
+
+.pref:hover {
+  color:gold;
+  cursor:pointer;
+  filter:saturate(5);
+}
+
+.prefBar {
+  margin-top:5px;
+}
+
+.prefBar button {
+  margin-bottom:10px;
+  margin-top:10px;
+  cursor:pointer;
 }
 
 .gameplayWrapper {
