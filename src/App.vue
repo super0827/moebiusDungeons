@@ -173,6 +173,9 @@ import '@/assets/styles/transitions.css';
 
 import { mapState, mapGetters } from 'vuex'
 
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 import SavedGame from '@/components/SavedGame.vue';
 import StartScreen from '@/components/StartScreen.vue';
 
@@ -221,6 +224,9 @@ export default {
       this.preferences = !this.preferences
     },
     signOut() {
+
+      this.$store.dispatch('authData/updateSavedGame')
+
       firebase
         .auth()
         .signOut()
