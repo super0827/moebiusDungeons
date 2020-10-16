@@ -58,8 +58,12 @@
             </h2>
         </section>
         <section>
-            <h2 @mouseenter="UiSound.chit.play()" @click="addMettle()" class="button green">
+            <h2 v-if="mettle < 3" @mouseenter="UiSound.chit.play()" @click="addMettle()" class="button green">
                 Rest + 1 <img :src="mettleImg"/>
+            </h2>
+            
+            <h2 :class="{'unavailable': mettle >= 3}" v-if="mettle >= 3"  @mouseenter="UiSound.chit.play()" class="button">
+                Can't Rest With Max Mettle
             </h2>
         </section>
 
@@ -118,7 +122,8 @@ export default {
         ...mapState('playerData', {
             mettleImg: state => state.info.mettleImg,
             coins: state => state.info.coins,
-            attackImg: state => state.info.attackTypeImage
+            attackImg: state => state.info.attackTypeImage,
+            mettle: state => state.info.mettle
         }),
         ...mapState('gameData', {
             tracker: state =>state.tracker,
@@ -222,6 +227,12 @@ export default {
 .button img {
     width:50px;
     margin-left:10px;
+}
+
+.unavailable {
+    color:white;
+    background:rgb(161, 0, 0);
+    cursor:not-allowed;
 }
 
 .red:hover {
