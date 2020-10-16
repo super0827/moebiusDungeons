@@ -23,137 +23,17 @@
         >
         <button>Change Display Name</button>
       </div> -->
+
     </section>
     </transition>
 
+    <debug-bar v-if="debugShow"/>
+
     <section class="version">
-      <p>v.1.0.0</p>
+      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.1.0</a></p>
     </section>
-<!-- 
+
     <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
-    <section class="debugBar" v-if="!testMode">
-      <section @click="debugShow = !debugShow">
-        <h3>DEBUG BAR</h3>
-      </section>
-
-      <article class="debugContent" v-if="debugShow">
-        <p>SCENES</p>
-
-        <section>
-          <section class="flexColumn">
-          <span>SCENE SELECT</span>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'SavedGame'})">SAVED GAME SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
-          </section>
-        </section>
-
-        <p>MONSTER</p>
-        <section>
-          <span>HEALTH</span>
-          <section>
-            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
-          </section>
-        </section>
-        
-        <br>
-        <p>ADD TEMP ITEMS</p>
-        <section>
-          <section>
-            <button @click="$store.commit('playerData/addToInventory', 
-            { 
-              type: 'temporary', 
-              bought: false, 
-              noSale: false, 
-              name: 'Dessicated Doll', 
-              cost: 5, 
-              description: 'Revive with 10 HP on death.', 
-              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:-1, shine:'goldShine'}}, 
-              icon: require('@/assets/imgs/icons/items/graverobber/dessicatedDoll.png')
-            }
-            )"> Dessicated Doll </button>
-            
-            
-          </section>
-        </section>
-        <p>PLAYER</p>
-        
-
-        <section>
-          <span>HEALTH</span>
-          <section>
-            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
-          </section>
-        </section>
-      
-        <section>
-          <span>ARMOR</span>
-          <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
-          </section>
-        </section>
-        
-        <section>
-          <span>ATTACK</span>
-          <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
-          </section>
-        </section>
-        
-        <section>
-          <span>COINS</span>
-          <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
-          </section>
-        </section>
-        
-        <section>
-          <span>METTLE</span>
-          <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
-          </section>
-        </section>
-
-        <br>
-
-        <p>SHOPKEEPS</p>
-          <section>
-            <section class="flexColumn">
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:0})">CLERIC </button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:1})">GRAVEROBBER</button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:2})">MERCHANT</button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</button>
-            </section>
-        </section>
-
-        <br>
-
-        <p>MONSTER RANKS</p>
-        <section class="flexColumn">
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: ''})">NORMAL</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'virulent'})">VIRULENT</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'fearsome'})">FEASRSOME</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'bloodless'})">BLOODLESS</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'flawless'})">FLAWLESS</button>
-            </section>
-        
-        <section>
-          <h3 @click="testMode = !testMode">Enable Testing Mode</h3>
-        </section>
-      </article> 
-    </section>
-      -->
 
     <!-- GUI -->
      <transition name="fade" mode="out-in">
@@ -186,6 +66,7 @@ import ShopPhase from '@/components/ShopPhase.vue';
 import LoseScreen from '@/components/LoseScreen.vue';
 import LeaderBoard from '@/components/LeaderBoard.vue';
 import TermsPage from '@/components/TermsPage.vue';
+import DebugBar from '@/components/DebugBar.vue';
 import Keypress from 'vue-keypress';
 import Login from '@/components/authentication/Login.vue';
 import Loading from '@/components/authentication/Loading.vue';
@@ -207,18 +88,20 @@ export default {
     Register,
     Loading,
     LeaderBoard,
-    TermsPage
+    TermsPage,
+    DebugBar
   },
   data() {
     return {
-      testMode: true,
       debugShow: false,
       preferences: false,
     }
   },
   methods: {
     toggleDebug(response) {
-      this.testMode = !this.testMode
+      if(this.admin){
+        this.debugShow = !this.debugShow
+      }
     },
     togglePref(response) {
       this.preferences = !this.preferences
@@ -241,10 +124,11 @@ export default {
         leaderboard: state => state.leaderboard
       }),
       ...mapState('authData', {
-        user: state => state.user 
+        user: state => state.user
       }),
       ...mapGetters('authData', {
         avatar: 'userIcon',
+        admin: 'adminAllowed'
       }),
       ...mapGetters('leaderboardData',{
         leaderBoard: 'snapshot',
@@ -393,46 +277,6 @@ contact@seanyager.com
         background:rgb(240, 240, 240);
         cursor:pointer
     }
-
-                  
-/* Debug Styles - REMOVE FOR PRODUCTION */
-.debugBar {
-  margin:10px;
-  font-family: var(--paragraphs-type);
-  text-align:center;
-  display:inline;
-  position:fixed;
-  font-size:13px;
-  top:0px;
-  z-index:999999;
-  min-width:200px;
-  opacity:0.7;
-  color:white;
-  left:0px;
-  background:black;
-  text-transform:uppercase;
-}
-
-.debugBar h3 {
-  border: solid white 2px;
-  padding:0 50px;
-}
-
-.debugBar span {
-  margin-right:10px;
-}
-
-.debugBar section {
-  display:flex;
-  justify-content:center;
-  padding:1px;
-  margin:3px;
-}
-
-.debugContent { 
-  height:500px;
-  overflow-y: scroll;
-}
 
 .user {
   margin:10px;
