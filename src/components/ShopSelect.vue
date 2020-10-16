@@ -2,7 +2,32 @@
 
 <section class="characterSelectWrapper">
 
-    <h1 >Choose a Shopkeep</h1>
+   <section class="lessImportant">
+    <h2 >Current Stats</h2>
+    <br>
+    <section class='flexRow'>
+        <section class="iconOverlay">
+            <img class="smallStat" src="../assets/imgs/icons/healthIcon.png">
+            <h3>{{ health }}</h3>
+        </section>
+        <section class="iconOverlay">
+            <img class="smallStat" :src="attackImg">
+            <h3>{{ attack }}</h3>
+        </section>
+        <section class="iconOverlay">
+            <img class="smallStat" src="../assets/imgs/icons/armorIcon.png">
+            <h3> {{ armor }} </h3>
+        </section>
+        <section>
+            <img class="smallCoin" src="../assets/imgs/icons/coinIcon.png">
+            <h3>{{ coins }}</h3>
+        </section>
+    </section>
+    </section>
+
+    <hr>
+
+     <h1 >Choose a Shopkeep</h1>
 
     <section class="chooseChar">
         <section
@@ -24,30 +49,32 @@
         </section>
     </section>
 
-    <h3 class="marginTop">Or pick an option below</h3>
+    <h3 class="marginTop">OR PICK AN OPTION BELOW</h3>
 
     <section class="flexRow">
-        <h2 @click="addMettle()" class="button green">
-            Rest + 1 <img :src="mettleImg"/>
-        </h2>
-    </section>
+        <section>
+            <h2 @mouseenter="UiSound.chit.play()" @click="toggleRetire()" class="button red">
+                Retire From Your Service
+            </h2>
+        </section>
+        <section>
+            <h2 @mouseenter="UiSound.chit.play()" @click="addMettle()" class="button green">
+                Rest + 1 <img :src="mettleImg"/>
+            </h2>
+        </section>
 
-    <section class="flexRow">
-        <h2 @click="toggleRetire()" class="button red">
-            Retire From Your Service
-        </h2>
     </section>
 
 <h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> Shop Select Help </h1>
 
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <shop-select-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
+        <shop-select-help  key="battleHelper" @close="toggleHelp()" v-if="helper"/>
     </transition>
    
     <!--  Retire Confirmation -->
-    <transition name="fade" mode="out-in">
-        <retire class="retire" key="retireConfirm" @close="toggleRetire()" @retire="retireGame()" v-if="retire"/>
+    <transition name="fade-fast" mode="out-in">
+        <retire class="retire"  key="retireConfirm" @close="toggleRetire()" @retire="retireGame()" v-if="retire"/>
     </transition>
 
 
@@ -91,6 +118,8 @@ export default {
         }),
         ...mapState('playerData', {
             mettleImg: state => state.info.mettleImg,
+            coins: state => state.info.coins,
+            attackImg: state => state.info.attackTypeImage
         }),
         ...mapState('gameData', {
             tracker: state =>state.tracker,
@@ -98,6 +127,11 @@ export default {
         ...mapGetters('authData', {
             user: 'user',
         }),
+        ...mapGetters('playerData', {
+            health: 'calcHealth',
+            armor: 'calcArmor',
+            attack: 'calcAttackMax',
+        })
     },
   methods: {
     toShopkeep(chosenShopkeep) {
@@ -105,13 +139,8 @@ export default {
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'ShopPhase'});
     },
     retireGame() {
-        const recUser = this.user.data.displayName.split(" ").join("").toLowerCase();
-        const recEmail = this.user.data.email;
-
-        firebase.database().ref('users/' + recUser).set({
-            username: recEmail,
-        });
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'LoseScreen'});
+        this.$store.dispatch('authData/updateLeaderboard')
     },
     toggleRetire() {
         this.retire = !this.retire
@@ -177,8 +206,9 @@ export default {
 
 .button {
     background:#999;
-    margin:20px 0 0 0;
-    width:200px;
+    margin:20px 10px;
+    width:175px;
+    height:100px;
     color:white;
     border-radius:5px;
     text-decoration:none;
@@ -209,6 +239,10 @@ export default {
     max-width:200px;
 }
 
+.lessImportant {
+    opacity:0.4;
+}
+
 .overlay {
     height:100px;
     width:200px;
@@ -219,6 +253,22 @@ export default {
 
 .portContainer {
     position:relative;
+}
+
+.smallCoin {
+    width:40px;
+    margin:0px 5px;
+}
+
+.smallStat {
+    width:55px;
+    position:relative;
+    top:-10px;
+}
+
+.iconOverlay h3 {
+    position:relative;
+    top: -15px;
 }
 
 #graverobber:hover .overlay {
