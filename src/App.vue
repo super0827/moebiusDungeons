@@ -173,8 +173,6 @@ import '@/assets/styles/transitions.css';
 
 import { mapState, mapGetters } from 'vuex'
 
-import * as firebase from "firebase";
-
 import SavedGame from '@/components/SavedGame.vue';
 import StartScreen from '@/components/StartScreen.vue';
 

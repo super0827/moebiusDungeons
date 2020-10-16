@@ -94,7 +94,6 @@ import helperToggles from '@/components/mixins/helperToggles';
 import gameAnimations from '@/components/mixins/gameAnimations';
 import gameMusic from '@/components/mixins/gameMusic';
 
-import firebase from "firebase";
 
 export default {
   name: 'ShopSelect',

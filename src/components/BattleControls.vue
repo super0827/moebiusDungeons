@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import StatBar from './StatBar.vue'
+import StatBar from '@/components/StatBar.vue'
 import {mapActions, mapState, mapGetters} from 'vuex'
-import SpecialBar from "./SpecialBar.vue"
+import SpecialBar from "@/components/SpecialBar.vue"
 import UiSounds from '@/plugins/UiSounds.js'
 
 export default {

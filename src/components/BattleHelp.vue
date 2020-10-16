@@ -13,7 +13,7 @@
             <section class="help">
                 <section>
                 <h1>Health</h1>
-                <img src="../assets/imgs/icons/healthIcon.png" alt="">
+                <img src="@/assets/imgs/icons/healthIcon.png" alt="">
                 <p>
                     When this value reaches 0, you're dead.
                 </p>
@@ -21,7 +21,7 @@
 
                 <section>
                     <h1>Armor</h1>
-                <img src="../assets/imgs/icons/armorIcon.png" alt="">
+                <img src="@/assets/imgs/icons/armorIcon.png" alt="">
                 <p>
                    Blocks incoming physical damage.
                 </p>
@@ -29,7 +29,7 @@
                 
                 <section>
                     <h1>Physical</h1>
-                <img src="../assets/imgs/icons/physicalIcon.png" alt="">
+                <img src="@/assets/imgs/icons/physicalIcon.png" alt="">
                 <p>
                     Physical damage is blocked by armor.
                 </p>
@@ -37,7 +37,7 @@
                 
                 <section>
                     <h1>Magical</h1>
-                <img src="../assets/imgs/icons/magicalIcon.png" alt="">
+                <img src="@/assets/imgs/icons/magicalIcon.png" alt="">
                 <p>
                     Magical damage is NOT reduced by armor.
                 </p>

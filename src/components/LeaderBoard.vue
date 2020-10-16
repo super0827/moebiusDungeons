@@ -53,7 +53,7 @@ export default {
     }),
   },
   created() {
-      this.$store.commit('authData/clearLeaderboard')
+      this.$store.commit('gameData/clearLeaderboard')
       this.$store.dispatch('authData/fetchLeaderboard')
   }
 }
