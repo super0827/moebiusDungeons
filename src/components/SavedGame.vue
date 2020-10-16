@@ -7,7 +7,7 @@
         <h1>Moebius Dungeons</h1>
         </div>
 
-        <p>There are likely a ton of bugs in this game, if you find any please send me an email and a description of the bug so I can fix it!</p>
+        <p>There are likely a ton of bugs in this game, if you find any please send me an email and a description of the bug so I can fix it! If you have any ideas send them my way as well!</p>
         <h3><a href="mailto:moebuisdungeons@gmail.com">moebiusdungeons@gmail.com</a></h3>
 
 <br>
@@ -135,6 +135,7 @@ import UiSounds from "../plugins/UiSounds";
 <style scoped>
 .relative {
     position:relative;
+    max-width:500px;
 }
 #credits {
     font-size: 20px;
