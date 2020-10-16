@@ -9,11 +9,23 @@
           <div class="card-header">
             <img src="../../assets/imgs/icons/playerSigilIcon.png" alt="">
             </div>
+          
+
           <div class="card-body">
+
+          <br>
+            <div @click="goToSignup()" class="boxSection link">
+                  <h3>New To Moebius Dungeons?</h3>
+                  <p >Sign Up Here.</p>
+            </div>
+
+            <hr>
 
              <div class="flexRow flexCenter">
               <img class="googleButton" @click="googleLogin" src="../../assets/imgs/icons/googleSignin.png" alt="">
               </div>
+
+            <hr>
 
             <div>
               <p>
@@ -79,10 +91,7 @@
 
             <hr>
 
-            <div @click="goToSignup()" class="boxSection link">
-                  <h3>New To Moebius Dungeons?</h3>
-                  <p >Sign Up Here.</p>
-            </div>
+            <p class="hoverOver" @click="toTerms()">Creating an account means you agree to the terms, available by clicking here.</p>
           </div>
         </div>
       </div>
@@ -114,9 +123,6 @@ export default {
     firebase.auth().signInWithPopup(provider)
     .then(() => {
       var user = firebase.auth().currentUser;
-      // console.log(`Google signin - ${user}`)
-      // this.$store.dispatch('authData/fetchUser', user, {root:true})
-      // this.$store.dispatch('authData/detectUser', user, {root:true})
     })
     .catch(function(error) {
       var errorCode = error.code;
@@ -125,13 +131,13 @@ export default {
       var credential = error.credential;
     });    
   },
-    submit() {
+  toTerms() {
+    this.$store.commit('gameData/mutate', {property: 'phase', with:"TermsPage"})
+  },
+  submit() {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
-        // .then(data => {
-        //   this.$store.dispatch('authData/fetchUser', data, {root:true})
-        // })
         .catch(err => {
           this.error = err.message;
         });
@@ -165,6 +171,11 @@ hr {
 .flexSpaceEven {
   justify-content: space-evenly;
   align-items: center;
+}
+
+.hoverOver:hover {
+  cursor:pointer;
+  color:gold;
 }
 
 .flexCenter {
