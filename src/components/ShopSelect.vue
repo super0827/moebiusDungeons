@@ -7,7 +7,7 @@
     <br>
     <section class='flexRow'>
         <section class="iconOverlay">
-            <img class="smallStat" src="../assets/imgs/icons/healthIcon.png">
+            <img class="smallStat" src="@/assets/imgs/icons/healthIcon.png">
             <h3>{{ health }}</h3>
         </section>
         <section class="iconOverlay">
@@ -15,11 +15,11 @@
             <h3>{{ attack }}</h3>
         </section>
         <section class="iconOverlay">
-            <img class="smallStat" src="../assets/imgs/icons/armorIcon.png">
+            <img class="smallStat" src="@/assets/imgs/icons/armorIcon.png">
             <h3> {{ armor }} </h3>
         </section>
         <section>
-            <img class="smallCoin" src="../assets/imgs/icons/coinIcon.png">
+            <img class="smallCoin" src="@/assets/imgs/icons/coinIcon.png">
             <h3>{{ coins }}</h3>
         </section>
     </section>
@@ -82,17 +82,17 @@
 </template>
 
 <script>
-import InstructionsScreen from './InstructionsScreen';
+import InstructionsScreen from '@/components/InstructionsScreen';
 import { mapState, mapGetters } from 'vuex';
 import shuffle from 'lodash.shuffle'
 
-import ShopSelectHelp from "./ShopSelectHelp.vue";
-import Retire from "./Retire.vue";
+import ShopSelectHelp from "@/components/ShopSelectHelp.vue";
+import Retire from "@/components/Retire.vue";
 import UiSound from '@/plugins/UiSounds.js'
 
-import helperToggles from './mixins/helperToggles';
-import gameAnimations from './mixins/gameAnimations';
-import gameMusic from './mixins/gameMusic';
+import helperToggles from '@/components/mixins/helperToggles';
+import gameAnimations from '@/components/mixins/gameAnimations';
+import gameMusic from '@/components/mixins/gameMusic';
 
 import firebase from "firebase";
 

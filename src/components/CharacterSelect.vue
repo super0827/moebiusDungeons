@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import InstructionsScreen from './InstructionsScreen';
+import InstructionsScreen from '@/components/InstructionsScreen';
 import { mapState } from 'vuex';
 
 import UiSound from '@/plugins/UiSounds.js'
 
-import helperToggles from './mixins/helperToggles';
-import gameAnimations from './mixins/gameAnimations';
-import gameMusic from './mixins/gameMusic';
+import helperToggles from '@/components/mixins/helperToggles';
+import gameAnimations from '@/components/mixins/gameAnimations';
+import gameMusic from '@/components/mixins/gameMusic';
 
 export default {
   name: 'CharacterSelect',
@@ -68,11 +68,11 @@ export default {
               { 
                 name:"swordsman",
                 type:'player', 
-                portrait:require("../assets/imgs/playableCharacters/swordsman.png"), 
+                portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
                 description1:"Slicing and Dicing",
                 description2:"Bruiser class, high damage, good armor, high health.", 
                 coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"),
+                attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
                 mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
                 mettle: 1,
                 curse:0,
@@ -85,11 +85,11 @@ export default {
               {
                 name:"mage",
                 type:'player', 
-                portrait:require("../assets/imgs/playableCharacters/mage.png"), 
+                portrait:require("@/assets/imgs/playableCharacters/mage.png"), 
                 description1:"Spellslinging", 
                 description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
                 coins:0, baseHealth:6, baseArmor:0, baseAttackMax:10, attackType: "magical", 
-                attackTypeImage: require("../assets/imgs/icons/magicalIcon.png"),
+                attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
                 mettleImg: require("@/assets/imgs/icons/mageMettle.png"),
                 mettle: 1,
                 curse:0,
@@ -102,11 +102,11 @@ export default {
               {
                 name:"varlet",
                 type:'player', 
-                portrait:require("../assets/imgs/playableCharacters/varlet.png"), 
+                portrait:require("@/assets/imgs/playableCharacters/varlet.png"), 
                 description1:"Sneaky and Roguish", 
                 description2:"Avoids damage on critical hits, mid tier stats.", 
                 coins:1, baseHealth:8, baseArmor:1, baseAttackMax:6, attackType: "physical", 
-                attackTypeImage: require("../assets/imgs/icons/physicalIcon.png"),
+                attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
                 mettleImg: require("@/assets/imgs/icons/varletMettle.png"),
                 mettle: 1,
                 curse:0,

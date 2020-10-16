@@ -3,12 +3,12 @@ import Vuex from 'vuex'
 
 import createLogger from 'vuex/dist/logger'
 
-import gameData from './modules/gameData'
-import playerData from './modules/playerData'
-import monsterData from './modules/monsterData'
-import shopkeepData from './modules/shopkeepData'
-import leaderboardData from './modules/leaderboardData'
-import authData from './modules/authData'
+import gameData from '@/store/modules/gameData'
+import playerData from '@/store/modules/playerData'
+import monsterData from '@/store/modules/monsterData'
+import shopkeepData from '@/store/modules/shopkeepData'
+import leaderboardData from '@/store/modules/leaderboardData'
+import authData from '@/store/modules/authData'
 
 Vue.use(Vuex);
 

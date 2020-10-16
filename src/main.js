@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
-import { store } from './store/store'
+import App from '@/App.vue'
+import { store } from '@/store/store'
 import { mapState, mapGetters } from 'vuex'
 import * as firebase from "firebase";
 

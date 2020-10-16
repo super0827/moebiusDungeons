@@ -23,7 +23,7 @@
         <section class="description">
           <section class="cost">  
             <article>
-              <img src="../assets/imgs/icons/coinIcon.png">
+              <img src="@/assets/imgs/icons/coinIcon.png">
               <h1>{{ buyable.cost }}</h1>
             </article>
           </section>

@@ -17,7 +17,7 @@
             <p><strong>Compete for the title of the most accomplished Kingloyal in the realm.</strong></p>
             </div>
 
-            <img src="../../assets/imgs/icons/playerSigilIcon.png" alt="">
+            <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
           </div>
 
           <br>

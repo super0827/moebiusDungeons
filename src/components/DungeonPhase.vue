@@ -2,7 +2,7 @@
 <section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
     <section class="flexRow animated"
     :class="{'zoomInDown' :isEntering, 'zoomOutUp' : !isEntering}">
-        <img key="dungeonSigil" id="dungeonSigil" class="iconImageSize" src="../assets/imgs/icons/monsterSigilIcon.png" alt="">
+        <img key="dungeonSigil" id="dungeonSigil" class="iconImageSize" src="@/assets/imgs/icons/monsterSigilIcon.png" alt="">
         <h1 class="textCenter phaseName">DUNGEON</h1>
     </section>
 
@@ -116,17 +116,17 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import BattleControls from './BattleControls.vue';
-import CharacterToken from "./CharacterToken.vue";
-import BattleHelp from './BattleHelp.vue';
-import TurnLog from './TurnLog.vue';
+import BattleControls from '@/components/BattleControls.vue';
+import CharacterToken from "@/components/CharacterToken.vue";
+import BattleHelp from '@/components/BattleHelp.vue';
+import TurnLog from '@/components/TurnLog.vue';
 
 import UiSounds from '@/plugins/UiSounds.js'
 import MonsterSounds from '@/plugins/MonsterSounds.js'
 
-import helperToggles from './mixins/helperToggles';
-import gameAnimations from './mixins/gameAnimations';
-import gameMusic from './mixins/gameMusic';
+import helperToggles from '@/components/mixins/helperToggles';
+import gameAnimations from '@/components/mixins/gameAnimations';
+import gameMusic from '@/components/mixins/gameMusic';
 
 
 export default {

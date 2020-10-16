@@ -12,7 +12,7 @@
             <section class="help">
                 <section>
                 <h1>Coins</h1>
-                <img src="../assets/imgs/icons/coinIcon.png" alt="">
+                <img src="@/assets/imgs/icons/coinIcon.png" alt="">
                 <p>
                     Represents your wealth.
                 </p>
@@ -20,7 +20,7 @@
 
                 <section>
                     <h1>HP</h1>
-                <img src="../assets/imgs/icons/healthIcon.png" alt="">
+                <img src="@/assets/imgs/icons/healthIcon.png" alt="">
                 <p>
                     HP means health.
                 </p>
@@ -28,7 +28,7 @@
                 
                 <section>
                 <h1>ARM</h1>
-                <img src="../assets/imgs/icons/armorIcon.png" alt="">
+                <img src="@/assets/imgs/icons/armorIcon.png" alt="">
                 <p>
                    ARM means armor. 
                 </p>
@@ -36,7 +36,7 @@
                 
                 <section>
                     <h1>ATK</h1>
-                <img src="../assets/imgs/icons/physicalIcon.png" alt="">
+                <img src="@/assets/imgs/icons/physicalIcon.png" alt="">
                 <p>
                     ATK means attack.
                 </p>

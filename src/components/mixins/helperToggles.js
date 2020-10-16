@@ -1,5 +1,4 @@
-import { store } from '../../store/store'
-import bkg from '@/plugins/backgroundMusic.js'
+import { store } from '@/store/store'
 
 export default {
     methods: {

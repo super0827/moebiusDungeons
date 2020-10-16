@@ -3,7 +3,7 @@
     <section class="flexRow animated"
         :class="{'zoomInDown' : isEntering, 'zoomOutUp' : !isEntering}">
     
-        <img key="shopSigil" class="iconImageSize shopSigil" src="../assets/imgs/icons/shopkeepSigilIcon.png" >
+        <img key="shopSigil" class="iconImageSize shopSigil" src="@/assets/imgs/icons/shopkeepSigilIcon.png" >
         <h1 class="textCenter phaseName">SHOP</h1> 
     </section>
 
@@ -60,16 +60,16 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import ShopControls from './ShopControls.vue';
-import CharacterToken from "./CharacterToken.vue";
-import ShopPortrait from "./ShopPortrait.vue";
-import ShopHelp from "./ShopHelp.vue";
+import ShopControls from '@/components/ShopControls.vue';
+import CharacterToken from "@/components/CharacterToken.vue";
+import ShopPortrait from "@/components/ShopPortrait.vue";
+import ShopHelp from "@/components/ShopHelp.vue";
 
-import UiSounds from "../plugins/UiSounds"
+import UiSounds from "@/plugins/UiSounds"
 
-import helperToggles from './mixins/helperToggles';
-import gameAnimations from './mixins/gameAnimations';
-import gameMusic from './mixins/gameMusic';
+import helperToggles from '@/components/mixins/helperToggles';
+import gameAnimations from '@/components/mixins/gameAnimations';
+import gameMusic from '@/components/mixins/gameMusic';
 
 
 export default {

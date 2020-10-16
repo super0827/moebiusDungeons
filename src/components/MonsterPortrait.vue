@@ -52,7 +52,7 @@
               <h2 class="versus">vs.</h2>
               
               <section class="indicatorWrapper">
-              <img class="armorIndicator" src="../assets/imgs/icons/armorIcon.png" alt="">
+              <img class="armorIndicator" src="@/assets/imgs/icons/armorIcon.png" alt="">
               <h2 class="armorValue" :class="{ 'striked': storeState.magicAttack}">
               {{ storeState.monster.armor }} 
               </h2>
@@ -89,7 +89,7 @@
 
 
       <section class="coinWrapper">
-        <img src="../assets/imgs/icons/coinIcon.png" alt="">
+        <img src="@/assets/imgs/icons/coinIcon.png" alt="">
         <h1 class="coinValue">
           <animated-number 
           :value="storeState.monster.coins"
@@ -107,7 +107,7 @@
 
 <script>
 import AnimatedNumber from "animated-number-vue";
-import MonsterStats from "./MonsterStats.vue";
+import MonsterStats from "@/components/MonsterStats.vue";
 
 export default {
   name: 'MonsterPortrait',

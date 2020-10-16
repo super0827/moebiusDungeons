@@ -1,7 +1,4 @@
 import shuffle from 'lodash.shuffle'
-import ShopSounds from '@/plugins/ShopSounds.js'
-import playerData from './playerData';
-
 
 const state = () => ({
     shopLoaded: false,

@@ -3,7 +3,7 @@
         <section class="stats statColumn" v-if="who === 'player'">
 
         <section class="flexRowStats">
-          <img src="../assets/imgs/icons/healthIcon.png">
+          <img src="@/assets/imgs/icons/healthIcon.png">
           <p>
           <animated-number 
           :value="health"
@@ -25,7 +25,7 @@
         </section>
         
         <section class="flexRowStats">
-          <img src="../assets/imgs/icons/armorIcon.png">
+          <img src="@/assets/imgs/icons/armorIcon.png">
           <p>
             <animated-number 
           :value="armor"
@@ -43,7 +43,7 @@
       <section class="stats statColumn" v-if="who === 'monster'">
 
         <section class="flexRowStats reverseSides">
-          <img src="../assets/imgs/icons/healthIcon.png">
+          <img src="@/assets/imgs/icons/healthIcon.png">
           <p>
           <animated-number 
           :value="health"
@@ -54,7 +54,7 @@
         </section>
         
         <section class="flexRowStats reverseSides">
-          <img src="../assets/imgs/icons/armorIcon.png">
+          <img src="@/assets/imgs/icons/armorIcon.png">
           <p>
             <animated-number 
           :value="armor"

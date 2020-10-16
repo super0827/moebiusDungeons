@@ -15,7 +15,7 @@
         <div class="flexRow">
             <div @click="startNewGame()" @mouseenter="UiSounds.chit.play()" class="newGame nodule block">
                 <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
-                <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
+                <img src="@/assets/imgs/icons/raceTypeHumanIcon.png" alt="">
             </div>
 
             <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="save" class="resumeGame nodule block flexColumn">
@@ -27,7 +27,7 @@
 
                 <div class="flexRow whiteText">
                     <div class="overlayStats">
-                    <img class="iconSize overlayGridPos" src="../assets/imgs/icons/healthIcon.png">
+                    <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/healthIcon.png">
                     <h3 class="overlayGridPos">{{ player.info.baseHealth + player.tempHealth}}</h3>
                     </div>
                     
@@ -37,14 +37,14 @@
                     </div>
                 
                     <div class="overlayStats">
-                    <img class="iconSize overlayGridPos" src="../assets/imgs/icons/armorIcon.png">
+                    <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/armorIcon.png">
                     <h3 class="overlayGridPos">{{ player.info.baseArmor + player.tempArmor}}</h3>
                     </div>
                 </div>
 
                 <div class="flexRow blackText">   
                     <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" src="../assets/imgs/icons/coinIcon.png">
+                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/coinIcon.png">
                         <h1 class="overlayGridPos">{{ player.info.coins }}</h1>
                     </div>
                     
@@ -77,9 +77,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import CreditsOverlay from './CreditsOverlay';
-import helperToggles from './mixins/helperToggles';
-import UiSounds from "../plugins/UiSounds";
+import CreditsOverlay from '@/components/CreditsOverlay';
+import helperToggles from '@/components/mixins/helperToggles';
+import UiSounds from "@/plugins/UiSounds";
 
     export default {
         name:"SavedGame",

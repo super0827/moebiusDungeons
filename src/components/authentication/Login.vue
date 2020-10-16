@@ -7,7 +7,7 @@
               Login
             </h1>
           <div class="card-header">
-            <img src="../../assets/imgs/icons/playerSigilIcon.png" alt="">
+            <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
             </div>
           
 
@@ -22,7 +22,7 @@
             <hr>
 
              <div class="flexRow flexCenter">
-              <img class="googleButton" @click="googleLogin" src="../../assets/imgs/icons/googleSignin.png" alt="">
+              <img class="googleButton" @click="googleLogin" src="@/assets/imgs/icons/googleSignin.png" alt="">
               </div>
 
             <hr>

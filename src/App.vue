@@ -167,29 +167,29 @@
 </template>
 
 <script>
-import './assets/styles/globals.css';
-import './assets/styles/animatedCSS.css';
-import './assets/styles/transitions.css';
+import '@/assets/styles/globals.css';
+import '@/assets/styles/animatedCSS.css';
+import '@/assets/styles/transitions.css';
 
 import { mapState, mapGetters } from 'vuex'
 
 import * as firebase from "firebase";
 
-import SavedGame from './components/SavedGame.vue';
-import StartScreen from './components/StartScreen.vue';
+import SavedGame from '@/components/SavedGame.vue';
+import StartScreen from '@/components/StartScreen.vue';
 
-import CharacterSelect from './components/CharacterSelect.vue';
-import DungeonPhase from './components/DungeonPhase.vue';
-import ShopSelect from './components/ShopSelect.vue';
-import ShopPhase from './components/ShopPhase.vue';
-import LoseScreen from './components/LoseScreen.vue';
-import LeaderBoard from './components/LeaderBoard.vue';
-import TermsPage from './components/TermsPage.vue';
+import CharacterSelect from '@/components/CharacterSelect.vue';
+import DungeonPhase from '@/components/DungeonPhase.vue';
+import ShopSelect from '@/components/ShopSelect.vue';
+import ShopPhase from '@/components/ShopPhase.vue';
+import LoseScreen from '@/components/LoseScreen.vue';
+import LeaderBoard from '@/components/LeaderBoard.vue';
+import TermsPage from '@/components/TermsPage.vue';
 import Keypress from 'vue-keypress';
-import Login from './components/authentication/Login.vue';
-import Loading from './components/authentication/Loading.vue';
+import Login from '@/components/authentication/Login.vue';
+import Loading from '@/components/authentication/Loading.vue';
 
-import Register from './components/authentication/Register.vue';
+import Register from '@/components/authentication/Register.vue';
 
 export default {
   name: 'App',

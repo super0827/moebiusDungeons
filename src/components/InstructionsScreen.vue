@@ -1,7 +1,7 @@
 <template>
 <section id="instructions" class="textCenter">
 
-  <img src="../assets/imgs/icons/instructions.png" alt="">
+  <img src="@/assets/imgs/icons/instructions.png" alt="">
   
   <h1 class="uppercase">
       Welcome to the MOBEIUS DUNGEONS adventurer.
@@ -32,7 +32,7 @@
 
 <script>
 
-import helperToggles from '../components/mixins/helperToggles'
+import helperToggles from '@/components/mixins/helperToggles'
 import UiSounds from '@/plugins/UiSounds.js'
 
 export default {

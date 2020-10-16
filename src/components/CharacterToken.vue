@@ -39,7 +39,7 @@
               class="deadOverlay"
               :class="{ dead : isDead }"
             >
-            <img src='../assets/imgs/icons/deadX.png' alt="">
+            <img src='@/assets/imgs/icons/deadX.png' alt="">
             </section>  
           </transition>
 
@@ -69,7 +69,7 @@
               <h2 class="versus">vs.</h2>
               
               <section class="indicatorWrapper">
-              <img class="armorIndicator" src="../assets/imgs/icons/armorIcon.png" alt="">
+              <img class="armorIndicator" src="@/assets/imgs/icons/armorIcon.png" alt="">
               <h2 class="armorValue" :class="{ 'striked': enemyAttackType === 'magical'}">
               {{ armor }} 
               </h2>
@@ -89,12 +89,12 @@
         >
           <section class="damageReadout" v-if="specialDamageAnimation && who === 'monster'">
             <section id="mageSpecial" v-if="enemy === 'mage'">
-              <img src="../assets/imgs/icons/magicalIcon.png" alt="">
+              <img src="@/assets/imgs/icons/magicalIcon.png" alt="">
               <h1 id="damageAmountMage">{{specialDamage}}</h1>
             </section>
 
             <section id="varletSpecial" v-if="enemy === 'varlet'">
-              <img src="../assets/imgs/icons/physicalIcon.png" alt="">
+              <img src="@/assets/imgs/icons/physicalIcon.png" alt="">
               <h1 id="damageAmountVarlet">{{specialDamage}}</h1>
             </section>
           </section>
@@ -125,16 +125,16 @@
             leave-active-class="animated fadeOut"
           >
             <section class="armorUp" v-if="(name === 'swordsman' && goldShine) && armorUp">
-              <img src="../assets/imgs/icons/armorIcon.png" alt="">
+              <img src="@/assets/imgs/icons/armorIcon.png" alt="">
               <h1>2</h1>
             </section>
 
              <section class="variagate" v-if="name === 'mage' && blueShine">
-              <img src="../assets/imgs/icons/magicalIcon.png" alt="">
+              <img src="@/assets/imgs/icons/magicalIcon.png" alt="">
             </section>
              
             <section class="backstab" v-if="name === 'varlet' && yellowShine">
-              <img src="../assets/imgs/icons/physicalIcon.png" alt="">
+              <img src="@/assets/imgs/icons/physicalIcon.png" alt="">
             </section>
           </transition>
 
@@ -151,7 +151,7 @@
       </section>
 
       <section class="coinWrapper">
-        <img src="../assets/imgs/icons/coinIcon.png" alt="">
+        <img src="@/assets/imgs/icons/coinIcon.png" alt="">
         <h1 class="coinValue">
           <animated-number 
           :value="coins"
@@ -179,8 +179,8 @@
 
 <script>
 import AnimatedNumber from "animated-number-vue";
-import CharacterStats from "./CharacterStats.vue";
-import InventoryBar from "./InventoryBar.vue";
+import CharacterStats from "@/components/CharacterStats.vue";
+import InventoryBar from "@/components/InventoryBar.vue";
 
 export default {
   name: 'CharacterToken',

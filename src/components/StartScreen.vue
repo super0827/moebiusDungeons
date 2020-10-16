@@ -3,9 +3,9 @@
 
     <section class="animated startScreen slower">
         <section>
-            <img src="../assets/imgs/icons/raceTypeHumanIcon.png" alt="">
-            <img src="../assets/imgs/icons/raceTypeIconMagic.png" alt="">
-            <img src="../assets/imgs/icons/raceTypeBeast.png" alt="">
+            <img src="@/assets/imgs/icons/raceTypeHumanIcon.png" alt="">
+            <img src="@/assets/imgs/icons/raceTypeIconMagic.png" alt="">
+            <img src="@/assets/imgs/icons/raceTypeBeast.png" alt="">
             <h1>MOEBIUS DUNGEONS</h1>
         </section>
     </section>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import gameAnimations from './mixins/gameAnimations';
+import gameAnimations from '@/components/mixins/gameAnimations';
 
 import { mapState } from 'vuex';
 import UiSounds from '@/plugins/UiSounds.js'
