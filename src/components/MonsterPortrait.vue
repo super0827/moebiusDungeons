@@ -80,11 +80,6 @@
             >
             </section> 
           </transition>
-
-          <section v-if="storeState.monster.dire" key="" class="virulentOverlay"></section>
-          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
-          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
-          <section v-else-if="storeState.monster.dire" class="direOverlay"></section>
       </section>
 
 

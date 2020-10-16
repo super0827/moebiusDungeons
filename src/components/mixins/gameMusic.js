@@ -1,5 +1,3 @@
-import { store } from '../../store/store'
-import { mapGetters } from 'vuex'
 import bkg from '@/plugins/backgroundMusic.js'
 import shuffle from 'lodash.shuffle'
 
