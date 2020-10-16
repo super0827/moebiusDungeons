@@ -16,8 +16,11 @@ const mutations = {
         state.user.loggedIn = value;
     },
     SET_USER(state, payload) {
-      state.user.data = {...state.user.data, displayName: payload.displayName},
-      state.user.data = {...state.user.data, email: payload.email}
+      state.user.data = {...state.user.data, displayName: payload.displayName};
+      state.user.data = {...state.user.data, email: payload.email};
+      if(payload.admin) {
+        state.user.data = {...state.user.data, admin: payload.admin}
+      }
     },
     LOG_OUT_USER(state) {
       state.user.data = null
@@ -28,6 +31,9 @@ const getters = {
     userIcon: state => {
       const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.displayName + ".png"
       return userIcon;
+    },
+    adminAllowed: state => {
+      return state.user.data.save.admin
     }
 }
 
@@ -45,13 +51,13 @@ const actions = {
             shopPick: rootGetters['shopkeepData/snapshot'],
             leaderBoard: rootGetters['leaderboardData/snapshot']
           },
-        }
+        },
+        {merge: true}
       )
     },
     loadSavedGame({state, dispatch, rootState}){
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
-
       userPath.get().then(function(doc){
         if (doc.exists) {
           if(doc.data().saveExists) {
@@ -130,7 +136,10 @@ const actions = {
 
       userPath.get().then(function(doc){
         if (doc.exists) {
-          if(doc.data().leaderBoard && rootGetters['leaderboardData/highScore'] > doc.data().leaderBoard.highScore) {
+          console.log('highScore = ' + rootGetters['leaderboardData/highScore'])
+          console.log(doc.data())
+          console.log('existing leaderboard highScore = ' + doc.data().highScore)
+          if(doc.data().leaderBoard && rootGetters['leaderboardData/highScore'] > doc.data().highScore) {
               userPath.set(
                 rootGetters['leaderboardData/snapshot']
               )
