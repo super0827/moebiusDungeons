@@ -317,7 +317,6 @@ const actions = {
 
       commit('changeStats', {stat:'mettle', value:1, operator:'minus'});
         setTimeout(() => {
-          commit('gameData/toggle', {property:'combatLocked'}, {root: true});
           dispatch('RESET_ANIMATIONS');
         }, 1200)
 
@@ -330,9 +329,11 @@ const actions = {
     commit('mutate', {property:'specialDamageAnimation', with:true})
     commit('mutate', {property:'specialDamage', with:dealtDamage})
     commit('monsterData/takeDamage', {damage: dealtDamage}, {root:true})
+    commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:dealtDamage}, {root:true})
     setTimeout(() => {
       dispatch('RESET_ANIMATIONS');
       commit('mutate', {property:'specialDamageAnimation', with:false})
+      dispatch('monsterData/SPECIAL_CHECK_HP', null, {root:true})
     }, 1200)
 
   },
