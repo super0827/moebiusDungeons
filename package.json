@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mdi/font": "^5.7.55",
     "animated-number-vue": "^1.0.0",
     "await-delay": "^1.0.0",
     "core-js": "^3.6.4",
