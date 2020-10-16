@@ -22,16 +22,16 @@ const state = () => ({
               icon: require("@/assets/imgs/icons/items/cleric/heal1.png")
             },
               
-            { 
-              type: 'instant', 
-              bought: false, 
-              noSale: false, 
-              name: 'minor blessing', 
-              cost: 1, 
-              description: '+1 ARM', 
-              effect: {action:"CHANGE_PLAYER_STATS", payload:[{stat:'baseArmor', value:1, operator: 'add'}]},
-              icon: require("@/assets/imgs/icons/items/cleric/boon.png")
-            },
+            // { 
+            //   type: 'instant', 
+            //   bought: false, 
+            //   noSale: false, 
+            //   name: 'minor blessing', 
+            //   cost: 1, 
+            //   description: '+1 ARM', 
+            //   effect: {action:"CHANGE_PLAYER_STATS", payload:[{stat:'baseArmor', value:1, operator: 'add'}]},
+            //   icon: require("@/assets/imgs/icons/items/cleric/boon.png")
+            // },
 
             {
               type: 'temporary', 
@@ -169,11 +169,11 @@ const state = () => ({
               noSale: false, 
               name: 'Demon Ring', 
               cost: 4, 
-              description: 'ATK Type = Physical | Havles your ARM | x2 ATK', 
+              description: 'Halves your ARM | x2 ATK', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
-                {stat:'baseArmor', value:3, operator:'add', shine:'purpleShine'},
-                {stat:'baseHealth', value:2, operator:'divide'},
+                {stat:'baseAttack', value:2, operator:'multiply', shine:'purpleShine'},
+                {stat:'baseArmor', value:2, operator:'divide'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")
             },
