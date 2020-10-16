@@ -131,6 +131,7 @@ export default {
         }
     },
     mounted() {
+        this.$store.dispatch('playerData/RESET_ANIMATIONS', null, {root:true})
         this.$store.dispatch('authData/updateSavedGame', null, {root:true})
     },
     destroyed() {
