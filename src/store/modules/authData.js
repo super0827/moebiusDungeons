@@ -25,7 +25,7 @@ const mutations = {
 
 const getters = {
     userIcon: state => {
-      const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.email + ".png"
+      const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.displayName + ".png"
       return userIcon;
     }
 }
@@ -112,7 +112,36 @@ const actions = {
           })
         }
       })
-    }
+    },
+    fetchLeaderboard({commit}) {
+      var db = firebase.firestore();
+      var leaderboards = db.collection('leaderboard').orderBy("highScore", "desc").limit(10);
+
+      leaderboards.get().then(function(snapshot){
+        snapshot.forEach(function(doc){
+          commit('gameData/addToLeaderboard', {name:doc.id, data: doc.data()}, {root:true})
+        })
+      })
+    },
+    updateLeaderboard({state, rootGetters}) {
+      var db = firebase.firestore();
+      var userPath = db.collection('leaderboard').doc(state.user.data.displayName);
+
+      userPath.get().then(function(doc){
+        if (doc.exists) {
+          if(doc.data().leaderBoard && rootGetters['leaderboardData/highScore'] > doc.data().leaderBoard.highScore) {
+              userPath.set(
+                rootGetters['leaderboardData/snapshot']
+              )
+            }
+          }
+        if (!doc.exists){
+          userPath.set(
+            rootGetters['leaderboardData/snapshot']
+          )
+        }
+        })
+    },
 }
 
 export default {
