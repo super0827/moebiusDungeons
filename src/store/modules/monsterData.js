@@ -296,7 +296,6 @@ const getters = {
     let num;
     if( state.info.attackType === 'physical') {
       num = state.thisDamage - rootGetters['playerData/calcArmor']
-      console.log(num)
     }
     else if ( state.info.attackType === 'magical') {
       num = state.thisDamage;
@@ -332,10 +331,10 @@ const actions = {
     }
   },
   GENERATE_MONSTER_STATS({state, commit, getters, rootState}){
-    const healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 3
+    const healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 2
     let health = Math.floor(Math.random() * Math.floor(healthRanking)) + healthRanking;
     const armorRanking = rootState['leaderboardData'].monstersKilled.length / 2
-    let armor = Math.floor(Math.random() * Math.floor(armorRanking)) + 1;
+    let armor = Math.floor(Math.random() * Math.floor(armorRanking)) + 2;
     const attackRanking = rootState['leaderboardData'].monstersKilled.length + 2
     let attack = Math.floor(Math.random() * Math.floor(attackRanking)) + 1;
     const coinRanking = (rootState['leaderboardData'].monstersKilled.length + 1) / 3
@@ -388,15 +387,16 @@ const actions = {
         commit('playerData/addCoins', state.info.coins, {root:true})
         commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
         
-        commit('leaderboardData/addToList', {property: 'monstersKilled', with:state.info.name}, {root:true})
         setTimeout(() => {
           commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
+          setTimeout(() => {
+            commit('leaderboardData/addToList', {property: 'monstersKilled', with:state.info.name}, {root:true})
+          }, 300)
         }, 1500)
       }
   },
   ROLL_DAMAGE({state, commit, dispatch, getters}) {
       const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
-      console.log('Random Roll is', randomRoll)
       commit('mutate', {property:'thisDamage', with:randomRoll})
       let randomAttackSound = Math.floor(Math.random() * (3) + 1)
       if (state.info.attackType === 'physical') {
@@ -415,7 +415,6 @@ const actions = {
     commit('incrementLog')
   },
   DEAL_DAMAGE({state, commit, getters, dispatch}) {
-      console.log('Monster Dealing Damage')
       commit('toggleAnimation', {property:'attacking'});
       if (getters.thisAdjDamage > 0) {
         dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`) 
