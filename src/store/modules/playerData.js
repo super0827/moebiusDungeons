@@ -86,7 +86,6 @@ const mutations = {
       state.info[payload.fromStat] = statModified;
       state.info[payload.toStat] += transferAmount;
     }
-    dispatch('leaderboardData', {property:state.info[payload.toStat], with:state.info[property.stat]}, {root:true})
   },
   toggleAnimation(state, payload) {
     state.animations[payload.property] = !state.animations[payload.property];
@@ -230,6 +229,7 @@ const actions = {
       PlayerSounds.playerDead.play()
       setTimeout(() => {
         commit('gameData/mutate', {property: 'phase', with:'LoseScreen'}, {root:true})
+        dispatch('authData/deleteSavedGame')
       }, 1200)
     }
   },
@@ -274,19 +274,30 @@ const actions = {
 
       // }
       // else if (getters.calcArmor < rootState['monsterData'].info.baseAttackMax && rootState['monsterData'].info.attackType === 'physical') {
-        if (getters.thisAdjDamage > 0) {
-          dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
-          commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+        if((rootState['monsterData'].info.baseAttackMax <= getters.calcArmor) && rootState['monsterData'].info.attackType === 'physical'){
+          dispatch('LOG_UPDATE', `The ${rootState['monsterData'].info.name} didn't stand a chance!`)
+          commit('monsterData/toggleAnimation', {property: 'isOneShot'}, {root:true})
           commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
           commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
-          commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
-          commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:getters.thisAdjDamage}, {root:true})      }
+          commit('monsterData/takeDamage', {damage: rootState['monsterData'].info.baseHealth}, {root:true})
+          commit('leaderboardData/incrementByValue', {property:'totalDamageDealt',  with:rootState['monsterData'].info.baseHealth}, {root:true})
+        }
+        else {
+          if (getters.thisAdjDamage > 0) {
+            dispatch('LOG_UPDATE', `DEALT ${getters.thisAdjDamage} DAMAGE`)
+            commit('monsterData/toggleAnimation', {property: 'hurt'}, {root:true})
+            commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
+            commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+            commit('monsterData/takeDamage', {damage: getters.thisAdjDamage}, {root:true})
+            commit('leaderboardData/incrementByValue', {property:'totalDamageDealt', with:getters.thisAdjDamage}, {root:true})      
+          }
           else if(getters.thisAdjDamage <= 0) {
             dispatch('LOG_UPDATE', `ATTACK BLOCKED`)
             commit('monsterData/toggleAnimation', {property: 'blocking'}, {root: true})
             commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
             commit('monsterData/toggleAnimation', {property: 'purpleShine'}, {root:true})
           }
+        }
         // }
       },
   RUN_SPECIAL({state, commit, getters, dispatch, rootState}){
@@ -316,9 +327,11 @@ const actions = {
       }
 
       commit('changeStats', {stat:'mettle', value:1, operator:'minus'});
-        setTimeout(() => {
+
+      setTimeout(() => {
           dispatch('RESET_ANIMATIONS');
-        }, 1200)
+          commit('gameData/toggle', {property:'combatLocked'}, {root: true}); 
+      }, 1200)
 
       dispatch('authData/updateSavedGame', null, {root:true})
 
@@ -352,7 +365,7 @@ const actions = {
         
         // Updating Log
         dispatch('LOG_UPDATE', `YOU'RE TURNING TAIL`);
-        dispatch('monsterData/LOG_UPDATE', `THE MONSTER LUNGES`, {root:true})
+        dispatch('monsterData/LOG_UPDATE', `THE MONSTER TRIES TO STOP YOU`, {root:true})
         
         // Initial Turn Tail Ambiguous Purple Animation
         commit('toggleAnimation', {property: 'portEffect'})
@@ -395,11 +408,6 @@ const actions = {
       if (state.animations[item] === true) commit('toggleAnimation', {property: item})
     }
   },
-
-  // THIS ACTION RUNS AFTER COMBAT PHASES TO CHECK ON STAT CHANGES
-  NEW_HIGH_SCORES({state, commit}){
-
-  }
 }
 
 export default {
