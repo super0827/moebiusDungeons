@@ -22,6 +22,7 @@ const state = () => ({
       purpleShine: false,
       greenShine: false,
       isDead: false,
+      isOneShot: false,
     },
     variants: [
         {
