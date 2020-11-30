@@ -81,6 +81,7 @@
 
         :isBlocking="monsterisBlocking"
         :monsterisAttacking="monsterisAttacking"
+        :isOneShot="monsterisOneShot"
         :isDead="monsterisDead"
         :statSide="monsterStatSide"
         :enemyAttackType="playerAttackType"
@@ -194,6 +195,7 @@ export default {
             monsterWarning: state => state.info.warning,
 
             monsterisHurt: state => state.animations.hurt,
+            monsterisOneShot: state => state.animations.isOneShot,
             monsterisBlocking: state => state.animations.blocking,
             monsterisAttacking: state => state.animations.attacking,
             monsterisDead: state => state.animations.isDead,
