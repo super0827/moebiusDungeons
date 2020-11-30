@@ -5,7 +5,7 @@
     <hr>
     <section class="flexColumn">
         <section v-for="(items, index) in leaderboards" :key="items + index" class="block flexRow">
-            <img :src="items.data.icon">
+            <img class="smallIcon" :src="items.data.icon">
             <h3>{{index + 1}}. {{items.name}} | <span class="capital">{{items.data.playedAs}}</span> | {{items.data.highScore}} Points </h3>
         </section>
     </section>
@@ -28,7 +28,7 @@ export default {
   name: 'LeaderBoard',
   data() {
       return {
-        music: [''],  
+        music: [''],
       }
   },
   methods: {
@@ -60,6 +60,10 @@ export default {
 </script>
 
 <style scoped>
+.smallIcon {
+    width:40px;
+    height:40px;
+}
 
 .buffer {
     margin:5px;
