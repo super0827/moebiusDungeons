@@ -64,6 +64,11 @@ const getters = {
 const actions = {
     loadSavedGame({state, commit}, payload){
         commit('mutate', {property:'phase', with:payload})
+    },
+    RESET_GAME(){
+        //reset character
+        //reset monster ranks
+        //reset  
     }
 }
 
