@@ -573,9 +573,10 @@ const actions = {
       dispatch('playerData/RESET_ANIMATIONS', null, {root:true});
     }, 1200)
   },
-  CHANGE_PLAYER_STATS({commit}, payload) {
+  CHANGE_PLAYER_STATS({commit, dispatch}, payload) {
       for(const slots in payload) {
         commit('playerData/changeStats', {stat:payload[slots].stat, value:payload[slots].value, operator:payload[slots].operator}, {root:true})
+        dispatch('leaderboardData/compareToHighScore', payload, {root:true})
       }
    },
    TRANSFER_PLAYER_STAT({commit}, payload){
