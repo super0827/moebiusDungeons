@@ -29,7 +29,7 @@ const mutations = {
 
 const getters = {
     userIcon: state => {
-      const userIcon = "https://api.adorable.io/avatars/40/" + state.user.data.displayName + ".png"
+      const userIcon = "https://avatars.dicebear.com/api/human/" + state.user.data.email.slice(1,3)+ "sprtgen.svg"
       return userIcon;
     },
     adminAllowed: state => {
@@ -139,7 +139,7 @@ const actions = {
           console.log('highScore = ' + rootGetters['leaderboardData/highScore'])
           console.log(doc.data())
           console.log('existing leaderboard highScore = ' + doc.data().highScore)
-          if(doc.data().leaderBoard && rootGetters['leaderboardData/highScore'] > doc.data().highScore) {
+          if(rootGetters['leaderboardData/highScore'] > doc.data().highScore) {
               userPath.set(
                 rootGetters['leaderboardData/snapshot']
               )
