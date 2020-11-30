@@ -16,8 +16,9 @@
       class="portraitWrapper"
       :class="{
       'animated pulse' : isHurt, 
+      'animated jello' : isOneShot,
       'animated wobble' : isAttacking,
-      'animated reverseWobble' : monsterisAttacking, 
+      'animated reverseWobble' : monsterisAttacking,
       'animated pulse' : isBlocking,
       'animated tada' : isDead 
       }"
@@ -50,6 +51,14 @@
           leave-active-class="animated fadeOut"
         >
           <h1 v-if="isBlocking" class="blocked">BLOCKED!</h1>
+        </transition>
+
+        <transition appear
+          type="animation"
+          enter-active-class="animated jackInTheBox"
+          leave-active-class="animated fadeOut"
+        >
+          <h1 v-if="isOneShot" class="oneShot">ONE SHOT!</h1>
         </transition>
 
         <transition appear
@@ -206,6 +215,7 @@ export default {
     'isHurt',
     'isBlocking',
     'isAttacking',
+    'isOneShot',
     'monsterisAttacking',
     'isDead',
     'statSide',
@@ -473,6 +483,21 @@ export default {
   margin:0 auto;
   text-decoration:none;
   color:greenyellow;
+  font-size:20px;
+  text-shadow:black 2px 2px 2px;
+}
+
+.oneShot {
+  grid-row: 2/3;
+  grid-column: 1/2;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width:200px;
+  text-align:center;
+  margin:0 auto;
+  text-decoration:none;
+  color:red;
   font-size:20px;
   text-shadow:black 2px 2px 2px;
 }
