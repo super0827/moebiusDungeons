@@ -30,7 +30,7 @@
     <debug-bar v-if="debugShow"/>
 
     <section class="version">
-      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.1.0</a></p>
+      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.2.0</a></p>
     </section>
 
     <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
@@ -209,6 +209,11 @@ contact@seanyager.com
   justify-content:space-evenly;
   padding:5px 5px;
   min-width:200px;
+}
+
+.loginBar img{
+  width:40px;
+  height:40px;
 }
 
 .loginBar .clickable:hover {
