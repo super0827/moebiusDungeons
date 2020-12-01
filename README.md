@@ -157,7 +157,7 @@ Each class has a special ability, costing mettle to use. This resource (mettle),
 ![](public/assets/swordsman.png)
 
 ### En'garde
-The Swordsman's ability (En'Garde) grants +3 armor which reduces incoming physical damage. The ability can be used up to three times in a row granting a total of +9 armor. This bonus armor remains active until the Swordsman fails to block a physical attack.
+The Swordsman's ability (En'Garde) grants +3 armor which reduces incoming physical damage. The ability can be used up to three times in a row granting a total of +9 armor. This bonus armor remains active until the Swordsman fails to block an attack or runs away from a monster.
 
 ![](public/assets/mage.png)
 
@@ -181,7 +181,7 @@ The monsters health must be 2 or less in order for Peculate to work properly.
 Peculate when used as the killing blow, grants the Varlet **2 more coins** on top of the coins you receive for defeating the monster.
 
 ## Turn Tail
-Players have the option to **Turn Tail**, and attempt to escape the current encounter. This option is easier to succeed at when you have high health. The mechanic weighs your health against the monsters and a random roll is added to your escape attempt value. Your health total gets added to your escape roll and must be higher than what the monster rolls for you to escape succefully.
+Players have the option to **Turn Tail**, and attempt to escape the current encounter. This option is easier to succeed at when you have high health. The mechanic weighs your health against the monsters and a random roll is added to your escape attempt value. Your health total gets added to your escape roll and must be higher than what the monster rolls for you to escape successfully.
 
 On a successful escape you leave the monster behind, and move on to the Shop Select Phase. You gain no coins from the monster you fought.
 
