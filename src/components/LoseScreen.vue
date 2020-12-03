@@ -108,6 +108,7 @@ export default {
   methods: {
       reset() {
           this.$store.commit('gameData/mutate', {property:'phase', with:'SavedGame'})
+          
       },
       leaderboards() {
           this.$store.commit('gameData/mutate', {property:'phase', with:'LeaderBoard'})

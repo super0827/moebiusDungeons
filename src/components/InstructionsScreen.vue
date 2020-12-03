@@ -1,32 +1,34 @@
 <template>
-<section id="instructions" class="textCenter">
+<section>
+    <section class="helpModule">
 
-  <img src="@/assets/imgs/icons/instructions.png" alt="">
-  
-  <h1 class="uppercase">
-      Welcome to the MOBEIUS DUNGEONS adventurer.
-  </h1>
+    <img src="@/assets/imgs/icons/instructions.png" alt="">
+    
+    <h1 class="uppercase">
+        Welcome to the MOBEIUS DUNGEONS adventurer.
+    </h1>
 
-  <h2>
-      This is a high fantasy hack and slash adventure where you attack monsters to gain coins, then spend your wealth on lavish equipment and enchantments.
-  </h2>
+    <h2>
+        This is a high fantasy hack and slash adventure where you attack monsters to gain coins, then spend your wealth on lavish equipment and enchantments.
+    </h2>
 
-  <h3>
-      Tougher beasts drop more coins. Each character class is different, so try them all out.
-  </h3>
+    <h3>
+        Tougher beasts drop more coins. Each character class is different, so try them all out.
+    </h3>
 
-  <h3>
-      Rinse then repeat. How long can you survive?   
-  </h3>
+    <h3>
+        Rinse then repeat. How long can you survive?   
+    </h3>
 
-  <p>
-      Do not falter.
-  </p>
+    <p>
+        Do not falter.
+    </p>
 
-<br>
-  <h1 @mouseenter="UiSounds.chit.play()" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
-      UNDERSTOOD.
-  </h1>
+    <br>
+    <h1 @mouseenter="UiSounds.chit.play()" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
+        UNDERSTOOD.
+    </h1>
+    </section>
 </section>
 </template>
 
@@ -47,20 +49,23 @@ export default {
 </script>
 
 <style scoped>
-    #instructions {
-        width:100%;
-        height:100%;
-        background:rgba(255, 255, 255, 0.98);
+    .helpModule {
         position:absolute;
         top:0px;
+        left:-50px;
+        padding: 0px 50px;
+        z-index:99999;
+        height:100%;
+        width:100%;
+        background:rgba(255, 255, 255, 0.94);
         display:flex;
-        justify-content: center;
+        justify-content:flex-start;
         align-items: center;
         flex-direction: column;
     }
 
-    #instructions img {
-        width:200px;
+    img {
+        width:50%;
     }
 
     #proceed {
@@ -68,6 +73,7 @@ export default {
         color:black;
         background: var(--button-background);
     }
+
     #proceed:hover {
         background:rgb(185, 185, 185);
         cursor:pointer;

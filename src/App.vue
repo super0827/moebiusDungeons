@@ -30,7 +30,7 @@
     <debug-bar v-if="debugShow"/>
 
     <section class="version">
-      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.2.0</a></p>
+      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.2.1</a></p>
     </section>
 
     <keypress key-event="keyup" :key-code="192" @success="toggleDebug" />

@@ -55,7 +55,7 @@ export default {
         width:100%;
         background:rgba(255, 255, 255, 0.94);
         display:flex;
-        justify-content:flex-start;
+        justify-content:center;
         align-items: center;
         flex-direction: column;
     }

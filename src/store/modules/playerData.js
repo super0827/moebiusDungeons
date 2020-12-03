@@ -166,7 +166,7 @@ const getters = {
     return maxLog
   },
   calcHealth: (state) => {
-    return state.tempHealth + state.info.baseHealth
+    return Math.ceil(state.tempHealth + state.info.baseHealth);
   },
   calcArmor: (state) => {
     return state.tempArmor + state.info.baseArmor
