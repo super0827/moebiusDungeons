@@ -108,6 +108,7 @@ export default {
   methods: {
       reset() {
           this.$store.commit('gameData/mutate', {property:'phase', with:'SavedGame'})
+          this.$store.dispatch('authData/deleteSavedGame')
           
       },
       leaderboards() {

@@ -259,7 +259,6 @@ const mutations = {
         state.roster += increment;
         if(state.roster >= state.variants.length) state.roster = increment;
         state.info = state.variants[state.roster];
-        console.log(`new roster number is ${state.roster}, monster is ${JSON.stringify(state.variants[state.roster])}`)
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -386,6 +385,7 @@ const actions = {
         let randomTrack = Math.floor(Math.random() * (3) + 1)
         UiSounds['victory' + randomTrack].play()
         commit('playerData/addCoins', state.info.coins, {root:true})
+        commit('gameData/mutate', {property:'turnTailUsed', with:false}, {root: true});
         commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
         
         setTimeout(() => {

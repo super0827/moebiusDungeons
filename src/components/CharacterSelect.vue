@@ -77,7 +77,7 @@ export default {
                 mettle: 1,
                 curse:0,
                 special: "en'garde",
-                specialDescription:"Spend one mettle hone your guard and permenantly gain 1 armor.",
+                specialDescription:"Spend one mettle to gain +1 Armor.",
                 inAnimations: "zoomInLeft",
                 outAnimations: "zoomOutLeft"
               },

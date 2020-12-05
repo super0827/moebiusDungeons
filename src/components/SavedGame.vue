@@ -128,7 +128,7 @@ import UiSounds from "@/plugins/UiSounds";
                         null
                 }
             }
-        }
+        },
     }
 </script>
 

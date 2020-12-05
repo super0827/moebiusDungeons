@@ -15,7 +15,7 @@ const state = () => ({
       mettle: 1,
       curse:0,
       special: "en'garde",
-      specialDescription:"Spend one mettle to gain +2 Armor for this encounter.",
+      specialDescription:"Spend one mettle to gain +1 Armor.",
     },
     permanantTraits: [],
     temporaryTraits: [],
@@ -229,7 +229,7 @@ const actions = {
       PlayerSounds.playerDead.play()
       setTimeout(() => {
         commit('gameData/mutate', {property: 'phase', with:'LoseScreen'}, {root:true})
-        dispatch('authData/deleteSavedGame')
+        dispatch('authData/deleteSavedGame', null, {root:true})
       }, 1200)
     }
   },
@@ -279,8 +279,8 @@ const actions = {
           commit('monsterData/toggleAnimation', {property: 'isOneShot'}, {root:true})
           commit('monsterData/toggleAnimation', {property: 'portEffect'}, {root:true})
           commit('monsterData/toggleAnimation', {property: 'redShine'}, {root:true})
+          commit('leaderboardData/incrementByValue', {property:'totalDamageDealt',  with:Math.ceil(rootState['monsterData'].info.baseHealth * 1.5)}, {root:true})
           commit('monsterData/takeDamage', {damage: rootState['monsterData'].info.baseHealth}, {root:true})
-          commit('leaderboardData/incrementByValue', {property:'totalDamageDealt',  with:rootState['monsterData'].info.baseHealth}, {root:true})
         }
         else {
           if (getters.thisAdjDamage > 0) {
@@ -310,6 +310,7 @@ const actions = {
         commit('toggleAnimation', {property: 'goldShine'})
         commit('toggleAnimation', {property: 'armorUp'})
         commit('mutate', {property: 'tempArmor', with:state.tempArmor+=1})
+        dispatch('monsterData/SPECIAL_CHECK_HP', null, {root:true})
         PlayerSounds.armorUp.play();
         dispatch('LOG_UPDATE', `+1 ARM`);
       }
@@ -330,7 +331,6 @@ const actions = {
 
       setTimeout(() => {
           dispatch('RESET_ANIMATIONS');
-          commit('gameData/toggle', {property:'combatLocked'}, {root: true}); 
       }, 1200)
 
       dispatch('authData/updateSavedGame', null, {root:true})

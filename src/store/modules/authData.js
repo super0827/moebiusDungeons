@@ -78,7 +78,7 @@ const actions = {
         }
       })
     },
-    deleteSavedGame({state}) {
+    deleteSavedGame({state, dispatch}) {
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
       
