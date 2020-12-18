@@ -25,12 +25,6 @@
       >
       <img class="portrait" :src="portrait">
 
-      <section v-if="who === 'monster'" class="warning">
-        <p>
-          {{ warning }}
-        </p>
-      </section>
-
       <transition appear
             type="animation"
             enter-active-class="animated fadeIn"
@@ -133,9 +127,9 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <section class="armorUp" v-if="(name === 'swordsman' && goldShine) && armorUp">
+            <section class="armorUp" v-if="(name === 'swordsman' && armorUp)">
               <img src="@/assets/imgs/icons/armorIcon.png" alt="">
-              <h1>2</h1>
+              <h1>+1</h1>
             </section>
 
              <section class="variagate" v-if="name === 'mage' && blueShine">
@@ -156,6 +150,18 @@
             bloodlessOverlay : monsterRank === 'bloodless',
             flawlessOverlay : monsterRank === 'flawless'
           }">
+          </section>
+
+          <section v-if="who === 'monster'" class="warning">
+            <p>
+              {{ warning }}
+            </p>
+          </section>
+
+          <section v-if="who === 'player'" class="warning">
+            <p>
+              {{ warning }}
+            </p>
           </section>
       </section>
 
@@ -267,6 +273,9 @@ export default {
   opacity:0;
   grid-row: 1/4;
   grid-column:1/2;
+  display:flex;
+  align-items: center;
+  justify-content:center;
   padding:20px;
   background:rgba(0, 0, 0, .4);
   text-transform:uppercase;
