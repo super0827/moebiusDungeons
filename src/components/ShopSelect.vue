@@ -3,7 +3,7 @@
 <section class="characterSelectWrapper">
 
    <section class="lessImportant">
-    <h2 >Current Stats</h2>
+    <h2>Current Stats</h2>
     <br>
     <section class='flexRow'>
         <section class="iconOverlay">
@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import InstructionsScreen from '@/components/InstructionsScreen';
 import { mapState, mapGetters } from 'vuex';
 import shuffle from 'lodash.shuffle'
 
@@ -103,7 +102,6 @@ export default {
   name: 'ShopSelect',
   mixins: [helperToggles, gameAnimations, gameMusic],
   components: {
-      InstructionsScreen,
       ShopSelectHelp,
       Retire
   },
