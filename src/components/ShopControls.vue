@@ -1,8 +1,6 @@
 <template>
 <section class="shop">
   <!-- Shop Title Description -->
-  
-    <special-bar/>
 
     <!-- Full Item Roll -->
     <section
@@ -46,6 +44,8 @@
 
       </section>
 
+      <SpecialBar/>
+
 </section>
 
 
@@ -56,6 +56,8 @@
 import {mapState, mapGetters} from 'vuex'
 import shuffle from 'lodash.shuffle'
 
+import SpecialBar from '@/components/gameUI/SpecialBar.vue'
+
 import UiSounds from '@/plugins/UiSounds.js'
 import ShopSounds from '@/plugins/ShopSounds.js'
 import ClericSounds from '@/plugins/ClericSounds.js'
@@ -63,12 +65,10 @@ import MerchantSounds from '@/plugins/MerchantSounds.js'
 import GraverobberSounds from '@/plugins/GraveRobberSounds.js'
 import WitchSounds from '@/plugins/WitchSounds.js'
 
-import SpecialBar from '@/components/SpecialBar'
-
 export default {
   name: 'ShopControls',
-  components: {
-    SpecialBar,
+  components:{
+    SpecialBar
   },
   data() {
     return {
@@ -153,7 +153,7 @@ export default {
             ShopSounds[`fourCoin`].play()
             break;
           case 5:
-            ShopSounds[`fiveCoin`].play()
+            ShopSounds[`fiveCoin`].play()``
             break;
         }
 
