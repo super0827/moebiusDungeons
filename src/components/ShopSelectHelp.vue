@@ -3,20 +3,19 @@
     <section class="helpModule">
         <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
 
-
         <h1 class="title">Shop Select Helper</h1>
         
         <br>
 
         <section>
                 <h3>After every monster you fight, you have an opprotunity to visit a shopkeeper, rest, or retire from your service to the Coterie.</h3>
-<br>
+                <br>
                 <h1>Choosing a Shopkeep</h1>
                 <p>Each shopkeep is different, and each can help you with different aspects of your adventuring. Make sure to visit each of them to begin understanding what each shopkeep offers.</p>
-<br>
+                <br>
                 <h1>Rest</h1>
                 <p>Resting recovers one use of mettle at no cost. Use this if you're healthy and low on coin.</p>
-<br>
+                <br>
                 <h1>Retire</h1>
                 <p>If you find yourself near death, or grow weary in your travels, retiring is your best bet. This option ends your current game and uploads you stats to the Kingloyal Leaderboards. Being in the top ten Kingloyal is an honor above all honors. Hold the highest rank at the end of the month and you'll be rewarded with a service sigil blessed by King Rense himself.</p>
         </section>
