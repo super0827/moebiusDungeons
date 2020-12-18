@@ -81,6 +81,8 @@ import CreditsOverlay from '@/components/CreditsOverlay';
 import helperToggles from '@/components/mixins/helperToggles';
 import UiSounds from "@/plugins/UiSounds";
 
+import { consoleHello } from "@/components/mixins/consoleHello.js"
+
     export default {
         name:"SavedGame",
         mixins: [helperToggles],
@@ -96,6 +98,7 @@ import UiSounds from "@/plugins/UiSounds";
             startNewGame() {
                 this.$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
                 this.$store.dispatch('authData/deleteSavedGame', null, {root:true})
+                this.$store.commit('monsterData/mutate', {property: 'roster', with:0}, {root:true})
             },
             ...mapActions( 'authData', [
                 'loadSavedGame',
@@ -129,6 +132,9 @@ import UiSounds from "@/plugins/UiSounds";
                 }
             }
         },
+        mounted() {
+            consoleHello();
+        }
     }
 </script>
 
