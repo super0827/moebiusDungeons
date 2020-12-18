@@ -1,31 +1,30 @@
 <template>
-<section class="columnsMiddle battleOptions"
->
-
-    <stat-bar/>
-
+<section class="columnsMiddle battleOptions">
+    <StatBar/>
 
     <br>
 
-    <special-bar/>
+    <SpecialBar/>
 
-    <h2 @mouseenter="UiSounds.chit.play()" 
-    :class="{'striked' : combatLocked }" 
-    @click="TRADE_BLOWS()">Trade Blows</h2>
-    
+    <ToolTip
+        :descriptions="[`Deal damage to the monster, if it's still alive after you attack it attacks back!`]"
+    >
+        <h2 @mouseenter="UiSounds.chit.play()" 
+        :class="{'striked' : combatLocked }" 
+        @click="TRADE_BLOWS()">Trade Blows</h2>
+    </ToolTip>
+
     <h2 @mouseenter="UiSounds.chit.play()" 
     :class="{'striked' : combatLocked || mettle <= 0}"
     class="flexColumn"
     @click="RUN_SPECIAL()">
         {{special}}
     
-    <section class="mettleCost">
-        <p>
-            Costs
-        <img :src="mettleImg">
-            
-        </p>
-    </section>
+        <section class="mettleCost">
+            <p>
+                Costs <img :src="mettleImg">
+            </p>
+        </section>
       
     </h2>
     
@@ -39,16 +38,19 @@
 </template>
 
 <script>
-import StatBar from '@/components/StatBar.vue'
 import {mapActions, mapState, mapGetters} from 'vuex'
-import SpecialBar from "@/components/SpecialBar.vue"
+
+import StatBar from '@/components/gameUI/StatBar.vue'
+import SpecialBar from "@/components/gameUI/SpecialBar.vue"
+import ToolTip from "@/components/ui/ToolTip.vue"
 import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
     name: 'BattleControls',
      components: {
       StatBar,
-      SpecialBar
+      SpecialBar,
+      ToolTip
     },
     data() {
         return {
