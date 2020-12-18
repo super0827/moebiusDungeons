@@ -1,10 +1,6 @@
 <template>
 
 <section class="characterSelectWrapper">
-
-    <h1 class="animated" :class="{'zoomInDown' : isEntering, 
-    'zoomOutUp' : !isEntering }">CHOOSE YOUR CHARACTER</h1>
-
     <section class="chooseChar">
         <section
         v-for="characters in characterClasses"
@@ -21,31 +17,39 @@
         :class="{ [characters.inAnimations]: isEntering, 
         [characters.outAnimations]: !isEntering }">
         
-            <h2>{{characters.name}}</h2>
+            <!-- <h2>{{characters.name}}</h2>
             <h3>{{characters.description1}}</h3>
-            <p>{{characters.description2}}</p>
+            <p>{{characters.description2}}</p> -->
         
-            <section 
-            @mouseenter="UiSound.chit.play()"
-            class="portContainer animated infinite" :id="characters.name">
-                <section class="overlay"></section>
-                <img :src="characters.portrait" :alt="characters.description2">
-            </section>
-
+            <ToolTip
+                :title="characters.name"
+                :subtitle="characters.description1"
+                :descriptions="[characters.description2]"
+            >
+                <section 
+                @mouseenter="UiSound.chit.play()"
+                class="portContainer animated infinite" :id="characters.name">
+                    <section class="overlay"></section>
+                    <img :src="characters.portrait" :alt="characters.description2">
+                </section>
+            </ToolTip>
         </section>
     </section>
+
+    <h1 class="animated" :class="{'zoomInUp' : isEntering, 
+    'zoomOutDown' : !isEntering }">CHOOSE YOUR CHARACTER</h1>
 
 <h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> What Is This? </h1>
 
 <transition name='fade'>
-    <instructions-screen v-if="this.helper"/>
+    <InstructionsScreen v-if="this.helper"/>
 </transition>
 
 </section>
 </template>
 
 <script>
-import InstructionsScreen from '@/components/InstructionsScreen';
+import InstructionsScreen from '@/components/helpers/InstructionsScreen';
 import { mapState } from 'vuex';
 
 import UiSound from '@/plugins/UiSounds.js'
@@ -53,12 +57,14 @@ import UiSound from '@/plugins/UiSounds.js'
 import helperToggles from '@/components/mixins/helperToggles';
 import gameAnimations from '@/components/mixins/gameAnimations';
 import gameMusic from '@/components/mixins/gameMusic';
+import ToolTip from '@/components/ui/ToolTip.vue';
 
 export default {
   name: 'CharacterSelect',
   mixins: [helperToggles, gameAnimations, gameMusic],
   components: {
       InstructionsScreen,
+      ToolTip,
   },
   data() {
       return {
@@ -67,6 +73,7 @@ export default {
             characterClasses: [
               { 
                 name:"swordsman",
+                warning:"Protected by a metal mesh, runs his blade through monster flesh.",
                 type:'player', 
                 portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
                 description1:"Slicing and Dicing",
@@ -77,13 +84,14 @@ export default {
                 mettle: 1,
                 curse:0,
                 special: "en'garde",
-                specialDescription:"Spend one mettle to gain +1 Armor.",
+                specialDescription:"Spend one mettle to gain +1 Armor. The monster won’t attack you back when you use En'garde.",
                 inAnimations: "zoomInLeft",
                 outAnimations: "zoomOutLeft"
               },
 
               {
                 name:"mage",
+                warning:"Tinctures made of bark and wirt, ancient words designed to hurt.",
                 type:'player', 
                 portrait:require("@/assets/imgs/playableCharacters/mage.png"), 
                 description1:"Spellslinging", 
@@ -94,24 +102,25 @@ export default {
                 mettle: 1,
                 curse:0,
                 special: "variagate",
-                specialDescription:"Spend one mettle to deal 12 damage to the enemy that ignores armor. The monster won’t attack you back when you use Variagate.",
+                specialDescription:"Spend one mettle to halve enemy HP. The monster won’t attack you back when you use Variagate.",
                 inAnimations: "zoomInUp",
                 outAnimations: "zoomOutDown",
               },
 
               {
                 name:"varlet",
+                warning:"A shoddy cloak, a knife that's worse, dishonest tools to cut your purse.",
                 type:'player', 
                 portrait:require("@/assets/imgs/playableCharacters/varlet.png"), 
                 description1:"Sneaky and Roguish", 
-                description2:"Avoids damage on critical hits, mid tier stats.", 
+                description2:"Varlet can steal coins from enemies using their Special. Starts with 1 gold.", 
                 coins:1, baseHealth:8, baseArmor:1, baseAttackMax:6, attackType: "physical", 
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
                 mettleImg: require("@/assets/imgs/icons/varletMettle.png"),
                 mettle: 1,
                 curse:0,
-                special: "Backstab",
-                specialDescription:"Spend 1 Mettle to deal 2/3 your max damage to the monster. The monster won’t attack you back when you use Backstab.",
+                special: "Peculate",
+                specialDescription:"Deals 1/4 your max damage rounding up. Kill a monster using Peculate to gain 2 extra gold.",
                 inAnimations: "zoomInRight",
                 outAnimations: "zoomOutRight",
               },
@@ -157,6 +166,7 @@ export default {
     z-index:999;
     position:absolute;
     bottom:0;
+    pointer-events: none;
 }
 
 .portContainer {
