@@ -72,6 +72,7 @@
         <section>
           <span>ATTACK</span>
           <section>
+          <button @click="$store.commit('playerData/addToStat', {property: 'baseAttackMax', with:1})">1</button>
           <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
           <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
           </section>
@@ -107,13 +108,17 @@
 
         <br>
 
+        <p>MONSTER ROSTER</p>
+        <section class="flexColumn">
+          <button @click="$store.commit('monsterData/newMonster', 1)">Next Monster</button>
+          <button @click="$store.commit('monsterData/newMonster', -1)">Prev Monster</button>
+        </section>
+
+        <br>
+
         <p>MONSTER RANKS</p>
         <section class="flexColumn">
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: ''})">NORMAL</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'virulent'})">VIRULENT</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'fearsome'})">FEASRSOME</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'bloodless'})">BLOODLESS</button>
-              <button @click="$store.commit('monsterData/mutate', {property: 'monsterRank', with: 'flawless'})">FLAWLESS</button>
+              <button @click="$store.commit('leaderboardData/addToList', {property: 'monstersKilled', with: 'monster'})">Rank Up</button>
             </section>
       </article> 
     </section>
@@ -147,8 +152,6 @@ export default {
   margin:10px;
   font-family: var(--paragraphs-type);
   text-align:center;
-  display:inline;
-  position:fixed;
   font-size:13px;
   top:0px;
   z-index:999999;
