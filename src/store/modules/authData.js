@@ -6,11 +6,24 @@ const state = () => ({
        loggedIn: false,
        data: null,
    },
+   settings: {
+      tooltips: true,
+   },
+   saveSuccessful: false,
 })
 
 const mutations = {
+    toggleUserData(state, payload){
+      state.settings[payload.property] = !state.settings[payload.property];
+    },
+    toggleAlerts(state, payload){
+      state[payload.property] = !state[payload.property];
+    },
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
+    },
+    SET_SETTINGS(state, payload){
+      state.settings = { payload }
     },
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
@@ -18,9 +31,6 @@ const mutations = {
     SET_USER(state, payload) {
       state.user.data = {...state.user.data, displayName: payload.displayName};
       state.user.data = {...state.user.data, email: payload.email};
-      if(payload.admin) {
-        state.user.data = {...state.user.data, admin: payload.admin}
-      }
     },
     LOG_OUT_USER(state) {
       state.user.data = null
@@ -102,15 +112,12 @@ const actions = {
         commit('gameData/mutate', {property: 'phase', with:'SavedGame'}, {root:true})
     },
     detectUser({ commit }, thisUser) {
-      //get ref to firestore
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(thisUser.email);
 
       userPath.get().then(function(doc){
-        if (doc.exists) {
-          if(doc.data().saveExists) {
-            commit("SET_SAVED_GAME", doc.data())
-          }
+        if(doc.data().saveExists) {
+          commit("SET_SAVED_GAME", doc.data())
         }
         else {
           userPath.set({
@@ -119,6 +126,15 @@ const actions = {
           })
         }
       })
+
+      var settingsPath = db.collection('settings').doc(thisUser.email);
+
+      settingsPath.get().then(function(doc){
+        if (doc.data().settings) {
+          commit("SET_SETTINGS", doc.data().settings)
+        }
+      })
+
     },
     fetchLeaderboard({commit}) {
       var db = firebase.firestore();
@@ -152,6 +168,23 @@ const actions = {
         }
         })
     },
+    saveUserSettings({state, commit}) {
+      var db = firebase.firestore();
+      var userPath = db.collection('settings').doc(state.user.data.email);
+
+      userPath.get().then(function(){
+          userPath.set({
+            settings:{
+              toolTips: state.settings.tooltips,
+            },
+          })
+        })
+
+        commit('toggleAlerts', {property: 'saveSuccessful'})
+        setTimeout(() => {
+          commit('toggleAlerts', {property: 'saveSuccessful'})
+        }, 3000)
+    }
 }
 
 export default {

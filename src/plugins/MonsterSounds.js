@@ -9,7 +9,7 @@ const batsEnter = new Howl({
 const impsEnter = new Howl({
     src: [require('@/assets/audio/monsterEnter/imp.wav')],
     loop: false,
-    volume: .4,
+    volume: .2,
 });
 
 const slimeEnter = new Howl({
@@ -75,7 +75,7 @@ const ghoulEnter = new Howl({
 const skeletonEnter = new Howl({
     src: [require('@/assets/audio/monsterEnter/skeleton.wav')],
     loop: false,
-    volume: 1,
+    volume: .5,
 });
 
 const swamplingEnter = new Howl({
@@ -123,7 +123,7 @@ const bansheeEnter = new Howl({
 const lichEnter = new Howl({
     src: [require('@/assets/audio/monsterEnter/lich.mp3')],
     loop: false,
-    volume: 1,
+    volume: .6,
 });
 
 const dragonEnter = new Howl({

@@ -172,7 +172,7 @@ const state = () => ({
               description: 'Halves your ARM | x2 ATK', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
-                {stat:'baseAttack', value:2, operator:'multiply', shine:'purpleShine'},
+                {stat:'baseAttack', value:2, operator:'multiply'},
                 {stat:'baseArmor', value:2, operator:'divide'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")

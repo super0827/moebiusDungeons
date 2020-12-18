@@ -5,7 +5,8 @@ const state = () => ({
     duration: 1000,
     combatLocked: false,
     turnTailUsed: false,
-    leaderboard:[]
+    leaderboard:[],
+    debugShow: false,
 })
 
 const mutations = {

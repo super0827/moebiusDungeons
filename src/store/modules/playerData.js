@@ -67,6 +67,9 @@ const mutations = {
   mutateInfo(state, payload) {
     state.info[payload.property] = payload.with;
   },
+  addToStat(state, payload) {
+    state.info[payload.property] += payload.with;
+  },
   changeStats(state, payload){
     if (payload.operator === 'add') state.info[payload.stat] += payload.value;
     else if (payload.operator === 'minus') state.info[payload.stat] -= payload.value;
@@ -175,7 +178,7 @@ const getters = {
     return state.tempAttackMax + state.info.baseAttackMax
   },
   varletCrit: (state, getters) => {
-    return Math.floor(getters.calcAttackMax - (getters.calcAttackMax / 4));
+    return Math.ceil(getters.calcAttackMax / 4);
   },
   inventory: (state, getters) => {
     let fullInventory = state.temporaryTraits.concat(state.permanantTraits);
@@ -234,7 +237,7 @@ const actions = {
     }
   },
   ROLL_DAMAGE({commit, state, getters}) {
-    const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
+    const randomRoll = Math.floor((Math.random() * (getters.calcAttackMax/2) + 1) + (Math.random() * (getters.calcAttackMax/2) + 1))
     commit('mutate', {property:'thisDamage', with:randomRoll})
     let randomAttackSound = Math.floor(Math.random() * (3) + 1)
     if (state.info.attackType === 'physical') {
@@ -316,15 +319,20 @@ const actions = {
       }
       else if (state.info.name === 'mage') {
         commit('toggleAnimation', {property: 'blueShine'})
-        dispatch('DEAL_SPECIAL_DAMAGE', 12)
+        commit('monsterData/divideHealth', null, {root:true})
         PlayerSounds.variagate.play();
-        dispatch('LOG_UPDATE', `VARIAGATE DEALT 12 DAMAGE`);
+        dispatch('LOG_UPDATE', `VARIAGATE HALVED ${rootState['monsterData'].info.name} HEALTH`);
+        setTimeout(() => {
+          dispatch('RESET_ANIMATIONS');
+          commit('mutate', {property:'specialDamageAnimation', with:false})
+          dispatch('monsterData/SPECIAL_CHECK_HP', null, {root:true})
+        }, 1200)
       }
       else if (state.info.name === 'varlet') {
         commit('toggleAnimation', {property: 'yellowShine'})
         dispatch('DEAL_SPECIAL_DAMAGE', getters.varletCrit)
         PlayerSounds.backstab.play();
-        dispatch('LOG_UPDATE', `BACKSTAB DEALT ${getters.varletCrit} DAMAGE`);
+        dispatch('LOG_UPDATE', `Peculate DEALT ${getters.varletCrit} DAMAGE`);
       }
 
       commit('changeStats', {stat:'mettle', value:1, operator:'minus'});
@@ -348,7 +356,6 @@ const actions = {
       commit('mutate', {property:'specialDamageAnimation', with:false})
       dispatch('monsterData/SPECIAL_CHECK_HP', null, {root:true})
     }, 1200)
-
   },
   TURN_TAIL({commit, dispatch, state, rootState}){
       if(!rootState.gameData.turnTailUsed) {

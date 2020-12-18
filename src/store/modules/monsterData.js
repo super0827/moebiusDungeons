@@ -251,14 +251,34 @@ const mutations = {
     takeDamage(state, payload) {
       state.info.baseHealth -= payload.damage;
     },
+    divideHealth(state, payload) {
+      state.info.baseHealth = Math.ceil(state.info.baseHealth/2);
+    },
     addToLog(state, payload){
       state.log.push(payload)
     },
-    newMonster(state) {
+    newMonster(state, payload) {
+      if(!payload){
         const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
         state.roster += increment;
-        if(state.roster >= state.variants.length) state.roster = increment;
-        state.info = state.variants[state.roster];
+      }
+
+      else if (payload){
+        if(Math.sign(payload) === 1) {
+          state.roster++;
+        }
+        else if (Math.sign(payload) === -1) state.roster--
+        
+        if(state.roster <= 1) state.roster = 1;
+
+        if(state.roster >= state.variants.length) state.roster = 1;
+      }
+      
+      if(state.roster >= state.variants.length) state.roster = increment;
+      
+      state.info = state.variants[state.roster];
+      
+      if(payload) MonsterSounds[state.info.enterSound].play();;
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -289,8 +309,8 @@ const getters = {
       if (ranking >= 0 && ranking <= 4) return ''
       else if (ranking >= 5 && ranking <= 9) return 'virulent'
       else if (ranking >= 10 && ranking <= 15) return 'fearsome'
-      else if (ranking >= 16 && ranking <= 21) return 'bloodless'
-      else if (ranking > 25 ) return 'flawless'
+      else if (ranking >= 16 && ranking <= 24) return 'bloodless'
+      else if (ranking >= 25 ) return 'flawless'
   },
   thisAdjDamage: (state, commit, rootState, rootGetters) => {
     let num;
@@ -396,7 +416,7 @@ const actions = {
         }, 1500)
       }
   },
-  SPECIAL_CHECK_HP ({state, commit, dispatch}) {
+  SPECIAL_CHECK_HP ({state, commit, dispatch, rootState}) {
     if (state.info.baseHealth <= 0) {
       dispatch('RESET_ANIMATIONS')
       commit('toggleAnimation', {property: 'isDead'})
@@ -404,7 +424,11 @@ const actions = {
       UiSounds['victory' + randomTrack].play()
       commit('playerData/addCoins', state.info.coins, {root:true})
       commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
-      
+      if(rootState['playerData'].info.name === 'varlet') {
+        dispatch('playerData/LOG_UPDATE', `You Stole 1 Coin`, {root:true});
+        commit('playerData/addCoins', 2, {root:true})
+        commit('leaderboardData/incrementByValue', {property:'totalCoins', with:1}, {root:true})
+      }
       setTimeout(() => {
         commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
         setTimeout(() => {
@@ -416,10 +440,13 @@ const actions = {
       setTimeout(() => {
         commit('gameData/toggle', {property:'combatLocked'}, {root: true});
       }, 1200)
+      if(rootState['playerData'].info.name === 'varlet') {
+        dispatch('playerData/LOG_UPDATE', `Peculate Failed`, {root:true});
+      }
     }
   },
   ROLL_DAMAGE({state, commit, dispatch, getters}) {
-      const randomRoll = Math.floor(Math.random() * (getters.calcAttackMax) + 1)
+      const randomRoll = Math.floor((Math.random() * ((getters.calcAttackMax/2) + 1)) + (Math.random() * ((getters.calcAttackMax/2) + 1)));
       commit('mutate', {property:'thisDamage', with:randomRoll})
       let randomAttackSound = Math.floor(Math.random() * (3) + 1)
       if (state.info.attackType === 'physical') {
