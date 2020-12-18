@@ -113,9 +113,6 @@
               </div>
             </form>
           </div>
-            <div class="marginTop">
-              <p @click="goToLogin()">I don't want to sign up, just let me play.</p>
-            </div>
           </div>
           </div>
 
