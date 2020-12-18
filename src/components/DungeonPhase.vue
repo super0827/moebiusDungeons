@@ -36,6 +36,8 @@
         :attackTypeImg="playerAttackTypeImage"
         :coins="playerCoins"
 
+        :warning="playerWarning"
+
         :isHurt="playerisHurt"
         :isBlocking="playerisBlocking"
         :isAttacking="playerisAttacking"
@@ -52,6 +54,7 @@
         :goldShine="goldShinePlayer"
         :blueShine="blueShinePlayer"
         :yellowShine="yellowShinePlayer"
+        :armorUp="armorUp"
         />
 
         <!-- Dungeon Controls -->
@@ -109,7 +112,7 @@
     
     <!--  Battle Helpers -->
     <transition name="fade" mode="out-in">
-        <battle-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
+        <BattleHelp key="battleHelper" @close="toggleHelp()" v-if="helper"/>
     </transition>
 </section>
 </template>
@@ -163,6 +166,8 @@ export default {
 
             monsterEnemy: state => state.info.name,
 
+            playerWarning: state => state.info.warning,
+
             playerisHurt: state => state.animations.hurt,
             playerisBlocking: state => state.animations.blocking,
             playerisAttacking: state => state.animations.attacking,
@@ -176,6 +181,7 @@ export default {
             yellowShinePlayer: state => state.animations.yellowShine,
 
             curse: state => state.info.curse,
+            armorUp: state => state.animations.armorUp,
         }),
         ...mapState('monsterData', {
             monsterLoaded: state => state.monsterLoaded,
@@ -203,8 +209,6 @@ export default {
             redShineMonster: state => state.animations.redShine,
             greenShineMonster: state => state.animations.greenShine,
             purpleShineMonster: state => state.animations.purpleShine,
-
-            armorUp: state => state.animations.armorUp,
         }),
         ...mapGetters('playerData', {
             playerLog: 'playerLog',
