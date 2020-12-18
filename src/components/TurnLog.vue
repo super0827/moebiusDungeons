@@ -1,7 +1,6 @@
 <template>
     <section class="readout">
-        <ul 
-        >
+        <ul>
         <transition-group name="list-complete">
             <li
             v-for="items in thisLog"
