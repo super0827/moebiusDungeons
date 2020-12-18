@@ -109,7 +109,6 @@ export default {
       reset() {
           this.$store.commit('gameData/mutate', {property:'phase', with:'SavedGame'})
           this.$store.dispatch('authData/deleteSavedGame')
-          
       },
       leaderboards() {
           this.$store.commit('gameData/mutate', {property:'phase', with:'LeaderBoard'})
@@ -117,7 +116,7 @@ export default {
   },
   computed: {
       ...mapState('leaderboardData', [
-          'highestHealth',
+        'highestHealth',
         'highestArmor',
         'highestAttack',
         'monstersKilled',
