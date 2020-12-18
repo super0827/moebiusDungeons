@@ -50,7 +50,7 @@ A Vue SPA Dungeon Crawler game based off of the Dungeons Of Amara Playable RPG B
 <br>
 
 ### Mobius Dungeons needs to be refactored, and I can't do it alone.
-If you'd like to assist in refactoring the game, or would like to support me as a web developer you can donate to Moebius Dungeons via my [Paypal Account](paypal.me/MisuseofMana)
+If you'd like to assist in refactoring the game, or would like to support me as a web developer you can donate to Moebius Dungeons via my [PayPal Account](paypal.me/MisuseofMana)
 
 <br>
 
@@ -71,10 +71,10 @@ If you'd like to assist in refactoring the game, or would like to support me as 
 
 # What is Moebius Dungeons?
 Moebius Dungeons is an RPG browser game built with Vue, Javascript, HTML, and CSS.
-The project is based off of Sean Yager's gameified book titled ["Dungeons Of Amara"](https://gum.co/CsdPh)
+The project is based off of Sean Yager's game-ified book titled ["Dungeons Of Amara"](https://gum.co/CsdPh)
 
-## Moebius Dungeons is an Expirement in Vue.js 
-**This project is being developed as an expiriment while completing my Full Stack Certification from Austin Coding Academy with a focus on the React framework.** 
+## Moebius Dungeons is an Experiment in Vue.js 
+**This project is being developed as an experiment while completing my Full Stack Certification from Austin Coding Academy with a focus on the React framework.** 
 
 Over the course of 2020 the game has taken on many different iterations as my full stack comprehension grew.
 
@@ -133,7 +133,7 @@ Additionally there are four icons representing your stats and the monsters:
 ## Health: 
 is reduced by Physical or Magical attacks.
 ## Armor:
-is permenant, and reduces incoming Physical attack values 1 to 1.
+is permanent, and reduces incoming Physical attack values 1 to 1.
 ## Attack:
 ##### Magic or Physical
 is your maximum possible damage, you can deal anywhere from 1 to your maximum listed value by your attack icon.
@@ -157,7 +157,7 @@ Each class has a special ability, costing mettle to use. This resource (mettle),
 ![](public/assets/swordsman.png)
 
 ### En'garde
-The Swordsman's ability (En'Garde) grants +3 armor which reduces incoming physical damage. The ability can be used up to three times in a row granting a total of +9 armor. This bonus armor remains active until the Swordsman fails to block an attack or runs away from a monster.
+The Swordsman's ability (En'Garde) grants +1 physical armor which reduces incoming physical damage. The ability can be used up to three times in a row.
 
 ![](public/assets/mage.png)
 
@@ -174,8 +174,8 @@ Peculate **must be used to deal the killing blow to a monster to provide coins.*
 ### Example: 
 ```
 A monster has 12HP and your Max Attack is 8. 
-You have one use of Peculate, which will deal 2 damage (1/4 of 8) per use. 
-The monsters health must be 2 or less in order for Peculate to work properly.
+You have one use of Peculate, which will always deal (1/4 of your max damage) per use regardless of armor. 
+Fight the monster with trade blows until you're certain peculate can kill it. If the monster dies, you'll steal coins from it.
 ```
 
 Peculate when used as the killing blow, grants the Varlet **2 more coins** on top of the coins you receive for defeating the monster.
@@ -223,7 +223,7 @@ Players can choose to skip the Shop Phase entirely in exchange for regaining 1 m
 <hr>
 
 ## Retire
-Playes **MUST** retire their game in order to be eligible for leaderboard submission. A player that does not retire from their adventure *and instead is killed in battle* **will lose all progress and forefit their chance to be placed in the leaderboard.**
+Playes **MUST** retire their game in order to be eligible for leaderboard submission. A player that does not retire from their adventure *and instead is killed in battle* **will lose all progress and forfeit their chance to be placed in the leaderboard.**
 
 This is the most important crux in **Moebius Dungeons**. The player must choose to end their run in safety to go on and tell of their epic journey.
 
