@@ -23,7 +23,7 @@ const mutations = {
       state.user.data = {...state.user.data, save: payload}
     },
     SET_SETTINGS(state, payload){
-      state.settings = { payload }
+      state.settings = payload
     },
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
@@ -64,6 +64,17 @@ const actions = {
         },
         {merge: true}
       )
+
+      console.log({
+        saveState: {
+          monster: rootGetters['monsterData/snapshot'] ,
+          player: rootGetters['playerData/snapshot'],
+          shopPick: rootGetters['shopkeepData/snapshot'],
+          leaderBoard: rootGetters['leaderboardData/snapshot']
+        },
+      }
+      )
+
     },
     loadSavedGame({state, dispatch, rootState}){
       var db = firebase.firestore();
@@ -88,10 +99,9 @@ const actions = {
         }
       })
     },
-    deleteSavedGame({state, dispatch}) {
+    deleteSavedGame({state}) {
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
-      
       userPath.set({
         saveExists: false,
         saveState: {
@@ -116,7 +126,7 @@ const actions = {
       var userPath = db.collection('users').doc(thisUser.email);
 
       userPath.get().then(function(doc){
-        if(doc.data().saveExists) {
+        if(doc.data()) {
           commit("SET_SAVED_GAME", doc.data())
         }
         else {
@@ -130,7 +140,7 @@ const actions = {
       var settingsPath = db.collection('settings').doc(thisUser.email);
 
       settingsPath.get().then(function(doc){
-        if (doc.data().settings) {
+        if (doc.data()) {
           commit("SET_SETTINGS", doc.data().settings)
         }
       })
@@ -149,7 +159,6 @@ const actions = {
     updateLeaderboard({state, rootGetters}) {
       var db = firebase.firestore();
       var userPath = db.collection('leaderboard').doc(state.user.data.displayName);
-
       userPath.get().then(function(doc){
         if (doc.exists) {
           console.log('highScore = ' + rootGetters['leaderboardData/highScore'])
@@ -175,7 +184,7 @@ const actions = {
       userPath.get().then(function(){
           userPath.set({
             settings:{
-              toolTips: state.settings.tooltips,
+              tooltips: state.settings.tooltips,
             },
           })
         })
