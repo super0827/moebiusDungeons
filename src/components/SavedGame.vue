@@ -58,6 +58,8 @@
         </div>
 <br>
 
+<p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save you game click the cog in the top left corner during game play and click save game before closing the browser.</p>
+
         <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
 
     </div>
@@ -250,5 +252,9 @@ p.overlayGridPos {
 
 h1, h2 {
     margin:0;
+}
+
+.warning {
+    color:red;
 }
 </style>

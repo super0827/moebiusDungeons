@@ -25,15 +25,22 @@
 
 
       <div v-if="settingShow && user.data != null" class="settings flexRowCenter">
-        <section v-if="canSave && this.phase != 'CharacterSelect'" @click="saveGame" class="bigButton">
+      <hr class="horRule">
+        <section v-if="(canSave && acceptablePhase)" @click="saveGame" class="bigButton">
           <h3>
             Save Game
           </h3>
         </section>
 
-        <section v-if="!canSave || this.phase === 'CharacterSelect'" @click="saveGame">
+        <section v-if="!canSave && acceptablePhase" @click="saveGame">
           <p class="widthSet">
             Your game is saved, play more before saving again.
+          </p>
+        </section>
+        
+        <section v-if="!acceptablePhase" @click="saveGame">
+          <p class="widthSet">
+            Your game can't be saved on this screen.
           </p>
         </section>
 
@@ -54,9 +61,16 @@
         <p v-if="saveSuccessful" class="bigButton">Save Settings</p>
 
       <hr class="horRule">
+      
+      <section class="flexRow widthSet">
         <section>
           <p class="clickable bigButton" @click="signOut">Sign Out</p>
         </section>
+
+        <!-- <section>
+          <p class="clickable bigButton" @click="mainMenu">Main Menu</p>
+        </section> -->
+      </section>
 
       </div>
 
@@ -111,6 +125,26 @@ export default {
           return false;
         }
       },
+      acceptablePhase(){
+        switch(this.phase){
+          case 'CharacterSelect':
+            return false;
+            break;
+          case 'SavedGame':
+            return false;
+            break;
+          case 'LoseScreen':
+            return false;
+            break;
+          case 'LeaderBoard':
+            return false;
+            break;
+          case 'CreditsOverlay':
+            return false;
+            break;
+          default: return true;
+        }
+      }
     },
     methods: {
         signOut() {
@@ -146,6 +180,10 @@ export default {
           else if(!this.canSave) {
             return
           }
+        },
+        mainMenu() {
+          this.$store.dispatch('authData/updateSavedGame');
+          this.$store.commit('gameData/mutate', {property: 'phase', with: 'SavedGame'});
         }
     }
 }
@@ -228,11 +266,11 @@ export default {
 }
 
 .bigButton {
-  margin:20px;
-  padding:10px;
+  margin:5px;
+  padding:5px;
 }
 
 .widthSet {
-  max-width:150px;
+  max-width:160px;
 }
 </style>
