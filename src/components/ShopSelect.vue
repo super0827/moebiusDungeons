@@ -155,7 +155,6 @@ export default {
   created() {
     if(!this.shopLoaded){
         this.$store.commit('shopkeepData/pickTwoShops');
-        this.$store.dispatch('authData/updateSavedGame', null, {root:true} )
     }
     else {
         this.$store.commit('shopkeepData/mutate', {property:'shopLoaded', with:false}, {root:true})
