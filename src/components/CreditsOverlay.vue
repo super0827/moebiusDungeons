@@ -1,35 +1,36 @@
 <template>
 <section>
-    <section class="helpModule">
-        <h1 @mouseenter="UiSounds.chit.play()" @click="$emit('close')" class="close">X</h1>
-
+<section class="wrapper">
         <h1 class="title">Credits</h1>
-        
-        <br>
+    
 
         <section>
 
-            <h3>Hello there, Sean here. Thanks for checking out the credits.</h3>
+            <section class='block'>
+
+            <p>
+            Hey there kingloyal. Sean Yager here, creator of Moebius Dungeons. This game is created in my free time, and I'm the only web developer on the team. If you'd like to help support the development of the game consider <a @mouseenter="UiSounds.chit.play()" href="paypal.me/MisuseofMana">donating to my Paypal account</a> or consider <a @mouseenter="UiSounds.chit.play()" href="https://gum.co/CsdPh" target="_blank">buying the RPG poetry book that inspired this game.</a>
+            </p>
             
             <p>Moebius Dungeons has been and still is a <strong>HUGE</strong> project, it's spanned a scope beyond myself in many ways. I've used a great many coding libraries, voice actors, audio editors, and other content creators. I couldn't have completed this project without their help.</p>
             
             <hr>
 
-            <h3>I'll update this list until it is complete as I have time, but for now a special thank you to the following people:</h3>
+            <h3>I'll update this list until it is complete as I have time, but for now a special thank you to the following people.</h3>
+            </section>
 
-            <br>    
 
-            <section class="flexRow">
-                <section class="flexColumn block">
-                    <h3>Dedicated To</h3>
+            <section>
+                <section class="block">
+                    <h2>Dedicated To:</h2>
                     <p>My beautiful, and patient wife.</p>
                     <p>My loving family.</p>
                     <p>My stalwart friends, who help me blow of steam and reboot.</p>
                     <p>My collaborators in all my artwork and storytelling, who guide me when I'm feeling wayward.</p>
                 </section>
                 
-                <section class="flexColumn block">
-                    <h3>Friends</h3>
+                <section class="block">
+                    <h2>My Friends:</h2>
                     <p>Andy Webb, for building the lore of Moebius Dungeons over the years.</p>
                     <p>David Haines, for always being interested.</p>
                     <p>Josh Haines, for dreaming with me.</p>
@@ -38,19 +39,20 @@
                     <p>Jerri Yager, for your encouragement.</p>
                 </section>
 
-                <section class="flexColumn block">
-                    <h3>Voices</h3>
+                <section class="block">
+                    <h2>The Talented Voices Of:</h2>
                     <p>Jordan Huges as the Merchant</p>
                     <p>Jacob Yager as the Graverobber</p>
                     <p>Al Yager as half the Monsters</p>
-                    <p>Eva Yager as the other Monsters</p>
+                    <p>Eva Yager as the other half of the Monsters</p>
                     <p>Talethia on Fiverr as the Cleric and Witch</p>
                 </section>
 
             </section>
 
         </section>
-    </section>
+</section>
+<h3 @click="backToMenu" class="backButton">Back To Main Menu</h3>
 </section>
 </template>
 
@@ -64,51 +66,51 @@ export default {
         UiSounds : UiSounds,
       }
   },
+  methods:{
+      backToMenu(){
+           this.$store.commit('gameData/mutate', {property: 'phase', with: 'SavedGame'})
+      }
+  }
 }
 </script>
 
 <style scoped>
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: black;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+.wrapper {
+    width:70vw;
+    height:500px;
+    overflow-y:scroll;
+}
+
     .title {
         text-decoration: none;
         font-size:30px;
+        text-align:center;
     }
 
     .block {
         padding:10px;
-        margin:0 10px;
+        margin:20px 10px;
         border:black 2px solid;
-    }
-
-    .helpModule {
-        position:absolute;
-        top:0px;
-        left:-50px;
-        padding: 0px 50px;
-        z-index:99999;
-        height:100%;
-        width:100%;
-        background:rgba(255, 255, 255, 0.94);
-        display:flex;
-        justify-content:flex-start;
-        align-items: center;
-        flex-direction: column;
-        text-align:center;
-    }
-
-    .close {
-        position:absolute;
-        font-size:35px;
-        top:0;
-        right:0;
-        color:rgb(0, 0, 0);
-        margin:10px 10px;
-        line-height:35px;
-        text-decoration: none;
-    }
-
-    .close:hover {
-        cursor:pointer;
-        color:rgb(255, 0, 0)
     }
 
     p {
@@ -152,5 +154,20 @@ export default {
 
     .help img {
         width:75px;
+    }
+
+    .backButton{
+        padding:20px;
+        background:#777;
+        width:200px;
+        color:white;
+        text-align:center;
+        margin:20px auto;
+        cursor:pointer;
+    }
+
+    .backButton:hover {
+        background:#ccc;
+        color:black;
     }
 </style>
