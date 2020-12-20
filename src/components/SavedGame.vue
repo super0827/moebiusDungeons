@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <h1 @click="toggleHelp()" @mouseenter="UiSounds.chit.play()" id="credits">ABOUT</h1>
+        <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()" id="credits">Credits</h1>
 
         <div class="flexColumn">
         <h1>Welcome To The</h1>
@@ -10,7 +10,7 @@
         <p>There are likely a ton of bugs in this game, if you find any please send me an email with a description of the bug so I can fix it!  <a href="https://discord.gg/U2pn7xq" target="_blank">If you use discord, you can report bugs here too.</a> Gameplay ideas are always welcome too so send them my way.</p>
         <h3><a href="mailto:moebuisdungeons@gmail.com">moebiusdungeons@gmail.com</a></h3>
 
-<br>
+        <br>
         
         <div class="flexRow">
             <div @click="startNewGame()" @mouseenter="UiSounds.chit.play()" class="newGame nodule block">
@@ -18,7 +18,7 @@
                 <img src="@/assets/imgs/icons/raceTypeHumanIcon.png" alt="">
             </div>
 
-            <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="save" class="resumeGame nodule block flexColumn">
+            <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null" class="resumeGame nodule block flexColumn">
 
                 <img class="portraitSize" :src="player.info.portrait" alt="">
                 <br>
@@ -57,20 +57,8 @@
 
         </div>
 <br>
-        <p class="widthCap">
-            Hey there kingloyal. Sean Yager here, creator of Moebius Dungeons. This game is created in my free time, and I'm the only web developer on the team. If you'd like to help support the development of the game consider <a @mouseenter="UiSounds.chit.play()" href="paypal.me/MisuseofMana">donating to my Paypal account</a> or consider <a @mouseenter="UiSounds.chit.play()" href="https://gum.co/CsdPh" target="_blank">buying the RPG poetry book that inspired this game.</a>
-        </p>
-
-        <div class="flexColumn">
-
-        <p>Always Remember. A Loyal Squire Will Never Tire</p>
 
         <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
-        </div>
-    
-    <transition name="fade" mode="out-in">
-        <credits-overlay key="battleHelper" @close="toggleHelp()" v-if="helper"/>
-    </transition>
 
     </div>
 </template>
@@ -99,6 +87,7 @@ import { consoleHello } from "@/components/mixins/consoleHello.js"
                 this.$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'}, {root:true})
                 this.$store.dispatch('authData/deleteSavedGame', null, {root:true})
                 this.$store.commit('monsterData/mutate', {property: 'roster', with:0}, {root:true})
+                this.$store.commit('leaderboardData/resetLeaderboard', null, {root:true})
             },
             ...mapActions( 'authData', [
                 'loadSavedGame',
@@ -131,6 +120,9 @@ import { consoleHello } from "@/components/mixins/consoleHello.js"
                         null
                 }
             }
+        },
+        created() {
+
         },
         mounted() {
             consoleHello();
