@@ -11,6 +11,11 @@
         </div>
 
           <p v-if="saveSuccessful">Settings Saved!</p>
+          <section v-if="!canSave && helpTip">
+          <p>
+            Game was saved!
+          </p>
+        </section>
 
       <div v-else-if="user.data == null" class="loginBar">
         <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</p>
@@ -20,9 +25,22 @@
 
 
       <div v-if="settingShow && user.data != null" class="settings flexRowCenter">
+        <section v-if="canSave && this.phase != 'CharacterSelect'" @click="saveGame" class="bigButton">
+          <h3>
+            Save Game
+          </h3>
+        </section>
+
+        <section v-if="!canSave || this.phase === 'CharacterSelect'" @click="saveGame">
+          <p class="widthSet">
+            Your game is saved, play more before saving again.
+          </p>
+        </section>
+
+        <hr class="horRule">
+
         <h2>Settings</h2>
         <section class="flexRowStart">
-
 
           <p>
             Tooltips are:
@@ -41,8 +59,6 @@
         </section>
 
       </div>
-
-      
 
       <!-- <div class="prefBar flexColumn" v-if="preferences">
         <input
@@ -64,6 +80,8 @@ export default {
         return {
             debugShow: false,
             settingShow: false,
+            saveMessage: 'Game Saved!',
+            helpTip: false,
         }
     },
     computed: {
@@ -76,10 +94,27 @@ export default {
         avatar: 'userIcon',
         admin: 'adminAllowed'
       }),
+      ...mapState('leaderboardData', {
+        saveCheck: state => state.saveCheck,
+      }),
+      ...mapGetters('leaderboardData', {
+        highScore: 'highScore',
+      }),
+      ...mapState('gameData', {
+        phase: state => state.phase,
+      }),
+      canSave() {
+        if(this.highScore === 0 || this.highScore > this.saveCheck ) {
+          return true;
+        }
+        else if (this.highScore === this.saveCheck) {
+          return false;
+        }
+      },
     },
     methods: {
         signOut() {
-        this.$store.dispatch('authData/updateSavedGame')
+        this.$store.dispatch('authData/updateSavedGame');
 
         firebase
             .auth()
@@ -98,6 +133,19 @@ export default {
         saveSettings() {
           this.$store.dispatch('authData/saveUserSettings');
           this.settingShow = !this.settingShow;
+        },
+        saveGame(){
+          if(this.canSave && this.phase != 'CharacterSelect') {
+             this.$store.dispatch('authData/updateSavedGame');
+             this.$store.commit('leaderboardData/mutate', {property: 'saveCheck', with:this.highScore})
+             this.helpTip = true;
+             setTimeout(() => {
+              this.helpTip = false;
+             }, 3000)
+          }
+          else if(!this.canSave) {
+            return
+          }
         }
     }
 }
@@ -182,5 +230,9 @@ export default {
 .bigButton {
   margin:20px;
   padding:10px;
+}
+
+.widthSet {
+  max-width:150px;
 }
 </style>
