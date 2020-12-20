@@ -208,7 +208,6 @@ const actions = {
 
     if(getters.calcHealth > 0){
       //UNLOCK COMBAT
-      dispatch('authData/updateSavedGame', null, {root:true} )
       commit('gameData/toggle', { property:'combatLocked' }, {root: true});
       setTimeout(() => {
         dispatch('RESET_ANIMATIONS')
@@ -340,9 +339,6 @@ const actions = {
       setTimeout(() => {
           dispatch('RESET_ANIMATIONS');
       }, 1200)
-
-      dispatch('authData/updateSavedGame', null, {root:true})
-
     }
   },
   DEAL_SPECIAL_DAMAGE({commit, getters, dispatch}, dealtDamage) {
