@@ -17,14 +17,11 @@
         :class="{ [characters.inAnimations]: isEntering, 
         [characters.outAnimations]: !isEntering }">
         
-            <!-- <h2>{{characters.name}}</h2>
-            <h3>{{characters.description1}}</h3>
-            <p>{{characters.description2}}</p> -->
-        
             <ToolTip
                 :title="characters.name"
                 :subtitle="characters.description1"
                 :descriptions="[characters.description2]"
+                top="true"
             >
                 <section 
                 @mouseenter="UiSound.chit.play()"
@@ -77,7 +74,7 @@ export default {
                 type:'player', 
                 portrait:require("@/assets/imgs/playableCharacters/swordsman.png"), 
                 description1:"Slicing and Dicing",
-                description2:"Bruiser class, high damage, good armor, high health.", 
+                description2:"Basic hack and slash class, focus on damage and armor to become a bulwark.", 
                 coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
                 mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
