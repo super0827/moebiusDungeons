@@ -1,16 +1,29 @@
 <template>
     <div class="tooltip-container">
-        <div @mouseenter="hover = true" @mouseleave="hover = false">
+        <span @mouseenter="hover = true" @mouseleave="hover = false">
             <slot></slot>
-        </div>
+        </span>
         
         <transition appear
             type="animation"
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-        <div v-if="hover && toolTipsEnabled" class="tooltip">
-            <span class="text">
+        <div v-if="hover && toolTipsEnabled" class="tooltip"
+        :class="{
+            'top':top,
+            'bottom': bottom,
+            'left': left,
+            'right': right
+        }">
+            <span class="text" 
+            :class="{
+                'arrowTop': top,
+                'arrowBottom': bottom,
+                'arrowRight': left,
+                'arrowLeft': right
+            }"
+            >
                 <h2 v-if="title">{{title}}</h2>
                 <h3 v-if="subtitle">{{subtitle}}</h3>
                 <span v-if="descriptions">
@@ -27,7 +40,7 @@ import { mapState } from 'vuex'
 
     export default {
         
-        props: ['title', 'subtitle', 'descriptions'],
+        props: ['title', 'subtitle', 'descriptions', 'top', 'bottom', 'left', 'right'],
         data() {
             return {
                 hover: false
@@ -58,29 +71,78 @@ import { mapState } from 'vuex'
         text-align: center;
         padding: 10px 10px;
         border-radius: 5px;
-        
-        bottom: 105%;
-        left: 50%;
-        margin-left: -90px;
-
         opacity: 0;
         transition: opacity .5s;
         transition-delay: .5s;
-
         position: absolute;
         z-index: 999;
+        background: rgba(119, 119, 119, .9);
+        width:auto;
+    }
 
-        background: #777;
+    .top {
+        bottom: 110%;
+        left: 50%;
+        margin-left: -90px;
+    }
+
+    .bottom {
+        top: 110%;
+        left: 50%;
+        margin-left: -90px;
+    }
+
+    .left {
+        left: -50%;
+        top: -5%;
+        margin-left: -90px;
+        width:200px;
+    }
+
+    .right {
+        left: 105%;
+        top: 50%;
+        margin-left: -90px;
     }
 
     .text::after {
         content: " ";
         position: absolute;
+        
+        border-width: 5px;
+        border-style: solid;
+        
+    }
+
+    h2, h3 {
+        text-transform: uppercase;
+    }
+
+    .arrowTop::after {
         top: 100%;
         left: 50%;
         margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
         border-color: #777 transparent transparent transparent;
+    }
+
+    .arrowBottom::after {
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-color: transparent transparent #777 transparent;
+    }
+
+    .arrowLeft::after {
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-color: transparent transparent #777 transparent;
+    }
+
+    .arrowRight::after {
+        top: 50%;
+        left: 100%;
+        margin-right: -5px;
+        border-color: transparent transparent transparent #777;
     }
 </style>
