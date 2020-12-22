@@ -234,6 +234,8 @@ export default {
             this.$store.commit('gameData/mutate', {property:'combatLocked', with:false})
             this.$store.commit('playerData/mutate', {property:'log', with:[]})
             this.$store.commit('monsterData/mutate', {property:'log', with:[]})
+            this.$store.commit('monsterData/newMonster');
+
         }
         else {
             this.MonsterSounds[this.monsterEnter].play();
