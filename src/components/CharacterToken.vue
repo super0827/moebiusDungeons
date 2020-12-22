@@ -165,6 +165,12 @@
           </section>
       </section>
 
+      <ToolTip
+      v-if="who === 'player'"
+        subtitle="Your coins"
+        :descriptions="[`Value represents your total coins, which are used to buy items during the shop phase.`]"
+        bottom="true"
+      > 
       <section class="coinWrapper">
         <img src="@/assets/imgs/icons/coinIcon.png" alt="">
         <h1 class="coinValue">
@@ -175,6 +181,25 @@
           />
         </h1>
       </section>
+      </ToolTip>
+
+      <ToolTip
+        v-if="who === 'monster'"
+        subtitle="Monster's Coins"
+        :descriptions="[`If you defeat the monster you'll win their coins.`]"
+        bottom="true"
+      >
+      <section class="coinWrapper">
+        <img src="@/assets/imgs/icons/coinIcon.png" alt="">
+        <h1 class="coinValue">
+          <animated-number 
+          :value="coins"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+        </h1>
+      </section>
+      </ToolTip>
 
       <transition name="fade" mode="out-in">
         <inventory-bar v-if="who === 'player'"/>
@@ -196,13 +221,15 @@
 import AnimatedNumber from "animated-number-vue";
 import CharacterStats from "@/components/CharacterStats.vue";
 import InventoryBar from "@/components/InventoryBar.vue";
+import ToolTip from "@/components/ui/ToolTip.vue";
 
 export default {
   name: 'CharacterToken',
   components: {
     AnimatedNumber,
     CharacterStats,
-    InventoryBar
+    InventoryBar,
+    ToolTip
   },
   props: [
     'who',

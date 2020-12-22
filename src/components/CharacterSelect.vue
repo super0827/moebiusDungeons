@@ -21,7 +21,7 @@
                 :title="characters.name"
                 :subtitle="characters.description1"
                 :descriptions="[characters.description2]"
-                top="true"
+                top='true'
             >
                 <section 
                 @mouseenter="UiSound.chit.play()"
@@ -83,8 +83,7 @@ export default {
                 special: "en'garde",
                 specialDescription:"Spend one mettle to gain +1 Armor. The monster won’t attack you back when you use En'garde.",
                 inAnimations: "zoomInLeft",
-                outAnimations: "zoomOutLeft"
-              },
+                outAnimations: "zoomOutLeft",              },
 
               {
                 name:"mage",
@@ -101,8 +100,7 @@ export default {
                 special: "variagate",
                 specialDescription:"Spend one mettle to halve enemy HP. The monster won’t attack you back when you use Variagate.",
                 inAnimations: "zoomInUp",
-                outAnimations: "zoomOutDown",
-              },
+                outAnimations: "zoomOutDown",              },
 
               {
                 name:"varlet",
@@ -141,7 +139,7 @@ export default {
 <style scoped>
 .characterSelectWrapper {
     text-align:center;
-    position:relative;
+    /* position:relative; */
 }
 
 .chooseChar {
@@ -160,14 +158,14 @@ export default {
 .overlay {
     height:100px;
     width:200px;
-    z-index:999;
+    z-index:2;
     position:absolute;
     bottom:0;
     pointer-events: none;
 }
 
 .portContainer {
-    position:relative;
+    /* position:relative; */
 }
 
 #swordsman:hover, #mage:hover, #varlet:hover {
@@ -196,6 +194,7 @@ export default {
     padding: 5px;
     background: rgb(218, 218, 218);
 }
+
 #about:hover {
     background:rgb(185, 185, 185);
     cursor:pointer;
