@@ -425,9 +425,10 @@ const actions = {
       UiSounds['victory' + randomTrack].play()
       commit('playerData/addCoins', state.info.coins, {root:true})
       commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
+      
       if(rootState['playerData'].info.name === 'varlet') {
         dispatch('playerData/LOG_UPDATE', `You Stole 1 Coin`, {root:true});
-        commit('playerData/addCoins', 2, {root:true})
+        commit('playerData/addCoins', 1, {root:true})
         commit('leaderboardData/incrementByValue', {property:'totalCoins', with:1}, {root:true})
       }
       setTimeout(() => {
@@ -437,6 +438,7 @@ const actions = {
         }, 300)
       }, 1500)
     }
+
     if(state.info.baseHealth > 0){
       setTimeout(() => {
         commit('gameData/toggle', {property:'combatLocked'}, {root: true});
