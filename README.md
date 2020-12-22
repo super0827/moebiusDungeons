@@ -1,4 +1,4 @@
-# Moebius Dungeons (MoDun)
+# Moebius Dungeons (MoDun) v1.3.1
 ## A Browser RPG Roguelike Game
 
 <br>
