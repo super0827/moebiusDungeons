@@ -1,9 +1,9 @@
 <template>
     <section class="centerRow">
         <p>METTLE</p>
-            <img :src="mettleImg" :class="{'used': mettle <= 0}"/>
-            <img :src="mettleImg" :class="{'used': mettle <= 1}"/>
-            <img :src="mettleImg" :class="{'used': mettle <= 2}"/>
+        <img :src="mettleImg" :class="{'used': mettle <= 0}"/>
+        <img :src="mettleImg" :class="{'used': mettle <= 1}"/>
+        <img :src="mettleImg" :class="{'used': mettle <= 2}"/>
     </section>
 </template>
 
@@ -28,7 +28,7 @@ import { mapGetters, mapState } from 'vuex';
     display:flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 p{
     font-size:20px;

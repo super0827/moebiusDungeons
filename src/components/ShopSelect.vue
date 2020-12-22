@@ -1,7 +1,7 @@
 <template>
 
 <section class="characterSelectWrapper">
-
+    
    <section class="lessImportant flexRowBetween">
     <h2>Your Stats:</h2>
     <br>
