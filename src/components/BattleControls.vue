@@ -1,13 +1,18 @@
 <template>
 <section class="columnsMiddle battleOptions">
     <StatBar/>
-
     <br>
-
+     <ToolTip
+        :shift="{
+            top:-120,
+        }"  
+        top="true"
+        subtitle="Mettle"
+        :descriptions="[`Mettle allows you to use your special ability up to a max of three times. Cost is always one to one.`]"
+    >
     <SpecialBar/>
-
+     </ToolTip>
     <br>
-
     <ToolTip
         subtitle="Trade Blows"
         :descriptions="[`Deal damage to the monster, if it's still alive after you attack, it attacks back!`]"
@@ -45,8 +50,8 @@
 
     <ToolTip
         subtitle="Turn Tail"
-        :descriptions="[`Escape from the Dungeon Phase, more successful when you have low health.`, `Can be used once per Dungeon Phase.`]"
-        left="true"
+        :descriptions="[`Flee you fool! Click this to run away. Not gaurenteed to succeed.`]"
+        right="true"
     >
     <div @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()" class="controlButton">
     <h3  
