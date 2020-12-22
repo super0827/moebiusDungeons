@@ -125,10 +125,10 @@ export default {
   methods: {
     setPlayer(passedPlayer) {
         this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
-        this.$store.commit('playerData/mutate', {property: 'info', with: passedPlayer});
         this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'});
-
-        this.$store.dispatch('leaderboardData/compareToHighScore')
+        this.$store.commit('monsterData/mutate', {property: 'roster', with: 0})
+        
+        //for varlets starting coins - not a mistake
         this.$store.commit('leaderboardData/incrementByValue', {property: 'totalCoins', with: passedPlayer.coins})
         UiSound.charPick.play();
     },
