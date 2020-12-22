@@ -1,4 +1,4 @@
-import bkg from '@/plugins/backgroundMusic.js'
+import bkg from '@/plugins/BackgroundMusic.js'
 import shuffle from 'lodash.shuffle'
 
 let shuffleMusic = [];
