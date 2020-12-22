@@ -2,8 +2,7 @@
     <div class="relative">
         <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()" id="credits">Credits</h1>
 
-        <div class="flexColumn">
-        <h1>Welcome To The</h1>
+        <div class="flexColumn">    
         <h1>Moebius Dungeons</h1>
         </div>
 
@@ -58,7 +57,7 @@
         </div>
 <br>
 
-<p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save you game click the cog in the top left corner during game play and click save game before closing the browser.</p>
+<p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
 
         <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
 
