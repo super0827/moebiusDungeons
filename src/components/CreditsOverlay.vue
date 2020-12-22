@@ -25,18 +25,18 @@
                     <h2>Dedicated To:</h2>
                     <p>My beautiful, and patient wife.</p>
                     <p>My loving family.</p>
-                    <p>My stalwart friends, who help me blow of steam and reboot.</p>
+                    <p>My stalwart friends, who help me blow off steam and reboot.</p>
                     <p>My collaborators in all my artwork and storytelling, who guide me when I'm feeling wayward.</p>
                 </section>
                 
                 <section class="block">
                     <h2>My Friends:</h2>
-                    <p>Andy Webb, for building the lore of Moebius Dungeons over the years.</p>
-                    <p>David Haines, for always being interested.</p>
+                    <p>Andy Webb, for building the lore of Amara and Moebius Dungeons over the years.</p>
+                    <p>David Haines, for always being interested in my work.</p>
                     <p>Josh Haines, for dreaming with me.</p>
                     <p>Jacob Yager, for being my biggest fan.</p>
-                    <p>Al Yager, for being an ear.</p>
-                    <p>Jerri Yager, for your encouragement.</p>
+                    <p>Al Yager, for always being an ear.</p>
+                    <p>Jerri Yager, for your unfaltering encouragement.</p>
                 </section>
 
                 <section class="block">
