@@ -10,7 +10,7 @@
     </transition>
 
     <section class="version">
-      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.2.1</a></p>
+      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.3.1</a></p>
     </section>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
@@ -50,6 +50,7 @@ import Keypress from 'vue-keypress';
 import Login from '@/components/authentication/Login.vue';
 import Loading from '@/components/authentication/Loading.vue';
 import TheLoginBar from '@/components/ui/TheLoginBar.vue';
+import CreditsOverlay from '@/components/CreditsOverlay.vue';
 
 import Register from '@/components/authentication/Register.vue';
 
@@ -70,7 +71,8 @@ export default {
     LeaderBoard,
     TermsPage,
     DebugBar,
-    TheLoginBar
+    TheLoginBar,
+    CreditsOverlay,
   },
   data() {
     return {
@@ -94,7 +96,8 @@ export default {
         debugShow: state => state.debugShow
       }),
       ...mapState('authData', {
-        user: state => state.user
+        user: state => state.user,
+        settings: state => state.settings
       }),
       ...mapGetters('leaderboardData',{
         leaderBoard: 'snapshot',
@@ -103,7 +106,7 @@ export default {
   mounted() {
     this.$store.commit('monsterData/newMonster');
     this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
-  }
+  },
 }
 </script>
 

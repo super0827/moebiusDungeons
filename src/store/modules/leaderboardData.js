@@ -8,6 +8,7 @@ const state = () => ({
   totalDamageDealt:0,
   totalDamageTaken:0,
   damageBlocked:0,
+  saveCheck:0,
 })
 
 const mutations = {
@@ -21,6 +22,7 @@ const mutations = {
     state.totalDamageDealt = 0;
     state.totalDamageTaken = 0;
     state.damageBlocked = 0;
+    state.saveCheck = 0;
   },
   mutate(state, payload) {
     state[payload.property] = payload.with;

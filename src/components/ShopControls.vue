@@ -15,7 +15,9 @@
     :class="{
       'striked' : buyable.cost > coins, 
       'animated shakeX faster' : buyable.noSale, 
-      'bought' : buyable.bought }"
+      'bought' : buyable.bought,
+      'locked' : lockInteract
+    }"
     class="itemRow"
     >
         <section class="description">
@@ -45,6 +47,12 @@
       </section>
 
       <SpecialBar/>
+
+      <br>
+      
+      <section :class="{'locked' : lockInteract}" @mouseenter="UiSounds.chit.play()" @click="backToDungeon" class="backToDungeon">
+        <h3>BACK TO THE DUNGEON</h3>
+      </section>
 
 </section>
 
@@ -79,6 +87,7 @@ export default {
       Merchant: MerchantSounds,
       Witch: WitchSounds,
       failedBuy: 0,
+      lockInteract: true,
     }
   },
   computed: {
@@ -119,7 +128,14 @@ export default {
     randomRoll(rollMax){
       return Math.floor(Math.random() * Math.floor(rollMax) + 1);
     },
+    backToDungeon() {
+      if(this.lockInteract === false) {
+        this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})
+      }
+    },
     buy(itemBought) {
+      if(this.lockInteract === false){
+      this.lockInteract = true;
       if(itemBought.cost <= this.coins && itemBought.bought === false) {
         
         let roll = this.randomRoll(2);
@@ -127,14 +143,22 @@ export default {
         if(itemBought.cost <= 4){
           let randomSound = this.randomRoll(this.shopkeep.thankYou.length-1)
           this.whosSound[this.shopkeep.thankYou[randomSound]].play()
+          this.whosSound[this.shopkeep.thankYou[randomSound]].on('end', () => {
+            this.lockInteract = false;
+          })
+
         }
         else if (itemBought.cost === 5) {
           if(this.shopkeep.bigBuy.length > 0) {
             let randomSound = this.randomRoll(this.shopkeep.bigBuy.length-1)
             this.whosSound[this.shopkeep.bigBuy[randomSound]].play()
+            this.whosSound[this.shopkeep.bigBuy[randomSound]].on('end', () => {
+            this.lockInteract = false;
+          })
           }
           else {
-            console.log(`No Sound Exists.`)
+            console.log(`No Sound Exists.`);
+            this.lockInteract = false;
           }
         }
         
@@ -153,7 +177,7 @@ export default {
             ShopSounds[`fourCoin`].play()
             break;
           case 5:
-            ShopSounds[`fiveCoin`].play()``
+            ShopSounds[`fiveCoin`].play()
             break;
         }
 
@@ -171,7 +195,6 @@ export default {
         this.$store.commit('playerData/buyItem', itemBought.cost)
 
         this.$store.commit('leaderboardData/incrementByValue', {property:'coinsSpent', with:itemBought.cost}, {root:true})
-        this.$store.dispatch('authData/updateSavedGame', null, {root:true})
       } 
       
       else {
@@ -186,16 +209,24 @@ export default {
         else { 
           if(this.shopkeep.cantBuy.length > 0){
             this.whosSound[this.shopkeep.cantBuy[0]].play()
+            this.whosSound[this.shopkeep.cantBuy[0]].on('end', () => {
+            this.lockInteract = false;
+          })
+            
             this.shopkeep.cantBuy.shift()
           }
 
           else if (this.shopkeep.cantBuy.length === 0) {
             ShopSounds['cantBuy'].play()
+            ShopSounds['cantBuy'].on('end', () => {
+            this.lockInteract = false;
+          })
           }
           this.failedBuy++;
           itemBought.noSale = false;
           }
         }, 500);
+      }
       }
     }
   },
@@ -203,15 +234,25 @@ export default {
     if(this.haveVisited) {
       let randomSound = this.randomRoll(this.shopkeep.welcomeBack.length-1)
       this.whosSound[this.shopkeep.welcomeBack[randomSound]].play()
+      this.whosSound[this.shopkeep.welcomeBack[randomSound]].on('end', () => {
+        this.lockInteract = false;
+      })
     } else {
       let randomSound = this.randomRoll(this.shopkeep.welcome.length-1)
       this.whosSound[this.shopkeep.welcome[randomSound]].play()
+      this.whosSound[this.shopkeep.welcome[randomSound]].on('end', () => {
+        this.lockInteract = false;
+      })
+      
       this.$store.commit('shopkeepData/recordVisit')
     }
   },
   beforeDestroy() {
       let randomSound = this.randomRoll(this.shopkeep.goodbye.length-1)
       this.whosSound[this.shopkeep.goodbye[randomSound]].play()
+      this.whosSound[this.shopkeep.goodbye[randomSound]].on('end', () => {
+        this.lockInteract = true;
+      })
   }
 }
 </script>
@@ -244,6 +285,7 @@ export default {
   flex-direction:row;
   align-items:center;
   justify-content:flex-start;
+  transition: all .3s ease-in-out
 }
 
 .itemIcon img {
@@ -322,6 +364,7 @@ p {
 .striked {
   text-decoration:line-through;
   background: rgb(255, 75, 75);
+  transition: all .3s ease-in-out
 }
 
 .striked:hover{
@@ -332,6 +375,7 @@ p {
 .bought {
   cursor:not-allowed;
   opacity:.2;
+  transition: all .3s ease-in-out
 }
 
 .boughtAlert h1{
@@ -348,8 +392,31 @@ p {
   font-size:39px;
 }
 
+.locked {
+  cursor:not-allowed;
+  opacity:.2;
+  transition: all .3s ease-in-out
+}
+
+.locked:hover {
+  cursor:not-allowed;
+}
+
+
 h1 {
   color:white;
   text-shadow: black -2px 2px 2px;
+}
+
+.backToDungeon {
+  text-align:center;
+  border:2px solid black;
+  padding:5px 0;
+  margin-top:5px;
+}
+
+.backToDungeon:hover {
+  background: rgb(253,229,144);
+  cursor:pointer;
 }
 </style>

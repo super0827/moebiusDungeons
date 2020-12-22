@@ -94,7 +94,7 @@
 import { mapState, mapGetters } from 'vuex'
 import LeaderBoard from '@/store/modules/leaderboardData'
 import PlayerData from '@/store/modules/playerData'
-import BackgroundMusic from '@/plugins/backgroundMusic'
+import BackgroundMusic from '@/plugins/BackgroundMusic'
 
 export default {
   name: 'LoseScreen',

@@ -11,6 +11,11 @@
         </div>
 
           <p v-if="saveSuccessful">Settings Saved!</p>
+          <section v-if="!canSave && helpTip">
+          <p>
+            Game was saved!
+          </p>
+        </section>
 
       <div v-else-if="user.data == null" class="loginBar">
         <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</p>
@@ -20,9 +25,29 @@
 
 
       <div v-if="settingShow && user.data != null" class="settings flexRowCenter">
+      <hr class="horRule">
+        <section v-if="(canSave && acceptablePhase)" @click="saveGame" class="bigButton">
+          <h3>
+            Save Game
+          </h3>
+        </section>
+
+        <section v-if="!canSave && acceptablePhase" @click="saveGame">
+          <p class="widthSet">
+            Your game is saved, play more before saving again.
+          </p>
+        </section>
+        
+        <section v-if="!acceptablePhase" @click="saveGame">
+          <p class="widthSet">
+            Your game can't be saved on this screen.
+          </p>
+        </section>
+
+        <hr class="horRule">
+
         <h2>Settings</h2>
         <section class="flexRowStart">
-
 
           <p>
             Tooltips are:
@@ -36,13 +61,18 @@
         <p v-if="saveSuccessful" class="bigButton">Save Settings</p>
 
       <hr class="horRule">
+      
+      <section class="flexRow widthSet">
         <section>
           <p class="clickable bigButton" @click="signOut">Sign Out</p>
         </section>
 
-      </div>
+        <!-- <section>
+          <p class="clickable bigButton" @click="mainMenu">Main Menu</p>
+        </section> -->
+      </section>
 
-      
+      </div>
 
       <!-- <div class="prefBar flexColumn" v-if="preferences">
         <input
@@ -64,6 +94,8 @@ export default {
         return {
             debugShow: false,
             settingShow: false,
+            saveMessage: 'Game Saved!',
+            helpTip: false,
         }
     },
     computed: {
@@ -76,10 +108,39 @@ export default {
         avatar: 'userIcon',
         admin: 'adminAllowed'
       }),
+      ...mapState('leaderboardData', {
+        saveCheck: state => state.saveCheck,
+      }),
+      ...mapGetters('leaderboardData', {
+        highScore: 'highScore',
+      }),
+      ...mapState('gameData', {
+        phase: state => state.phase,
+      }),
+      canSave() {
+        if(this.highScore === 0 || this.highScore > this.saveCheck ) {
+          return true;
+        }
+        else if (this.highScore === this.saveCheck) {
+          return false;
+        }
+      },
+      acceptablePhase(){
+        switch(this.phase){
+          case 'CharacterSelect':
+          case 'SavedGame':
+          case 'LoseScreen':
+          case 'LeaderBoard':
+          case 'CreditsOverlay':
+            return false;
+            break;
+          default: return true;
+        }
+      }
     },
     methods: {
         signOut() {
-        this.$store.dispatch('authData/updateSavedGame')
+        this.$store.dispatch('authData/updateSavedGame');
 
         firebase
             .auth()
@@ -93,11 +154,29 @@ export default {
           this.settingShow = !this.settingShow;
         },
         toggleToolTips() {
+          console.log('tooltips toggling')
           this.$store.commit('authData/toggleUserData', {property:'tooltips'});
         },
         saveSettings() {
           this.$store.dispatch('authData/saveUserSettings');
           this.settingShow = !this.settingShow;
+        },
+        saveGame(){
+          if(this.canSave && this.phase != 'CharacterSelect') {
+             this.$store.dispatch('authData/updateSavedGame');
+             this.$store.commit('leaderboardData/mutate', {property: 'saveCheck', with:this.highScore})
+             this.helpTip = true;
+             setTimeout(() => {
+              this.helpTip = false;
+             }, 3000)
+          }
+          else if(!this.canSave) {
+            return
+          }
+        },
+        mainMenu() {
+          this.$store.dispatch('authData/updateSavedGame');
+          this.$store.commit('gameData/mutate', {property: 'phase', with: 'SavedGame'});
         }
     }
 }
@@ -180,7 +259,11 @@ export default {
 }
 
 .bigButton {
-  margin:20px;
-  padding:10px;
+  margin:5px;
+  padding:5px;
+}
+
+.widthSet {
+  max-width:160px;
 }
 </style>

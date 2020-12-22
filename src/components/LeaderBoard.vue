@@ -2,12 +2,17 @@
 <section class="wrapper">
     <h1>LEADERBOARDS</h1>
     <p>Congragulations to the most powerful kingloyal in Amara.</p>
+    <p>Leaderboards were reset for V.1.3.1 at 12/21/2020 9pm EST</p>
     <hr>
-    <section class="flexColumn">
+    <section v-if="leaderboards.length > 0" class="flexColumn">
         <section v-for="(items, index) in leaderboards" :key="items + index" class="block flexRow">
             <img class="smallIcon" :src="items.data.icon">
             <h3>{{index + 1}}. {{items.name}} | <span class="capital">{{items.data.playedAs}}</span> | {{items.data.highScore}} Points </h3>
         </section>
+    </section>
+
+    <section v-else>
+        <p>Leaderboards are empty, carve your own path and make Kingloyal history!</p>
     </section>
 
     <br>
@@ -22,7 +27,7 @@
 import { mapState, mapGetters } from 'vuex'
 import LeaderBoard from '@/store/modules/leaderboardData'
 import PlayerData from '@/store/modules/playerData'
-import BackgroundMusic from '@/plugins/backgroundMusic'
+import BackgroundMusic from '@/plugins/BackgroundMusic'
 
 export default {
   name: 'LeaderBoard',
