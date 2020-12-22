@@ -19,6 +19,15 @@ const mutations = {
     toggleAlerts(state, payload){
       state[payload.property] = !state[payload.property];
     },
+    DELETE_SAVED_GAME(state) {
+      state.user.data.save.saveExists = false;
+      state.user.data.save.saveState = {
+          monster: null, 
+          player: null,
+          shopPick: null,
+          leaderBoard: null,
+        };
+    },
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
     },
@@ -99,7 +108,7 @@ const actions = {
         }
       })
     },
-    deleteSavedGame({state}) {
+    deleteSavedGame({state, commit}) {
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
       userPath.set({
@@ -108,9 +117,10 @@ const actions = {
           monster: null, 
           player: null,
           shopPick: null,
-          leaderboard: null,
+          leaderBoard: null,
         },
-      })
+      });
+      commit('DELETE_SAVED_GAME');
     },
     fetchUser({ commit }, user) {
         //set login state based on user truthyness
