@@ -2,8 +2,8 @@
 
 <section class="characterSelectWrapper">
 
-   <section class="lessImportant">
-    <h2>Current Stats</h2>
+   <section class="lessImportant flexRowBetween">
+    <h2>Your Stats:</h2>
     <br>
     <section class='flexRow'>
         <section class="iconOverlay">
@@ -18,7 +18,7 @@
             <img class="smallStat" src="@/assets/imgs/icons/armorIcon.png">
             <h3> {{ armor }} </h3>
         </section>
-        <section>
+        <section class="iconOverlay">
             <img class="smallCoin" src="@/assets/imgs/icons/coinIcon.png">
             <h3>{{ coins }}</h3>
         </section>
@@ -263,19 +263,18 @@ export default {
 }
 
 .smallCoin {
-    width:40px;
-    margin:0px 5px;
+    width:54px;
+    margin:9px 5px;
 }
 
 .smallStat {
-    width:55px;
-    position:relative;
-    top:-10px;
+    width:70px;
+
 }
 
 .iconOverlay h3 {
+    font-size:1.5vw;
     position:relative;
-    top: -15px;
 }
 
 #graverobber:hover .overlay {
