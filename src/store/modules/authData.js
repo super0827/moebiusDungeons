@@ -27,6 +27,7 @@ const mutations = {
           shopPick: null,
           leaderBoard: null,
         };
+      
     },
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
@@ -121,6 +122,7 @@ const actions = {
         },
       });
       commit('DELETE_SAVED_GAME');
+      commit('monsterData/mutate', {property:'roster', with:0}, {root:true});
     },
     fetchUser({ commit }, user) {
         //set login state based on user truthyness
