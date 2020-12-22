@@ -128,17 +128,9 @@ export default {
       acceptablePhase(){
         switch(this.phase){
           case 'CharacterSelect':
-            return false;
-            break;
           case 'SavedGame':
-            return false;
-            break;
           case 'LoseScreen':
-            return false;
-            break;
           case 'LeaderBoard':
-            return false;
-            break;
           case 'CreditsOverlay':
             return false;
             break;
@@ -162,6 +154,7 @@ export default {
           this.settingShow = !this.settingShow;
         },
         toggleToolTips() {
+          console.log('tooltips toggling')
           this.$store.commit('authData/toggleUserData', {property:'tooltips'});
         },
         saveSettings() {
