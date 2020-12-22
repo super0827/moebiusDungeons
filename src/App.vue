@@ -101,6 +101,9 @@ export default {
       }),
       ...mapGetters('leaderboardData',{
         leaderBoard: 'snapshot',
+      }),
+      ...mapState('monsterData', {
+        roster: state => state.roster
       })
   },
   mounted() {
