@@ -1,4 +1,4 @@
-import bkg from '@/plugins/backgroundMusic.js'
+import bkg from '@/plugins/BackgroundMusic.js'
 import shuffle from 'lodash.shuffle'
 
 let shuffleMusic = [];
@@ -29,10 +29,11 @@ export default {
         helper: function(value){
             let fadeVolume = setVolume - .2;
             if (value === true) {
-                if (fadeVolume <= 0) fadeVolume = .05;
+                if (fadeVolume <= 0) fadeVolume = .1;
                 bkg[pickedMusic].fade(setVolume,fadeVolume,1000); 
             }
             else {
+                if (fadeVolume <= 0) fadeVolume = .1;
                 bkg[pickedMusic].fade(fadeVolume,setVolume,1000); 
             }
         }

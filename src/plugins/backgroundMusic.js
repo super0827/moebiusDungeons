@@ -57,7 +57,7 @@ const shopMusic3 = new Howl({
 const shopSelect = new Howl({
     src: [require('@/assets/audio/shopAudio/background/gentleCorpBackingPP.mp3')],
     loop: true,
-    volume: .2,
+    volume: .25,
 });
 
 const loseScreen = new Howl({

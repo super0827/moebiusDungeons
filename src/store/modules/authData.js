@@ -19,11 +19,20 @@ const mutations = {
     toggleAlerts(state, payload){
       state[payload.property] = !state[payload.property];
     },
+    DELETE_SAVED_GAME(state) {
+      state.user.data.save.saveExists = false;
+      state.user.data.save.saveState = {
+          monster: null, 
+          player: null,
+          shopPick: null,
+          leaderBoard: null,
+        };
+    },
     SET_SAVED_GAME(state, payload){
       state.user.data = {...state.user.data, save: payload}
     },
     SET_SETTINGS(state, payload){
-      state.settings = { payload }
+      state.settings = payload
     },
     SET_LOGGED_IN(state, value) {
         state.user.loggedIn = value;
@@ -64,6 +73,17 @@ const actions = {
         },
         {merge: true}
       )
+
+      console.log({
+        saveState: {
+          monster: rootGetters['monsterData/snapshot'] ,
+          player: rootGetters['playerData/snapshot'],
+          shopPick: rootGetters['shopkeepData/snapshot'],
+          leaderBoard: rootGetters['leaderboardData/snapshot']
+        },
+      }
+      )
+
     },
     loadSavedGame({state, dispatch, rootState}){
       var db = firebase.firestore();
@@ -88,19 +108,19 @@ const actions = {
         }
       })
     },
-    deleteSavedGame({state, dispatch}) {
+    deleteSavedGame({state, commit}) {
       var db = firebase.firestore();
       var userPath = db.collection('users').doc(state.user.data.email);
-      
       userPath.set({
         saveExists: false,
         saveState: {
           monster: null, 
           player: null,
           shopPick: null,
-          leaderboard: null,
+          leaderBoard: null,
         },
-      })
+      });
+      commit('DELETE_SAVED_GAME');
     },
     fetchUser({ commit }, user) {
         //set login state based on user truthyness
@@ -116,7 +136,7 @@ const actions = {
       var userPath = db.collection('users').doc(thisUser.email);
 
       userPath.get().then(function(doc){
-        if(doc.data().saveExists) {
+        if(doc.data()) {
           commit("SET_SAVED_GAME", doc.data())
         }
         else {
@@ -130,7 +150,7 @@ const actions = {
       var settingsPath = db.collection('settings').doc(thisUser.email);
 
       settingsPath.get().then(function(doc){
-        if (doc.data().settings) {
+        if (doc.data()) {
           commit("SET_SETTINGS", doc.data().settings)
         }
       })
@@ -149,7 +169,6 @@ const actions = {
     updateLeaderboard({state, rootGetters}) {
       var db = firebase.firestore();
       var userPath = db.collection('leaderboard').doc(state.user.data.displayName);
-
       userPath.get().then(function(doc){
         if (doc.exists) {
           console.log('highScore = ' + rootGetters['leaderboardData/highScore'])
@@ -175,7 +194,7 @@ const actions = {
       userPath.get().then(function(){
           userPath.set({
             settings:{
-              toolTips: state.settings.tooltips,
+              tooltips: state.settings.tooltips,
             },
           })
         })

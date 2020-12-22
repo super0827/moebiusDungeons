@@ -6,18 +6,30 @@
 
     <SpecialBar/>
 
+    <br>
+
     <ToolTip
-        :descriptions="[`Deal damage to the monster, if it's still alive after you attack it attacks back!`]"
+        subtitle="Trade Blows"
+        :descriptions="[`Deal damage to the monster, if it's still alive after you attack, it attacks back!`]"
+        top="true"
     >
-        <h2 @mouseenter="UiSounds.chit.play()" 
+    <div @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()" class="controlButton">
+        <h2  
         :class="{'striked' : combatLocked }" 
-        @click="TRADE_BLOWS()">Trade Blows</h2>
+        >Trade Blows</h2>
+    </div>
     </ToolTip>
 
-    <h2 @mouseenter="UiSounds.chit.play()" 
+    <ToolTip
+        :subtitle="special"
+        :descriptions="[specialDescription]"
+        left="true"
+    >
+    <div @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()" class="controlButton">
+    <h2 
     :class="{'striked' : combatLocked || mettle <= 0}"
     class="flexColumn"
-    @click="RUN_SPECIAL()">
+   >
         {{special}}
     
         <section class="mettleCost">
@@ -25,14 +37,23 @@
                 Costs <img :src="mettleImg">
             </p>
         </section>
-      
     </h2>
+    </div>
+    </ToolTip>
     
     <br>
 
-    <h3 @mouseenter="UiSounds.chit.play()" 
+    <ToolTip
+        subtitle="Turn Tail"
+        :descriptions="[`Escape from the Dungeon Phase, more successful when you have low health.`, `Can be used once per Dungeon Phase.`]"
+        left="true"
+    >
+    <div @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()" class="controlButton">
+    <h3  
     :class="{'striked' : turnTailUsed || combatLocked }" 
-    @click="TURN_TAIL()">Turn Tail</h3>
+    >Turn Tail</h3>
+    </div>
+    </ToolTip>
 
 </section>
 </template>
@@ -64,6 +85,7 @@ export default {
         ]),
         ...mapState('playerData', {
             special: state => state.info.special,
+            specialDescription: state => state.info.specialDescription,
             mettleImg: state => state.info.mettleImg,
             mettle: state => state.info.mettle
         }),
@@ -94,29 +116,28 @@ export default {
 
     h1, h2, h3 {
         transition: all .2s;
-        width:90%;
+    }
+
+    .controlButton {
+        background: rgb(207, 207, 207);
+        cursor:pointer;
+        padding:20px 20px;
+        display:block;
+        min-width:200px;
+        margin:0 0 10px 0;
+    }
+
+    .controlButton:hover {
+        background: rgb(166, 207, 144);
     }
 
     h2 {
-        background: rgb(207, 207, 207);
-        cursor:pointer;
-        padding:20px;
         text-decoration:none;
     }
     
     h3 {
-        background: rgb(207, 207, 207);
-        cursor:pointer;
-        padding:10px 20px;
         font-size:20px;
         text-transform:uppercase;
-    }
-    h2:hover {
-        background: rgb(166, 207, 144);
-    }
-    
-    h3:hover {
-        background: rgb(166, 207, 144);
     }
 
     .mettleCost {
@@ -152,10 +173,9 @@ export default {
 
     .columnsMiddle {
         display:flex;
-        justify-content: center;
+        justify-content:center;
         align-items:center;
         flex-direction: column;
-        width:200px;
         min-width:200px;
         text-align:center;
         margin:0 10px;  

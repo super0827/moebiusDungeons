@@ -258,8 +258,9 @@ const mutations = {
       state.log.push(payload)
     },
     newMonster(state, payload) {
+      const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
+      
       if(!payload){
-        const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
         state.roster += increment;
       }
 
