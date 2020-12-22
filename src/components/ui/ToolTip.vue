@@ -6,20 +6,21 @@
         
         <transition appear
             type="animation"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
+            enter-active-class="animated zoomIn faster"
+            leave-active-class="animated zoomOut faster"
           >
-        <div v-if="hover && toolTipsEnabled" class="tooltip"
+        <div v-if="hover && toolTipsEnabled" class="tooltip noPointer"
         :class="{
             'top':top,
             'bottom': bottom,
             'left': left,
             'right': right
-        }">
+        }"
+        :style="toolShift">
             <span class="text" 
             :class="{
-                'arrowTop': top,
-                'arrowBottom': bottom,
+                'arrowTop': bottom,
+                'arrowBottom': top,
                 'arrowRight': left,
                 'arrowLeft': right
             }"
@@ -40,7 +41,7 @@ import { mapState } from 'vuex'
 
     export default {
         
-        props: ['title', 'subtitle', 'descriptions', 'top', 'bottom', 'left', 'right'],
+        props: ['title', 'subtitle', 'descriptions', 'top', 'bottom', 'left', 'right', 'shift'],
         data() {
             return {
                 hover: false
@@ -50,68 +51,95 @@ import { mapState } from 'vuex'
             ...mapState('authData', {
                 toolTipsEnabled: state => state.settings.tooltips,
             }),
+            toolShift () {
+                let move = '';
+                if(this.shift){
+                if(this.shift.top) {
+                    move += `top: ${this.shift.top}px; `
+                }
+                if(this.shift.right) {
+                    move += `right: ${this.shift.right}px; `
+                }
+                if(this.shift.bottom) {
+                    move += `bottom: ${this.shift.bottom}px; `
+                }
+                if(this.shift.left) {
+                    move += `left: ${this.shift.left}px; `
+                }
+                return move;
+                }
+            }
         }
     }
 </script>
 
 <style scoped>
     .tooltip-container {
+        display:grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 100%;
         position:relative;
-        display:inline-block;
+        /* display:inline-block; */
         z-index:9999;
     }
 
     .tooltip-container:hover .tooltip {
-        display:inline-block;
+        /* display:inline-block; */
+        grid-column: 1/2;
+        grid-row: 1/2;
         opacity:1;
     }
 
     .tooltip {
         color: #ffffff;
         text-align: center;
-        padding: 10px 10px;
         border-radius: 5px;
         opacity: 0;
         transition: opacity .5s;
         transition-delay: .5s;
         position: absolute;
-        z-index: 999;
-        background: rgba(119, 119, 119, .9);
-        width:auto;
+        z-index: 9999;
+        background: rgba(119, 119, 119, 1);
+        box-shadow:#333 2px 2px 3px 1px;
+        width:90%;
+        min-width:150px;
+    }
+
+    .tooltip:hover {
+        /* display:inline-block; */
+        opacity:1;
     }
 
     .top {
-        bottom: 110%;
-        left: 50%;
-        margin-left: -90px;
+        bottom: 50%;
+        left: 5%;
     }
 
     .bottom {
-        top: 110%;
-        left: 50%;
-        margin-left: -90px;
+        top: 90%;
+        left: 5%;
     }
 
     .left {
-        left: -50%;
+        left: -90%;
         top: -5%;
-        margin-left: -90px;
-        width:200px;
     }
 
     .right {
-        left: 105%;
-        top: 50%;
-        margin-left: -90px;
+        left: 90%;
+        top: -5%;
+    }
+
+    .text {
+        display:inline-block;
+        margin:10px;
     }
 
     .text::after {
         content: " ";
         position: absolute;
-        
         border-width: 5px;
         border-style: solid;
-        
     }
 
     h2, h3 {
@@ -119,30 +147,42 @@ import { mapState } from 'vuex'
     }
 
     .arrowTop::after {
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-color: #777 transparent transparent transparent;
+        bottom: 100%;
+        left: calc(50% - 10px);
+        border-top: transparent 10px solid;
+        border-bottom: #777 10px solid;
+        border-left:transparent 10px solid;
+        border-right:transparent 10px solid;
     }
 
     .arrowBottom::after {
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-color: transparent transparent #777 transparent;
+        top:100%;
+        left: calc(50% - 10px);
+        border-top: #777 10px solid;
+        border-bottom:transparent 10px solid;
+        border-left:transparent 10px solid;
+        border-right:transparent 10px solid;
     }
 
     .arrowLeft::after {
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-color: transparent transparent #777 transparent;
+        bottom: calc(50% - 10px);
+        right:100%;
+        border-top: transparent 10px solid;
+        border-bottom:transparent 10px solid;
+        border-left:transparent 10px solid;
+        border-right:#777 10px solid;
     }
 
     .arrowRight::after {
-        top: 50%;
+        top: calc(50% - 10px);
         left: 100%;
-        margin-right: -5px;
-        border-color: transparent transparent transparent #777;
+        border-top: transparent 10px solid;
+        border-bottom:transparent 10px solid;
+        border-left:#777 10px solid;
+        border-right:transparent 10px solid;
+    }
+
+    .noPointer {
+        pointer-events: none;
     }
 </style>
