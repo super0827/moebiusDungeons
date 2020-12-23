@@ -69,8 +69,6 @@ import CreditsOverlay from '@/components/CreditsOverlay';
 import helperToggles from '@/components/mixins/helperToggles';
 import UiSounds from "@/plugins/UiSounds";
 
-import { consoleHello } from "@/components/mixins/consoleHello.js"
-
     export default {
         name:"SavedGame",
         mixins: [helperToggles],
@@ -121,12 +119,6 @@ import { consoleHello } from "@/components/mixins/consoleHello.js"
                 }
             }
         },
-        created() {
-
-        },
-        mounted() {
-            consoleHello();
-        }
     }
 </script>
 

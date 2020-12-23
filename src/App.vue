@@ -10,7 +10,7 @@
     </transition>
 
     <section class="version">
-      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.3.2</a></p>
+      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.2</a></p>
     </section>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
@@ -53,6 +53,8 @@ import TheLoginBar from '@/components/ui/TheLoginBar.vue';
 import CreditsOverlay from '@/components/CreditsOverlay.vue';
 
 import Register from '@/components/authentication/Register.vue';
+import { consoleHello } from "@/components/mixins/consoleHello.js"
+
 
 export default {
   name: 'App',
@@ -109,6 +111,7 @@ export default {
   mounted() {
     this.$store.commit('monsterData/newMonster');
     this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
+    consoleHello();
   },
 }
 </script>

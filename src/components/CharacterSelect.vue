@@ -99,7 +99,8 @@ export default {
                 special: "variagate",
                 specialDescription:"Spend one mettle to halve enemy HP. The monster won’t attack you back when you use Variagate.",
                 inAnimations: "zoomInUp",
-                outAnimations: "zoomOutDown",              },
+                outAnimations: "zoomOutDown",              
+              },
 
               {
                 name:"varlet",
@@ -130,7 +131,10 @@ export default {
         //for varlets starting coins - not a mistake
         this.$store.commit('leaderboardData/incrementByValue', {property: 'totalCoins', with: passedPlayer.coins})
         UiSound.charPick.play();
+        this.$store.commit('monsterData/newMonster');
+        this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS')
     },
+    
   },
 }
 </script>

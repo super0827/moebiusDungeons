@@ -271,15 +271,13 @@ const mutations = {
         else if (Math.sign(payload) === -1) state.roster--
         
         if(state.roster <= 1) state.roster = 1;
-
-        if(state.roster >= state.variants.length) state.roster = 1;
       }
       
       if(state.roster >= state.variants.length) state.roster = increment;
       
       state.info = state.variants[state.roster];
       
-      if(payload) MonsterSounds[state.info.enterSound].play();;
+      if(payload) MonsterSounds[state.info.enterSound].play();
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -352,20 +350,25 @@ const actions = {
     }
   },
   GENERATE_MONSTER_STATS({state, commit, getters, rootState}){
-    const healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 2
+    let healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 2
+
     let health = Math.floor(Math.random() * Math.floor(healthRanking)) + healthRanking;
-    const armorRanking = rootState['leaderboardData'].monstersKilled.length / 2
+
+    let armorRanking = rootState['leaderboardData'].monstersKilled.length / 2;
+
     let armor = Math.floor(Math.random() * Math.floor(armorRanking)) + 2;
-    const attackRanking = rootState['leaderboardData'].monstersKilled.length + 2
+
+    let attackRanking = rootState['leaderboardData'].monstersKilled.length + 2;
+
     let attack = Math.floor(Math.random() * Math.floor(attackRanking)) + 1;
-    const coinRanking = (rootState['leaderboardData'].monstersKilled.length + 1) / 3
+
+    let coinRanking = (rootState['leaderboardData'].monstersKilled.length + 1) / 3;
+    
     let coin = Math.floor(Math.random() * Math.floor(coinRanking)) + 1;
     
     if(getters.monsterRank === ''){
       health += 2;
-      armor += 0;
       attack += 1;
-      coin += 0;
     }
     else if(getters.monsterRank === 'virulent') {
       health += 5;
@@ -391,6 +394,9 @@ const actions = {
       attack += 18;
       coin += 3;
     }
+
+    console.table([health, armor, attack, coin])
+
     commit('mutateInfo', {property:'baseHealth', with: health})
     commit('mutateInfo', {property:'baseArmor', with: armor})
     commit('mutateInfo', {property:'baseAttackMax', with: attack})

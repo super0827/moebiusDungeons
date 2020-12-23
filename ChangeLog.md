@@ -1,4 +1,4 @@
-# V.1.3.2 - More Tooltips and bug Squashing
+# V.1.3.2 - More Tooltips & Bug Squashing
 *Deployed 12/22/2020*
 - Added Tooltips to Dungeon Phase
 - Made Tooltip component more robust and adaptable, accepting more props.
@@ -7,6 +7,7 @@
 - Added your current score to the login bar, which now is displayed during gameplay.
 - Fixed some typos.
 - Added a default save state to prevent errors on registration without Google login.
+- Made monster generation more explicit, and it is more consistent when restarting and playing subsequent games.
 
 
 # V.1.3.1 - Database Changes & Tooltip Hot Fix
@@ -37,7 +38,7 @@
 ## AUDIO CHANGES
 - Remixed and mastered all audio for the game using conditional volumes for Howler to make the audio less varied and entire audio experience enjoyable.
 
-# GENERAL CHANGES
+## GENERAL CHANGES
 - Added a Tool Tip Component to improve gameplay help for new players. Hovering over certain things will now provide context clues. Try it out! I'll be adding more as I improve the game.
 - Added a setting cog to the Login Bar, for now you can use this to change your preferences for using tooltips which will help newcomers learn how to play the game. More settings will be available as the game improves and updates.
 - New hovertext for character portraits in the dungeon phase.
