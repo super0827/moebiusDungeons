@@ -85,6 +85,12 @@ p {
     align-items: flex-start;
 }
 
+.flexStart {
+    display:flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .flexRowBetween {
     display:flex;
     justify-content: space-between;
