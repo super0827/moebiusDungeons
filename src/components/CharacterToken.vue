@@ -169,7 +169,6 @@
       v-if="who === 'player'"
         subtitle="Your coins"
         :descriptions="[`Value represents your total coins, which are used to buy items during the shop phase.`]"
-        bottom="true"
       > 
       <section class="coinWrapper">
         <img src="@/assets/imgs/icons/coinIcon.png" alt="">
@@ -187,7 +186,6 @@
         v-if="who === 'monster'"
         subtitle="Monster's Coins"
         :descriptions="[`If you defeat the monster you'll win their coins.`]"
-        bottom="true"
       >
       <section class="coinWrapper">
         <img src="@/assets/imgs/icons/coinIcon.png" alt="">

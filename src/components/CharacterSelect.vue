@@ -21,7 +21,6 @@
                 :title="characters.name"
                 :subtitle="characters.description1"
                 :descriptions="[characters.description2]"
-                top='true'
             >
                 <section 
                 @mouseenter="UiSound.chit.play()"

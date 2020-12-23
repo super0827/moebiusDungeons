@@ -3,10 +3,6 @@
     <StatBar/>
     <br>
      <ToolTip
-        :shift="{
-            top:-120,
-        }"  
-        top="true"
         subtitle="Mettle"
         :descriptions="[`Mettle allows you to use your special ability up to a max of three times. Cost is always one to one.`]"
     >
@@ -16,7 +12,6 @@
     <ToolTip
         subtitle="Trade Blows"
         :descriptions="[`Deal damage to the monster, if it's still alive after you attack, it attacks back!`]"
-        top="true"
     >
     <div @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()" class="controlButton">
         <h2  
@@ -28,7 +23,6 @@
     <ToolTip
         :subtitle="special"
         :descriptions="[specialDescription]"
-        left="true"
     >
     <div @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()" class="controlButton">
     <h2 
@@ -51,7 +45,6 @@
     <ToolTip
         subtitle="Turn Tail"
         :descriptions="[`Flee you fool! Click this to run away. Not gaurenteed to succeed.`]"
-        right="true"
     >
     <div @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()" class="controlButton">
     <h3  

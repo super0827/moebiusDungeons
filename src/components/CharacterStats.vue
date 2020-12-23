@@ -3,11 +3,6 @@
         <section class="stats statColumn" v-if="who === 'player'">
 
           <ToolTip
-            :shift="{
-              top:-50,
-              left:-130,
-            }"
-            left="true"
             subtitle="Your Health (HP)"
             :descriptions="[`Value representing your total Health. If this reaches zero it's Game Over!`]"
           >
@@ -24,11 +19,6 @@
         </ToolTip>
         
         <ToolTip
-            :shift="{
-              top:-44,
-              left:-130,
-            }"
-            left="true"
             subtitle="Your Attack (ATK)"
             :descriptions="[`Value representing your maximum possible attack.`]"
           >
@@ -45,11 +35,6 @@
         </ToolTip>
 
         <ToolTip
-            :shift="{
-              top:-56,
-              left:-130,
-            }"
-            left="true"
             subtitle="Your Armor (ARM)"
             :descriptions="[`Value representing your armor, this value reduces attacks from physical type monsters.`]"
           >
@@ -72,10 +57,6 @@
       <section class="stats statColumn" v-if="who === 'monster'">
 
         <ToolTip
-        :shift="{
-            top:-55,
-        }"  
-        right="true"
         subtitle="Monster's HP"
         :descriptions="[`Attacking the monster will reduce this number, when it reaches zero, you beat the monster!`]"
         >
@@ -93,10 +74,6 @@
         
         
         <ToolTip
-            :shift="{
-              top:-67,
-            }"
-            right="true"
             subtitle="Monster's Armor (ARM)"
             :descriptions="[`Value representing the Monster's armor, this value reduces physical damage dealt to the Monster.`]"
           >
@@ -113,11 +90,6 @@
         </ToolTip>
         
         <ToolTip
-            :shift="{
-              top:-67,
-              left:-103
-            }"
-            left="true"
             subtitle="Monster's Armor (ARM)"
             :descriptions="[`Value representing the Monster's armor, this value reduces physical damage dealt to the Monster.`]"
           >
