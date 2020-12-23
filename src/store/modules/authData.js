@@ -4,7 +4,16 @@ import 'firebase/firestore'
 const state = () => ({
    user: {
        loggedIn: false,
-       data: null,
+       data: {
+        save:{
+          saveState: {
+            monster: null,
+            player: null,
+            shopPick: null,
+            leaderBoard: null,
+          }
+        }
+       },
    },
    settings: {
       tooltips: true,
