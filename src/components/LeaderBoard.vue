@@ -2,7 +2,7 @@
 <section class="wrapper">
     <h1>LEADERBOARDS</h1>
     <p>Congragulations to the most powerful kingloyal in Amara.</p>
-    <p>Leaderboards were reset for V.1.3.1 at 12/21/2020 9pm EST</p>
+    <p>Leaderboards were reset for V.1.3.2 at 12/22/2020 6pm EST</p>
     <hr>
     <section v-if="leaderboards.length > 0" class="flexColumn">
         <section v-for="(items, index) in leaderboards" :key="items + index" class="block flexRow">
