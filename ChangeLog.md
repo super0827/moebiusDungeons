@@ -20,7 +20,7 @@
 ## BUG FIXES
 - Fixed a leaderboard breaking bug where the players score was persisting between character deaths, allowing one dedicated player *CRASHDADDY* to amass a score of over 200,000
 
-   ![CRASHDADDY!!!!!!](public/assets/changelog/crashdaddy.png)
+   ![CRASHDADDY!!!!!!](public/assets/changelog/crashdaddy.PNG)
 
 - Fixed issue where saved game data would appear on the Saved Game/Main Menu screen despite not actually existing.
 
