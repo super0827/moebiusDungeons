@@ -17,7 +17,7 @@
                 <p>Resting recovers one use of mettle at no cost. Use this if you're healthy and low on coin.</p>
                 <br>
                 <h1>Retire</h1>
-                <p>If you find yourself near death, or grow weary in your travels, retiring is your best bet. This option ends your current game and uploads you stats to the Kingloyal Leaderboards. Being in the top ten Kingloyal is an honor above all honors. Hold the highest rank at the end of the month and you'll be rewarded with a service sigil blessed by King Rense himself.</p>
+                <p>If you find yourself near death, or grow weary in your travels, retiring is your best bet. This option ends your current game and uploads your highscore to the Kingloyal Leaderboards. Being in the top ten Kingloyal is an honor above all honors. Hold the highest rank at the end of the month and you'll be rewarded with a service sigil blessed by King Rense himself.</p>
         </section>
     </section>
 </section>
