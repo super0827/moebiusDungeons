@@ -10,7 +10,7 @@
     </transition>
 
     <section class="version">
-      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.3.1</a></p>
+      <p><a href="https://discord.gg/R9D7znn" target="_blank">v.1.3.2</a></p>
     </section>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
