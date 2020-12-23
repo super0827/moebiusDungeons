@@ -1,6 +1,7 @@
 <template>
 <section>
     <section class="helpModule">
+        <section class="constraint">
 
     <img src="@/assets/imgs/icons/instructions.png" alt="">
     
@@ -28,6 +29,7 @@
     <h1 @mouseenter="UiSounds.chit.play()" class="animated pulse slow infinite" id="proceed" @click="toggleHelp()">
         UNDERSTOOD.
     </h1>
+     </section>
     </section>
 </section>
 </template>
@@ -59,13 +61,18 @@ export default {
         width:100%;
         background:rgba(255, 255, 255, 0.94);
         display:flex;
-        justify-content:flex-start;
+        justify-content:center;
         align-items: center;
         flex-direction: column;
     }
 
     img {
         width:50%;
+        max-width:200px;
+    }
+
+    .constraint {
+        max-width: 600px;
     }
 
     #proceed {
