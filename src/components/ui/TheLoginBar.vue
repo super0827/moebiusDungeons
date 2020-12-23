@@ -10,6 +10,19 @@
           </div>
         </div>
 
+        <transition name="fade" mode="in-out">
+        <section v-if="acceptablePhase" class="flexStart highscore">
+          <p>Score:</p>
+          <h1>
+           <animated-number 
+          :value="highScore"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </h1>
+        </section>
+        </transition>
+
           <p v-if="saveSuccessful">Settings Saved!</p>
           <section v-if="!canSave && helpTip">
           <p>
@@ -88,8 +101,13 @@
 import { mapState, mapGetters } from 'vuex'
 import firebase from "firebase/app";
 import 'firebase/firestore'
+import AnimatedNumber from "animated-number-vue";
+
 
 export default {
+components: {
+  AnimatedNumber
+},
     data() {
         return {
             debugShow: false,
@@ -265,5 +283,15 @@ export default {
 
 .widthSet {
   max-width:160px;
+}
+
+.highscore p, .highscore h1 {
+  font-size:15px;
+  line-height:20px;
+  margin:0 0 10px 0;
+}
+
+.highscore p {
+  margin-right:10px;
 }
 </style>
