@@ -1,3 +1,14 @@
+# V.1.3.2 - More Tooltips and bug Squashing
+*Deployed 12/22/2020*
+- Added Tooltips to Dungeon Phase
+- Made Tooltip component more robust and adaptable, accepting more props.
+- Semantic changes and new warning on Saved Game phase.
+- Fixed an issue where the game was failing to reset the roster number and monster fought causing new games to start fighting higher roster monsters.
+- Added your current score to the login bar, which now is displayed during gameplay.
+- Fixed some typos.
+- Added a default save state to prevent errors on registration without Google login.
+
+
 # V.1.3.1 - Database Changes & Tooltip Hot Fix
 *Deployed 12/21/2020*
 
