@@ -6,6 +6,7 @@ const state = () => ({
        loggedIn: false,
        data: {
         save:{
+          saveExists:false,
           saveState: {
             monster: null,
             player: null,
@@ -48,8 +49,8 @@ const mutations = {
         state.user.loggedIn = value;
     },
     SET_USER(state, payload) {
-      state.user.data = {...state.user.data, displayName: payload.displayName};
-      state.user.data = {...state.user.data, email: payload.email};
+      state.user.data.displayName = payload.displayName;
+      state.user.data.email = payload.email;
     },
     LOG_OUT_USER(state) {
       state.user.data = null

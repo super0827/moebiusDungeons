@@ -26,11 +26,12 @@
             <div class="boxSection">
             <div v-if="error" class="alert alert-danger"><p>{{error}}</p></div>
             <form action="#" @submit.prevent="submit">
+            <p class="subtitle">Knighthood name may be visible on leaderboards, please keep it clean.</p>
             <div class="form-group row">
                   <div class="flexRow flexSpaceEven">
                 <label for="name" class="col-md-4 col-form-label text-md-right">
                   <p class="fieldName">
-                    *Knighthood Name:
+                    Knighthood Name:
                   </p>
                 </label>
                 <div class="col-md-6">
@@ -45,33 +46,6 @@
                     required
                     autofocus
                     v-model="form.name"
-                  />
-                </div>
-                  </div>
-                  <p class="subtitle">Knighthood name may be visible on leaderboards, please keep it clean.</p>
-              </div>
-
-              <div class="form-group row">
-                <div class="flexRow flexSpaceEven">
-                <label for="email" class="col-md-4 col-form-label text-md-right">
-
-                  <p class="fieldName">
-                  Email:
-                  </p>
-                </label>
-
-                <div class="col-md-6">
-                  <input
-                    id="email"
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="Email"
-                    autocomplete="email"
-                    value
-                    required
-                    autofocus
-                    v-model="form.email"
                   />
                 </div>
                   </div>
@@ -142,16 +116,19 @@ export default {
   submit() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .createUserWithEmailAndPassword(this.form.name.replace(/\s/g, "") + '@fakeemail.com', this.form.password)
         .then(() => {
           var user = firebase.auth().currentUser;
           user.updateProfile({
             displayName: this.form.name
           })
-          this.$store.commit(`authData/SET_USER`, {displayName: this.form.name, email: user.email}, {root:true})
+          this.$store.commit(`authData/SET_USER`, {displayName: this.form.name, email:this.form.name+'@fakeemail.com'}, {root:true})
         })
         .catch(err => {
           this.error = err.message;
+          if(err.code === 'auth/email-already-in-use') {
+            this.error = 'Username already exists! Try another name.'
+          }
         });
     },
   },
