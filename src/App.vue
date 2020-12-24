@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in">
-      <section class="flexColumn">
+      <section class="flexColumn hideMobile">
         <section key="loginBar" v-if="phase != 'Loading'" class="user">
           <TheLoginBar />
           <DebugBar v-if="debugShow"/>
@@ -18,33 +18,16 @@
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
 
     <!-- GUI -->
-     <transition v-if="(acceptableBrowser !== 'unsupported' && acceptableDevice)" name="fade" mode="out-in">
-        <component 
+     <transition name="fade" mode="out-in">
+        <component
+        class="hideMobile"
         :key="phase"
         :is="phase"
         ></component>
       </transition>
 
       <transition name="fade" mode="out-in">
-        <section  v-if="(acceptableBrowser === 'unsupported' && acceptableDevice)" class="flexColumn">
-          <h1>Oh Dang!</h1>
-          <p>Looks like Moebius Dungeons isn't available for your browser just yet.</p>
-          <p>Currently the game works best on Google Chrome and alright on Mozilla Firefox</p>
-          <p>Download one of those browsers and try again.</p>
-          <section class="flexRow">
-              <a href="https://www.google.com/chrome/">
-                <h3 class="linkButton">Get Google Chrome</h3>
-              </a>
-
-              <a href="https://www.mozilla.org/en-US/firefox/">
-                <h3 class="linkButton">Get Mozilla Firefox</h3>
-              </a>
-          </section>
-        </section>
-      </transition>
-
-      <transition name="fade" mode="out-in">
-        <section v-if="!acceptableDevice" class="flexColumn mobileAlert">
+        <section class="flexColumn mobileAlert hideDesktop">
           <h1>Oops!</h1>
           <p>Moebius Dungeons isn't available on mobile devices yet!</p>
           <p>Come back on a desktop device to delve the dungeons!</p>
@@ -135,17 +118,6 @@ export default {
       ...mapState('monsterData', {
         roster: state => state.roster
       }),
-      acceptableBrowser() {
-        let browser = this.$browserDetect;
-        if(browser.isChrome) return 'supported';
-        if(browser.isSafari || browser.isOpera || browser.isEdge || browser.isIE) return 'unsupported';
-        if(browser.isFirefox) return 'experimental'
-      },
-      acceptableDevice() {
-        let device = this.$browserDetect;
-        if (device.$isIOS) return false
-        return true
-      }
   },
   mounted() {
     this.$store.commit('monsterData/newMonster');
@@ -277,5 +249,24 @@ a {
 .mobileAlert {
   width:200px;
   text-align:center;
+}
+
+@media screen and (max-width: 400px) {
+.hideDesktop {
+  display:block; 
+}
+.hideMobile {
+  display:none;
+}
+}
+
+@media screen and (min-width: 401px) {
+  .hideDesktop {
+    display:none; 
+  }
+  .hideMobile {
+    display:block;
+  }
+
 }
 </style>
