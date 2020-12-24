@@ -241,10 +241,10 @@ const state = () => ({
             noSale: false, 
             name: 'Mettle Poultice', 
             cost: 1, 
-            description: '+1 METTLE', 
+            description: '+3 ATK', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'mettle', value:1, operator:'add'},
+              {stat:'baseAttackMax', value:3, operator:'add'},
             ]},  
             icon: require("@/assets/imgs/icons/items/merchant/poultice.png")
           },
@@ -283,10 +283,10 @@ const state = () => ({
             noSale: false, 
             name: 'Mettle Draght', 
             cost: 2, 
-            description: '+2 METTLE', 
+            description: '+6 ATK', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'mettle', value:2, operator:'add'},
+              {stat:'baseAttackMax', value:6, operator:'add'},
             ]},  
             icon: require("@/assets/imgs/icons/items/merchant/draught.png")
           },
@@ -322,10 +322,10 @@ const state = () => ({
             bought: false, 
             noSale: false, 
             name: 'Mettle Vulnerary', 
-            cost: 3, description: '+3 METTLE', 
+            cost: 3, description: '+9 ATK', 
             effect: {action:"CHANGE_PLAYER_STATS",
             payload:[
-              {stat:'mettle', value:3, operator:'add'},
+              {stat:'baseAttackMax', value:4, operator:'add'},
             ]}, 
             icon: require("@/assets/imgs/icons/items/merchant/vulnary.png")
           },

@@ -6,6 +6,8 @@
             <div class="aboveHeader">
             <h1>Moebius Dungeons</h1>
             </div>
+          
+          <div class="flexRow">
           <div class="card-header flexRow flexSpaceEven">
             <div>
             <p>Swear the oath to become a <strong>Kingloyal Knight</strong> admitted into the King's Coterie, a group of adventurers renown across all <strong>Amara.</strong> It's your job to slay monsters and delve dungeons, <em>all to keep the grand kingdom of Eyien safe at night.</em>
@@ -19,8 +21,6 @@
 
             <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
           </div>
-
-          <br>
             
           <div class="card-body">
             <div class="boxSection">
@@ -115,6 +115,7 @@
           </div>
           </div>
           </div>
+          </div>
 
       </div>
     </div>
@@ -170,7 +171,6 @@ h1 {
 .flexRow {
   display:flex;
   flex-direction:row;
-  margin: 5px 0;
 }
 
 .flexSpaceEven {
@@ -195,6 +195,7 @@ h1 {
   border:solid black 1px;
   box-shadow:#777 0px 3px 5px;
   padding:25px;
+  margin-right:10px;
   text-align:center;
 }
 
@@ -227,7 +228,7 @@ h1 {
 }
 
 .container { 
-  max-width:450px;
+  max-width:650px;
 }
 
 button {

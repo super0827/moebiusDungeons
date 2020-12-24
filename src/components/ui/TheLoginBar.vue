@@ -10,19 +10,6 @@
           </div>
         </div>
 
-        <transition name="fade" mode="in-out">
-        <section v-if="acceptablePhase" class="flexStart highscore">
-          <p>Score:</p>
-          <h1>
-           <animated-number 
-          :value="highScore"
-          :duration="1000"
-          :formatValue="wholeNumber"
-          />
-          </h1>
-        </section>
-        </transition>
-
           <p v-if="saveSuccessful">Settings Saved!</p>
           <section v-if="!canSave && helpTip">
           <p>
@@ -36,6 +23,18 @@
         <p @click="$store.commit('gameData/mutate', {property: 'phase', with:'Register'})" class="clickable">Sign Up</p>
       </div>
 
+       <transition name="fade" mode="in-out">
+        <section v-if="acceptablePhase" class="flexStart highscore">
+          <p>Score:</p>
+          <h1>
+           <animated-number 
+          :value="highScore"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </h1>
+        </section>
+        </transition>
 
       <div v-if="settingShow && user.data != null" class="settings flexRowCenter">
       <hr class="horRule">
@@ -150,6 +149,8 @@ components: {
           case 'LoseScreen':
           case 'LeaderBoard':
           case 'CreditsOverlay':
+          case 'Login':
+          case 'Register':
             return false;
             break;
           default: return true;

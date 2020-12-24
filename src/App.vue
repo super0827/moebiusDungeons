@@ -11,16 +11,44 @@
 
     <section class="version">
       <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.2</a></p>
+      <p class="smallText">Stable in Google Chrome</p>
+      <p class="smallText">Buggy in Firefox</p>
     </section>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
 
     <!-- GUI -->
-     <transition name="fade" mode="out-in">
+     <transition v-if="(acceptableBrowser !== 'unsupported' && acceptableDevice)" name="fade" mode="out-in">
         <component 
         :key="phase"
         :is="phase"
         ></component>
+      </transition>
+
+      <transition name="fade" mode="out-in">
+        <section  v-if="(acceptableBrowser === 'unsupported' && acceptableDevice)" class="flexColumn">
+          <h1>Oh Dang!</h1>
+          <p>Looks like Moebius Dungeons isn't available for your browser just yet.</p>
+          <p>Currently the game works best on Google Chrome and alright on Mozilla Firefox</p>
+          <p>Download one of those browsers and try again.</p>
+          <section class="flexRow">
+              <a href="https://www.google.com/chrome/">
+                <h3 class="linkButton">Get Google Chrome</h3>
+              </a>
+
+              <a href="https://www.mozilla.org/en-US/firefox/">
+                <h3 class="linkButton">Get Mozilla Firefox</h3>
+              </a>
+          </section>
+        </section>
+      </transition>
+
+      <transition name="fade" mode="out-in">
+        <section  v-if="!acceptableDevice" class="flexColumn">
+          <h1>Oops!</h1>
+          <p>Moebius Dungeons isn't available on mobile devices yet!</p>
+          <p>Come back on a desktop device to delve the dungeons!</p>
+        </section>
       </transition>
 </div>
 </template>
@@ -106,7 +134,18 @@ export default {
       }),
       ...mapState('monsterData', {
         roster: state => state.roster
-      })
+      }),
+      acceptableBrowser() {
+        let browser = this.$browserDetect;
+        if(browser.isChrome) return 'supported';
+        if(browser.isSafari || browser.isOpera || browser.isEdge || browser.isIE) return 'unsupported';
+        if(browser.isFirefox) return 'experimental'
+      },
+      acceptableDevice() {
+        let device = this.$browserDetect;
+        if (device.$isIOS) return false
+        return true
+      }
   },
   mounted() {
     this.$store.commit('monsterData/newMonster');
@@ -210,5 +249,28 @@ export default {
   color:black;
   right:0px;
   text-transform:uppercase;
+}
+
+a {
+  text-decoration:none;
+}
+
+.linkButton {
+  color:white;
+  background:#777;
+  padding:20px;
+  margin:20px;
+  border-radius:5px;
+  text-decoration:none;
+}
+
+.linkButton:hover {
+  color:black;
+  background:#999;
+}
+
+.smallText {
+  font-size:10px;
+  text-transform:none;
 }
 </style>

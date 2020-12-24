@@ -6,7 +6,8 @@ import firebase from "firebase/app";
 import 'firebase/firestore'
 import 'firebase/auth'
 
-
+import browserDetect from "vue-browser-detect-plugin";
+Vue.use(browserDetect);
 
 Vue.config.productionTip = false;
 
