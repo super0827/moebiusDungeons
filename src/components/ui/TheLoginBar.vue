@@ -173,7 +173,6 @@ components: {
           this.settingShow = !this.settingShow;
         },
         toggleToolTips() {
-          console.log('tooltips toggling')
           this.$store.commit('authData/toggleUserData', {property:'tooltips'});
         },
         saveSettings() {

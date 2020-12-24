@@ -18,7 +18,7 @@
 
             <section class="googleButtonWrapper">
             <div @click="googleLogin" class="googleButton">
-              <img  src="@/assets/imgs/icons/googleSignin.png" alt="">
+              <img src="@/assets/imgs/icons/googleSignin.png" alt="">
             </div>
                   <div @click="goToSignup()" class="boxSection link">
                   <h3>New To Moebius Dungeons?</h3>

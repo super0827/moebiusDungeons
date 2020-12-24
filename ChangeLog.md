@@ -2,6 +2,7 @@
 *Deployed 12/24/2020*
 - prevented access to game via mobile devices
 - for people who don't want to sign up with an email address I've allowed signup through a username and password
+- fixed issue with the LOGOUT_USER action nullifying player data
 
 
 # V.1.3.2 - More Tooltips & Bug Squashing

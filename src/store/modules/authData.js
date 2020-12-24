@@ -5,6 +5,8 @@ const state = () => ({
    user: {
        loggedIn: false,
        data: {
+        displayName: 'null',
+        email: null,
         save:{
           saveExists:false,
           saveState: {
@@ -40,21 +42,33 @@ const mutations = {
       
     },
     SET_SAVED_GAME(state, payload){
-      state.user.data = {...state.user.data, save: payload}
+      state.user.data.save = payload;
     },
     SET_SETTINGS(state, payload){
       state.settings = payload
     },
     SET_LOGGED_IN(state, value) {
-        state.user.loggedIn = value;
+      state.user.loggedIn = value;
     },
     SET_USER(state, payload) {
-      state.user.data.displayName = payload.displayName;
+      state.user.data.displayName = payload.username;
       state.user.data.email = payload.email;
     },
     LOG_OUT_USER(state) {
-      state.user.data = null
+      state.user.data = {
+        displayName: null,
+        email: null,
+        save:{
+          saveExists:false,
+          saveState: {
+            monster: null,
+            player: null,
+            shopPick: null,
+            leaderBoard: null,
+          }
+        }
     }
+}
 }
 
 const getters = {
@@ -84,17 +98,6 @@ const actions = {
         },
         {merge: true}
       )
-
-      console.log({
-        saveState: {
-          monster: rootGetters['monsterData/snapshot'] ,
-          player: rootGetters['playerData/snapshot'],
-          shopPick: rootGetters['shopkeepData/snapshot'],
-          leaderBoard: rootGetters['leaderboardData/snapshot']
-        },
-      }
-      )
-
     },
     loadSavedGame({state, dispatch, rootState}){
       var db = firebase.firestore();
@@ -139,7 +142,7 @@ const actions = {
         commit("SET_LOGGED_IN", user != null);
         if (user.displayName != null) {
           //sets display name and email in the case that the display name exists immediately after registration
-          commit('SET_USER', user)
+          commit('SET_USER', {username: user.displayName, email: user.email})
         }
         commit('gameData/mutate', {property: 'phase', with:'SavedGame'}, {root:true})
     },
@@ -183,9 +186,6 @@ const actions = {
       var userPath = db.collection('leaderboard').doc(state.user.data.displayName);
       userPath.get().then(function(doc){
         if (doc.exists) {
-          console.log('highScore = ' + rootGetters['leaderboardData/highScore'])
-          console.log(doc.data())
-          console.log('existing leaderboard highScore = ' + doc.data().highScore)
           if(rootGetters['leaderboardData/highScore'] > doc.data().highScore) {
               userPath.set(
                 rootGetters['leaderboardData/snapshot']
