@@ -1,3 +1,9 @@
+# V.1.3.3 - Roadblocks
+*Deployed 12/24/2020*
+- added in roadblocks for players using non optimized browsers
+- prevented access to website via mobile devices
+
+
 # V.1.3.2 - More Tooltips & Bug Squashing
 *Deployed 12/22/2020*
 - Added Tooltips to Dungeon Phase

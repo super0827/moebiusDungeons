@@ -10,7 +10,7 @@
     </transition>
 
     <section class="version">
-      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.2</a></p>
+      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.3</a></p>
       <p class="smallText">Stable in Google Chrome</p>
       <p class="smallText">Buggy in Firefox</p>
     </section>
@@ -44,7 +44,7 @@
       </transition>
 
       <transition name="fade" mode="out-in">
-        <section  v-if="!acceptableDevice" class="flexColumn">
+        <section v-if="!acceptableDevice" class="flexColumn mobileAlert">
           <h1>Oops!</h1>
           <p>Moebius Dungeons isn't available on mobile devices yet!</p>
           <p>Come back on a desktop device to delve the dungeons!</p>
@@ -272,5 +272,10 @@ a {
 .smallText {
   font-size:10px;
   text-transform:none;
+}
+
+.mobileAlert {
+  width:200px;
+  text-align:center;
 }
 </style>
