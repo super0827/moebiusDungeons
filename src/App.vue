@@ -104,6 +104,7 @@ export default {
   },
   computed: {
       ...mapState('gameData', {
+
         phase: state => state.phase,
         leaderboard: state => state.leaderboard,
         debugShow: state => state.debugShow
@@ -118,11 +119,12 @@ export default {
       ...mapState('monsterData', {
         roster: state => state.roster
       }),
+      ...mapState('shopkeepData', {
+        variants: state => state.variants
+      })
   },
   mounted() {
-    this.$store.commit('monsterData/newMonster');
-    this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
-    consoleHello();
+    // consoleHello();
   },
 }
 </script>
