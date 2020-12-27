@@ -132,9 +132,9 @@ export default {
         this.$store.commit('leaderboardData/incrementByValue', {property: 'totalCoins', with: passedPlayer.coins})
         UiSound.charPick.play();
         this.$store.commit('monsterData/newMonster');
-        this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS')
+        this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
+        this.$store.commit('shopkeepData/resetShopItems');
     },
-    
   },
 }
 </script>
