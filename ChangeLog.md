@@ -1,3 +1,8 @@
+# V.1.3.4 - Item Reset Fix
+*Deployed 12/24/2020*
+- fixed a major bug where items were displaying as already bought if playing multiple times in a row
+- added two new 5 cost items to the Cleric
+
 # V.1.3.3 - Roadblocks
 *Deployed 12/24/2020*
 - prevented access to game via mobile devices
