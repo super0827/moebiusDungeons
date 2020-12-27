@@ -1,3 +1,7 @@
+# V.1.4.0 - Shopkeeper Overhaul
+*Deployed ???*
+- small semantic code updates to make things cleaner for the future
+
 # V.1.3.4 - Item Reset Fix
 *Deployed 12/24/2020*
 - fixed a major bug where items were displaying as already bought if playing multiple times in a row
@@ -8,7 +12,6 @@
 - prevented access to game via mobile devices
 - for people who don't want to sign up with an email address I've allowed signup through a username and password
 - fixed issue with the LOGOUT_USER action nullifying player data
-
 
 # V.1.3.2 - More Tooltips & Bug Squashing
 *Deployed 12/22/2020*
