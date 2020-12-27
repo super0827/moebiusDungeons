@@ -21,18 +21,6 @@ const state = () => ({
               effect: {action:'CHANGE_PLAYER_STATS', payload:[{stat:'baseHealth', value:5, operator: 'add'}]},
               icon: require("@/assets/imgs/icons/items/cleric/heal1.png")
             },
-              
-            // { 
-            //   type: 'instant', 
-            //   bought: false, 
-            //   noSale: false, 
-            //   name: 'minor blessing', 
-            //   cost: 1, 
-            //   description: '+1 ARM', 
-            //   effect: {action:"CHANGE_PLAYER_STATS", payload:[{stat:'baseArmor', value:1, operator: 'add'}]},
-            //   icon: require("@/assets/imgs/icons/items/cleric/boon.png")
-            // },
-
             {
               type: 'temporary', 
               bought: false, 
@@ -222,9 +210,6 @@ const state = () => ({
         cantBuy:['noBargaining', 'noBargaining2', 'noDiscounts', 'notEnoughCoin', 'notEnoughCoin2', 'notEnoughCoin3', 'youreBroke'],
         bigBuy:['gladToRidThat', 'gladYouBought', 'gladYouBought2', 'pickedAnother', 'pickedAnother2', 'thankYouSire',]
         },
-
-
-
 
         //MERCHANT SHOP
         {
@@ -541,9 +526,9 @@ const mutations = {
       const randomPick = Math.floor(Math.random() * Math.floor(state.variants.length));
       state.info = state.variants[randomPick]
       const inventory = shuffle(state.variants[randomPick].items);
-      state.inventory = inventory.slice(0, 3)
+      state.inventory = inventory.slice(0, 3);
     }
-    else if (typeof payload.shopkeep == 'number'){
+    else if (typeof payload.shopkeep === 'number'){
       state.info = state.variants[payload.shopkeep]
       const inventory = shuffle(state.variants[payload.shopkeep].items);
       state.inventory = inventory.slice(0, 3)
@@ -592,8 +577,8 @@ const actions = {
       }
   },
   PICK_SHOPKEEP ({commit}, payload){
-    commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true})
-    commit('newShopkeep', payload)
+    commit('gameData/mutate', {property: 'phase', with:'ShopPhase'}, {root:true});
+    commit('newShopkeep', payload);
   },
   ADD_TO_INVENTORY({commit, dispatch}, payload) {
     commit('playerData/toggleAnimation', {property: 'portEffect'}, {root:true})
