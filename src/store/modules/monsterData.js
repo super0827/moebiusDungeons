@@ -395,7 +395,7 @@ const actions = {
       coin += 3;
     }
 
-    console.table([health, armor, attack, coin])
+    console.table({monsterHealth:health, monsterArmor:armor, monsterAttack:attack, monsterCoins:coin})
 
     commit('mutateInfo', {property:'baseHealth', with: health})
     commit('mutateInfo', {property:'baseArmor', with: armor})
