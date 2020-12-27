@@ -11,6 +11,11 @@ body {
     padding:0;
 }
 
+.phaseContainer { 
+  max-width:85vw;
+  max-height:85vh;
+}
+
 .columns {
     max-width:200px;
     min-width:200px;
@@ -95,6 +100,13 @@ p {
     display:flex;
     justify-content: space-around;
     align-items:center;
+}
+
+.flexRowCenter {
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction:row;
 }
 
 .flexColumn {

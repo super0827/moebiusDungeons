@@ -1,4 +1,4 @@
-# V.1.4.0 - Shopkeeper Overhaul
+# V.1.4.0 - Shopkeeper Overhaul & CSS
 *Deployed ???*
 - small semantic code updates to make things cleaner for the future
 
