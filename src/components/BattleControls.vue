@@ -24,23 +24,13 @@
         :subtitle="special"
         :descriptions="[specialDescription]"
     >
-    <div @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()" class="controlButton">
-    <h2 
-    :class="{'striked' : combatLocked || mettle <= 0}"
-    class="flexColumn"
-   >
-        {{special}}
-    
-        <section class="mettleCost">
-            <p>
-                Costs <img :src="mettleImg">
-            </p>
-        </section>
-    </h2>
+    <div :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()" class="controlButton flexRowCenter">
+        <h2 class="rightMargin">{{special}}</h2>
+        <h2>(Costs</h2>
+        <img class="imgSmall" :src="mettleImg">
+        <h2>)</h2>
     </div>
     </ToolTip>
-    
-    <br>
 
     <ToolTip
         subtitle="Turn Tail"
@@ -120,7 +110,6 @@ export default {
         background: rgb(207, 207, 207);
         cursor:pointer;
         padding:20px 20px;
-        display:block;
         min-width:200px;
         margin:0 0 10px 0;
     }
@@ -131,10 +120,15 @@ export default {
 
     h2 {
         text-decoration:none;
+        font-size:15px;
+    }
+
+    .rightMargin {
+        margin-right:5px;
     }
     
     h3 {
-        font-size:20px;
+        font-size:10px;
         text-transform:uppercase;
     }
 
@@ -144,19 +138,10 @@ export default {
         justify-content: center;
     }
 
-    .mettleCost img {
+    .imgSmall {
         width:20px;
-        height:20px;
         position:relative;
-        top:5px;
-    }
-
-    .mettleCost p {
-        display: block;
-        margin-block-start: 0em;
-        margin-block-end: 0em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
+        top:1px;
     }
 
     .striked {
