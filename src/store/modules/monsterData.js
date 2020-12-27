@@ -259,11 +259,12 @@ const mutations = {
     },
     newMonster(state, payload) {
       const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
-      
+    
       if(!payload){
         state.roster += increment;
       }
 
+      //used for debugging - don't remove
       else if (payload){
         if(Math.sign(payload) === 1) {
           state.roster++;
@@ -271,7 +272,7 @@ const mutations = {
         else if (Math.sign(payload) === -1) state.roster--
         
         if(state.roster <= 1) state.roster = 1;
-      }
+      }//end debug code
       
       if(state.roster >= state.variants.length) state.roster = increment;
       
@@ -351,19 +352,15 @@ const actions = {
   },
   GENERATE_MONSTER_STATS({state, commit, getters, rootState}){
     let healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 2
-
     let health = Math.floor(Math.random() * Math.floor(healthRanking)) + healthRanking;
 
     let armorRanking = rootState['leaderboardData'].monstersKilled.length / 2;
-
     let armor = Math.floor(Math.random() * Math.floor(armorRanking)) + 2;
 
     let attackRanking = rootState['leaderboardData'].monstersKilled.length + 2;
-
     let attack = Math.floor(Math.random() * Math.floor(attackRanking)) + 1;
 
     let coinRanking = (rootState['leaderboardData'].monstersKilled.length + 1) / 3;
-    
     let coin = Math.floor(Math.random() * Math.floor(coinRanking)) + 1;
     
     if(getters.monsterRank === ''){
