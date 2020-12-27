@@ -43,7 +43,6 @@ const state = () => ({
               effect: {action:'CHANGE_MONSTER_STATS', payload:[{stat:'coins', value:2, length:1, operator:'multiply', length: 1}]},
               icon: require('@/assets/imgs/icons/items/cleric/fortune.png')
             },
-              
             {
               type: 'instant', 
               bought: false, 
@@ -54,7 +53,34 @@ const state = () => ({
               effect: {action:'CHANGE_PLAYER_STATS', payload:[{stat:'baseHealth', value:12, operator:'add'}]},
               icon: require("@/assets/imgs/icons/items/cleric/heal2.png")
             },
-
+            {
+              type: 'instant', 
+              bought: false, 
+              noSale: false, 
+              name: 'favor of amara', 
+              cost: 5, 
+              description: '+10 HP +5 ATK', 
+              effect: {action:'CHANGE_PLAYER_STATS', 
+              payload:[
+              {stat:'baseHealth', value:10, operator:'add'},
+              {stat:'baseAttackMax', value:5, operator:'add'}
+              ]},
+              icon: require("@/assets/imgs/icons/items/cleric/immune2.png")
+            },
+            {
+              type: 'instant', 
+              bought: false, 
+              noSale: false, 
+              name: 'Ember Shield', 
+              cost: 5, 
+              description: '+5 ARM +10 HP', 
+              effect: {action:'CHANGE_PLAYER_STATS', 
+              payload:[
+              {stat:'baseHealth', value:10, operator:'add'},
+              {stat:'baseAttackMax', value:5, operator:'add'}
+              ]},
+              icon: require("@/assets/imgs/icons/items/cleric/boon.png")
+            },
             {
               type: 'instant', 
               bought: false, 
@@ -65,7 +91,6 @@ const state = () => ({
               effect: {action:'CHANGE_PLAYER_STATS', payload:[{stat:'baseArmor', value:3, operator:'add'}]},
               icon: require("@/assets/imgs/icons/items/cleric/boonGold.png")
             },
-
             {
               type: 'instant', 
               bought: false, 
@@ -76,17 +101,16 @@ const state = () => ({
               effect: {action:'CHANGE_PLAYER_STATS', payload:[{stat:'baseAttackMax', value:5, operator:'add'}]},
               icon: require("@/assets/imgs/icons/items/cleric/boostAttack.png")
             },
-            
-            {
-              type: 'temporary', 
-              bought: false, 
-              noSale: false, 
-              name: 'boon', 
-              cost: 3, 
-              description: 'Immune to damage once', 
-              effect: {action:'ADD_TO_INVENTORY', payload: {ability:'immune', length:1, shine:'greenShine'}},
-              icon: require("@/assets/imgs/icons/items/cleric/immune2.png")
-            },
+            // {
+            //   type: 'temporary', 
+            //   bought: false, 
+            //   noSale: false, 
+            //   name: 'boon', 
+            //   cost: 3, 
+            //   description: 'Immune to damage once', 
+            //   effect: {action:'ADD_TO_INVENTORY', payload: {ability:'immune', length:1, shine:'greenShine'}},
+            //   icon: require("@/assets/imgs/icons/items/cleric/immune2.png")
+            // },
           ],
           saying:"Come in, are you hurt?",
           shopTitle: "I can heal you... or perhaps you need the favor of the old gods?",
@@ -172,7 +196,7 @@ const state = () => ({
               description: 'Halves your ARM | x2 ATK', 
               effect: {action:'CHANGE_PLAYER_STATS',
               payload:[
-                {stat:'baseAttack', value:2, operator:'multiply'},
+                {stat:'baseAttackMax', value:2, operator:'multiply'},
                 {stat:'baseArmor', value:2, operator:'divide'},
               ]}, 
               icon: require("@/assets/imgs/icons/items/graverobber/demonRing.png")
@@ -532,6 +556,13 @@ const mutations = {
   },
   recordVisit(state) {
     state.visited.push(state.info.name)
+  },
+  resetShopItems (state) {
+  for(const shopkeep in state.variants){
+      for (const item of state.variants[shopkeep].items) {
+        item.bought = false;
+      }
+    }
   }
 }
 
