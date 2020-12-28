@@ -70,7 +70,7 @@ import UiSounds from '@/plugins/UiSounds.js'
 import ShopSounds from '@/plugins/ShopSounds.js'
 import ClericSounds from '@/plugins/ClericSounds.js'
 import MerchantSounds from '@/plugins/MerchantSounds.js'
-import GraverobberSounds from '@/plugins/GraveRobberSounds.js'
+import GraveRobberSounds from '@/plugins/GraveRobberSounds.js'
 import WitchSounds from '@/plugins/WitchSounds.js'
 
 export default {
@@ -83,7 +83,7 @@ export default {
       shake: false,
       UiSounds: UiSounds,
       Cleric: ClericSounds,
-      Graverobber: GraverobberSounds,
+      Graverobber: GraveRobberSounds,
       Merchant: MerchantSounds,
       Witch: WitchSounds,
       failedBuy: 0,
@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     randomRoll(rollMax){
-      return Math.floor(Math.random() * Math.floor(rollMax) + 1);
+      return Math.floor(Math.random() * Math.floor(rollMax));
     },
     backToDungeon() {
       if(this.lockInteract === false) {
@@ -138,23 +138,26 @@ export default {
       this.lockInteract = true;
       if(itemBought.cost <= this.coins && itemBought.bought === false) {
         
-        let roll = this.randomRoll(2);
+        let roll = this.randomRoll(1);
 
         if(itemBought.cost <= 4){
-          let randomSound = this.randomRoll(this.shopkeep.thankYou.length-1)
+          let randomSound = this.randomRoll(this.shopkeep.thankYou.length)
           this.whosSound[this.shopkeep.thankYou[randomSound]].play()
           this.whosSound[this.shopkeep.thankYou[randomSound]].on('end', () => {
             this.lockInteract = false;
-          })
-
+          }).on('playerror', () => {
+          this.lockInteract = false;
+          }); 
         }
         else if (itemBought.cost === 5) {
           if(this.shopkeep.bigBuy.length > 0) {
-            let randomSound = this.randomRoll(this.shopkeep.bigBuy.length-1)
+          let randomSound = this.randomRoll(this.shopkeep.bigBuy.length)
             this.whosSound[this.shopkeep.bigBuy[randomSound]].play()
             this.whosSound[this.shopkeep.bigBuy[randomSound]].on('end', () => {
             this.lockInteract = false;
-          })
+          }).on('playerror', () => {
+          this.lockInteract = false;
+          }); 
           }
           else {
             console.log(`No Sound Exists.`);
@@ -163,6 +166,7 @@ export default {
         }
         
         // PLAYS COIN SOUNDS ON BUY
+        roll++
         switch (itemBought.cost) {
           case 1:
             ShopSounds[`oneCoin${roll}`].play()
@@ -208,19 +212,22 @@ export default {
         }
         else { 
           if(this.shopkeep.cantBuy.length > 0){
-            this.whosSound[this.shopkeep.cantBuy[0]].play()
-            this.whosSound[this.shopkeep.cantBuy[0]].on('end', () => {
+            let randomSound = this.randomRoll(this.shopkeep.cantBuy.length)
+            this.whosSound[this.shopkeep.cantBuy[randomSound]].play()
+            this.whosSound[this.shopkeep.cantBuy[randomSound]].on('end', () => {
             this.lockInteract = false;
-          })
-            
-            this.shopkeep.cantBuy.shift()
+          }).on('playerror', () => {
+          this.lockInteract = false;
+          }); 
           }
 
           else if (this.shopkeep.cantBuy.length === 0) {
             ShopSounds['cantBuy'].play()
             ShopSounds['cantBuy'].on('end', () => {
             this.lockInteract = false;
-          })
+          }).on('playerror', () => {
+            this.lockInteract = false;
+          }); 
           }
           this.failedBuy++;
           itemBought.noSale = false;
@@ -232,23 +239,26 @@ export default {
   },
   mounted() {
     if(this.haveVisited) {
-      let randomSound = this.randomRoll(this.shopkeep.welcomeBack.length-1)
+      let randomSound = this.randomRoll(this.shopkeep.welcomeBack.length)
       this.whosSound[this.shopkeep.welcomeBack[randomSound]].play()
       this.whosSound[this.shopkeep.welcomeBack[randomSound]].on('end', () => {
         this.lockInteract = false;
-      })
+      }).on('playerror', () => {
+        this.lockInteract = false;
+      }); 
     } else {
-      let randomSound = this.randomRoll(this.shopkeep.welcome.length-1)
+      let randomSound = this.randomRoll(this.shopkeep.welcome.length)
       this.whosSound[this.shopkeep.welcome[randomSound]].play()
       this.whosSound[this.shopkeep.welcome[randomSound]].on('end', () => {
         this.lockInteract = false;
-      })
-      
+      }).on('playerror', () => {
+        this.lockInteract = false;
+      }); 
       this.$store.commit('shopkeepData/recordVisit')
     }
   },
   beforeDestroy() {
-      let randomSound = this.randomRoll(this.shopkeep.goodbye.length-1)
+      let randomSound = this.randomRoll(this.shopkeep.goodbye.length)
       this.whosSound[this.shopkeep.goodbye[randomSound]].play()
       this.whosSound[this.shopkeep.goodbye[randomSound]].on('end', () => {
         this.lockInteract = true;
