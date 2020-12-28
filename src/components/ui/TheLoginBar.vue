@@ -159,7 +159,7 @@ components: {
     },
     methods: {
         signOut() {
-        if(state.user.data.displayName !== 'wanderer'){
+        if(this.user.data.displayName !== 'wanderer'){
           this.$store.dispatch('authData/updateSavedGame');
         }
 
