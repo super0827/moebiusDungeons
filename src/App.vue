@@ -10,7 +10,7 @@
     </transition>
 
     <section class="version">
-      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.4</a></p>
+      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.5</a></p>
       <p class="smallText">Stable in Google Chrome</p>
       <p class="smallText">Buggy in Firefox</p>
     </section>

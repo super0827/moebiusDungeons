@@ -78,17 +78,28 @@
                         Login
                       </h3>
                     </button>
-
                   </div>
               </div>
             </form>
               </div>
-
             </section>
+
+            <p class="hoverOver" @click="toTerms()">Creating an account means you agree to the terms, available by clicking here.</p>
 
             <hr>
 
-            <p class="hoverOver" @click="toTerms()">Creating an account means you agree to the terms, available by clicking here.</p>
+              <div class="form-group row mb-0">
+                  <div class="submission col-md-8 offset-md-4">
+                    <button @click="playAnyways" class="btn btn-primary">
+                      <h3>
+                        Play Without Signing Up
+                      </h3>
+                    </button>
+                  </div>
+              </div>
+
+            <section>
+            </section>
           </div>
         </div>
       </div>
@@ -143,6 +154,14 @@ export default {
     goToSignup() {
       this.$store.commit('gameData/mutate', {property: 'phase', with: 'Register'});
     },
+    playAnyways() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword('wanderer@fakeemail.com', 'guestpassword')
+        .catch(err => {
+          this.error = err.message;
+        });
+    }
   }
 };
 </script>

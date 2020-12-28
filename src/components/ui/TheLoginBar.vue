@@ -38,7 +38,7 @@
 
       <div v-if="settingShow && user.data != null" class="settings flexRowCenter">
       <hr class="horRule">
-        <section v-if="(canSave && acceptablePhase)" @click="saveGame" class="bigButton">
+        <section v-if="(canSave && acceptablePhase) && (user.data.displayName !== 'wanderer')" @click="saveGame" class="bigButton">
           <h3>
             Save Game
           </h3>
@@ -56,7 +56,7 @@
           </p>
         </section>
 
-        <hr class="horRule">
+        <hr v-if="user.data.displayName !== 'wanderer'" class="horRule">
 
         <h2>Settings</h2>
         <section class="flexRowStart">
@@ -68,8 +68,8 @@
           <p v-if="toolTip" @click="toggleToolTips" class="button">ON</p>
           <p v-else-if="!toolTip" @click="toggleToolTips" class="button">OFF</p>
         </section>
-        <br>
-        <p v-if="!saveSuccessful" @click="saveSettings" class="bigButton">Save Settings</p>
+        <br v-if="user.data.displayName !== 'wanderer'">
+        <p v-if="!saveSuccessful && user.data.displayName !== 'wanderer'" @click="saveSettings" class="bigButton">Save Settings</p>
         <p v-if="saveSuccessful" class="bigButton">Save Settings</p>
 
       <hr class="horRule">
@@ -159,7 +159,11 @@ components: {
     },
     methods: {
         signOut() {
-        this.$store.dispatch('authData/updateSavedGame');
+        if(state.user.data.displayName !== 'wanderer'){
+          this.$store.dispatch('authData/updateSavedGame');
+        }
+
+        this.settingShow = !this.settingShow;
 
         firebase
             .auth()
