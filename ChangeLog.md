@@ -2,6 +2,7 @@
 *Deployed 12/28/2020*
 - added the ability to sign in as a guest.
    - Guests can not save their information but will be submitted to the leaderboard under the name "WANDERER"
+- fixed issue with sound effects not playing and freezing the shop phase
 
 # V.1.3.4 - Item Reset Fix
 *Deployed 12/24/2020*
