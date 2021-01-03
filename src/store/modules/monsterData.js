@@ -217,7 +217,7 @@ const state = () => ({
            portrait:require("@/assets/imgs/monsters/lich.png"), 
            coins:10, baseHealth:36, baseArmor:8, baseAttackMax:12, attackType: "magical",
            attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           warning: "Whirling nacre tp body bound, a yearning mind in learn-lust drown.",
+           warning: "Whirling nacre to body bound, a yearning mind in learn-lust drown.",
            enterSound: 'lichEnter',
          },
          {

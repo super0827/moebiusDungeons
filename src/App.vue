@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in">
-      <section class="flexColumn hideMobile">
+      <section class="flexColumn">
         <section key="loginBar" v-if="phase != 'Loading'" class="user">
           <TheLoginBar />
           <DebugBar v-if="debugShow"/>
@@ -16,21 +16,13 @@
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
 
-    <!-- GUI -->
+    <!-- Game Interface - Switches Phases -->
      <transition name="fade" mode="out-in">
         <component
-        class="hideMobile"
+        class="gameArea"
         :key="phase"
         :is="phase"
         ></component>
-      </transition>
-
-      <transition name="fade" mode="out-in">
-        <section class="flexColumn mobileAlert hideDesktop">
-          <h1>Oops!</h1>
-          <p>Moebius Dungeons isn't available on mobile devices yet!</p>
-          <p>Come back on a desktop device to delve the dungeons!</p>
-        </section>
       </transition>
 </div>
 </template>
@@ -129,10 +121,8 @@ export default {
 </script>
 
 <style>
-
-
 #app {
-  overflow:hidden;
+  /* overflow:hidden; */
   width:100vw;
   height:100vh;
 
@@ -144,9 +134,11 @@ export default {
   align-items:center;
 }
 
-.battleWrapper {
-  width:400px;
-  max-width:400px;
+.flexColumn {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .phaseName {
@@ -245,29 +237,5 @@ a {
 .smallText {
   font-size:10px;
   text-transform:none;
-}
-
-.mobileAlert {
-  width:200px;
-  text-align:center;
-}
-
-@media screen and (max-width: 400px) {
-.hideDesktop {
-  display:block; 
-}
-.hideMobile {
-  display:none;
-}
-}
-
-@media screen and (min-width: 401px) {
-  .hideDesktop {
-    display:none; 
-  }
-  .hideMobile {
-    display:block;
-  }
-
 }
 </style>

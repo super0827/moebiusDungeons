@@ -1,22 +1,25 @@
 <template>
-    <div class="relative">
-        <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()" id="credits">Credits</h1>
+    <div class="gameContainer">
+        <section class="block col-left-4 row-top-2">
+            <h1>News</h1>
+            <p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
+            <p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
+        </section>
 
-        <div class="flexColumn">    
-        <h1>Moebius Dungeons</h1>
+        <section class="flexRow discordHover block col-left-4 row-bottom-1">
+            <img class="margin-right" src="@/assets/imgs/icons/discord.png" alt="discord icon">
+            <section>
+                <h3>Join the Moebius Dungeon Discord</h3>
+                <p>Help develop the game as it grows, and become a part of the Amaran community.</p>
+            </section>
+        </section>
+        
+        <div class="newGame block col-center-4 row-top-2" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
+            <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
+            <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
         </div>
 
-<p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
-
-        <br>
-        
-        <div class="flexRow">
-            <div @click="startNewGame()" @mouseenter="UiSounds.chit.play()" class="newGame nodule block">
-                <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
-                <img src="@/assets/imgs/icons/raceTypeHumanIcon.png" alt="">
-            </div>
-
-            <div @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null" class="resumeGame nodule block flexColumn">
+        <div class="col-right-4 row-top-2 resumeGame block flexColumn" @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null">
 
                 <img class="portraitSize" :src="player.info.portrait" alt="">
                 <br>
@@ -53,12 +56,23 @@
                 </div>
             </div>
 
+            <div class="col-right-4 row-top-2 noGameData nodule block flexColumn" v-if="player === null">
+                <h1>No Game Data Exists</h1>
+            </div>
+
+        <div class="col-center-4 row-bottom-1 ">
+            <div class="leaderboards flexRowCenter">
+                <img class="margin-right" src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
+                <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()">LEADERBOARDS</h1>
+            </div>
+            <div class="leaderboards flexRowCenter">
+                <img class="margin-right" src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
+                <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">CREDITS</h1>
+            </div>
         </div>
-<br>
 
-<p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
-
-        <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()" class="leaderboards">LEADERBOARDS</h1>
+        <div class="col-right-4 row-bottom-1 ">
+        </div>
 
     </div>
 </template>
@@ -123,13 +137,50 @@ import UiSounds from "@/plugins/UiSounds";
 </script>
 
 <style scoped>
-.relative {
-    position:relative;
-    max-width:500px;
-    text-align:center;
+.gameContainer {
+    width:85vw;
+    height:70vh;
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows:repeat(3, 1fr);
+    grid-gap: 10px 10px;
 }
-#credits {
-    font-size: 20px;
+
+.margin-right {
+    margin-right:10px;
+}
+
+.col-left-4 {
+    grid-column: 1/5;
+}
+
+.col-center-4 {
+    grid-column:5/9;
+}
+
+.col-right-4 {
+    grid-column:9/13;
+}
+
+.col-right-8 {
+    grid-column:5/13;
+    grid-row:3/4;
+}
+
+.row-all {
+    grid-row: 1/4;
+}
+
+.row-top-2 {
+    grid-row:1/3;
+}
+
+.row-bottom-1 {
+    grid-row:3/4;
+}
+
+.helperButton {
+    font-size: 1vw;
     position: fixed;
     right: 10px;
     top: 10px;
@@ -138,13 +189,16 @@ import UiSounds from "@/plugins/UiSounds";
     background: rgb(218, 218, 218);
     cursor:pointer;
 }
-h3, h1 {
-    text-align:center;
-}
+
 .leaderboards {
     background:rgb(218,218,218);
     padding:10px;
+    text-align:left;
     margin:10px 0px;
+}
+.leaderboards img {
+    max-width:10%;
+    height:auto;
 }
 .leaderboardsSmaller {
     background:rgb(218,218,218);
@@ -159,12 +213,15 @@ h3, h1 {
     color:grey;
     cursor:pointer;
 }
-.resumeGame h1 {
-    font-size:20px;
+
+h1 {
+    font-size:1.8vw;
 }
-.small {
-    font-size:20px;
-}
+
+p {
+    font-size:1.2vw;
+};
+
 
 .overlayStats{
     width:60px;
@@ -213,13 +270,7 @@ p.overlayGridPos {
 
 .block {
     border:solid 1px black;
-    margin:10px;
     padding:10px;
-}
-
-.nodule {
-    width:200px;
-    height:300px;
 }
 
 .newGame:hover, .resumeGame:hover {
@@ -240,8 +291,20 @@ p.overlayGridPos {
     margin:0 auto;
 }
 
+.noGameData {
+    border:#aaa dashed 1px;
+    color:#aaa;
+    cursor:not-allowed;
+}
+
 h1, h2 {
     margin:0;
+}
+
+.discordHover:hover {
+    cursor:pointer;
+    background: #8A9CFE;
+    border:#8A9CFE solid 1px;
 }
 
 .warning {
