@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bar">
         <div class="loginBar" v-if="user.loggedIn == true">
           <img class="avatar" :src="avatar" alt="">
           <section class="flexRowBetween">
@@ -205,6 +205,17 @@ components: {
 </script>
 
 <style scoped>
+.bar {
+  font-family: var(--paragraphs-type);
+  font-size:13px;
+  z-index:999999;
+  min-width:200px;
+  color:white;
+  left:0px;
+  background:rgb(54, 54, 54);
+  text-transform:uppercase;
+}
+
 .loginBar {
   display:flex;
   align-items:center;
