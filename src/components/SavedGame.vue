@@ -1,79 +1,83 @@
 <template>
-    <div class="gameContainer">
-        <section class="block col-left-4 row-top-2">
-            <h1>News</h1>
-            <p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
-            <p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
-        </section>
-
-        <section class="flexRow discordHover block col-left-4 row-bottom-1">
-            <img class="margin-right" src="@/assets/imgs/icons/discord.png" alt="discord icon">
-            <section>
-                <h3>Join the Moebius Dungeon Discord</h3>
-                <p>Help develop the game as it grows, and become a part of the Amaran community.</p>
+    <div>
+        <div class="gameContainer">
+            <section class="block col-left-4 row-top-2">
+                <h1>News</h1>
+                <p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
+                <p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
             </section>
-        </section>
-        
-        <div class="newGame block col-center-4 row-top-2" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
-            <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
-            <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
-        </div>
 
-        <div class="col-right-4 row-top-2 resumeGame block flexColumn" @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null">
+            <section class="discordHover flexColumn card col-left-4 row-bottom-1" @mouseenter="UiSounds.chit.play()">
+                <section>
+                    <img class="margin-right" src="@/assets/imgs/icons/discord.png" alt="discord icon">
+                    <section class="discordText">
+                        <h3>Join the Moebius Dungeon Discord and help develop the game as it grows, and become a part of the Amaran community.</h3>
+                    </section>
+                </section>
+            </section>
+            
+            <div class="newGame col-center-4 row-top-2" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
+                <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
+                <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
+            </div>
 
-                <img class="portraitSize" :src="player.info.portrait" alt="">
-                <br>
-                <h1>Resume Game</h1>
-                <h3>{{savedPhase}}</h3>
+            <div class="col-right-4 row-top-2 resumeGame block flexColumn" @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null">
 
-                <div class="flexRow whiteText">
-                    <div class="overlayStats">
-                    <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/healthIcon.png">
-                    <h3 class="overlayGridPos">{{ player.info.baseHealth + player.tempHealth}}</h3>
-                    </div>
+                    <img class="portraitSize" :src="player.info.portrait" alt="">
+                    <br>
+                    <h1>Resume Game</h1>
+                    <h3>{{savedPhase}}</h3>
+
+                    <div class="flexRow whiteText">
+                        <div class="overlayStats">
+                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/healthIcon.png">
+                        <h3 class="overlayGridPos">{{ player.info.baseHealth + player.tempHealth}}</h3>
+                        </div>
+                        
+                        <div class="overlayStats">
+                        <img class="iconSize overlayGridPos" :src="player.info.attackTypeImage">
+                        <h3 class="overlayGridPos">{{ player.info.baseAttackMax + player.tempAttackMax}}</h3>
+                        </div>
                     
-                    <div class="overlayStats">
-                    <img class="iconSize overlayGridPos" :src="player.info.attackTypeImage">
-                    <h3 class="overlayGridPos">{{ player.info.baseAttackMax + player.tempAttackMax}}</h3>
+                        <div class="overlayStats">
+                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/armorIcon.png">
+                        <h3 class="overlayGridPos">{{ player.info.baseArmor + player.tempArmor}}</h3>
+                        </div>
                     </div>
-                
-                    <div class="overlayStats">
-                    <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/armorIcon.png">
-                    <h3 class="overlayGridPos">{{ player.info.baseArmor + player.tempArmor}}</h3>
+
+                    <div class="flexRow blackText">   
+                        <div class="overlayStats">
+                            <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/coinIcon.png">
+                            <h1 class="overlayGridPos">{{ player.info.coins }}</h1>
+                        </div>
+                        
+                        <div class="overlayStats">
+                            <img class="iconSize overlayGridPos" :src="player.info.mettleImg">
+                            <h1 class="overlayGridPos">{{ player.info.mettle }}</h1>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flexRow blackText">   
-                    <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/coinIcon.png">
-                        <h1 class="overlayGridPos">{{ player.info.coins }}</h1>
-                    </div>
-                    
-                    <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" :src="player.info.mettleImg">
-                        <h1 class="overlayGridPos">{{ player.info.mettle }}</h1>
-                    </div>
+                <div class="col-right-4 row-top-2 noGameData nodule block flexColumn" v-if="player === null">
+                    <h1>No Game Data Exists</h1>
+                </div>
+
+            <div class="col-center-4 row-bottom-1 flexColumn">
+                <div class="leaderboards flexRowCenter">
+                    <img class="margin-right" src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
+                    <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()">LEADERBOARDS</h1>
+                </div>
+                <div class="leaderboards flexRowCenter">
+                    <img class="margin-right" src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
+                    <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">CREDITS</h1>
                 </div>
             </div>
 
-            <div class="col-right-4 row-top-2 noGameData nodule block flexColumn" v-if="player === null">
-                <h1>No Game Data Exists</h1>
-            </div>
+            <div class="col-right-4 row-bottom-1 flexColumn">
 
-        <div class="col-center-4 row-bottom-1 ">
-            <div class="leaderboards flexRowCenter">
-                <img class="margin-right" src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
-                <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()">LEADERBOARDS</h1>
-            </div>
-            <div class="leaderboards flexRowCenter">
-                <img class="margin-right" src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
-                <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">CREDITS</h1>
+                <img class="imageSmall" src="@/assets/imgs/icons/instructions.png" alt="">
             </div>
         </div>
-
-        <div class="col-right-4 row-bottom-1 ">
-        </div>
-
     </div>
 </template>
 
@@ -138,16 +142,19 @@ import UiSounds from "@/plugins/UiSounds";
 
 <style scoped>
 .gameContainer {
-    width:85vw;
-    height:70vh;
     display:grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows:repeat(3, 1fr);
+    grid-template-rows:repeat(5, 15vh);
     grid-gap: 10px 10px;
 }
 
 .margin-right {
     margin-right:10px;
+    float:left;
+}
+
+.imageSmall {
+    width:50%;
 }
 
 .col-left-4 {
@@ -273,17 +280,26 @@ p.overlayGridPos {
     padding:10px;
 }
 
-.newGame:hover, .resumeGame:hover {
-    background:gold;
-    border:goldenrod 1px solid;
-    cursor:pointer;
+.card {
+    padding:10px;
+    box-shadow: 1px 1px 3px 0px #ccc;
 }
 
-.newGame {
+.newGame, .resumeGame{
     display:flex;
     flex-direction:column;
     align-items: center;
     justify-content: center;
+    background:#fff;
+    box-shadow: 1px 1px 3px 0px #ccc;
+    border:none;
+}
+
+
+.newGame:hover, .resumeGame:hover {
+    background:gold;
+    box-shadow: 1px 1px 3px 0px #d6b600;
+    cursor:pointer;
 }
 
 .newGame img {
@@ -303,8 +319,12 @@ h1, h2 {
 
 .discordHover:hover {
     cursor:pointer;
-    background: #8A9CFE;
-    border:#8A9CFE solid 1px;
+    background: gold;
+    box-shadow:#d6b600 solid 1px;
+}
+
+.discordText h3 {
+    font-size:1.5vw;
 }
 
 .warning {
