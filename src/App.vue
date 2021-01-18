@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in">
-      <section class="flexColumn">
-        <section key="loginBar" v-if="phase != 'Loading'" class="user">
+      <section class="userInfoBar">
+        <section key="loginBar" v-if="phase != 'Loading'">
           <TheLoginBar />
           <DebugBar v-if="debugShow"/>
         </section>
@@ -19,7 +19,7 @@
     <!-- Game Interface - Switches Phases -->
      <transition name="fade" mode="out-in">
         <component
-        class="gameArea"
+        class="gameArea flexColumn"
         :key="phase"
         :is="phase"
         ></component>
@@ -125,20 +125,27 @@ export default {
   /* overflow:hidden; */
   width:100vw;
   height:100vh;
-
   margin:0;
   padding:0;
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-gap: 10px;
+}
 
+.userInfoBar {
+  grid-row:1/2;
+  grid-column:1/3;
+  margin:10px 0 0 10px;
   display:flex;
   justify-content:center;
   align-items:center;
+  position:absolute;
 }
 
-.flexColumn {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.gameArea {
+  grid-row:2/3;
+  grid-column:2/12;
 }
 
 .phaseName {
@@ -185,34 +192,14 @@ export default {
         cursor:pointer
     }
 
-.user {
-  margin:10px;
-  font-family: var(--paragraphs-type);
-  text-align:center;
-  display:inline;
-  position:fixed;
-  font-size:13px;
-  top:0px;
-  z-index:999999;
-  min-width:200px;
-  opacity:0.7;
-  color:white;
-  left:0px;
-  background:black;
-  text-transform:uppercase;
-}
-
 .version {
   margin:10px 20px 10px 10px;
   font-family: var(--paragraphs-type);
   text-align:center;
-  display:inline;
-  position:fixed;
+  grid-row:3/4;
+  grid-column: 12/13;
   font-size:13px;
-  bottom:0px;
-  z-index:999999;
   color:black;
-  right:0px;
   text-transform:uppercase;
 }
 
