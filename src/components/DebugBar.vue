@@ -1,40 +1,28 @@
 <template>
-<section class="debugBar">
-      <section @click="bugger = !bugger">
-        <h3>DEBUG BAR</h3>
-      </section>
-
-      <article class="debugContent" v-if="bugger">
-        <p>SCENES</p>
-
-        <section>
-          <section class="flexColumn">
+  <b-col cols='12' class="d-flex flex-column justify-content-start align-items-center">
+    <div class="debugBar px-2" v-if="bugger">
+      <article class="debugContent d-flex flex-column">
+        <h4 class="mt-2">SCENES</h4>
+        <section class="d-flex flex-column">
           <span>SCENE SELECT</span>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'StartScreen'})">STARTING SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'SavedGame'})">SAVED GAME SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHARACTER SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'WinScreen'})">WIN SCREEN</button>
-            <button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</button>
-          </section>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'SavedGame'})">SAVE GAME</b-button>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'CharacterSelect'})">CHAR SELECT</b-button>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</b-button>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</b-button>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</b-button>
+          <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</b-button>
         </section>
 
-        <p>MONSTER</p>
-        <section>
+        <h4 class="mt-2">MONSTERS</h4>
+        <section class="d-flex align-items-center">
           <span>HEALTH</span>
-          <section>
-            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-            <button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
-          </section>
+          <b-button class="mr-1" click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:1})">1</b-button>
+          <b-button @click="$store.commit('monsterData/mutateInfo', {property: 'baseHealth', with:99})">99</b-button>
         </section>
         
-        <br>
-        <p>ADD TEMP ITEMS</p>
-        <section>
+        <h4 class="mt-2">TEMP ITEMS</h4>
           <section>
-            <button @click="$store.commit('playerData/addToInventory', 
+            <b-button @click="$store.commit('playerData/addToInventory', 
             { 
               type: 'temporary', 
               bought: false, 
@@ -45,83 +33,72 @@
               effect: {action:'ADD_TO_INVENTORY', payload: {ability:'revive', length:-1, shine:'goldShine'}}, 
               icon: require('@/assets/imgs/icons/items/graverobber/dessicatedDoll.png')
             }
-            )"> Dessicated Doll </button>
-            
-            
+            )"> Dessicated Doll </b-button>
           </section>
-        </section>
-        <p>PLAYER</p>
-        
 
-        <section>
-          <span>HEALTH</span>
+        <h4 class="mt-2">PLAYER</h4>
+        <section class="d-flex align-items-center">
+          <span>HP</span>
           <section>
-            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</button>
-            <button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</button>
+            <b-button class="mr-1" @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:1})">1</b-button>
+            <b-button @click="$store.commit('playerData/mutateInfo', {property: 'baseHealth', with:99})">99</b-button>
           </section>
         </section>
       
-        <section>
-          <span>ARMOR</span>
+        <section class="d-flex align-items-center">
+          <span>ARM</span>
           <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</button>
+          <b-button class="mr-1" @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:5})">5</b-button>
+          <b-button @click="$store.commit('playerData/mutateInfo', {property: 'baseArmor', with:99})">99</b-button>
           </section>
         </section>
         
-        <section>
-          <span>ATTACK</span>
+        <section class="d-flex align-items-center">
+          <span>ATK</span>
           <section>
-          <button @click="$store.commit('playerData/addToStat', {property: 'baseAttackMax', with:1})">1</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</button> 
+          <b-button size="sm" class="mr-1" @click="$store.commit('playerData/addToStat', {property: 'baseAttackMax', with:1})">1</b-button>
+          <b-button size="sm" class="mr-1" @click="$store.commit('playerData/mutateInfo', {property: 'baseAttackMax', with:5})">5</b-button>
+          <b-button size="sm" @click="$store.commit('playerData/mutateInfo', {property:'baseAttackMax', with:99})">99</b-button> 
           </section>
         </section>
         
-        <section>
-          <span>COINS</span>
+        <section class="d-flex align-items-center">
+          <span>COIN</span>
           <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</button>
+          <b-button class="mr-1" @click="$store.commit('playerData/mutateInfo', {property:'coins', with:0})">0</b-button>
+          <b-button @click="$store.commit('playerData/mutateInfo', {property:'coins', with:99})">99</b-button>
           </section>
         </section>
         
-        <section>
-          <span>METTLE</span>
+        <section class="d-flex align-items-center">
+          <span>MTL</span>
           <section>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</button>
-          <button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</button>
+          <b-button class="mr-1" @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:0})">0</b-button>
+          <b-button @click="$store.commit('playerData/mutateInfo', {property:'mettle', with:3})">3</b-button>
           </section>
         </section>
 
-        <br>
-
-        <p>SHOPKEEPS</p>
-          <section>
-            <section class="flexColumn">
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:0})">CLERIC </button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:1})">GRAVEROBBER</button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:2})">MERCHANT</button>
-              <button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</button>
-            </section>
+        <h4 class="mt-2">SHOPKEEPS</h4>
+          <section class="d-flex flex-column">
+            <b-button class="mb-1" @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:0})">CLERIC </b-button>
+            <b-button class="mb-1" @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:1})">GRAVEROBBER</b-button>
+            <b-button class="mb-1" @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:2})">MERCHANT</b-button>
+            <b-button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</b-button>
         </section>
 
-        <br>
-
-        <p>MONSTER ROSTER</p>
-        <section class="flexColumn">
-          <button @click="$store.commit('monsterData/newMonster', 1)">Next Monster</button>
-          <button @click="$store.commit('monsterData/newMonster', -1)">Prev Monster</button>
+        <h4 class="mt-2">MONSTER ROSTER</h4>
+        <section class="d-flex flex-column">
+          <b-button class="mb-1" @click="$store.commit('monsterData/newMonster', 1)">Next Monster</b-button>
+          <b-button @click="$store.commit('monsterData/newMonster', -1)">Prev Monster</b-button>
         </section>
 
-        <br>
-
-        <p>MONSTER RANKS</p>
-        <section class="flexColumn">
-              <button @click="$store.commit('leaderboardData/addToList', {property: 'monstersKilled', with: 'monster'})">Rank Up</button>
-            </section>
+        <h4 class="mt-2">MONSTER RANKS</h4>
+        <section class="d-flex flex-column">
+          <b-button @click="$store.commit('leaderboardData/addToList', {property: 'monstersKilled', with: 'monster'})">Rank Up</b-button>
+        </section>
       </article> 
-    </section>
+    </div>
+  </b-col>
 </template>
 
 <script>
@@ -132,16 +109,18 @@ import UiSounds from '@/plugins/UiSounds.js'
 export default {
   name: 'DebugBar',
   data() {
-      return {
-          bugger: false,
-          UiSounds: UiSounds
+    return {
+      UiSounds: UiSounds
       }
   },
   computed: {
     ...mapState('playerData', {
         special: state => state.info.special,
         description: state => state.info.specialDescription
-    })
+    }),
+    ...mapState('gameData', {
+        bugger: state => state.debugShow
+    }),
   }
 }
 </script>
@@ -149,23 +128,11 @@ export default {
 <style scoped>
     /* Debug Styles - REMOVE FOR PRODUCTION */
 .debugBar {
-  margin:10px;
-  font-family: var(--paragraphs-type);
-  text-align:center;
-  font-size:13px;
-  top:0px;
-  z-index:999999;
-  min-width:200px;
-  opacity:0.7;
+  z-index:999;
+  padding:5px;
   color:white;
-  left:0px;
-  background:black;
-  text-transform:uppercase;
-}
-
-.debugBar h3 {
-  border: solid white 2px;
-  padding:0 50px;
+  background:rgb(54, 54, 54);
+  width:200px;
 }
 
 .debugBar span {
