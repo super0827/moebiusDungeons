@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import App from '@/App.vue'
+
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+
 import { store } from '@/store/store'
 import { mapState, mapGetters } from 'vuex'
 import firebase from "firebase/app";
@@ -10,6 +13,12 @@ import browserDetect from "vue-browser-detect-plugin";
 Vue.use(browserDetect);
 
 Vue.config.productionTip = false;
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 const firebaseConfig = {
   apiKey: "AIzaSyC8sd8gfr_MtwT-8O3DtI-nGd9T7ZRaNdA",
