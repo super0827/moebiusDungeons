@@ -1,36 +1,37 @@
 <template>
-  <div id="app">
-    <transition name="fade" mode="out-in">
-      <section class="userInfoBar">
-        <section key="loginBar" v-if="phase != 'Loading'">
-          <TheLoginBar />
-          <DebugBar v-if="debugShow"/>
-        </section>
-      </section>
-    </transition>
+  <b-container id="app" class="h-100">
+		<b-row align-v="center" class="h-100" align-h="center">
+      <b-col align-self="start" cols="1" class="h-10 d-flex flex-column justify-content-start mr-n4">
+        <transition-group name="fade" mode="out-in">
+          <TheLoginBar key="loginBar" v-if="phase != 'Loading'"/>
+        </transition-group>
+          <DebugBar key="debugBar" v-if="debugShow"/>
+      </b-col>
 
-    <section class="version">
-      <p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.5</a></p>
-      <p class="smallText"><a href="https://github.com/MisuseofMana/moebiusDungeons/issues">Report Issues Here</a></p>
-    </section>
+			<b-col align-self="center" cols="10" class="h-80 d-flex justify-content-center align-items-center mx-n4">
+        <transition name="fade" mode="out-in">
+          <component
+          :key="phase"
+          :is="phase"
+          ></component>
+        </transition>
+      </b-col>
 
-    <Keypress key-event="keyup" :key-code="192" @success="toggleDebug" />
+			<b-col align-self="end" cols="1" class="h-10 d-flex flex-column justify-content-end align-items-center ml-n4">
+				<p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.5</a></p>
+				<p class="smallText"><a href="https://github.com/MisuseofMana/moebiusDungeons/issues">Report Issues Here</a></p>
+      </b-col>
+    </b-row>
 
-    <!-- Game Interface - Switches Phases -->
-     <transition name="fade" mode="out-in">
-        <component
-        class="gameArea flexColumn"
-        :key="phase"
-        :is="phase"
-        ></component>
-      </transition>
-</div>
+    <Keypress key-event="keyup" :key-code="192" @success="toggleDebug"/>
+  </b-container>
 </template>
 
 <script>
 import '@/assets/styles/globals.css';
 import '@/assets/styles/animatedCSS.css';
 import '@/assets/styles/transitions.css';
+import '@/assets/styles/scrollbars.css';
 
 import { mapState, mapGetters } from 'vuex'
 
@@ -84,7 +85,7 @@ export default {
     }
   },
   methods: {
-    toggleDebug(response) {
+    toggleDebug() {
       if(this.user.data.displayName === 'Sean Yager'){
         this.$store.commit('gameData/toggle', {property:'debugShow'});
       }
@@ -122,107 +123,7 @@ export default {
 
 <style>
 #app {
-  /* overflow:hidden; */
-  width:100vw;
-  height:100vh;
-  margin:0;
-  padding:0;
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 1fr 10fr 1fr;
-  grid-gap: 10px;
-}
-
-.userInfoBar {
-  grid-row:1/2;
-  grid-column:1/3;
-  margin:10px 0 0 10px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:absolute;
-}
-
-.gameArea {
-  grid-row:2/3;
-  grid-column:2/12;
-}
-
-.phaseName {
-  font-size:40px;
-  margin:10px 0;
-}
-
-.pref:hover {
-  color:gold;
-  cursor:pointer;
-  filter:saturate(5);
-}
-
-.prefBar {
-  margin-top:5px;
-}
-
-.prefBar button {
-  margin-bottom:10px;
-  margin-top:10px;
-  cursor:pointer;
-}
-
-.gameplayWrapper {
-  width:600px;
-  min-width:600px;
-  margin:0 auto;
-  position:relative;
-}
-
-/* HELPERS */
-    #dungeonHelp {
-        font-size: 20px;
-        position:fixed;
-        right:10px;
-        top:10px;
-        margin:0;
-        padding:5px;
-        background:rgb(218, 218, 218);
-    }
-
-    #dungeonHelp:hover {
-        background:rgb(240, 240, 240);
-        cursor:pointer
-    }
-
-.version {
-  margin:10px 20px 10px 10px;
-  font-family: var(--paragraphs-type);
-  text-align:center;
-  grid-row:3/4;
-  grid-column: 12/13;
-  font-size:13px;
-  color:black;
-  text-transform:uppercase;
-}
-
-a {
-  text-decoration:none;
-}
-
-.linkButton {
-  color:white;
-  background:#777;
-  padding:20px;
-  margin:20px;
-  border-radius:5px;
-  text-decoration:none;
-}
-
-.linkButton:hover {
-  color:black;
-  background:#999;
-}
-
-.smallText {
-  font-size:10px;
-  text-transform:none;
+	height:100vh;
+	width:100vw;
 }
 </style>
