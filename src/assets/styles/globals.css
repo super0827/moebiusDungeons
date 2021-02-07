@@ -9,6 +9,12 @@
 body {
     margin:0;
     padding:0;
+    height:100%;
+    width:100%;
+}
+
+html { 
+    height: 100%; 
 }
 
 .columns {
@@ -29,10 +35,6 @@ body {
     height:290px;
 }
 
-.iconImageSize {
-    width:75px;
-  }
-
 h1 {
     font-family: var(--headers-type);
     font-size:30px;
@@ -45,11 +47,18 @@ h2 {
     text-transform:uppercase;
     text-decoration:underline;
 }
+
 h3 {
     font-family: var(--paragraphs-type);
     font-size:18px;
     font-weight:100;
     margin:2px 0;
+}
+
+h4 {
+    font-family: var(--paragraphs-type);
+    font-size:10px;
+    font-weight:100;
 }
 
 p {
