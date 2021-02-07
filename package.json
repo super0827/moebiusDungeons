@@ -11,6 +11,7 @@
     "@mdi/font": "^5.7.55",
     "animated-number-vue": "^1.0.0",
     "await-delay": "^1.0.0",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.4",
     "es6-promise": "^4.2.8",
     "firebase": "^7.19.1",
