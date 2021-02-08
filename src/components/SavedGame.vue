@@ -1,84 +1,90 @@
 <template>
-    <div>
-        <div class="gameContainer">
-            <section class="block col-left-4 row-top-2">
-                <h1>News</h1>
-                <p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
-                <p class="warning">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
-            </section>
+	<b-col cols="12">
+		<b-row class="d-flex justify-content-between mb-3">
+			<!-- NEWS -->
+			<b-col cols="5" class="border">
+				<div class="p-4">
+					<h1>News</h1>
+					<p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
+					<p class="text-danger">WARNING: Moebius Dungeons no longer auto saves your gameplay. To save your game click the cog in the top left corner during game play and click save game before closing the browser.</p>
+				</div>
+			</b-col>
+			
+			<!-- NEW GAME -->
+			<b-col cols="3" class="border d-flex flex-column justify-content-center align-items-center text-center hoverGold" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
+				<div class="p-4">
+					<img src="@/assets/imgs/icons/playerSigilIcon.png" alt="kingloyal sigil icon, resembles a decorated helmet fifth floral borders">
+					<h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
+				</div>
+			</b-col>
 
-            <section class="discordHover flexColumn card col-left-4 row-bottom-1" @mouseenter="UiSounds.chit.play()">
-                <section>
-                    <img class="margin-right" src="@/assets/imgs/icons/discord.png" alt="discord icon">
-                    <section class="discordText">
-                        <h3>Join the Moebius Dungeon Discord and help develop the game as it grows, and become a part of the Amaran community.</h3>
-                    </section>
-                </section>
-            </section>
-            
-            <div class="newGame col-center-4 row-top-2" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
-                <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
-                <h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
-            </div>
+			<!-- LOAD SAVED GAME -->
+			<b-col cols="3" class="hoverGold border d-flex justify-content-center align-items-center p-4 savedGame text-center"
+				@click="loadSavedGame()"
+				@mouseenter="UiSounds.chit.play()"
+			>
 
-            <div class="col-right-4 row-top-2 resumeGame block flexColumn" @click="loadSavedGame()" @mouseenter="UiSounds.chit.play()" v-if="player != null">
+				<div v-if="player != null">
+					<img class="mb-2" :src="player.info.portrait" alt="a portrait of your character">
+					<h1 class="small">Resume Game</h1>
 
-                    <img class="portraitSize" :src="player.info.portrait" alt="">
-                    <br>
-                    <h1>Resume Game</h1>
-                    <h3>{{savedPhase}}</h3>
+					<h3>{{savedPhase}}</h3>
 
-                    <div class="flexRow whiteText">
-                        <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/healthIcon.png">
-                        <h3 class="overlayGridPos">{{ player.info.baseHealth + player.tempHealth}}</h3>
-                        </div>
-                        
-                        <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" :src="player.info.attackTypeImage">
-                        <h3 class="overlayGridPos">{{ player.info.baseAttackMax + player.tempAttackMax}}</h3>
-                        </div>
-                    
-                        <div class="overlayStats">
-                        <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/armorIcon.png">
-                        <h3 class="overlayGridPos">{{ player.info.baseArmor + player.tempArmor}}</h3>
-                        </div>
-                    </div>
+					<div class="d-flex flex-row justify-content-center">
+						<div> 
+							<img class="statIcon" src="@/assets/imgs/icons/healthIcon.png">
+							<h4>{{ player.info.baseHealth + player.tempHealth}}</h4>
+						</div>
+							
+						<div>
+							<img class="statIcon" :src="player.info.attackTypeImage">
+							<h4>{{ player.info.baseAttackMax + player.tempAttackMax}}</h4>
+						</div>
+					
+						<div>
+							<img class="statIcon" src="@/assets/imgs/icons/armorIcon.png">
+							<h4 class="overlayGridPos">{{ player.info.baseArmor + player.tempArmor}}</h4>
+						</div>
+					</div>
 
-                    <div class="flexRow blackText">   
-                        <div class="overlayStats">
-                            <img class="iconSize overlayGridPos" src="@/assets/imgs/icons/coinIcon.png">
-                            <h1 class="overlayGridPos">{{ player.info.coins }}</h1>
-                        </div>
-                        
-                        <div class="overlayStats">
-                            <img class="iconSize overlayGridPos" :src="player.info.mettleImg">
-                            <h1 class="overlayGridPos">{{ player.info.mettle }}</h1>
-                        </div>
-                    </div>
-                </div>
+					<div class="d-flex flex-row justify-content-center">
+						<div>
+							<img class="statIcon" src="@/assets/imgs/icons/coinIcon.png">
+							<h4>{{ player.info.coins }}</h4>
+						</div>
+							
+						<div>
+							<img class="statIcon" :src="player.info.mettleImg">
+							<h4>{{ player.info.mettle }}</h4>
+						</div>
+					</div>
+				</div>
 
-                <div class="col-right-4 row-top-2 noGameData nodule block flexColumn" v-if="player === null">
-                    <h1>No Game Data Exists</h1>
-                </div>
+				<h3 v-else>No Game Data Exists</h3>
 
-            <div class="col-center-4 row-bottom-1 flexColumn">
-                <div class="leaderboards flexRowCenter">
-                    <img class="margin-right" src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
-                    <h1 @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()">LEADERBOARDS</h1>
-                </div>
-                <div class="leaderboards flexRowCenter">
-                    <img class="margin-right" src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
-                    <h1 @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">CREDITS</h1>
-                </div>
-            </div>
-
-            <div class="col-right-4 row-bottom-1 flexColumn">
-
-                <img class="imageSmall" src="@/assets/imgs/icons/instructions.png" alt="">
-            </div>
-        </div>
-    </div>
+		</b-col>
+	</b-row>
+	
+		<!-- Second Row -->
+		<b-row class="d-flex justify-content-between">
+			<b-col cols="5" class="border hoverGold d-flex align-items-center">
+				<div class="p-4" @mouseenter="UiSounds.chit.play()">
+					<img class="float-left mr-4" src="@/assets/imgs/icons/discord.png" alt="discord icon">
+					<p>Join the Moebius Dungeon Discord to become a part of the Amaran community. help develop the game as it grows, and be the first to hear about new features and content. </p>
+				</div>
+			</b-col>
+			
+			<b-col cols="3" class="border hoverGold d-flex flex-column justify-content-center align-items-center" @mouseenter="UiSounds.chit.play()" @click="toLeaderboards()">
+					<img src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
+					<h4>LEADERBOARDS</h4>
+			</b-col>
+			
+			<b-col cols="3" class="border d-flex flex-column justify-content-center align-items-center" @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">
+					<img src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
+					<h4>CREDITS</h4>
+			</b-col>
+		</b-row>
+	</b-col>
 </template>
 
 <script>
@@ -141,193 +147,16 @@ import UiSounds from "@/plugins/UiSounds";
 </script>
 
 <style scoped>
-.gameContainer {
-    display:grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows:repeat(5, 15vh);
-    grid-gap: 10px 10px;
+.savedGame img {
+	width:100px;
 }
 
-.margin-right {
-    margin-right:10px;
-    float:left;
+.statIcon {
+	max-width:50px;
 }
 
-.imageSmall {
-    width:50%;
-}
-
-.col-left-4 {
-    grid-column: 1/5;
-}
-
-.col-center-4 {
-    grid-column:5/9;
-}
-
-.col-right-4 {
-    grid-column:9/13;
-}
-
-.col-right-8 {
-    grid-column:5/13;
-    grid-row:3/4;
-}
-
-.row-all {
-    grid-row: 1/4;
-}
-
-.row-top-2 {
-    grid-row:1/3;
-}
-
-.row-bottom-1 {
-    grid-row:3/4;
-}
-
-.helperButton {
-    font-size: 1vw;
-    position: fixed;
-    right: 10px;
-    top: 10px;
-    margin: 0;
-    padding: 5px;
-    background: rgb(218, 218, 218);
-    cursor:pointer;
-}
-
-.leaderboards {
-    background:rgb(218,218,218);
-    padding:10px;
-    text-align:left;
-    margin:10px 0px;
-}
-.leaderboards img {
-    max-width:10%;
-    height:auto;
-}
-.leaderboardsSmaller {
-    background:rgb(218,218,218);
-    font-size:15px;
-    color:black;
-    text-decoration: none;
-    padding:10px;
-    margin:10px 0px;
-}
-.leaderboards:hover, .leaderboardsSmaller:hover {
-    background:rgb(255, 241, 179);
-    color:grey;
-    cursor:pointer;
-}
-
-h1 {
-    font-size:1.8vw;
-}
-
-p {
-    font-size:1.2vw;
-};
-
-
-.overlayStats{
-    width:60px;
-    display:grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-}
-
-.overlayGridPos{
-    grid-row: 1/2;
-    grid-column: 1/2;
-    width:60px;
-    height:60px;
-    text-align:center;
-    line-height:60px;
-}
-
-.blackText h1 {
-    color:white;
-    text-shadow:black 1px 1px 2px;
-    font-size:20px;
-}
-
-.whiteText h3 {
-    color:white;
-    text-shadow:black 1px 1px 2px;
-    font-size:15px;
-}
-
-p.overlayGridPos {
-    margin:0;
-}
-
-.portraitSize{
-    width:75px;
-}
-
-.iconSize {
-    width:60px;
-}
-
-.widthCap{
-    width:500px;
-    text-align:center;
-}
-
-.block {
-    border:solid 1px black;
-    padding:10px;
-}
-
-.card {
-    padding:10px;
-    box-shadow: 1px 1px 3px 0px #ccc;
-}
-
-.newGame, .resumeGame{
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    background:#fff;
-    box-shadow: 1px 1px 3px 0px #ccc;
-    border:none;
-}
-
-
-.newGame:hover, .resumeGame:hover {
-    background:gold;
-    box-shadow: 1px 1px 3px 0px #d6b600;
-    cursor:pointer;
-}
-
-.newGame img {
-    height:100px;
-    margin:0 auto;
-}
-
-.noGameData {
-    border:#aaa dashed 1px;
-    color:#aaa;
-    cursor:not-allowed;
-}
-
-h1, h2 {
-    margin:0;
-}
-
-.discordHover:hover {
-    cursor:pointer;
-    background: gold;
-    box-shadow:#d6b600 solid 1px;
-}
-
-.discordText h3 {
-    font-size:1.5vw;
-}
-
-.warning {
-    color:red;
+.hoverGold:hover {
+	background:gold;
+	cursor:pointer;
 }
 </style>

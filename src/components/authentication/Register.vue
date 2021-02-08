@@ -1,99 +1,71 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-            <div class="aboveHeader">
-            <h1>Moebius Dungeons</h1>
-            </div>
+  <b-col cols='8'>
+    <div class="d-flex flex-column justify-content-start align-items-center">
+      <section class="text-center mb-2">
+        <h1>SIGN UP</h1>
+      </section>
+      
+      <section class="d-flex flex-column">    
+        <div class="p-4 border mb-3">
+          <img class="mr-3 float-left" src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
+          <p>Swear the oath to become a <strong>Kingloyal Knight</strong> admitted into the King's Coterie, a group of adventurers renown across all <strong>Amara.</strong> It's your job to slay monsters and delve dungeons, <em>all to keep the grand kingdom of Eyien safe at night.</em></p>
+          <p><strong>Compete for the title of the most accomplished Kingloyal in the realm</strong> and fight back the infinite threats until you're ready to retire.</p> 
+          <h4 class="text-center">Good luck, adventurer. <em>You'll need it.</em></h4>
+        </div>
           
-          <div class="flexRow">
-          <div class="card-header flexRow flexSpaceEven">
-            <div>
-            <p>Swear the oath to become a <strong>Kingloyal Knight</strong> admitted into the King's Coterie, a group of adventurers renown across all <strong>Amara.</strong> It's your job to slay monsters and delve dungeons, <em>all to keep the grand kingdom of Eyien safe at night.</em>
-            </p>
-            <p>
-            Fight back the infinite threats until you're ready to retire.
-            </p> 
-            
-            <p><strong>Compete for the title of the most accomplished Kingloyal in the realm.</strong></p>
-            </div>
+        <div v-if="error" class="alert alert-danger"><p>{{error}}</p></div>
+         
+        <b-form @submit="submit" @reset='reset'>
+          <b-form-group
+            id="input-group-1"
+            label="Knighthood Name:"
+            label-for="input-1"
+            description="Your chosen knighthood name may be visible on leaderboards, please keep it clean."
+          >
+            <b-form-input
+              id="input-1"
+              v-model="form.name"
+              placeholder="Your Desired Knighthood Name"
+              required
+            ></b-form-input>
+          </b-form-group>
+        
+            <b-form-group
+              id="input-group-2"
+              label="Password:"
+              label-for="input-2"
+              description="Input a secure password."
+            >
+              <b-form-input
+                id="input-2"
+                v-model="form.password"
+                placeholder="Password"
+                required
+              ></b-form-input>
+            </b-form-group>
+          
+            <b-form-group
+              id="input-group-3"
+              label="Confirm Password:"
+              label-for="input-3"
+              description="Please double check your desired password."
+            >
+              <b-form-input
+                id="input-2"
+                v-model="form.confirmPassword"
+                placeholder="Retype Password"
+                required
+              ></b-form-input>
+            </b-form-group>
 
-            <img src="@/assets/imgs/icons/playerSigilIcon.png" alt="">
-          </div>
-            
-          <div class="card-body">
-            <div class="boxSection">
-            <div v-if="error" class="alert alert-danger"><p>{{error}}</p></div>
-            <form action="#" @submit.prevent="submit">
-            <p class="subtitle">Knighthood name may be visible on leaderboards, please keep it clean.</p>
-            <div class="form-group row">
-                  <div class="flexRow flexSpaceEven">
-                <label for="name" class="col-md-4 col-form-label text-md-right">
-                  <p class="fieldName">
-                    Knighthood Name:
-                  </p>
-                </label>
-                <div class="col-md-6">
-                  <input
-                    id="name"
-                    type="name"
-                    class="form-control"
-                    name="name"
-                    placeholder="Your Desired Username"
-                    autocomplete="nickname"
-                    value
-                    required
-                    autofocus
-                    v-model="form.name"
-                  />
-                </div>
-                  </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="flexRow flexSpaceEven">
-
-                <label for="password" class="col-md-4 col-form-label text-md-right">
-                  <p>
-                    Password:
-                  </p>
-                </label>
-
-                <div class="col-md-6">
-                  <input
-                    id="password"
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    placeholder="Password"
-                    autocomplete="new-password"
-                    required
-                    v-model="form.password"
-                  />
-                </div>
-                </div>
-              </div>
-
-              <div class="form-group row mb-0">
-                <div class="submission col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">
-                    <h3>
-                      Register
-                    </h3>
-                  </button>
-
-                </div>
-              </div>
-            </form>
-          </div>
-          </div>
-          </div>
-          </div>
-
-      </div>
+          <span class="d-flex justify-content-end mt-3">
+            <b-button class="mr-2" type="submit" variant="primary">Submit</b-button>
+            <b-button type="reset" variant="warning">Reset</b-button>
+          </span>
+        </b-form>
+      </section>
     </div>
-  </div>
+  </b-col>
 </template>
 
 
@@ -108,12 +80,14 @@ export default {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
       },
       error: null,
     };
   },
   methods: {
-  submit() {
+  submit(event) {
+      event.preventDefault()
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.form.name.replace(/\s/g, "") + '@fakeemail.com', this.form.password)
@@ -131,6 +105,17 @@ export default {
           }
         });
     },
+    reset(event) {
+       event.preventDefault()
+        this.form.name = ''
+        this.form.password = ''
+        this.confirmPassword = '',
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+    }
   },
   created() {
     firebase.auth().useDeviceLanguage();
@@ -140,110 +125,4 @@ export default {
 
 <style scoped>
 
-h1 {
-  padding:0px;
-  margin:0px;
-}
-
-.flexRow {
-  display:flex;
-  flex-direction:row;
-}
-
-.flexSpaceEven {
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.flexCenter {
-  justify-content:center;
-  align-items: center;
-}
-
-.card {
-  text-align:center;
-}
-
-.registration {
-  margin-bottom:10px
-}
-
-.card-header {
-  border:solid black 1px;
-  box-shadow:#777 0px 3px 5px;
-  padding:25px;
-  margin-right:10px;
-  text-align:center;
-}
-
-.marginTop {
-  margin-top:10px;
-}
-
-.boxSection {
-  border:solid black 1px;
-  box-shadow:#777 0px 3px 5px;
-  padding:15px;
-  text-align:center;
-}
-
-.aboveHeader {
-  margin-bottom:10px;
-}
-
-.subtitle {
-  font-size:13px;
-  color:#999;
-  margin-block-start: 0em;
-  margin-block-end: 0em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
-
-.fieldName {
-  margin-right:10px;
-}
-
-.container { 
-  max-width:650px;
-}
-
-button {
-  cursor:pointer;
-}
-
-.card-header img {
-  width:100px;
-  padding: 0 10px;
-}
-
-.alert {
-  color:red;
-}
-
-.card-body{
-  display:flex;
-  flex-direction: column;
-  justify-content:center;
-  align-items:center;
-}
-
-.googleButton:hover{
-  cursor:pointer;
-  transform: scale(1.03, 1.03);
-  transition: all .3s
-}
-
-.submission {
-  margin-top:10px;
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:space-evenly;
-}
-
-.marginTop p:hover {
-  cursor:pointer;
-  color:red;
-}
 </style>

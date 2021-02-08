@@ -17,9 +17,15 @@
         </transition>
       </b-col>
 
-			<b-col align-self="end" cols="1" class="h-10 d-flex flex-column justify-content-end align-items-center ml-n4">
-				<p><a href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.5</a></p>
-				<p class="smallText"><a href="https://github.com/MisuseofMana/moebiusDungeons/issues">Report Issues Here</a></p>
+			<b-col align-self="end" cols="1" class="h-10 ml-n4 mb-1">
+				<div class="info d-flex flex-row justify-content-end align-items-center text-center">
+				  <b-button class="mr-3" variant="info" size="sm">
+            <a class="text-white" href="https://github.com/MisuseofMana/moebiusDungeons/issues">Report Issues</a>
+          </b-button>
+          <b-button variant="info" size="sm">
+          <a class="text-decoration-none text-white" href="https://github.com/MisuseofMana/moebiusDungeons/blob/master/ChangeLog.md" target="_blank">v.1.3.5</a>
+          </b-button>
+        </div>
       </b-col>
     </b-row>
 
@@ -125,5 +131,9 @@ export default {
 #app {
 	height:100vh;
 	width:100vw;
+}
+
+.info {
+  min-width:200px;
 }
 </style>

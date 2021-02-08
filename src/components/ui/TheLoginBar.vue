@@ -22,8 +22,8 @@
       </section>
 
       <div v-else-if="user.loggedIn == false" class="loginBar d-flex flex-row align-items-center justify-content-around text-center">
-        <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</b-button>
         <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'Register'})" class="clickable">Sign Up</b-button>
+        <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</b-button>
       </div>
 
       <transition name="fade" mode="in-out">
@@ -39,9 +39,11 @@
         </section>
       </transition>
 
-      <div v-if="settingShow && user.data != null" class="d-flex flex-column align-items-center mt-2">
-        <section v-if="(canSave && acceptablePhase) && (user.data.displayName !== 'wanderer')" @click="saveGame" class="bigButton">
-          <h3>Save Game</h3>
+      <div v-if="settingShow && user.data != null" class="d-flex flex-column align-items-center">
+        <section v-if="(canSave && acceptablePhase) && (user.data.displayName !== 'wanderer')" @click="saveGame" class="my-3">
+          <b-button @click="saveGame()">
+            Save Game
+          </b-button>
         </section>
 
         <section v-if="!canSave && acceptablePhase" @click="saveGame">
@@ -183,7 +185,7 @@ components: {
   padding:5px;
   color:white;
   background:rgb(54, 54, 54);
-  width:200px;
+  min-width:200px;
 }
 
 .avatar {
