@@ -1,6 +1,6 @@
 <template>
-  <b-col cols='12' class="d-flex flex-column justify-content-start align-items-center">
-    <div class="debugBar px-2" v-if="bugger">
+  <div class="d-flex flex-column justify-content-start align-items-center">
+    <div class="debugBar px-3 w-100" v-if="bugger">
       <article class="debugContent d-flex flex-column">
         <h4 class="mt-2">SCENES</h4>
         <section class="d-flex flex-column">
@@ -98,7 +98,7 @@
         </section>
       </article> 
     </div>
-  </b-col>
+  </div>
 </template>
 
 <script>
