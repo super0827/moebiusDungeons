@@ -68,13 +68,6 @@
         </section>
 
     </section>
-
-<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> Shop Select Help </h1>
-
-    <!--  Battle Helpers -->
-    <transition name="fade" mode="out-in">
-        <shop-select-help  key="battleHelper" @close="toggleHelp()" v-if="helper"/>
-    </transition>
    
     <!--  Retire Confirmation -->
     <transition name="fade-fast" mode="out-in">
@@ -87,20 +80,18 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import shuffle from 'lodash.shuffle'
 
 import ShopSelectHelp from "@/components/ShopSelectHelp.vue";
 import Retire from "@/components/Retire.vue";
 import UiSound from '@/plugins/UiSounds.js'
 
-import helperToggles from '@/components/mixins/helperToggles';
 import gameAnimations from '@/components/mixins/gameAnimations';
 import gameMusic from '@/components/mixins/gameMusic';
 
 
 export default {
   name: 'ShopSelect',
-  mixins: [helperToggles, gameAnimations, gameMusic],
+  mixins: [gameAnimations, gameMusic],
   components: {
       ShopSelectHelp,
       Retire
