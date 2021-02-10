@@ -1,10 +1,12 @@
 <template>
-    <section class="centerRow">
-        <p>METTLE</p>
-        <img :src="mettleImg" :class="{'used': mettle <= 0}"/>
-        <img :src="mettleImg" :class="{'used': mettle <= 1}"/>
-        <img :src="mettleImg" :class="{'used': mettle <= 2}"/>
-    </section>
+    <b-row class="centerRow">
+        <b-col cols="12" class="d-flex justify-content-center align-items-center">
+            <h3 class='m-0 mr-2'>METTLE</h3>
+            <img :src="mettleImg" :class="{'used': mettle <= 0}"/>
+            <img :src="mettleImg" :class="{'used': mettle <= 1}"/>
+            <img :src="mettleImg" :class="{'used': mettle <= 2}"/>
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -23,18 +25,8 @@ import { mapGetters, mapState } from 'vuex';
 </script>
 
 <style scoped>
-.centerRow{
-    width:200px;
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-p{
-    font-size:20px;
-}
 img{
-    width:30px;
+    width:50px;
 }
 .used {
     filter: grayscale(100%);
