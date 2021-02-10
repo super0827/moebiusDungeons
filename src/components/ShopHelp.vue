@@ -86,7 +86,7 @@
 import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
-  name: 'BattleHelp',
+  name: 'ShopHelp',
   data() {
       return {
         UiSounds : UiSounds,
