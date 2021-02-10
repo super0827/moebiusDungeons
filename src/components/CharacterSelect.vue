@@ -1,7 +1,14 @@
 <template>
 
-<section class="characterSelectWrapper">
-    <section class="chooseChar">
+<b-col cols="12" class="d-flex flex-column justify-content-center">
+    <h1 
+        class="animated text-center mb-5" 
+        :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering }"
+    >
+    CHOOSE YOUR CHARACTER
+    </h1>
+
+    <section class="chooseChar justify-content-center">
         <section
         v-for="characters in characterClasses"
         :key="characters.name"
@@ -32,34 +39,20 @@
         </section>
     </section>
 
-    <h1 class="animated" :class="{'zoomInUp' : isEntering, 
-    'zoomOutDown' : !isEntering }">CHOOSE YOUR CHARACTER</h1>
-
-<h1 id="about" @mouseenter="UiSound.chit.play()" @click="toggleHelp()"> What Is This? </h1>
-
-<transition name='fade'>
-    <InstructionsScreen v-if="this.helper"/>
-</transition>
-
-</section>
+</b-col>
 </template>
 
 <script>
-import InstructionsScreen from '@/components/helpers/InstructionsScreen';
-import { mapState } from 'vuex';
-
 import UiSound from '@/plugins/UiSounds.js'
 
-import helperToggles from '@/components/mixins/helperToggles';
 import gameAnimations from '@/components/mixins/gameAnimations';
 import gameMusic from '@/components/mixins/gameMusic';
 import ToolTip from '@/components/ui/ToolTip.vue';
 
 export default {
   name: 'CharacterSelect',
-  mixins: [helperToggles, gameAnimations, gameMusic],
+  mixins: [gameAnimations, gameMusic],
   components: {
-      InstructionsScreen,
       ToolTip,
   },
   data() {
@@ -76,6 +69,7 @@ export default {
                 description2:"Basic hack and slash class, focus on damage and armor to become a bulwark.", 
                 coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+                armorType: 'physical',
                 mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
                 mettle: 1,
                 curse:0,
@@ -93,6 +87,7 @@ export default {
                 description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
                 coins:0, baseHealth:6, baseArmor:0, baseAttackMax:10, attackType: "magical", 
                 attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+                armorType: 'magical',
                 mettleImg: require("@/assets/imgs/icons/mageMettle.png"),
                 mettle: 1,
                 curse:0,
@@ -111,6 +106,7 @@ export default {
                 description2:"Varlet can steal coins from enemies using their Special. Starts with 1 gold.", 
                 coins:1, baseHealth:8, baseArmor:1, baseAttackMax:6, attackType: "physical", 
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+                armorType: 'physical',
                 mettleImg: require("@/assets/imgs/icons/varletMettle.png"),
                 mettle: 1,
                 curse:0,
