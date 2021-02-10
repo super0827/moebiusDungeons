@@ -1,55 +1,58 @@
 <template>
-<section class="columnsMiddle battleOptions">
-    <StatBar/>
-    <br>
-     <ToolTip
+<b-row>
+    <b-col cols="12" class="d-flex flex-column justify-content-center">
+
+
+    <!-- Green Comparison Bars -->
+    <ToolTip
         subtitle="Mettle"
         :descriptions="[`Mettle allows you to use your special ability up to a max of three times. Cost is always one to one.`]"
     >
-    <SpecialBar/>
+        <!-- Mettle Bar -->
+        <SpecialBar class="mb-5"/>
      </ToolTip>
-    <br>
+
+
     <ToolTip
         subtitle="Trade Blows"
         :descriptions="[`Deal damage to the monster, if it's still alive after you attack, it attacks back!`]"
     >
-    <div @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()" class="controlButton">
-        <h2  
-        :class="{'striked' : combatLocked }" 
-        >Trade Blows</h2>
-    </div>
+        <b-button class="mb-2 py-3 w-100" size="lg" @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()">
+            <h3 
+            class="m-0"
+            :class="{'striked' : combatLocked }" 
+            >Trade Blows</h3>
+        </b-button>
     </ToolTip>
 
     <ToolTip
         :subtitle="special"
         :descriptions="[specialDescription]"
     >
-    <div :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()" class="controlButton flexRowCenter">
-        <h2 class="rightMargin">{{special}}</h2>
-        <h2>(Costs</h2>
-        <img class="imgSmall" :src="mettleImg">
-        <h2>)</h2>
-    </div>
+        <b-button size="lg" class="mb-2 py-3 w-100 d-flex flex-row justify-content-center align-items-center" :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()">
+            <h3 class="m-0 mr-2 mettleIcon">{{special}} (Costs <img :src="mettleImg">)</h3>
+        </b-button>
     </ToolTip>
 
     <ToolTip
         subtitle="Turn Tail"
-        :descriptions="[`Flee you fool! Click this to run away. Not gaurenteed to succeed.`]"
+        :descriptions="[`Flee you fool! Click this to run away. Not certain to succeed.`]"
     >
-    <div @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()" class="controlButton">
-    <h3  
-    :class="{'striked' : turnTailUsed || combatLocked }" 
-    >Turn Tail</h3>
-    </div>
+        <b-button class="py-3 w-100" @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()">
+            <h3
+            class="m-0"
+            :class="{'striked' : turnTailUsed || combatLocked }" 
+            >Turn Tail</h3>
+        </b-button>
     </ToolTip>
 
-</section>
+    </b-col>
+</b-row>
 </template>
 
 <script>
 import {mapActions, mapState, mapGetters} from 'vuex'
 
-import StatBar from '@/components/gameUI/StatBar.vue'
 import SpecialBar from "@/components/gameUI/SpecialBar.vue"
 import ToolTip from "@/components/ui/ToolTip.vue"
 import UiSounds from '@/plugins/UiSounds.js'
@@ -57,7 +60,6 @@ import UiSounds from '@/plugins/UiSounds.js'
 export default {
     name: 'BattleControls',
      components: {
-      StatBar,
       SpecialBar,
       ToolTip
     },
@@ -91,76 +93,14 @@ export default {
 </script>
 
 <style scoped>
-    .battleOptions {
-        margin:0 20px;
-        width:200px;
-        min-width:200px;
-    }
-
-    p {
-        font-size:12px;
-        text-transform:uppercase;
-    }
-
-    h1, h2, h3 {
-        transition: all .2s;
-    }
-
-    .controlButton {
-        background: rgb(207, 207, 207);
-        cursor:pointer;
-        padding:20px 20px;
-        min-width:200px;
-        margin:0 0 10px 0;
-    }
-
-    .controlButton:hover {
-        background: rgb(166, 207, 144);
-    }
-
-    h2 {
-        text-decoration:none;
-        font-size:15px;
-    }
-
-    .rightMargin {
-        margin-right:5px;
-    }
-    
-    h3 {
-        font-size:10px;
-        text-transform:uppercase;
-    }
-
-    .mettleCost {
-        display:flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .imgSmall {
-        width:20px;
-        position:relative;
-        top:1px;
-    }
-
-    .striked {
-        text-decoration: line-through;
-        opacity:0.2;
-        transition:all .6s;
-    }
-    .striked:hover {
-        transition:all .6s;
-        cursor:not-allowed;
-    }
-
-    .columnsMiddle {
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        flex-direction: column;
-        min-width:200px;
-        text-align:center;
-        margin:0 10px;  
-    }
+.striked {
+    text-decoration: line-through;
+    opacity:0.2;
+    transition:all .6s;
+}
+.striked:hover {
+    text-decoration: line-through;
+    transition:all .6s;
+    cursor:not-allowed;
+}
 </style>
