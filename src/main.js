@@ -55,7 +55,6 @@ export const mixinGlobalState = {
   computed: {
     ...mapState({
       isEntering: state => state.gameData.isEntering,
-      helper: state => state.gameData.helper,
       combatLocked: state => state.gameData.combatLocked,
     }),
   },
