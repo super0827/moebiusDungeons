@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Frijole|Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Frijole&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+
 
 :root{
     --headers-type: 'Frijole', cursive;
@@ -37,34 +39,22 @@ html {
 
 h1 {
     font-family: var(--headers-type);
-    font-size:30px;
 }
 
 h2 {
     font-family: var(--paragraphs-type);
-    font-size:25px;
-    margin:5px 0;
-    text-transform:uppercase;
-    text-decoration:underline;
 }
 
 h3 {
     font-family: var(--paragraphs-type);
-    font-size:18px;
-    font-weight:100;
-    margin:2px 0;
 }
 
 h4 {
     font-family: var(--paragraphs-type);
-    font-size:10px;
-    font-weight:100;
 }
 
 p {
     font-family: var(--paragraphs-type);
-    font-size:15px;
-    margin:5px 0;
 }
 
 .textCenter {
