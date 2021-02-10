@@ -29,7 +29,7 @@ import { mapState } from 'vuex'
 import UiSounds from '@/plugins/UiSounds.js'
 
 export default {
-  name: 'BattleHelp',
+  name: 'ShopSelectHelper',
   data() {
       return {
           UiSounds: UiSounds
