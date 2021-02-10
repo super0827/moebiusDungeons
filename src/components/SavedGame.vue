@@ -1,8 +1,8 @@
 <template>
-	<b-col cols="12">
-		<b-row class="d-flex justify-content-between mb-3">
+	<div>
+		<b-row class="d-flex justify-content-between mb-3" no-gutters>
 			<!-- NEWS -->
-			<b-col cols="5" class="border">
+			<b-col cols="4" class="border">
 				<div class="p-4">
 					<h1>News</h1>
 					<p>If the game appears too large on your screen try pressing CRTL- on Windows or CMD- on Mac to resize the interface.</p>
@@ -14,19 +14,19 @@
 			<b-col cols="3" class="border d-flex flex-column justify-content-center align-items-center text-center hoverGold" @click="startNewGame()" @mouseenter="UiSounds.chit.play()">
 				<div class="p-4">
 					<img src="@/assets/imgs/icons/playerSigilIcon.png" alt="kingloyal sigil icon, resembles a decorated helmet fifth floral borders">
-					<h1 class="small"><span v-if="save">Delete Save and</span> Start A New Game</h1>
+					<h4 class="text-uppercase"><span v-if="save">Delete Save and</span> Start A New Game</h4>
 				</div>
 			</b-col>
 
 			<!-- LOAD SAVED GAME -->
-			<b-col cols="3" class="hoverGold border d-flex justify-content-center align-items-center p-4 savedGame text-center"
+			<b-col cols="4" class="hoverGold border d-flex justify-content-center align-items-center p-4 savedGame text-center"
 				@click="loadSavedGame()"
 				@mouseenter="UiSounds.chit.play()"
 			>
 
 				<div v-if="player != null">
 					<img class="mb-2" :src="player.info.portrait" alt="a portrait of your character">
-					<h1 class="small">Resume Game</h1>
+					<h4>Resume Game</h4>
 
 					<h3>{{savedPhase}}</h3>
 
@@ -60,14 +60,14 @@
 					</div>
 				</div>
 
-				<h3 v-else>No Game Data Exists</h3>
+				<h3 class="text-uppercase" v-else>No Save Data Exists</h3>
 
 		</b-col>
 	</b-row>
 	
 		<!-- Second Row -->
-		<b-row class="d-flex justify-content-between">
-			<b-col cols="5" class="border hoverGold d-flex align-items-center">
+		<b-row class="d-flex justify-content-between" no-gutters>
+			<b-col cols="4" class="border hoverGold d-flex align-items-center">
 				<div class="p-4" @mouseenter="UiSounds.chit.play()">
 					<img class="float-left mr-4" src="@/assets/imgs/icons/discord.png" alt="discord icon">
 					<p>Join the Moebius Dungeon Discord to become a part of the Amaran community. help develop the game as it grows, and be the first to hear about new features and content. </p>
@@ -79,23 +79,21 @@
 					<h4>LEADERBOARDS</h4>
 			</b-col>
 			
-			<b-col cols="3" class="border d-flex flex-column justify-content-center align-items-center" @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">
+			<b-col cols="4" class="border hoverGold d-flex flex-column justify-content-center align-items-center" @click="$store.commit('gameData/mutate', {property: 'phase', with: 'CreditsOverlay'});" @mouseenter="UiSounds.chit.play()">
 					<img src="@/assets/imgs/icons/shopkeepSigilIcon.png" alt="">
 					<h4>CREDITS</h4>
 			</b-col>
 		</b-row>
-	</b-col>
+	</div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 import CreditsOverlay from '@/components/CreditsOverlay';
-import helperToggles from '@/components/mixins/helperToggles';
 import UiSounds from "@/plugins/UiSounds";
 
     export default {
         name:"SavedGame",
-        mixins: [helperToggles],
         components: {
             CreditsOverlay
         },
