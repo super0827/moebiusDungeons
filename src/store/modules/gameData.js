@@ -2,6 +2,7 @@ const state = () => ({
     phase: "Loading",
     isEntering: true,
     helper: false,
+    helperName:'',
     duration: 1000,
     combatLocked: false,
     turnTailUsed: false,
