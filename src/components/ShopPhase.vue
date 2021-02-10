@@ -50,10 +50,6 @@
         key="shopPortrait"/>
     </section>
 
-    <!--  Battle Helpers -->
-    <transition name="fade" mode="out-in">
-        <shop-help key="battleHelper" @close="toggleHelp()" v-if="helper"/>
-    </transition>
 </section>
 </template>
 
@@ -67,10 +63,8 @@ import ShopHelp from "@/components/ShopHelp.vue";
 
 import UiSounds from "@/plugins/UiSounds"
 
-import helperToggles from '@/components/mixins/helperToggles';
 import gameAnimations from '@/components/mixins/gameAnimations';
 import gameMusic from '@/components/mixins/gameMusic';
-
 
 export default {
     name: 'ShopPhase',
@@ -80,7 +74,7 @@ export default {
         ShopPortrait,
         ShopHelp,
     },
-    mixins: [helperToggles, gameAnimations, gameMusic],
+    mixins: [gameAnimations, gameMusic],
     data() {
         return {
             music:['shopMusic1', 'shopMusic2', 'shopMusic3'],
