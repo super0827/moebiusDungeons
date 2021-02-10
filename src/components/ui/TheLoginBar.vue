@@ -1,16 +1,26 @@
 <template>
-  <b-col cols='12' class="d-flex flex-column justify-content-start align-items-center">
-    <!-- User Info Wrapper -->
-    <!-- v-If renders inside the component wrapper to maintain a centered on screen effect during preloading -->
-    <div class="loginBar d-flex flex-column justify-content-center text-center">
-
-      <!-- Shows only if user is logged in -->
-      <div class="d-flex flex-row justify-content-around align-items-center"  v-if="user.loggedIn == true">
-        <b-button>
+  <div class="d-flex flex-column justify-content-start align-items-start" no-gutters>
+    <div class="loginBar px-3 w-100 text-center" v-if="user.loggedIn == true">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <b-button size="sm" class="m-2">
           <b-icon scale="1.2" @click="toggleSettings" icon="gear-fill" aria-hidden="true"></b-icon> 
         </b-button>
-        <img class="m-1 avatar" :src="avatar" alt="an avatar icon">
-        <p class="m-1">{{user.data ? user.data.displayName : "..."}}</p>
+        <img class="m-2 avatar" :src="avatar" alt="an avatar icon">
+        <p class="m-2">{{user.data ? user.data.displayName : "..."}}</p>
+        
+        <transition name="fade" mode="in-out">
+        <section v-if="acceptablePhase">
+          <p class="m-0">
+          Score: 
+          <animated-number 
+          :value="highScore"
+          :duration="1000"
+          :formatValue="wholeNumber"
+          />
+          </p>
+        </section>
+      </transition>
+      
       </div>
 
       <!-- Helper text when user saves settings -->
@@ -26,50 +36,44 @@
         <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'Login'})" class="clickable" >Login</b-button>
       </div>
 
-      <transition name="fade" mode="in-out">
-        <section v-if="acceptablePhase" class="my-0 d-flex flex-column align-items-center justify-content-center border-top mt-2 mx-3">
-          <p class="m-0 mt-2">
-          Score: 
-          <animated-number 
-          :value="highScore"
-          :duration="1000"
-          :formatValue="wholeNumber"
-          />
-          </p>
-        </section>
-      </transition>
+      <div v-if="settingShow && user.data != null" class="d-flex flex-column align-items-center p-3">
+        <section class="mb-3">
+          <section v-if="(canSave && acceptablePhase) && (user.data.displayName !== 'wanderer')" @click="saveGame" class="my-3">
+            <b-button @click="saveGame()">
+              Save Game
+            </b-button>
+          </section>
 
-      <div v-if="settingShow && user.data != null" class="d-flex flex-column align-items-center">
-        <section v-if="(canSave && acceptablePhase) && (user.data.displayName !== 'wanderer')" @click="saveGame" class="my-3">
-          <b-button @click="saveGame()">
-            Save Game
-          </b-button>
-        </section>
-
-        <section v-if="!canSave && acceptablePhase" @click="saveGame">
-          <p>Your game is saved, play more before saving again.</p>
-        </section>
-        
-        <section v-if="!acceptablePhase" @click="saveGame">
-          <p>Your game can't be saved on this screen.</p>
+          <section v-if="!canSave && acceptablePhase" @click="saveGame">
+            <p>Your game is saved, play more before saving again.</p>
+          </section>
+          
+          <section v-if="!acceptablePhase" @click="saveGame">
+            <p>Your game can't be saved on this screen.</p>
+          </section>
         </section>
 
         <h2>Settings</h2>
-        <section class="d-flex flex-row align-items-center justify-content-between">
-          <h4 class="m-0 mr-1">Tooltips:</h4>
-          <b-button v-if="toolTip" @click="toggleToolTips">ON</b-button>
-          <b-button v-else @click="toggleToolTips">OFF</b-button>
+        <section class="d-flex flex-column align-items-center justify-content-between my-3">
+          <div class="d-flex flex-row">
+            <h4 class="m-0 mr-1">Tooltips:</h4>
+            <b-button v-if="toolTip" @click="toggleToolTips">ON</b-button>
+            <b-button v-else @click="toggleToolTips">OFF</b-button>
+          </div>
+          <div>
+            <b-button class="my-4" v-if="!saveSuccessful && user.data.displayName !== 'wanderer'" @click="saveSettings">Save Settings</b-button>
+            <b-button v-if="saveSuccessful">Save Settings</b-button>
+          </div>
         </section>
 
-        <section class="my-3"> 
-          <b-button class="my-4" v-if="!saveSuccessful && user.data.displayName !== 'wanderer'" @click="saveSettings">Save Settings</b-button>
-          <b-button class="mb-4" v-if="saveSuccessful">Save Settings</b-button>
+        <h2>MENU</h2>
+        <section class="my-3 d-flex flex-column"> 
           <b-button class="mb-2" @click="signOut">Sign Out</b-button>
           <b-button @click="mainMenu">Main Menu</b-button>
         </section>
       </div>
     </div>
-  </b-col>
+  </div>
 </template>
 
 <script>
@@ -185,7 +189,6 @@ components: {
   padding:5px;
   color:white;
   background:rgb(54, 54, 54);
-  min-width:200px;
 }
 
 .avatar {
