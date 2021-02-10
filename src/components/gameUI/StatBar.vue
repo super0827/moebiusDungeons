@@ -1,39 +1,50 @@
 <template>
-    <div class="barContainer">
-
-        <!-- HEALTH BAR -->
-        <section class="bar" id="bar1">
-            <!-- PLAYER -->
-            <section class="center"></section>
-            <section 
-            :style="{ width: healthBar + '%' }"
-            class="barSize"
-            :class="{ 'greenBar': healthBarAbove, 'redBar': !healthBarAbove }"
-            >
+<div class="mt-1">
+    <b-row align-h="center" class="mt-4">
+        <b-col cols="12" class="d-flex justify-content-center mt-1">
+            <!-- HEALTH BAR -->
+            <section class="bar" id="bar1">
+                <!-- PLAYER -->
+                <section class="center"></section>
+                <section 
+                    :style="{ width: healthBar + '%' }"
+                    class="barSize"
+                    :class="{ 'greenBar': healthBarAbove, 'redBar': !healthBarAbove }"
+                >
+                </section>
             </section>
-        </section>
+        </b-col>
+    </b-row>
 
-        <!-- Armor Bar -->
-        <section class="bar" id="bar2">
-            <section class="center"></section>
-            <section 
-            :style="{ width: playerAttackVsArmor + '%' }"
-            class="barSize"
-            :class="{ 'greenBar': attackBarAbove, 'redBar': !attackBarAbove }"
-            >
+    <b-row class="mt-3">
+        <b-col cols="12" class="mt-5 d-flex justify-content-center">
+            <!-- Armor Bar -->
+            <section class="bar mt-2" id="bar2">
+                <section class="center"></section>
+                <section 
+                    :style="{ width: playerAttackVsArmor + '%' }"
+                    class="barSize"
+                    :class="{ 'greenBar': attackBarAbove, 'redBar': !attackBarAbove }"
+                >
+                </section>
             </section>
-        </section>
+        </b-col>
+    </b-row>
 
-         <!--Attack Bar  -->
-        <section class="bar" id="bar3">
-            <section class="center"></section>
-            <section 
-            :style="{ width: playerArmorVsAttack + '%' }"
-            class="barSize"
-            :class="{ 'greenBar': defendBarAbove, 'redBar': !defendBarAbove }"
-            ></section>
-        </section>
-    </div>
+    <b-row class="mt-3">
+        <b-col class="mt-5 d-flex justify-content-center">
+            <!--Attack Bar  -->
+            <section class="bar mt-2" id="bar3">
+                <section class="center"></section>
+                <section 
+                :style="{ width: playerArmorVsAttack + '%' }"
+                class="barSize"
+                :class="{ 'greenBar': defendBarAbove, 'redBar': !defendBarAbove }"
+                ></section>
+            </section>
+        </b-col>
+    </b-row>
+</div>
 </template>
 
 <script>
@@ -68,12 +79,12 @@ import { mapGetters, mapState } from 'vuex';
 .bar {
     position:relative;
     background:rgb(48, 6, 11);
-    width:200px;
-    height:8px;
+    width:170px;
+    height:15px;
 }
 
 .barSize {
-    height:8px;
+    height:15px;
     transition: width 1s ease-in-out;
 }
 
@@ -86,20 +97,11 @@ import { mapGetters, mapState } from 'vuex';
 }
 
 .center {
-    height:12px;
+    height:21px;
     width:2px;
     background:black;
     position: absolute;
-    left:100px;
-    top:-2px;
-}
-#bar1 {
-    margin:60px 0 0 0;
-}
-#bar2 {
-    margin:78px 0 0 0;
-}
-#bar3 {
-    margin:74px 0 20px 0;
+    left:85px;
+    top:-3px;
 }
 </style>
