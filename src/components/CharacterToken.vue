@@ -1,14 +1,6 @@
 <template>
 
 <section class="flexRow">
-      <character-stats v-if="who === 'monster'"
-        :health="health"
-        :armor="armor"
-        :attack="attack"
-        :attackImage="attackTypeImg"
-        :who="'monster'"
-      />
-
   <section class="columns">
 
       <h3 id="name">{{name}}</h3>
@@ -164,70 +156,20 @@
             </p>
           </section>
       </section>
-
-      <ToolTip
-      v-if="who === 'player'"
-        subtitle="Your coins"
-        :descriptions="[`Value represents your total coins, which are used to buy items during the shop phase.`]"
-      > 
-      <section class="coinWrapper">
-        <img src="@/assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">
-          <animated-number 
-          :value="coins"
-          :duration="1000"
-          :formatValue="wholeNumber"
-          />
-        </h1>
-      </section>
-      </ToolTip>
-
-      <ToolTip
-        v-if="who === 'monster'"
-        subtitle="Monster's Coins"
-        :descriptions="[`If you defeat the monster you'll win their coins.`]"
-      >
-      <section class="coinWrapper">
-        <img src="@/assets/imgs/icons/coinIcon.png" alt="">
-        <h1 class="coinValue">
-          <animated-number 
-          :value="coins"
-          :duration="1000"
-          :formatValue="wholeNumber"
-          />
-        </h1>
-      </section>
-      </ToolTip>
-
-      <transition name="fade" mode="out-in">
-        <inventory-bar v-if="who === 'player'"/>
-      </transition>
   </section>
 
-      <character-stats v-if="who === 'player'"
-      :health="health"
-      :armor="armor"
-      :attack="attack"
-      :attackImage="attackTypeImg"
-      :who="'player'"
-      />
+      
 
 </section>
 </template>
 
 <script>
-import AnimatedNumber from "animated-number-vue";
-import CharacterStats from "@/components/CharacterStats.vue";
-import InventoryBar from "@/components/InventoryBar.vue";
 import ToolTip from "@/components/ui/ToolTip.vue";
 
 export default {
   name: 'CharacterToken',
   components: {
-    AnimatedNumber,
-    CharacterStats,
-    InventoryBar,
-    ToolTip
+    ToolTip,
   },
   props: [
     'who',
@@ -270,9 +212,7 @@ export default {
     'monsterRank'
   ],
   methods: {
-    wholeNumber(value) {
-      return `${Math.ceil(value)}`;
-    },
+    
   }
 }
 
