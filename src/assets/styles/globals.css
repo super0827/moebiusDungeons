@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Frijole&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
-
 :root{
     --headers-type: 'Frijole', cursive;
     --paragraphs-type: 'Oswald', sans-serif;
