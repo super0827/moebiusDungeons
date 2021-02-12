@@ -8,6 +8,7 @@ const state = () => ({
     turnTailUsed: false,
     leaderboard:[],
     debugShow: false,
+    location: 'roads',
 })
 
 const mutations = {
@@ -67,6 +68,10 @@ const actions = {
     loadSavedGame({state, commit}, payload){
         commit('mutate', {property:'phase', with:payload})
     },
+    changeLocation({state, commit}, payload) {
+        commit('mutate', {property:'phase', with:payload.phase})
+        commit('mutate', {property:'location', with:payload.location})
+    }
 }
 
 export default {
