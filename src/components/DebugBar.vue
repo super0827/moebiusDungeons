@@ -10,6 +10,7 @@
           <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'DungeonPhase'})">DUNGEON</b-button>
           <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopSelect'})">SHOP SELECT</b-button>
           <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'ShopPhase'})">SHOP</b-button>
+          <b-button class="mb-1" @click="$store.commit('gameData/mutate', {property: 'phase', with:'WorldMap'})">WORLD MAP</b-button>
           <b-button @click="$store.commit('gameData/mutate', {property: 'phase', with:'LoseScreen'})">LOSE SCREEN</b-button>
         </section>
 
