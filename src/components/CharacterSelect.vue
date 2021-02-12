@@ -72,6 +72,7 @@ export default {
                 description2:"Basic hack and slash class, focus on damage and armor to become a bulwark.", 
                 coins:0, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+                armorTypeImage: require("@/assets/imgs/icons/armorIcon.png/"),
                 armorType: 'physical',
                 mettleImg: require("@/assets/imgs/icons/swordsmanMettle.png"),
                 mettle: 1,
@@ -91,6 +92,7 @@ export default {
                 description2:"Magic attacks ignore enemy armor, highest damage, lowest health.", 
                 coins:0, baseHealth:6, baseArmor:0, baseAttackMax:10, attackType: "magical", 
                 attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+                armorTypeImage: require("@/assets/imgs/icons/wardIcon.png/"),
                 armorType: 'magical',
                 mettleImg: require("@/assets/imgs/icons/mageMettle.png"),
                 mettle: 1,
@@ -110,6 +112,7 @@ export default {
                 description2:"Varlet can steal coins from enemies using their Special. Starts with 1 gold.", 
                 coins:1, baseHealth:8, baseArmor:1, baseAttackMax:6, attackType: "physical", 
                 attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+                armorTypeImage: require("@/assets/imgs/icons/armorIcon.png/"),
                 armorType: 'physical',
                 mettleImg: require("@/assets/imgs/icons/varletMettle.png"),
                 mettle: 1,
@@ -131,8 +134,7 @@ export default {
         //for varlets starting coins - not a mistake
         this.$store.commit('leaderboardData/incrementByValue', {property: 'totalCoins', with: passedPlayer.coins})
         UiSound.charPick.play();
-        this.$store.commit('monsterData/newMonster');
-        this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
+        this.$store.dispatch('monsterData/NEW_MONSTER');
         this.$store.commit('shopkeepData/resetShopItems');
     },
   },
