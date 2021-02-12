@@ -1,5 +1,5 @@
 <template>
-<div class="mt-2">
+<div class="mt-4">
     <b-overlay
         id="overlay"
         no-center
@@ -21,20 +21,20 @@
             </b-row>
         </template>
         <b-row class="blankHeight d-flex flex-row justify-content-center" no-gutters>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
         </b-row>
         <b-row class="blankHeight d-flex flex-row justify-content-center" no-gutters>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
 
         </b-row>
         <b-row class="blankHeight d-flex flex-row justify-content-center" no-gutters>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
-            <b-col class="border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
+            <b-col class="filler border m-1" cols="3"></b-col>
         </b-row>
     </b-overlay>
 </div>
@@ -53,5 +53,9 @@
 <style scoped>
 .blankHeight {
     height:60px;
+}
+
+.filler {
+    background:rgba(0,0,0,0.4);
 }
 </style>
