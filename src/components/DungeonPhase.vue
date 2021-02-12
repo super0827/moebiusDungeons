@@ -335,7 +335,7 @@ export default {
       },
     },
     beforeMount() {
-      
+
     },
     created() {
         if(!this.playerLoaded){
@@ -356,7 +356,7 @@ export default {
         }
     },
     destroyed(){
-        this.$store.commit('monsterData/newMonster');
+        this.$store.dispatch('monsterData/NEW_MONSTER');
         this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
         this.$store.dispatch('playerData/CHECK_INVENTORY');
         this.$store.commit('playerData/REMOVE_TEMP_STATS');
