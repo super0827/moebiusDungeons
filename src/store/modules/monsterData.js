@@ -438,7 +438,7 @@ const actions = {
         commit('leaderboardData/incrementByValue', {property:'totalCoins', with:state.info.coins}, {root:true})
         
         setTimeout(() => {
-          commit('gameData/mutate', {property:'phase', with:'ShopSelect'}, {root:true})
+          commit('gameData/mutate', {property:'phase', with:'WorldMap'}, {root:true})
           setTimeout(() => {
             commit('leaderboardData/addToList', {property: 'monstersKilled', with:state.info.name}, {root:true})
           }, 300)
