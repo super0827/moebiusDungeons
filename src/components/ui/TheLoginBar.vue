@@ -2,8 +2,8 @@
   <div class="d-flex flex-column justify-content-start align-items-start" no-gutters>
     <div class="loginBar px-3 w-100 text-center" v-if="user.loggedIn == true">
       <div class="d-flex flex-row justify-content-between align-items-center">
-        <b-button size="sm" class="m-2">
-          <b-icon scale="1.2" @click="toggleSettings" icon="gear-fill" aria-hidden="true"></b-icon> 
+        <b-button size="sm" @click="toggleSettings" class="m-2">
+          <b-icon scale="1.2"  icon="gear-fill" aria-hidden="true"></b-icon> 
         </b-button>
         <img class="m-2 avatar" :src="avatar" alt="an avatar icon">
         <p class="m-2">{{user.data ? user.data.displayName : "..."}}</p>
