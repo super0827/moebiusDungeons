@@ -3,7 +3,16 @@ import UiSounds from '@/plugins/UiSounds.js'
 
 const state = () => ({
     monsterLoaded: false,
-    info: {},
+    info: {
+      name:"bats",
+      type:'monster', 
+      portrait:require("@/assets/imgs/monsters/bats.png"), 
+      coins:0, baseHealth:5, baseArmor:0, baseAttackMax:3, attackType: "physical",
+      attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+      armorType:'physical',
+      warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
+      enterSound: 'batsEnter',
+    },
     roster: 0,
     tempTraits: [],
     isBoss: false,
@@ -24,234 +33,263 @@ const state = () => ({
       isDead: false,
       isOneShot: false,
     },
-    variants: [
+    monsters: {
+      roads: [
         {
-          name: "emptyObject",
-         },
-         {
-           name:"bats",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/bats.png"), 
-           coins:0, baseHealth:4, baseArmor:0, baseAttackMax:4, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
-           enterSound: 'batsEnter',
-         },
-         {
-           name:"imps",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/imps.png"), 
-           coins:1, baseHealth:5, baseArmor:1, baseAttackMax:1, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
-           enterSound: 'impsEnter',
-         },
-         {
-           name:"slime",
-           type:'monster',
-           portrait:require("@/assets/imgs/monsters/slime.png"), 
-           coins:1, baseHealth:6, baseArmor:2, baseAttackMax:4, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "One wrong step to right or left is sure to spell your slimy death.",
-           enterSound: 'slimeEnter',
-         },
-         {
-           name:"kobold",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/kobold.png"), 
-           coins:1, baseHealth:7, baseArmor:1, baseAttackMax:4, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
-           enterSound: 'koboldEnter',
-         },
-         {
-           name:"gnoll",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/gnoll.png"), 
-           coins:1, baseHealth:9, baseArmor:1, baseAttackMax:5, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "a warning growl behind sharp teeth, quickly now your sword unsheath.",
-           enterSound: 'gnollEnter',
-         },
-         {
-           name:"goblins",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/goblins.png"), 
-           coins:1, baseHealth:8, baseArmor:1, baseAttackMax:4, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
-           enterSound: 'goblinEnter',
-         },
-         
-         {
-           name:"ghost",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/ghost.png"), 
-           coins:2, baseHealth:10, baseArmor:2, baseAttackMax:8, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
-           enterSound: 'ghostEnter',
-         },
-         {
-           name:"lizardman",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/lizardman.png"), 
-           coins:2, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "Lizard senses seek out prey, poison venom helps them slay.",
-           enterSound: 'lizardmanEnter',
-         },
-         {
-           name:"curse",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/curse.png"), 
-           coins:1, baseHealth:16, baseArmor:4, baseAttackMax:10, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
-           enterSound: 'curseEnter',
-         },
-         {
-           name:"bandits",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/bandits.png"), 
-           coins:2, baseHealth:15, baseArmor:2, baseAttackMax:8, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "Shadows hide two men from sight. Their motives born of moral spite.",
-           enterSound: 'banditsEnter',
-         },
-         
-         {
-           name:"mimic",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/mimic.png"), 
-           coins:4, baseHealth:18, baseArmor:3, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
-           enterSound: 'mimicEnter',
-         },
-         
-         {
-           name:"ghoul",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/ghoul.png"), 
-           coins:3, baseHealth:15, baseArmor:2, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
-           enterSound: 'ghoulEnter',
-         },
-         {
-           name:"skeleton",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/skeleton.png"), 
-           coins:3, baseHealth:16, baseArmor:2, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'magical',
-           warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
-           enterSound: 'skeletonEnter',
-         },
-         {
-           name:"swampling",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/swampling.png"), 
-           coins:3, baseHealth:16, baseArmor:2, baseAttackMax:10, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
-           enterSound: 'swamplingEnter',
-         },
-         {
-           name:"harpy",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/harpy.png"),
-           coins:4, baseHealth:15, baseArmor:3, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "Halfway bird and halfway horrid, You'll be telling tales quite sordid.",
-           enterSound: 'harpyEnter',
-         },
-         {
-           name:"mushroom",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/mushroom.png"), 
-           coins:4, baseHealth:18, baseArmor:2, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning:"It stands still by a rotting log, spores cloud up a toxic fog.",
-           enterSound: 'mushroomEnter',
-         },
-         {
-           name:"dryad",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/dryad.png"), 
-           coins:4, baseHealth:20, baseArmor:4, baseAttackMax:10, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "she lives beneath a special tree, deaf to any mortal plea.",
-           enterSound: 'dryadEnter',
-         },
-         {
-           name:"golem",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/golem.png"), 
-           coins:4, baseHealth:22, baseArmor:4, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning: "a guardian immune to death, you cannot kill what has no breath.",
-           enterSound: 'golemEnter',
-         },
-         {
-           name:"demon",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/demon.png"), 
-           coins:5, baseHealth:25, baseArmor:4, baseAttackMax:10, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'magical',
-           warning: "Human-like but one thing proves, instead of feet they have black hooves.",
-           enterSound: 'demonEnter',
-         },
-         {
-           name:"banshee",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/banshee.png"), 
-           coins:5, baseHealth:30, baseArmor:5, baseAttackMax:12, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "she moans in anguish, ghostly, gritty. Her eyes shine bright to see your pity.",
-           enterSound: 'bansheeEnter',
-         },
-         {
-           name:"lich",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/lich.png"), 
-           coins:10, baseHealth:36, baseArmor:8, baseAttackMax:12, attackType: "magical",
-           attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
-           armorType:'magical',
-           warning: "Whirling nacre to body bound, a yearning mind in learn-lust drown.",
-           enterSound: 'lichEnter',
-         },
-         {
-           name:"dragon",
-           type:'monster', 
-           portrait:require("@/assets/imgs/monsters/dragon.png"), 
-           coins:10, baseHealth:40, baseArmor:8, baseAttackMax:12, attackType: "physical",
-           attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
-           armorType:'physical',
-           warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.',
-           enterSound: 'dragonEnter',
-         },
+          name:"goblins",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/goblins.png"), 
+          coins:1, baseHealth:6, baseArmor:1, baseAttackMax:4, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "Strong enough to maim and kill, gross enough your lunch might spill.",
+          enterSound: 'goblinEnter',
+        },
+        {
+          name:"gnoll",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/gnoll.png"), 
+          coins:1, baseHealth:10, baseArmor:1, baseAttackMax:5, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "a warning growl behind sharp teeth, quickly now your sword unsheath.",
+          enterSound: 'gnollEnter',
+        },
+        {
+          name:"bandits",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/bandits.png"), 
+          coins:2, baseHealth:13, baseArmor:1, baseAttackMax:6, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "Shadows hide two men from sight. Their motives born of moral spite.",
+          enterSound: 'banditsEnter',
+        },
+        {
+          name:"bats",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/bats.png"), 
+          coins:0, baseHealth:5, baseArmor:0, baseAttackMax:3, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
+          enterSound: 'batsEnter',
+        },
+      ],
+      forest: [
+        {
+          name:"bats",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/bats.png"), 
+          coins:1, baseHealth:8, baseArmor:0, baseAttackMax:3, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning:"Bright red eyes, fangs meant to slice. To stay away is my advice.",
+          enterSound: 'batsEnter',
+        },
+        {
+          name:"swampling",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/swampling.png"), 
+          coins:2, baseHealth:12, baseArmor:2, baseAttackMax:8, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "into mud as thick as tar, your skin wil boil, bubble, and scar",
+          enterSound: 'swamplingEnter',
+        },
+        {
+          name:"mushroom",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/mushroom.png"), 
+          coins:2, baseHealth:15, baseArmor:2, baseAttackMax:9, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning:"It stands still by a rotting log, spores cloud up a toxic fog.",
+          enterSound: 'mushroomEnter',
+        },
+        {
+          name:"dryad",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/dryad.png"), 
+          coins:2, baseHealth:18, baseArmor:3, baseAttackMax:12, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "she lives beneath a special tree, deaf to any mortal plea.",
+          enterSound: 'dryadEnter',
+        },
+      ],
+      caves: [
+        {
+          name:"slime",
+          type:'monster',
+          portrait:require("@/assets/imgs/monsters/slime.png"), 
+          coins:2, baseHealth:8, baseArmor:2, baseAttackMax:6, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "One wrong step to right or left is sure to spell your slimy death.",
+          enterSound: 'slimeEnter',
+        },
+        {
+          name:"kobold",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/kobold.png"), 
+          coins:2, baseHealth:9, baseArmor:3, baseAttackMax:8, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "greenish armor, sharp teeth too - slay it quick 'fore it slays you!",
+          enterSound: 'koboldEnter',
+        },
+        {
+          name:"mimic",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/mimic.png"), 
+          coins:3, baseHealth:16, baseArmor:3, baseAttackMax:8, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "You reach out to your surprise, You're met by big bright yellow eyes.",
+          enterSound: 'mimicEnter',
+        },
+        {
+          name:"imps",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/imps.png"), 
+          coins:2, baseHealth:10, baseArmor:3, baseAttackMax:5, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "You feel magic, hear a hissing - your meat and peas and toast are missing!",
+          enterSound: 'impsEnter',
+        },
+        {
+          name:"dragon",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/dragon.png"), 
+          coins:5, baseHealth:25, baseArmor:5, baseAttackMax:10, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning:'"I\'ve slain a lizard with breath of fire!" Often heard by boasting liar.',
+          enterSound: 'dragonEnter',
+        },
+      ],
+      hills: [
+        {
+          name:"lizardman",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/lizardman.png"), 
+          coins:3, baseHealth:19, baseArmor:4, baseAttackMax:12, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "Lizard senses seek out prey, poison venom helps them slay.",
+          enterSound: 'lizardmanEnter',
+        },
+        {
+          name:"harpy",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/harpy.png"),
+          coins:3, baseHealth:24, baseArmor:4, baseAttackMax:14, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "Halfway bird and halfway horrid, You'll be telling tales quite sordid.",
+          enterSound: 'harpyEnter',
+        },
+        {
+          name:"bandits",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/bandits.png"), 
+          coins:3, baseHealth:25, baseArmor:4, baseAttackMax:16, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "Shadows hide two men from sight. Their motives born of moral spite.",
+          enterSound: 'banditsEnter',
+        },
+      ],
+      ruins: [
+        {
+          name:"banshee",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/banshee.png"), 
+          coins:3, baseHealth:20, baseArmor:4, baseAttackMax:12, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "she moans in anguish, ghostly, gritty. Her eyes shine bright to see your pity.",
+          enterSound: 'bansheeEnter',
+        },
+        {
+          name:"ghost",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/ghost.png"), 
+          coins:3, baseHealth:20, baseArmor:4, baseAttackMax:14, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "You lay awake at midnight hour, sounds unearthly shape your cower.",
+          enterSound: 'ghostEnter',
+        },
+        {
+          name:"ghoul",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/ghoul.png"), 
+          coins:3, baseHealth:24, baseArmor:4, baseAttackMax:15, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "You walk between the crumbling tombs, behind you somethimg sickly looms!",
+          enterSound: 'ghoulEnter',
+        },
+        {
+          name:"skeleton",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/skeleton.png"), 
+          coins:3, baseHealth:22, baseArmor:5, baseAttackMax:17, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'magical',
+          warning:"strong dark magic guides their hand, to stab and fight and kill and stand.",
+          enterSound: 'skeletonEnter',
+        },
+      ],
+      tower: [
+        {
+          name:"golem",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/golem.png"), 
+          coins:5, baseHealth:30, baseArmor:6, baseAttackMax:18, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'physical',
+          warning: "a guardian immune to death, you cannot kill what has no breath.",
+          enterSound: 'golemEnter',
+        },
+        {
+          name:"demon",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/demon.png"), 
+          coins:5, baseHealth:35, baseArmor:7, baseAttackMax:22, attackType: "physical",
+          attackTypeImage: require("@/assets/imgs/icons/physicalIcon.png"),
+          armorType:'magical',
+          warning: "Human-like but one thing proves, instead of feet they have black hooves.",
+          enterSound: 'demonEnter',
+        },
+        
+        {
+          name:"lich",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/lich.png"), 
+          coins:5, baseHealth:40, baseArmor:8, baseAttackMax:25, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "Whirling nacre to body bound, a yearning mind in learn-lust drown.",
+          enterSound: 'lichEnter',
+        },
+      ],
+      unique: [
+        {
+          name:"curse",
+          type:'monster', 
+          portrait:require("@/assets/imgs/monsters/curse.png"), 
+          coins:0, baseHealth:20, baseArmor:5, baseAttackMax:14, attackType: "magical",
+          attackTypeImage: require("@/assets/imgs/icons/magicalIcon.png"),
+          armorType:'magical',
+          warning: "A faint feeling of unluck first, your body hurts, you feel your worst.",
+          enterSound: 'curseEnter',
+        },
       ]
+    },
 })
 
 const mutations = {
@@ -278,28 +316,6 @@ const mutations = {
     },
     addToLog(state, payload){
       state.log.push(payload)
-    },
-    newMonster(state, payload) {
-      const increment = Math.floor(Math.random() * Math.floor(3)) + 1;
-      
-      if(!payload){
-        state.roster += increment;
-      }
-
-      else if (payload){
-        if(Math.sign(payload) === 1) {
-          state.roster++;
-        }
-        else if (Math.sign(payload) === -1) state.roster--
-        
-        if(state.roster <= 1) state.roster = 1;
-      }
-      
-      if(state.roster >= state.variants.length) state.roster = increment;
-      
-      state.info = state.variants[state.roster];
-      
-      if(payload) MonsterSounds[state.info.enterSound].play();
     },
     changeStats(state, payload){
       if (payload.operator === 'add') state.info[payload.stat] += payload.value;
@@ -371,7 +387,19 @@ const actions = {
       commit('mutate', {property:property, with:payload[property]})
     }
   },
+  NEW_MONSTER({state, commit, dispatch, rootState}) {
+
+    let location = rootState['gameData'].location
+
+    let newMonster = state.monsters[location][Math.floor(Math.random() * ((state.monsters[location].length) + 1))]
+
+    commit('mutate', {property:'info', with: newMonster})
+
+    dispatch('GENERATE_MONSTER_STATS')
+
+  },
   GENERATE_MONSTER_STATS({state, commit, getters, rootState}){
+
     let healthRanking = (rootState['leaderboardData'].monstersKilled.length + 1) * 2
 
     let health = Math.floor(Math.random() * Math.floor(healthRanking)) + healthRanking;
@@ -416,8 +444,6 @@ const actions = {
       attack += 18;
       coin += 3;
     }
-
-    console.table({monsterHealth:health, monsterArmor:armor, monsterAttack:attack, monsterCoins:coin})
 
     commit('mutateInfo', {property:'baseHealth', with: health})
     commit('mutateInfo', {property:'baseArmor', with: armor})
