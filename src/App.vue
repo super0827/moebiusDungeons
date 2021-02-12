@@ -135,6 +135,7 @@ export default {
         'CharacterSelect':'Who To Pick',
         'DungeonPhase':'How To Fight',
         'WorldMap':'Map Help',
+        'ShopSelect': 'Eyien Help'
       },
     }
   },
