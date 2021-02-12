@@ -1,13 +1,13 @@
 <template>
-<section class="dungeonPhaseWrapper" key="dungeonPhaseWrapper">
+<section class="dungeonBackground" :style="dungeonBackgroundStyle">
     <b-row 
         align-h="center"
         class="mb-3 animated"
         :class="{'zoomInDown' :isEntering, 'zoomOutUp' : !isEntering}"
     >
         <b-col cols="12" class="text-center">
-            <section>
-                <img key="dungeonSigil" id="dungeonSigil" src="@/assets/imgs/icons/monsterSigilIcon.png" alt="">
+            <section class="d-flex justify-content-center align-items-center">
+                <img class="imgScale mr-3" key="dungeonSigil" id="dungeonSigil" src="@/assets/imgs/icons/monsterSigilIcon.png" alt="">
                 <h1>DUNGEON PHASE</h1>
             </section>
         </b-col>
@@ -21,6 +21,7 @@
                 'zoomOutLeft' : !isEntering
                 }"
                 :thisLog="playerLog"
+                :who="'Player'"
             />
         </b-col>
         <b-col cols="3">
@@ -129,6 +130,7 @@
                 'zoomOutLeft' : !isEntering
                 }"
                 :thisLog="monsterLog"
+                :who="`Monster`"
             />
         </b-col>
     </b-row>
@@ -181,7 +183,6 @@
             <InventoryItems/>
         </b-col>
     </b-row>
-    
 </section>
 </template>
 
@@ -225,7 +226,15 @@ export default {
         return {
             music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
             UiSounds : UiSounds,
-            MonsterSounds : MonsterSounds
+            MonsterSounds : MonsterSounds,
+            backgrounds: {
+                'forest':require('@/assets/imgs/locations/placemats/forest.png'),
+                'ruins':require('@/assets/imgs/locations/placemats/ruins.png'),
+                'tower':require('@/assets/imgs/locations/placemats/tower.png'),
+                'hills':require('@/assets/imgs/locations/placemats/hills.png'),
+                'roads':require('@/assets/imgs/locations/placemats/roads.png'),
+                'caves':require('@/assets/imgs/locations/placemats/caves.png'),
+            },
         }
     },
     methods: {
@@ -234,6 +243,11 @@ export default {
         },
     },
     computed: {
+        ...mapState('gameData', {
+            location: state => state.location,
+            phase: state => state.phase,
+            showDungeonBackground: state => state.showDungeonBackground
+        }),
         ...mapState('playerData', {
             playerLoaded: state => state.playerLoaded,
 
@@ -310,7 +324,18 @@ export default {
             monsterArmor: 'calcArmor',
             monsterAttackMax: 'calcAttackMax',
             monsterRank: 'monsterRank'
-        })
+        }),
+        dungeonBackgroundStyle: function() {
+            if (this.phase === 'DungeonPhase') {
+            return {
+                'background-image': `url(${this.backgrounds[this.location]})`,
+            }
+        }
+        return {}
+      },
+    },
+    beforeMount() {
+      
     },
     created() {
         if(!this.playerLoaded){
@@ -333,13 +358,20 @@ export default {
     destroyed(){
         this.$store.commit('monsterData/newMonster');
         this.$store.dispatch('monsterData/GENERATE_MONSTER_STATS');
-        this.$store.dispatch('playerData/CHECK_INVENTORY')
-        this.$store.commit('playerData/REMOVE_TEMP_STATS')
-
+        this.$store.dispatch('playerData/CHECK_INVENTORY');
+        this.$store.commit('playerData/REMOVE_TEMP_STATS');
     }
 }
 </script>
 
 <style  scoped>
+.imgScale {
+    height:70px;
+}
 
+.dungeonBackground {
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
 </style>
