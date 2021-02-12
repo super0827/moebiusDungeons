@@ -50,8 +50,8 @@
 
       <br>
       
-      <section :class="{'locked' : lockInteract}" @mouseenter="UiSounds.chit.play()" @click="backToDungeon" class="backToDungeon">
-        <h3>BACK TO THE DUNGEON</h3>
+      <section :class="{'locked' : lockInteract}" @mouseenter="UiSounds.chit.play()" @click="worldMap" class="backToDungeon">
+        <h3>TO WORLD MAP</h3>
       </section>
 
 </section>
@@ -128,9 +128,9 @@ export default {
     randomRoll(rollMax){
       return Math.floor(Math.random() * Math.floor(rollMax));
     },
-    backToDungeon() {
+    worldMap() {
       if(this.lockInteract === false) {
-        this.$store.commit('gameData/mutate', {property: 'phase', with: 'DungeonPhase'})
+        this.$store.commit('gameData/mutate', {property: 'phase', with: 'WorldMap'})
       }
     },
     buy(itemBought) {
