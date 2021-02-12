@@ -9,6 +9,14 @@ const state = () => ({
     leaderboard:[],
     debugShow: false,
     location: 'roads',
+    locationRanks: {
+        'roads': 1,
+        'caves': 2,
+        'forest': 2,
+        'hills': 3,
+        'ruins': 3,
+        'tower': 4,
+    }
 })
 
 const mutations = {
