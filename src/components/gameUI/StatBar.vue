@@ -101,7 +101,7 @@ import { mapGetters, mapState } from 'vuex';
     width:2px;
     background:black;
     position: absolute;
-    left:85px;
+    left:75px;
     top:-3px;
 }
 </style>
