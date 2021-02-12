@@ -1,45 +1,48 @@
 <template>
+<section>
+    <b-row align-v="center" align-h="center">
+        <h1 
+            class="animated text-center mb-5" 
+            :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering }"
+        >
+        CHOOSE YOUR CHARACTER
+        </h1>
 
-<b-col cols="12" class="d-flex flex-column justify-content-center">
-    <h1 
-        class="animated text-center mb-5" 
-        :class="{'zoomInUp' : isEntering, 'zoomOutDown' : !isEntering }"
-    >
-    CHOOSE YOUR CHARACTER
-    </h1>
-
-    <section class="chooseChar justify-content-center">
-        <section
-        v-for="characters in characterClasses"
-        :key="characters.name"
-        :portrait="characters.portrait"
-        :coins="characters.coins"
-        :health="characters.health"
-        :armor="characters.armor"
-        :attackMax="characters.attackMax"
-        :attackType="characters.attackType"
-        :attackTypeImage="characters.attackTypeImage"
-        @click="setPlayer(characters)"
-        class="columns animated"
-        :class="{ [characters.inAnimations]: isEntering, 
-        [characters.outAnimations]: !isEntering }">
-        
-            <ToolTip
-                :title="characters.name"
-                :subtitle="characters.description1"
-                :descriptions="[characters.description2]"
+        <section class="d-flex flex-row justify-content-between">
+            <b-col cols="4"
+                v-for="characters in characterClasses"
+                :key="characters.name"
+                :portrait="characters.portrait"
+                :coins="characters.coins"
+                :health="characters.health"
+                :armor="characters.armor"
+                :attackMax="characters.attackMax"
+                :attackType="characters.attackType"
+                :attackTypeImage="characters.attackTypeImage"
+                @click="setPlayer(characters)"
+                class="animated"
+                :class="{ [characters.inAnimations]: isEntering, 
+                [characters.outAnimations]: !isEntering }"
             >
-                <section 
-                @mouseenter="UiSound.chit.play()"
-                class="portContainer animated infinite" :id="characters.name">
-                    <section class="overlay"></section>
-                    <img :src="characters.portrait" :alt="characters.description2">
-                </section>
-            </ToolTip>
+            
+                <ToolTip
+                    :title="characters.name"
+                    :subtitle="characters.description1"
+                    :descriptions="[characters.description2]"
+                >
+                    <section 
+                        @mouseenter="UiSound.chit.play()"
+                        class="animated infinite position-relative wrapper" 
+                        :id="characters.name"
+                    >
+                        <img :src="characters.portrait" :alt="characters.description2"/>
+                        <section class="overlay"></section>
+                    </section>
+                </ToolTip>
+            </b-col>
         </section>
-    </section>
-
-</b-col>
+    </b-row>
+</section>
 </template>
 
 <script>
@@ -76,7 +79,8 @@ export default {
                 special: "en'garde",
                 specialDescription:"Spend one mettle to gain +1 Armor. The monster won’t attack you back when you use En'garde.",
                 inAnimations: "zoomInLeft",
-                outAnimations: "zoomOutLeft",              },
+                outAnimations: "zoomOutLeft",
+                },
 
               {
                 name:"mage",
@@ -136,35 +140,18 @@ export default {
 </script>
 
 <style scoped>
-.characterSelectWrapper {
-    text-align:center;
-    /* position:relative; */
+.wrapper, .wrapper img {
+    position: relative;
+    max-width: 260px;
+    max-height: 300px;
 }
 
-.chooseChar {
-    display:flex;
-    flex-direction: row;
-}
-
-.columns {
-    margin:0 10px;
-}
-
-.chooseChar img {
-    max-width:200px;
-}
-
-.overlay {
-    height:100px;
-    width:200px;
-    z-index:2;
-    position:absolute;
-    bottom:0;
-    pointer-events: none;
-}
-
-.portContainer {
-    /* position:relative; */
+.wrapper .overlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 50%;
 }
 
 #swordsman:hover, #mage:hover, #varlet:hover {
@@ -181,21 +168,6 @@ export default {
 
 #varlet:hover .overlay {
     background: linear-gradient(0deg, rgb(238, 255, 0) 0%, rgba(255,192,0,0) 100%);
-    cursor:pointer;
-}
-
-#about {
-    font-size: 20px;
-    position: fixed;
-    right: 10px;
-    top: 10px;
-    margin: 0;
-    padding: 5px;
-    background: rgb(218, 218, 218);
-}
-
-#about:hover {
-    background:rgb(185, 185, 185);
     cursor:pointer;
 }
 </style>

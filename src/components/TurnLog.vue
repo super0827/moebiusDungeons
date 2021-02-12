@@ -1,16 +1,20 @@
 <template>
-    <section class="readout">
-        <ul>
-        <transition-group name="list-complete">
-            <li
-            v-for="items in thisLog"
-            class="list-complete-item"
-            :key="items.id"
-            >
-                {{ items.message }}
-            </li>
-        </transition-group>
-        </ul>
+    <section class="text-center readout position-absolute m-0 pale"
+        :class="{'rightPos': who === 'Player', 'leftPos': who === 'Monster'}"
+    >
+        <p class="text-uppercase"><strong>{{who}}</strong></p>
+        <b-row align-h="center" class="readout" no-gutters>
+            <transition-group name="list-complete">
+                <b-col 
+                    cols="12"
+                    class="border-top m-0 pt-3 pb-3 list-complete-item" 
+                    v-for="items in thisLog"
+                    :key="items.id"
+                >
+                    <p class="m-0">{{ items.message }}</p>
+                </b-col>
+            </transition-group>
+        </b-row>
     </section>
 </template>
 
@@ -18,34 +22,23 @@
 
 export default {
     name: 'TurnLog',
-    props: ['thisLog'],
+    props: ['thisLog', 'who'],
 }
 </script>
 
 <style scoped>
+    .pale {
+        color:#ccc;
+    }
     .readout {
-        width:70px;
-        text-align:center;
-        margin:0 10px;
+        width:75px;
     }
-    li {
-        font-family:var(--paragraphs-type);
-        font-size:15px;
-        text-transform:uppercase;
-        min-width:50px;
-        max-width:50px;
-        border-top: solid 2px rgb(182,182,182);
-        border-bottom: solid 2px rgb(182,182,182);
-        padding:10px;
-        margin:5px 0px;
+
+    .rightPos{
+        right:20px;
     }
-    ul {
-        list-style-type: none;
-        margin-block-start: 0;
-        margin-block-end: 0;
-        margin-inline-start: 0;
-        margin-inline-end: 0;
-        padding-inline-start: 0;
-        color:rgb(182, 182, 182);
+    
+    .leftPos{
+        left:20px;
     }
 </style>
