@@ -68,7 +68,6 @@ import { mapState } from 'vuex'
         grid-template-rows: 100%;
         position:relative;
         /* display:inline-block; */
-        z-index:9999;
     }
 
     .tooltip-container:hover .tooltip {
