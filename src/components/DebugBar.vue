@@ -87,12 +87,6 @@
             <b-button @click="$store.dispatch('shopkeepData/PICK_SHOPKEEP', {shopkeep:3})">WITCH</b-button>
         </section>
 
-        <h4 class="mt-2">MONSTER ROSTER</h4>
-        <section class="d-flex flex-column">
-          <b-button class="mb-1" @click="$store.commit('monsterData/newMonster', 1)">Next Monster</b-button>
-          <b-button @click="$store.commit('monsterData/newMonster', -1)">Prev Monster</b-button>
-        </section>
-
         <h4 class="mt-2">MONSTER RANKS</h4>
         <section class="d-flex flex-column">
           <b-button @click="$store.commit('leaderboardData/addToList', {property: 'monstersKilled', with: 'monster'})">Rank Up</b-button>
