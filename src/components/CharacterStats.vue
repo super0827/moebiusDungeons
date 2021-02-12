@@ -1,6 +1,6 @@
 <template>
   <b-row class="text-white mt-1">
-    <b-col class="mb-5 mt-3" cols="12">
+    <b-col class="mb-5 mt-3 " cols="12">
         <ToolTip
           subtitle="Health (HP)"
           :descriptions="[`Value representing total Health.`]"
@@ -104,14 +104,14 @@ export default {
 
 <style scoped>
 img {
-  width:90px;
-  height:90px;
+  width:80px;
+  height:80px;
 }
 
 .leftPos {
   text-align:center;
-  left:27px;
-  top:9px;
+  left:21px;
+  top:10px;
 }
 
 h1 {
