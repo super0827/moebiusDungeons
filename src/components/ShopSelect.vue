@@ -1,80 +1,79 @@
 <template>
-
-<section class="characterSelectWrapper">
-    
-   <section class="lessImportant flexRowBetween">
-    <h2>Your Stats:</h2>
-    <br>
-    <section class='flexRow'>
-        <section class="iconOverlay">
-            <img class="smallStat" src="@/assets/imgs/icons/healthIcon.png">
-            <h3>{{ health }}</h3>
-        </section>
-        <section class="iconOverlay">
-            <img class="smallStat" :src="attackImg">
-            <h3>{{ attack }}</h3>
-        </section>
-        <section class="iconOverlay">
-            <img class="smallStat" src="@/assets/imgs/icons/armorIcon.png">
-            <h3> {{ armor }} </h3>
-        </section>
-        <section class="iconOverlay">
-            <img class="smallCoin" src="@/assets/imgs/icons/coinIcon.png">
-            <h3>{{ coins }}</h3>
-        </section>
-    </section>
-    </section>
-
-    <hr>
-
-     <h1 >Choose a Shopkeep</h1>
-
-    <section class="chooseChar">
-        <section
-        v-for="characters in variants"
-        :key="characters.name"
-        :portrait="characters.portrait"
-        class="shopkeep columns animated">
-        
-            <h2>{{characters.name}}</h2>
-
-            <section 
-            @mouseenter="UiSound.chit.play()"
-            @click="toShopkeep(characters)"
-            class="portContainer animated infinite" :id="characters.name">
-                <section class="overlay"></section>
-                <img :src="characters.portrait">
+<section class="characterSelectWrapper d-flex flex-column justify-content-center">
+    <b-row align-h="center" class="text-center">
+        <b-col>
+            <img src="@/assets/imgs/icons/travelersSigilIcon.png" alt="">
+            <h1>EYIEN</h1>
+        </b-col>
+    </b-row>
+    <b-row align-v="center" class="my-4 d-flex flex-row justify-content-around m-4">
+        <b-col cols="12" class="d-flex flex-row justify-content-between text-white statIcons">
+            <section class="mx-4 d-flex flex-column justify-content-center">
+                <img class="position-absolute" src="@/assets/imgs/icons/healthIcon.png">
+                <h1 class="m-0 leftPos position-relative">{{health}}</h1>
             </section>
 
-        </section>
-    </section>
-
-    <h3 class="marginTop">OR PICK AN OPTION BELOW</h3>
-
-    <section class="flexRow">
-        <section>
-            <h2 @mouseenter="UiSound.chit.play()" @click="toggleRetire()" class="button red">
-                Retire From Your Service
-            </h2>
-        </section>
-        <section>
-            <h2 v-if="mettle < 3" @mouseenter="UiSound.chit.play()" @click="addMettle()" class="button green">
-                Rest + 1 <img :src="mettleImg"/>
-            </h2>
+            <section class="mx-4 d-flex flex-column justify-content-center">
+                <img class="position-absolute" :src="attackImg">
+                <h1 class="m-0 leftPos position-relative">{{ attack }}</h1>
+            </section>
             
-            <h2 :class="{'unavailable': mettle >= 3}" v-if="mettle >= 3"  @mouseenter="UiSound.chit.play()" class="button">
-                Can't Rest With Max Mettle
-            </h2>
-        </section>
+            <section class="mx-4 d-flex flex-column justify-content-center">
+                <img class="position-absolute" :src="armorImg">
+                <h1 class="m-0 leftPos position-relative">{{ armor }}</h1>
+            </section>
 
-    </section>
-   
-    <!--  Retire Confirmation -->
-    <transition name="fade-fast" mode="out-in">
+            <section class="mx-4 d-flex flex-column justify-content-center">
+                <img class="position-absolute coin" src="@/assets/imgs/icons/coinIcon.png">
+                <h1 class="m-0 coinLeftPos position-relative">{{ coins }}</h1>
+            </section>
+            
+            <section class="mx-4 d-flex flex-column justify-content-center">
+                <img class="position-absolute coin" :src="mettleImg">
+                <h1 class="m-0 coinLeftPos position-relative">{{ mettle }}</h1>
+            </section>
+        </b-col>
+    </b-row>
+
+    <b-row class="text-center">
+        <b-col cols="12" class="d-flex justify-content-center">
+            <section
+                v-for="characters in variants"
+                :key="characters.name"
+                :portrait="characters.portrait"
+            >
+                <section 
+                    @mouseenter="UiSound.chit.play()"
+                    @click="toShopkeep(characters)"
+                    class="portContainer"
+                    :id="characters.name"
+                >
+                    <h2 class="text-uppercase">{{characters.name}}</h2>
+                    <section class="overlay"></section>
+                    <img :src="characters.portrait">
+                </section>
+            </section>
+        </b-col>
+    </b-row>
+
+    <!-- Options -->
+    <b-row align-h="center" class="mt-3 d-flex flex-row justify-content-center">
+        <b-col cols="8" class="d-flex justify-content-center">
+            <b-button class="p-4 mr-3 d-flex justify-content-center align-items-center" @mouseenter="UiSound.chit.play()" @click="toggleRetire()">
+                <h2 class="">Retire</h2>
+            </b-button>
+
+            <b-button class="p-4 d-flex flex-row justify-content-center align-items-center" v-if="mettle < 3" @mouseenter="UiSound.chit.play()" @click="addMettle()">
+                <h2 class="m-0">Rest + 1 <img :src="mettleImg"/></h2>
+            </b-button>
+
+            <b-button class="p-4 d-flex justify-content-center align-items-center" :class="{'unavailable': mettle >= 3}" v-if="mettle >= 3"  @mouseenter="UiSound.chit.play()">
+                <h2 class="m-0">Can't Rest With Max Mettle</h2>
+            </b-button>
+        </b-col>
+
         <retire class="retire"  key="retireConfirm" @close="toggleRetire()" @retire="retireGame()" v-if="retire"/>
-    </transition>
-
-
+    </b-row>
 </section>
 </template>
 
@@ -112,7 +111,9 @@ export default {
             mettleImg: state => state.info.mettleImg,
             coins: state => state.info.coins,
             attackImg: state => state.info.attackTypeImage,
-            mettle: state => state.info.mettle
+            armorImg: state => state.info.armorTypeImage,
+            mettle: state => state.info.mettle,
+            mettleImage: state => state.info.mettleImg
         }),
         ...mapState('gameData', {
             tracker: state =>state.tracker,
@@ -155,117 +156,39 @@ export default {
 </script>
 
 <style scoped>
-
-.retire {
-    z-index:9999999;
+.leftPos {
+  text-align:center;
+  left:24px;
+  top:8px;
 }
 
-#about {
-    font-size: 20px;
-    position: fixed;
-    right: 10px;
-    top: 10px;
-    margin: 0;
-    padding: 5px;
-    background: rgb(218, 218, 218);
-}
-#about:hover {
-    background:rgb(185, 185, 185);
-    cursor:pointer;
+.coinLeftPos {
+  text-align:center;
+  left:12px;
+  top:7px;
 }
 
-.characterSelectWrapper {
-    text-align:center;
-    position:relative;
+.statIcons img {
+  width:80px;
+  height:80px;
 }
 
-.chooseChar {
-    display:flex;
-    flex-direction: row;
+img.coin {
+    width:60px;
+    height:60px;
 }
 
-.marginTop {
-    margin-top:15px;
+.statIcons h1 {
+  height:35px;
+  width:35px;
+  font-size:20px;
+  text-align:center;
+  display:block;
+  text-shadow: 1px 1px 5px black;
 }
 
-.shopkeep {
-    cursor:pointer;
-}
-
-.columns {
-    margin:0 10px;
-}
-
-.button {
-    background:#999;
-    margin:20px 10px;
-    width:175px;
-    height:100px;
-    color:white;
-    border-radius:5px;
-    text-decoration:none;
-    padding:10px;
-    font-size:25px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-.button img {
-    width:50px;
-    margin-left:10px;
-}
-
-.unavailable {
-    color:white;
-    background:rgb(161, 0, 0);
-    cursor:not-allowed;
-}
-
-.red:hover {
-    cursor:pointer;
-    background:rgb(148, 106, 106);
-}
-
-.green:hover {
-    cursor:pointer;
-    background:rgb(106, 148, 120);
-}
-
-.chooseChar img {
-    max-width:200px;
-}
-
-.lessImportant {
-    opacity:0.4;
-}
-
-.overlay {
-    height:100px;
+.portContainer img{
     width:200px;
-    z-index:999;
-    position:absolute;
-    bottom:0;
-}
-
-.portContainer {
-    position:relative;
-}
-
-.smallCoin {
-    width:54px;
-    margin:9px 5px;
-}
-
-.smallStat {
-    width:70px;
-
-}
-
-.iconOverlay h3 {
-    font-size:1.5vw;
-    position:relative;
 }
 
 #graverobber:hover .overlay {
