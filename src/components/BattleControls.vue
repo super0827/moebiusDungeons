@@ -1,8 +1,6 @@
 <template>
-<b-row>
-    <b-col cols="12" class="d-flex flex-column justify-content-center">
-
-
+<b-row align-h="center">
+    <b-col cols="8" class="d-flex flex-column justify-content-center">
     <!-- Green Comparison Bars -->
     <ToolTip
         subtitle="Mettle"
@@ -29,8 +27,9 @@
         :subtitle="special"
         :descriptions="[specialDescription]"
     >
-        <b-button size="lg" class="mb-2 py-3 w-100 d-flex flex-row justify-content-center align-items-center" :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()">
-            <h3 class="m-0 mr-2 mettleIcon">{{special}} (Costs <img :src="mettleImg">)</h3>
+        <b-button size="lg" class="mb-2 py-3 w-100 d-flex flex-column justify-content-center align-items-center" :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()">
+            <h3 class="m-0 mettleIcon">{{special}}</h3>
+            <p class="m-0">(Costs <img :src="mettleImg">)</p>
         </b-button>
     </ToolTip>
 
@@ -102,5 +101,9 @@ export default {
     text-decoration: line-through;
     transition:all .6s;
     cursor:not-allowed;
+}
+
+p img {
+    max-height:30px;
 }
 </style>
