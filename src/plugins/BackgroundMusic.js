@@ -66,6 +66,12 @@ const loseScreen = new Howl({
     volume: .3,
 });
 
+const worldMap = new Howl({
+    src: [require('@/assets/audio/worldMapMusic/Tears_in_the_Snow_Version_01_Fade_Out.mp3')],
+    loop: true,
+    volume: .1,
+});
+
 
 
 export default {
@@ -79,5 +85,6 @@ export default {
     shopMusic2,
     shopMusic3,
     shopSelect,
-    loseScreen
+    loseScreen,
+    worldMap
 };
