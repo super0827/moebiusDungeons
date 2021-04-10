@@ -1,5 +1,9 @@
 <template>
-  <b-container id="app" class="h-100 p-0">
+  <b-container id="app" fluid class="h-100 p-0 overflow-hidden">
+    <transition name="fade" mode="out-in">
+      <img :key="backgroundImage" class="position-absolute h-100 w-100" v-if="this.phase === 'DungeonPhase'" :src="backgroundImage" alt="backgroundimage">
+    </transition>
+    <b-container>
         <b-row class="viewHeight10 justify-content-between" no-gutters>
           <b-col cols="3 mt-2">
             <transition name="fade" mode="out-in">
@@ -62,6 +66,7 @@
     </transition>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug"/>
+    </b-container>
   </b-container>
 </template>
 
@@ -137,6 +142,14 @@ export default {
         'WorldMap':'Map Help',
         'ShopSelect': 'Eyien Help'
       },
+      backgrounds: {
+        'forest':require('@/assets/imgs/locations/placemats/forest.png'),
+        'ruins':require('@/assets/imgs/locations/placemats/ruins.png'),
+        'tower':require('@/assets/imgs/locations/placemats/tower.png'),
+        'hills':require('@/assets/imgs/locations/placemats/hills.png'),
+        'roads':require('@/assets/imgs/locations/placemats/roads.png'),
+        'caves':require('@/assets/imgs/locations/placemats/caves.png'),
+      },
     }
   },
   methods: {
@@ -155,6 +168,7 @@ export default {
   computed: {
       ...mapState('gameData', {
         phase: state => state.phase,
+        location: state => state.location,
         leaderboard: state => state.leaderboard,
         debugShow: state => state.debugShow,
         helper: state => state.helper,
@@ -186,6 +200,12 @@ export default {
           default:
             return false;
         }
+      },
+      backgroundImage: function() {
+            if (this.phase === 'DungeonPhase') {
+            return this.backgrounds[this.location]
+        }
+        return {}
       },
   },
   mounted() {

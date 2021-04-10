@@ -1,5 +1,5 @@
 <template>
-<section class="dungeonBackground" :style="dungeonBackgroundStyle">
+<section>
     <b-row 
         align-h="center"
         class="mb-3 animated"
@@ -227,14 +227,6 @@ export default {
             music: ['dungeonMusic1','dungeonMusic2','dungeonMusic3','dungeonMusic4','dungeonMusic5'],
             UiSounds : UiSounds,
             MonsterSounds : MonsterSounds,
-            backgrounds: {
-                'forest':require('@/assets/imgs/locations/placemats/forest.png'),
-                'ruins':require('@/assets/imgs/locations/placemats/ruins.png'),
-                'tower':require('@/assets/imgs/locations/placemats/tower.png'),
-                'hills':require('@/assets/imgs/locations/placemats/hills.png'),
-                'roads':require('@/assets/imgs/locations/placemats/roads.png'),
-                'caves':require('@/assets/imgs/locations/placemats/caves.png'),
-            },
         }
     },
     methods: {
@@ -367,11 +359,5 @@ export default {
 <style  scoped>
 .imgScale {
     height:70px;
-}
-
-.dungeonBackground {
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
 }
 </style>
