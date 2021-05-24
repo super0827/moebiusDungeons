@@ -3,6 +3,7 @@
     <transition name="fade" mode="out-in">
       <img :key="backgroundImage" class="blurImage position-absolute h-100 w-100" v-if="this.phase === 'DungeonPhase'" :src="backgroundImage" alt="background image">
     </transition>
+
     <b-container>
         <b-row class="viewHeight10 justify-content-between" no-gutters>
           <b-col cols="3 mt-2">
@@ -63,7 +64,6 @@
             </b-button>
           </b-col>
         </b-row>
-    </transition>
 
     <Keypress key-event="keyup" :key-code="192" @success="toggleDebug"/>
     </b-container>
