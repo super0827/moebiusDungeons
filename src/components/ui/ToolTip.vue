@@ -32,7 +32,7 @@ import { mapState } from 'vuex'
         props: ['title', 'subtitle', 'descriptions', 'top', 'bottom', 'left', 'right', 'shift'],
         data() {
             return {
-                hover: false
+                hover: true
             }
         },
         computed: {
@@ -42,20 +42,21 @@ import { mapState } from 'vuex'
             toolShift () {
                 let move = '';
                 if(this.shift){
-                if(this.shift.top) {
-                    move += `top: ${this.shift.top}px; `
-                }
-                if(this.shift.right) {
-                    move += `right: ${this.shift.right}px; `
-                }
-                if(this.shift.bottom) {
-                    move += `bottom: ${this.shift.bottom}px; `
-                }
-                if(this.shift.left) {
-                    move += `left: ${this.shift.left}px; `
-                }
+                    if(this.shift.top) {
+                        move += `top: ${this.shift.top}px; `
+                    }
+                    if(this.shift.right) {
+                        move += `right: ${this.shift.right}px; `
+                    }
+                    if(this.shift.bottom) {
+                        move += `bottom: ${this.shift.bottom}px; `
+                    }
+                    if(this.shift.left) {
+                        move += `left: ${this.shift.left}px; `
+                    }
                 return move;
                 }
+                return move;
             }
         }
     }
@@ -99,8 +100,7 @@ import { mapState } from 'vuex'
     }
 
     .text {
-        display:inline-block;
-        margin:10px;
+        padding:1rem;
     }
 
     h2, h3 {

@@ -8,7 +8,7 @@
         <b-col cols="12" class="text-center">
             <section class="d-flex justify-content-center align-items-center">
                 <img class="imgScale mr-3" key="dungeonSigil" id="dungeonSigil" src="@/assets/imgs/icons/monsterSigilIcon.png" alt="">
-                <h1>DUNGEON PHASE</h1>
+                <h1 class="white">DUNGEON PHASE</h1>
             </section>
         </b-col>
     </b-row>
@@ -359,5 +359,10 @@ export default {
 <style  scoped>
 .imgScale {
     height:70px;
+    filter:invert() brightness(200%);
+}
+
+.white {
+    color:white;
 }
 </style>

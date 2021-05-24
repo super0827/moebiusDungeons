@@ -1,7 +1,7 @@
 <template>
   <b-container id="app" fluid class="h-100 p-0 overflow-hidden">
     <transition name="fade" mode="out-in">
-      <img :key="backgroundImage" class="position-absolute h-100 w-100" v-if="this.phase === 'DungeonPhase'" :src="backgroundImage" alt="backgroundimage">
+      <img :key="backgroundImage" class="blurImage position-absolute h-100 w-100" v-if="this.phase === 'DungeonPhase'" :src="backgroundImage" alt="background image">
     </transition>
     <b-container>
         <b-row class="viewHeight10 justify-content-between" no-gutters>
@@ -81,11 +81,11 @@ import { mapState, mapGetters } from 'vuex'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import SavedGame from '@/components/SavedGame.vue';
+import SavedGame from '@/components/phases/SavedGame.vue';
 import StartScreen from '@/components/StartScreen.vue';
 
-import CharacterSelect from '@/components/CharacterSelect.vue';
-import DungeonPhase from '@/components/DungeonPhase.vue';
+import CharacterSelect from '@/components/phases/CharacterSelect.vue';
+import DungeonPhase from '@/components//phases/DungeonPhase.vue';
 import ShopSelect from '@/components/ShopSelect.vue';
 import ShopPhase from '@/components/ShopPhase.vue';
 import LoseScreen from '@/components/LoseScreen.vue';
@@ -238,5 +238,9 @@ export default {
 
 .z-999 {
   z-index:999;
+}
+
+.blurImage{
+  filter:blur(10px)
 }
 </style>
