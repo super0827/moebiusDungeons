@@ -71,7 +71,7 @@
 				<div class="p-4" @mouseenter="UiSounds.chit.play()">
 					<a href="https://discord.gg/R9D7znn" target='_blank'>
 						<img class="float-left mr-4" src="@/assets/imgs/icons/discord.png" alt="discord icon">
-						<p>Join the Moebius Dungeon Discord to become a part of the Amaran community. help develop the game as it grows, and be the first to hear about new features and content. </p>
+						<p>Join the Moebius Dungeon Discord to become a part of the Amaran community. Help develop the game as it grows, and be the first to hear about new features and content. </p>
 					</a>
 				</div>
 			</b-col>

@@ -1,6 +1,6 @@
 <template>
 
-    <b-col cols="12" class="d-flex flex-column justify-content-center aligh-items-center text-center">
+    <b-col cols="12" class="d-flex flex-column justify-content-center text-center">
         <h1>LEADERBOARDS</h1>
         <p>Congragtulations to the most powerful kingloyal in Amara.</p>
 
