@@ -102,6 +102,7 @@ import WorldMap from '@/components/WorldMap.vue';
 
 import CharacterSelectHelper from '@/components/helpers/CharacterSelectHelper'
 import DungeonPhaseHelper from '@/components/helpers/DungeonPhaseHelper.vue';
+import ShopSelectHelper from "@/components/helpers/ShopSelectHelp.vue";
 
 import Register from '@/components/authentication/Register.vue';
 import { consoleHello } from "@/components/mixins/consoleHello.js"
@@ -116,6 +117,7 @@ export default {
     CharacterSelect,
     DungeonPhase,
     ShopSelect,
+    ShopSelectHelper,
     ShopPhase,
     LoseScreen,
     Keypress,

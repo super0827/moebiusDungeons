@@ -15,7 +15,7 @@
         subtitle="Trade Blows"
         :descriptions="[`Deal damage to the monster, if it's still alive after you attack, it attacks back!`]"
     >
-        <b-button class="mb-2 py-3 w-100" size="lg" @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()">
+        <b-button variant="primary" class="mb-2 py-3 w-100" size="lg" @mouseenter="UiSounds.chit.play()" @click="TRADE_BLOWS()">
             <h3 
             class="m-0"
             :class="{'striked' : combatLocked }" 
@@ -27,7 +27,7 @@
         :subtitle="special"
         :descriptions="[specialDescription]"
     >
-        <b-button size="lg" class="mb-2 py-3 w-100 d-flex flex-column justify-content-center align-items-center" :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()">
+        <b-button variant="primary" size="lg" class="mb-2 py-3 w-100 d-flex flex-column justify-content-center align-items-center" :class="{'striked' : combatLocked || mettle <= 0}" @mouseenter="UiSounds.chit.play()" @click="RUN_SPECIAL()">
             <h3 class="m-0 mettleIcon">{{special}}</h3>
             <p class="m-0">(Costs <img :src="mettleImg">)</p>
         </b-button>
@@ -37,7 +37,7 @@
         subtitle="Turn Tail"
         :descriptions="[`Flee you fool! Click this to run away. Not certain to succeed.`]"
     >
-        <b-button class="py-3 w-100" @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()">
+        <b-button variant="primary" class="py-3 w-100" @mouseenter="UiSounds.chit.play()" @click="TURN_TAIL()">
             <h3
             class="m-0"
             :class="{'striked' : turnTailUsed || combatLocked }" 

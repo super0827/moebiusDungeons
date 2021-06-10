@@ -80,7 +80,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import ShopSelectHelp from "@/components/ShopSelectHelp.vue";
 import Retire from "@/components/Retire.vue";
 import UiSound from '@/plugins/UiSounds.js'
 
@@ -92,7 +91,6 @@ export default {
   name: 'ShopSelect',
   mixins: [gameAnimations, gameMusic],
   components: {
-      ShopSelectHelp,
       Retire
   },
   data() {
