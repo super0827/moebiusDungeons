@@ -4,7 +4,7 @@
       <img :key="backgroundImage" class="blurImage position-absolute h-100 w-100" v-if="this.phase === 'DungeonPhase'" :src="backgroundImage" alt="background image">
     </transition>
 
-    <b-container>
+    <b-container class="p-1">
         <b-row class="viewHeight10 justify-content-between" no-gutters>
           <b-col cols="3 mt-2">
             <transition name="fade" mode="out-in">
@@ -195,7 +195,6 @@ export default {
           case 'DungeonPhase':
           case 'ShopSelect':
           case 'ShopPhase':
-          case 'LeaderBoard':
           case 'WorldMap':
             return true;
             break;

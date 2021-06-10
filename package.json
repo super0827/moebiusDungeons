@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
   },
   "dependencies": {
     "@mdi/font": "^5.7.55",
@@ -18,6 +19,7 @@
     "howler": "^2.2.0",
     "jquery": "^3.5.0",
     "lodash.shuffle": "^4.2.0",
+    "nuxt": "^2.15.6",
     "vue": "^2.6.11",
     "vue-browser-detect-plugin": "^0.1.13",
     "vue-keypress": "^2.1.1",

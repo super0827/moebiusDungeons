@@ -7,7 +7,7 @@
             <transition-group name="list-complete">
                 <b-col 
                     cols="12"
-                    class="border-top m-0 pt-3 pb-3 list-complete-item" 
+                    class="border-top m-0 text-uppercase pt-3 pb-3 list-complete-item" 
                     v-for="items in thisLog"
                     :key="items.id"
                 >
